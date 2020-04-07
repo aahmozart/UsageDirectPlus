@@ -166,25 +166,11 @@ public class AppUsageStatisticsFragment extends Fragment {
      */
     //VisibleForTesting
     void updateAppsList(List<UsageStats> usageStatsList) {
-        List<CustomUsageStats> customUsageStatsList = new ArrayList<>();
-        for (int i = 0; i < usageStatsList.size(); i++) {
-            CustomUsageStats customUsageStats = new CustomUsageStats();
-            customUsageStats.usageStats = usageStatsList.get(i);
-            try {
-                Drawable appIcon = getActivity().getPackageManager()
-                        .getApplicationIcon(customUsageStats.usageStats.getPackageName());
-                customUsageStats.appIcon = appIcon;
-            } catch (PackageManager.NameNotFoundException e) {
-                Log.w(TAG, String.format("App Icon is not found for %s",
-                        customUsageStats.usageStats.getPackageName()));
-                customUsageStats.appIcon = getActivity()
-                        .getDrawable(R.drawable.ic_default_app_launcher);
-            }
-            customUsageStatsList.add(customUsageStats);
-        }
-        mUsageListAdapter.setCustomUsageStatsList(customUsageStatsList);
+        mUsageListAdapter.setCustomUsageStatsList(usageStatsList);
         mUsageListAdapter.notifyDataSetChanged();
         mRecyclerView.scrollToPosition(0);
+
+        new IconThread(usageStatsList, mLayoutManager, getActivity()).start();
     }
 
     /**

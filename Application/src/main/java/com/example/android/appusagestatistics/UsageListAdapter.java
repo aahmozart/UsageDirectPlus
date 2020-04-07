@@ -16,6 +16,8 @@
 
 package com.example.android.appusagestatistics;
 
+import android.app.usage.UsageStats;
+import android.graphics.drawable.Drawable;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +37,7 @@ import java.util.List;
  */
 public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.ViewHolder> {
 
-    private List<CustomUsageStats> mCustomUsageStatsList = new ArrayList<>();
+    private List<UsageStats> mUsageStatsList = new ArrayList<>();
     private DateFormat mDateFormat = new SimpleDateFormat();
 
     /**
@@ -84,23 +86,33 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        viewHolder.getPackageName().setText(
-                mCustomUsageStatsList.get(position).usageStats.getPackageName());
-        long lastTimeUsed = mCustomUsageStatsList.get(position).usageStats.getLastTimeUsed();
+
+        UsageStats usageStats = mUsageStatsList.get(position);
+
+        viewHolder.getPackageName().setText(usageStats.getPackageName());
+        long lastTimeUsed = usageStats.getLastTimeUsed();
         viewHolder.getLastTimeUsed().setText(mDateFormat.format(new Date(lastTimeUsed)));
 
-        long timeUsed = mCustomUsageStatsList.get(position).usageStats.getTotalTimeInForeground();
+        long timeUsed = usageStats.getTotalTimeInForeground();
         viewHolder.getTimeUsed().setText(Humanize.duration(timeUsed / 1000));
 
-        viewHolder.getAppIcon().setImageDrawable(mCustomUsageStatsList.get(position).appIcon);
+        viewHolder.getAppIcon().setImageDrawable(IconThread.iconMap.get(usageStats));
     }
 
     @Override
     public int getItemCount() {
-        return mCustomUsageStatsList.size();
+        return mUsageStatsList.size();
     }
 
-    public void setCustomUsageStatsList(List<CustomUsageStats> customUsageStats) {
-        mCustomUsageStatsList = customUsageStats;
+    public void setCustomUsageStatsList(List<UsageStats> usageStats) {
+        mUsageStatsList = usageStats;
     }
+
+    public int getPosition(UsageStats usageStats) {
+        return mUsageStatsList.indexOf(usageStats);
+    }
+
+    /*public static void updateIcon(UsageStats usageStats, Drawable icon) {
+        get
+    }*/
 }
