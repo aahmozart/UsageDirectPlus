@@ -88,7 +88,13 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
 
         UsageStats usageStats = mUsageStatsList.get(position);
 
-        viewHolder.getPackageName().setText(usageStats.getPackageName());
+        String name = IconThread.nameMap.get(usageStats);
+        viewHolder.getPackageName().setText(
+                name == null?
+                usageStats.getPackageName() : name
+        );
+
+
         long lastTimeUsed = usageStats.getLastTimeUsed();
 
         if (lastTimeUsed > 1)

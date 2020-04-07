@@ -3,11 +3,13 @@ package com.example.android.appusagestatistics;
 import android.app.Activity;
 import android.app.usage.UsageStats;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.HashMap;
@@ -16,6 +18,7 @@ import java.util.List;
 public class IconThread extends Thread {
 
     public static HashMap<UsageStats, Drawable> iconMap = new HashMap<>();
+    public static HashMap<UsageStats, String> nameMap = new HashMap<>();
 
     private List<UsageStats> usageStats;
     private RecyclerView.LayoutManager layout;
@@ -38,6 +41,10 @@ public class IconThread extends Thread {
                 final Drawable appIcon = packageManager.getApplicationIcon(u.getPackageName());
                 iconMap.put(u, appIcon);
 
+                ApplicationInfo appInfo = packageManager.getApplicationInfo(u.getPackageName(), 0);
+                final String appName = (String) packageManager.getApplicationLabel(appInfo);
+                nameMap.put(u, appName);
+
                 context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -46,8 +53,10 @@ public class IconThread extends Thread {
                         if (view == null) return;
 
                         ImageView imageView = view.findViewById(R.id.app_icon);
-
                         imageView.setImageDrawable(appIcon);
+
+                        TextView textView = view.findViewById(R.id.textview_package_name);
+                        textView.setText(appName);
                     }
                 });
 
