@@ -16,6 +16,7 @@
 
 package com.example.android.appusagestatistics;
 
+import android.annotation.SuppressLint;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Intent;
@@ -72,6 +73,7 @@ public class AppUsageStatisticsFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
