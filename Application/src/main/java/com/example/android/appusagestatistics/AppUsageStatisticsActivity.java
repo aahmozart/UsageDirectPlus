@@ -17,7 +17,7 @@
 package com.example.android.appusagestatistics;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Launcher Activity for the App Usage Statistics sample app.
