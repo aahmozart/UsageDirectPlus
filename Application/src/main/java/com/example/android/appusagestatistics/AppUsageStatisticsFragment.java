@@ -134,9 +134,9 @@ public class AppUsageStatisticsFragment extends Fragment {
      * @return A list of {@link android.app.usage.UsageStats}.
      */
     public List<UsageStats> getUsageStatistics(int intervalType) {
-        // Get the app statistics since one year ago from the current time.
+        // Get the app statistics for the currently ongoing interval.
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.YEAR, -1);
+        cal.add(Calendar.MINUTE, -1);
 
         List<UsageStats> queryUsageStats = mUsageStatsManager
                 .queryUsageStats(intervalType, cal.getTimeInMillis(),
