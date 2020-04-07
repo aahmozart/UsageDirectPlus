@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import humanize.Humanize;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -43,17 +44,23 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView mPackageName;
         private final TextView mLastTimeUsed;
+        private final TextView mTimeUsed;
         private final ImageView mAppIcon;
 
         public ViewHolder(View v) {
             super(v);
             mPackageName = (TextView) v.findViewById(R.id.textview_package_name);
             mLastTimeUsed = (TextView) v.findViewById(R.id.textview_last_time_used);
+            mTimeUsed = (TextView) v.findViewById(R.id.textview_time_used);
             mAppIcon = (ImageView) v.findViewById(R.id.app_icon);
         }
 
         public TextView getLastTimeUsed() {
             return mLastTimeUsed;
+        }
+
+        public TextView getTimeUsed() {
+            return mTimeUsed;
         }
 
         public TextView getPackageName() {
@@ -81,6 +88,10 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
                 mCustomUsageStatsList.get(position).usageStats.getPackageName());
         long lastTimeUsed = mCustomUsageStatsList.get(position).usageStats.getLastTimeUsed();
         viewHolder.getLastTimeUsed().setText(mDateFormat.format(new Date(lastTimeUsed)));
+
+        long timeUsed = mCustomUsageStatsList.get(position).usageStats.getTotalTimeInForeground();
+        viewHolder.getTimeUsed().setText(Humanize.duration(timeUsed / 1000));
+
         viewHolder.getAppIcon().setImageDrawable(mCustomUsageStatsList.get(position).appIcon);
     }
 

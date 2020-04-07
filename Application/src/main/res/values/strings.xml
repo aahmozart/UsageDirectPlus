@@ -22,4 +22,5 @@
         statistics. You may need to enable access
         for this app through Settings > Security > Apps with usage access
     </string>
+    <string name="time_used">"Time used: "</string>
 </resources>
