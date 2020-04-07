@@ -111,7 +111,7 @@ public class AppUsageStatisticsFragment extends Fragment {
                 if (statsUsageInterval != null) {
                     List<UsageStats> usageStatsList =
                             getUsageStatistics(statsUsageInterval.mInterval);
-                    Collections.sort(usageStatsList, new LastTimeLaunchedComparatorDesc());
+                    Collections.sort(usageStatsList, new TimeInForegroundComparatorDesc());
                     updateAppsList(usageStatsList);
                 }
             }
@@ -197,6 +197,17 @@ public class AppUsageStatisticsFragment extends Fragment {
         @Override
         public int compare(UsageStats left, UsageStats right) {
             return Long.compare(right.getLastTimeUsed(), left.getLastTimeUsed());
+        }
+    }
+
+    /**
+     * A {@link Comparator} to sort a collection of {@link UsageStats} total screen time.
+     */
+    private static class TimeInForegroundComparatorDesc implements Comparator<UsageStats> {
+
+        @Override
+        public int compare(UsageStats left, UsageStats right) {
+            return Long.compare(right.getTotalTimeInForeground(), left.getTotalTimeInForeground());
         }
     }
 
