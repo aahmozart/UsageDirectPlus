@@ -113,10 +113,21 @@ public class AppUsageStatisticsFragment extends Fragment {
                 StatsUsageInterval statsUsageInterval = StatsUsageInterval
                         .getValue(strings[position]);
                 if (statsUsageInterval != null) {
+
                     List<UsageStats> usageStatsList =
                             getUsageStatistics(statsUsageInterval.mInterval);
+
+                    // Filter unused apps
+                    for (int i = usageStatsList.size() - 1; i >= 0; i--) {
+                        UsageStats usageStats = usageStatsList.get(i);
+                        if (usageStats.getTotalTimeInForeground() <= 0)
+                            usageStatsList.remove(i);
+                    }
+
                     Collections.sort(usageStatsList, new TimeInForegroundComparatorDesc());
+
                     updateAppsList(usageStatsList);
+
                 }
             }
 
