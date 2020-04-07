@@ -25,4 +25,6 @@
     <string name="go">Go</string>
     <string name="leave_app">Leave app</string>
     <string name="not_used">Not used</string>
+    <string name="menu_about">About</string>
+    <string name="about_libraries_header">usageDirect is forked from the Android sample AppUsageStatistics and has since been developed further by Fynn Godau.\n\nThe following list displays all components that make up this application.</string>
 </resources>
