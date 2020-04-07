@@ -17,4 +17,6 @@
 
 <resources>
     <dimen name="usage_row_height">72dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
 </resources>
