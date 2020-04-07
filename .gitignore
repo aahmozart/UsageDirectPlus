@@ -1,0 +1,8 @@
+.gradle/
+.idea/
+AndroidApps.AppUsageStatistics.iml
+Application/Application.iml
+Application/build/
+build/
+local.properties
+
