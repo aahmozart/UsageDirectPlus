@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -92,10 +93,13 @@ public class AppUsageStatisticsFragment extends Fragment {
         super.onViewCreated(rootView, savedInstanceState);
 
         mUsageListAdapter = new UsageListAdapter(getActivity());
+
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview_app_usage);
         mLayoutManager = mRecyclerView.getLayoutManager();
         mRecyclerView.scrollToPosition(0);
         mRecyclerView.setAdapter(mUsageListAdapter);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+
         mSpinner = (Spinner) rootView.findViewById(R.id.spinner_time_span);
         SpinnerAdapter spinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.action_list, android.R.layout.simple_spinner_dropdown_item);
