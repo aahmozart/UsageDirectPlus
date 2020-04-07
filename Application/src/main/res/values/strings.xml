@@ -24,4 +24,5 @@
     <string name="explanation_access_appusage_message">Please grant access to your system\'s usage statistics on the next page.</string>
     <string name="go">Go</string>
     <string name="leave_app">Leave app</string>
+    <string name="not_used">Not used</string>
 </resources>

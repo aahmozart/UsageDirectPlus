@@ -90,9 +90,13 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
 
         viewHolder.getPackageName().setText(usageStats.getPackageName());
         long lastTimeUsed = usageStats.getLastTimeUsed();
-        viewHolder.getLastTimeUsed().setText(
-                mContext.getString(R.string.last_used, Humanize.naturalTime(new Date(lastTimeUsed)))
-        );
+
+        if (lastTimeUsed > 1)
+            viewHolder.getLastTimeUsed().setText(
+                    mContext.getString(R.string.last_used, Humanize.naturalTime(new Date(lastTimeUsed)))
+            );
+        else
+            viewHolder.getLastTimeUsed().setText(R.string.not_used);
 
         long timeUsed = usageStats.getTotalTimeInForeground();
         viewHolder.getTimeUsed().setText(Humanize.duration(timeUsed / 1000));
@@ -108,8 +112,4 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
     public void setCustomUsageStatsList(List<UsageStats> usageStats) {
         mUsageStatsList = usageStats;
     }
-
-    /*public static void updateIcon(UsageStats usageStats, Drawable icon) {
-        get
-    }*/
 }
