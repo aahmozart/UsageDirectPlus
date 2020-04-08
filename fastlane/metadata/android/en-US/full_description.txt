@@ -1,0 +1,3 @@
+Since Android 5.0, the Android system collects usage statistics, like how long applications are in foreground, in the background. This simple application allows viewing this information similar to the view present in stock Android in the INFO debug menu.
+
+It a fork of the Android sample "AppUsageStatistics".

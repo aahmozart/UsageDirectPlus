@@ -1,0 +1,3 @@
+Seit Android 5.0 sammelt das Android-System im Hintergrund Nutzungsstatistiken wie Vordergrundzeit einzelner Applikationen. Diese simple Anwendung erlaubt die Betrachtung dieser Informationen, ähnlich der Ansicht, die in Standard-Android-Installationen im INFO-Debug-Menü enthalten ist.
+
+Sie ist ein Fork des Android-Samples "AppUsageStatistics".
