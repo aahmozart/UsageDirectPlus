@@ -18,8 +18,10 @@ package com.example.android.appusagestatistics;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.AppOpsManager;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -114,19 +116,39 @@ public class AppUsageStatisticsFragment extends Fragment {
                         .getValue(strings[position]);
                 if (statsUsageInterval != null) {
 
-                    List<UsageStats> usageStatsList =
-                            getUsageStatistics(statsUsageInterval.mInterval);
+                    if (isPermissionGranted()) {
+                        List<UsageStats> usageStatsList =
+                                getUsageStatistics(statsUsageInterval.mInterval);
 
-                    // Filter unused apps
-                    for (int i = usageStatsList.size() - 1; i >= 0; i--) {
-                        UsageStats usageStats = usageStatsList.get(i);
-                        if (usageStats.getTotalTimeInForeground() <= 0)
-                            usageStatsList.remove(i);
+                        // Filter unused apps
+                        for (int i = usageStatsList.size() - 1; i >= 0; i--) {
+                            UsageStats usageStats = usageStatsList.get(i);
+                            if (usageStats.getTotalTimeInForeground() <= 0)
+                                usageStatsList.remove(i);
+                        }
+
+                        Collections.sort(usageStatsList, new TimeInForegroundComparatorDesc());
+
+                        updateAppsList(usageStatsList);
+                    } else {
+                        new AlertDialog.Builder(getActivity())
+                                .setTitle(R.string.explanation_access_appusage_title)
+                                .setMessage(R.string.explanation_access_appusage_message)
+                                .setPositiveButton(R.string.go, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        startActivityForResult(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS), REQUEST_SETTINGS);
+                                    }
+                                })
+                                .setNegativeButton(R.string.leave_app, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        getActivity().finish();
+                                    }
+                                })
+                                .setCancelable(false)
+                                .show();
                     }
-
-                    Collections.sort(usageStatsList, new TimeInForegroundComparatorDesc());
-
-                    updateAppsList(usageStatsList);
 
                 }
             }
@@ -140,6 +162,8 @@ public class AppUsageStatisticsFragment extends Fragment {
     /**
      * Returns the {@link #mRecyclerView} including the time span specified by the
      * intervalType argument.
+     * <p>Assumes usage stats permission is granted, check beforehand using
+     * {@link #isPermissionGranted()}.
      *
      * @param intervalType The time interval by which the stats are aggregated.
      *                     Corresponding to the value of {@link UsageStatsManager}.
@@ -158,25 +182,7 @@ public class AppUsageStatisticsFragment extends Fragment {
                         System.currentTimeMillis());
 
         if (queryUsageStats.size() == 0) {
-            Log.i(TAG, "No usage stats were returned by the system. Permission likely not granted");
-
-            new AlertDialog.Builder(getActivity())
-                    .setTitle(R.string.explanation_access_appusage_title)
-                    .setMessage(R.string.explanation_access_appusage_message)
-                    .setPositiveButton(R.string.go, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            startActivityForResult(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS), REQUEST_SETTINGS);
-                        }
-                    })
-                    .setNegativeButton(R.string.leave_app, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            getActivity().finish();
-                        }
-                    })
-                    .setCancelable(false)
-                    .show();
+            Log.i(TAG, "No usage stats were returned by the system");
         }
 
         return queryUsageStats;
@@ -195,6 +201,18 @@ public class AppUsageStatisticsFragment extends Fragment {
         mRecyclerView.scrollToPosition(0);
 
         new IconThread(usageStatsList, mLayoutManager, getActivity()).start();
+    }
+
+    /**
+     * Tests whether usage stats permission has been granted by the user.
+     * If not, user needs to be prompted to grant permission in settings.
+     * @see <a href="https://stackoverflow.com/a/28921586">StackOverflow</a>
+     */
+    private boolean isPermissionGranted() {
+        AppOpsManager appOps = (AppOpsManager) getActivity().getSystemService(Context.APP_OPS_SERVICE);
+        int mode = appOps.checkOpNoThrow("android:get_usage_stats",
+                android.os.Process.myUid(), getActivity().getPackageName());
+        return mode == AppOpsManager.MODE_ALLOWED;
     }
 
     @Override
