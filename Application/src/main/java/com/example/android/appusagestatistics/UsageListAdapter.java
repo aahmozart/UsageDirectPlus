@@ -18,6 +18,9 @@ package com.example.android.appusagestatistics;
 
 import android.app.usage.UsageStats;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,6 +83,25 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.usage_row, viewGroup, false);
+
+        final ViewHolder viewHolder = new ViewHolder(v);
+
+        // For performance, only set OnClickListener once
+        viewHolder.getAppIcon().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Launch app that this icon is associated with
+                try {
+                    String packageName = (String) viewHolder.getAppIcon().getTag();
+                    Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(packageName);
+                    mContext.startActivity(intent);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                    Toast.makeText(mContext, R.string.launch_unavailable, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         return new ViewHolder(v);
     }
 
@@ -108,6 +130,8 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
         viewHolder.getTimeUsed().setText(Humanize.duration(timeUsed / 1000));
 
         viewHolder.getAppIcon().setImageDrawable(IconThread.iconMap.get(usageStats));
+
+        viewHolder.getAppIcon().setTag(usageStats.getPackageName());
     }
 
     @Override
