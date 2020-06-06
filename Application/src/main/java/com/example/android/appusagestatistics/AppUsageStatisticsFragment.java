@@ -41,7 +41,6 @@ import android.widget.SpinnerAdapter;
 
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -51,14 +50,17 @@ public class AppUsageStatisticsFragment extends Fragment {
 
     private static final String TAG = AppUsageStatisticsFragment.class.getSimpleName();
 
-    //VisibleForTesting for variables below
-    UsageStatsManager mUsageStatsManager;
-    UsageListAdapter mUsageListAdapter;
-    RecyclerView mRecyclerView;
-    RecyclerView.LayoutManager mLayoutManager;
-    Spinner mSpinner;
+    private UsageStatsWrapper usageStatsWrapper;
+
+    private UsageListAdapter mUsageListAdapter;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private Spinner mSpinner;
 
     private static final int REQUEST_SETTINGS = 0;
+
+    public AppUsageStatisticsFragment() {
+    }
 
     /**
      * Use this factory method to create a new instance of
@@ -67,21 +69,13 @@ public class AppUsageStatisticsFragment extends Fragment {
      * @return A new instance of fragment {@link AppUsageStatisticsFragment}.
      */
     public static AppUsageStatisticsFragment newInstance() {
-        AppUsageStatisticsFragment fragment = new AppUsageStatisticsFragment();
-        return fragment;
+        return new AppUsageStatisticsFragment();
     }
 
-    public AppUsageStatisticsFragment() {
-        // Required empty public constructor
-    }
-
-    @SuppressLint("WrongConstant")
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mUsageStatsManager = (UsageStatsManager) getActivity()
-                .getSystemService("usagestats"); //Context.USAGE_STATS_SERVICE
+        usageStatsWrapper = new UsageStatsWrapper(getActivity());
     }
 
     @Override
@@ -96,61 +90,57 @@ public class AppUsageStatisticsFragment extends Fragment {
 
         mUsageListAdapter = new UsageListAdapter(getActivity());
 
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview_app_usage);
+        mRecyclerView = rootView.findViewById(R.id.recyclerview_app_usage);
         mLayoutManager = mRecyclerView.getLayoutManager();
         mRecyclerView.scrollToPosition(0);
         mRecyclerView.setAdapter(mUsageListAdapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
-        mSpinner = (Spinner) rootView.findViewById(R.id.spinner_time_span);
+        mSpinner = rootView.findViewById(R.id.spinner_time_span);
         SpinnerAdapter spinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.action_list, android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(spinnerAdapter);
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            String[] strings = getResources().getStringArray(R.array.action_list);
-
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                StatsUsageInterval statsUsageInterval = StatsUsageInterval
-                        .getValue(strings[position]);
-                if (statsUsageInterval != null) {
+                UsageStatsWrapper.StatsUsageInterval statsUsageInterval = UsageStatsWrapper.StatsUsageInterval
+                        .values()[position];
 
-                    if (isPermissionGranted()) {
-                        List<UsageStats> usageStatsList =
-                                getUsageStatistics(statsUsageInterval.mInterval);
+                if (usageStatsWrapper.isPermissionGranted()) {
+                    List<UsageStats> usageStatsList =
+                            usageStatsWrapper.getUsageStatistics(statsUsageInterval, 0);
 
-                        // Filter unused apps
-                        for (int i = usageStatsList.size() - 1; i >= 0; i--) {
-                            UsageStats usageStats = usageStatsList.get(i);
-                            if (usageStats.getTotalTimeInForeground() <= 0)
-                                usageStatsList.remove(i);
-                        }
-
-                        Collections.sort(usageStatsList, new TimeInForegroundComparatorDesc());
-
-                        updateAppsList(usageStatsList);
-                    } else {
-                        new AlertDialog.Builder(getActivity())
-                                .setTitle(R.string.explanation_access_appusage_title)
-                                .setMessage(R.string.explanation_access_appusage_message)
-                                .setPositiveButton(R.string.go, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        startActivityForResult(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS), REQUEST_SETTINGS);
-                                    }
-                                })
-                                .setNegativeButton(R.string.leave_app, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        getActivity().finish();
-                                    }
-                                })
-                                .setCancelable(false)
-                                .show();
+                    // Filter unused apps
+                    for (int i = usageStatsList.size() - 1; i >= 0; i--) {
+                        UsageStats usageStats = usageStatsList.get(i);
+                        if (usageStats.getTotalTimeInForeground() <= 0)
+                            usageStatsList.remove(i);
                     }
 
+                    Collections.sort(usageStatsList, new Comparator.TimeInForegroundComparatorDesc());
+
+                    updateAppsList(usageStatsList);
+                } else {
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle(R.string.explanation_access_appusage_title)
+                            .setMessage(R.string.explanation_access_appusage_message)
+                            .setPositiveButton(R.string.go, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    startActivityForResult(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS), REQUEST_SETTINGS);
+                                }
+                            })
+                            .setNegativeButton(R.string.leave_app, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    getActivity().finish();
+                                }
+                            })
+                            .setCancelable(false)
+                            .show();
                 }
+
             }
 
             @Override
@@ -160,42 +150,12 @@ public class AppUsageStatisticsFragment extends Fragment {
     }
 
     /**
-     * Returns the {@link #mRecyclerView} including the time span specified by the
-     * intervalType argument.
-     * <p>Assumes usage stats permission is granted, check beforehand using
-     * {@link #isPermissionGranted()}.
-     *
-     * @param intervalType The time interval by which the stats are aggregated.
-     *                     Corresponding to the value of {@link UsageStatsManager}.
-     *                     E.g. {@link UsageStatsManager#INTERVAL_DAILY}, {@link
-     *                     UsageStatsManager#INTERVAL_WEEKLY},
-     *
-     * @return A list of {@link android.app.usage.UsageStats}.
-     */
-    public List<UsageStats> getUsageStatistics(int intervalType) {
-        // Get the app statistics for the currently ongoing interval.
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MINUTE, -1);
-
-        List<UsageStats> queryUsageStats = mUsageStatsManager
-                .queryUsageStats(intervalType, cal.getTimeInMillis(),
-                        System.currentTimeMillis());
-
-        if (queryUsageStats.size() == 0) {
-            Log.i(TAG, "No usage stats were returned by the system");
-        }
-
-        return queryUsageStats;
-    }
-
-    /**
      * Updates the {@link #mRecyclerView} with the list of {@link UsageStats} passed as an argument.
      *
      * @param usageStatsList A list of {@link UsageStats} from which update the
      *                       {@link #mRecyclerView}.
      */
-    //VisibleForTesting
-    void updateAppsList(List<UsageStats> usageStatsList) {
+    private void updateAppsList(List<UsageStats> usageStatsList) {
         mUsageListAdapter.setCustomUsageStatsList(usageStatsList);
         mUsageListAdapter.notifyDataSetChanged();
         mRecyclerView.scrollToPosition(0);
@@ -203,74 +163,9 @@ public class AppUsageStatisticsFragment extends Fragment {
         new IconThread(usageStatsList, mLayoutManager, getActivity()).start();
     }
 
-    /**
-     * Tests whether usage stats permission has been granted by the user.
-     * If not, user needs to be prompted to grant permission in settings.
-     * @see <a href="https://stackoverflow.com/a/28921586">StackOverflow</a>
-     */
-    private boolean isPermissionGranted() {
-        AppOpsManager appOps = (AppOpsManager) getActivity().getSystemService(Context.APP_OPS_SERVICE);
-        int mode = appOps.checkOpNoThrow("android:get_usage_stats",
-                android.os.Process.myUid(), getActivity().getPackageName());
-        return mode == AppOpsManager.MODE_ALLOWED;
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == REQUEST_SETTINGS)
             getActivity().recreate();
-    }
-
-    /**
-     * The {@link Comparator} to sort a collection of {@link UsageStats} sorted by the timestamp
-     * last time the app was used in the descendant order.
-     */
-    private static class LastTimeLaunchedComparatorDesc implements Comparator<UsageStats> {
-
-        @Override
-        public int compare(UsageStats left, UsageStats right) {
-            return Long.compare(right.getLastTimeUsed(), left.getLastTimeUsed());
-        }
-    }
-
-    /**
-     * A {@link Comparator} to sort a collection of {@link UsageStats} total screen time.
-     */
-    private static class TimeInForegroundComparatorDesc implements Comparator<UsageStats> {
-
-        @Override
-        public int compare(UsageStats left, UsageStats right) {
-            return Long.compare(right.getTotalTimeInForeground(), left.getTotalTimeInForeground());
-        }
-    }
-
-    /**
-     * Enum represents the intervals for {@link android.app.usage.UsageStatsManager} so that
-     * values for intervals can be found by a String representation.
-     *
-     */
-    //VisibleForTesting
-    static enum StatsUsageInterval {
-        DAILY("Daily", UsageStatsManager.INTERVAL_DAILY),
-        WEEKLY("Weekly", UsageStatsManager.INTERVAL_WEEKLY),
-        MONTHLY("Monthly", UsageStatsManager.INTERVAL_MONTHLY),
-        YEARLY("Yearly", UsageStatsManager.INTERVAL_YEARLY);
-
-        private int mInterval;
-        private String mStringRepresentation;
-
-        StatsUsageInterval(String stringRepresentation, int interval) {
-            mStringRepresentation = stringRepresentation;
-            mInterval = interval;
-        }
-
-        static StatsUsageInterval getValue(String stringRepresentation) {
-            for (StatsUsageInterval statsUsageInterval : values()) {
-                if (statsUsageInterval.mStringRepresentation.equals(stringRepresentation)) {
-                    return statsUsageInterval;
-                }
-            }
-            return null;
-        }
     }
 }
