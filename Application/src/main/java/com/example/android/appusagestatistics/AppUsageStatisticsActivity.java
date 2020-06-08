@@ -21,7 +21,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import godau.fynn.librariesdirect.AboutLibrariesActivity;
 import godau.fynn.librariesdirect.AboutLibrariesConfig;
 import godau.fynn.librariesdirect.Library;
@@ -30,7 +30,7 @@ import godau.fynn.librariesdirect.License;
 /**
  * Launcher Activity for the App Usage Statistics sample app.
  */
-public class AppUsageStatisticsActivity extends AppCompatActivity {
+public class AppUsageStatisticsActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
