@@ -117,6 +117,13 @@ public class UsageStatsWrapper {
                  * An event type denoting that a component moved to the foreground.
                  */
                 case UsageEvents.Event.MOVE_TO_FOREGROUND:
+                /*
+                 * public static final int android.app.usage.UsageEvents.Event.CONTINUE_PREVIOUS_DAY = 4;
+                 * Copy of documentation:
+                 * "An event type denoting that a component was in the foreground the previous day.
+                 * This is effectively treated as a MOVE_TO_FOREGROUND."
+                 */
+                case 4:
                     moveToForegroundMap.put(event.getPackageName(), event.getTimeStamp());
 
                     break;
