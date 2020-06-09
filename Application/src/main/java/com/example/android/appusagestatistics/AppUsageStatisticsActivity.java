@@ -52,6 +52,9 @@ public class AppUsageStatisticsActivity extends FragmentActivity {
                 AboutLibrariesConfig.setLibraries(new Library[]{
                         new Library("usageDirect", License.APACHE_20_LICENSE, null, "Fynn Godau", "https://codeberg.org/fynngodau/usageDirect"),
                         new Library("AppUsageStatistics", License.APACHE_20_LICENSE, null, "The Android Open Source Project, Inc", "https://github.com/googlesamples/android-AppUsageStatistics"),
+                        new Library("AndroidCharts", License.MIT_LICENSE, "The MIT License (MIT)\n" +
+                                "\n" +
+                                "Copyright (c) 2013 Ding Wenhao", "Ding Wenhao", "https://github.com/HackPlan/AndroidCharts"),
                         new Library("Humanize", License.APACHE_20_LICENSE, null, "mfornos", "http://mfornos.github.io/humanize/"),
                         new Library("librariesDirect", License.CC0_LICENSE, null, "Fynn Godau", "https://codeberg.org/fynngodau/librariesDirect"),
                 });
@@ -59,6 +62,11 @@ public class AppUsageStatisticsActivity extends FragmentActivity {
                 AboutLibrariesConfig.setHeaderText(getString(R.string.about_libraries_header));
 
                 startActivity(new Intent(this, AboutLibrariesActivity.class));
+                break;
+
+            case R.id.menu_charts:
+                startActivity(new Intent(this, ChartsActivity.class));
+                break;
         }
 
         return super.onOptionsItemSelected(item);
