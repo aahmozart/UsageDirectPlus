@@ -16,6 +16,8 @@
 
 package com.example.android.appusagestatistics;
 
+import android.app.AlertDialog;
+import android.app.usage.UsageStats;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -26,6 +28,8 @@ import godau.fynn.librariesdirect.AboutLibrariesActivity;
 import godau.fynn.librariesdirect.AboutLibrariesConfig;
 import godau.fynn.librariesdirect.Library;
 import godau.fynn.librariesdirect.License;
+
+import java.util.List;
 
 /**
  * Launcher Activity for the App Usage Statistics sample app.
@@ -67,6 +71,36 @@ public class AppUsageStatisticsActivity extends FragmentActivity {
             case R.id.menu_charts:
                 startActivity(new Intent(this, ChartsActivity.class));
                 break;
+
+            case R.id.menu_test:
+
+                UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(this);
+
+                List<UsageStats> stats;
+                int days = 0;
+                do {
+                    stats = usageStatsWrapper.getUsageStatistics(UsageStatsWrapper.StatsUsageInterval.DAILY, days++);
+                } while (stats.size() > 0);
+
+                int weeks = 0;
+                do {
+                    stats = usageStatsWrapper.getUsageStatistics(UsageStatsWrapper.StatsUsageInterval.WEEKLY, weeks++);
+                } while (stats.size() > 0);
+
+                int months = 0;
+                do {
+                    stats = usageStatsWrapper.getUsageStatistics(UsageStatsWrapper.StatsUsageInterval.WEEKLY, months++);
+                } while (stats.size() > 0);
+
+                int years = 0;
+                do {
+                    stats = usageStatsWrapper.getUsageStatistics(UsageStatsWrapper.StatsUsageInterval.WEEKLY, years++);
+                } while (stats.size() > 0);
+
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.menu_test)
+                        .setMessage(getString(R.string.test_result, --days, --weeks, --months, --years))
+                        .show();
         }
 
         return super.onOptionsItemSelected(item);

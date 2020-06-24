@@ -29,4 +29,11 @@
     <string name="about_libraries_header">usageDirect is forked from the Android sample AppUsageStatistics and has since been developed further by Fynn Godau.\n\nThe following list displays all components that make up this application.</string>
     <string name="launch_unavailable">Could not launch app</string>
     <string name="menu_charts">Charts</string>
+    <string name="menu_test">Test API</string>
+    <string name="test_result">The Android system returns data for the following number of past periods including the ongoing one:
+    \n\nDaily: %d
+    \n\nWeekly: %d
+    \n\nMonthly: %d
+    \n\nYearly: %d
+    </string>
 </resources>
