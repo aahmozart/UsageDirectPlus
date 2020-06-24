@@ -82,6 +82,12 @@ public class AppUsageStatisticsActivity extends FragmentActivity {
                     stats = usageStatsWrapper.getUsageStatistics(UsageStatsWrapper.StatsUsageInterval.DAILY, days++);
                 } while (stats.size() > 0);
 
+                int eventDays = 0;
+                List<UsageStatsWrapper.ComponentForegroundStat> events;
+                do {
+                    events = usageStatsWrapper.getForegroundStatsByRelativeDay(eventDays++);
+                } while (events.size() > 0);
+
                 int weeks = 0;
                 do {
                     stats = usageStatsWrapper.getUsageStatistics(UsageStatsWrapper.StatsUsageInterval.WEEKLY, weeks++);
@@ -99,7 +105,7 @@ public class AppUsageStatisticsActivity extends FragmentActivity {
 
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.menu_test)
-                        .setMessage(getString(R.string.test_result, --days, --weeks, --months, --years))
+                        .setMessage(getString(R.string.test_result, --days, --eventDays, --weeks, --months, --years))
                         .show();
         }
 

@@ -32,6 +32,7 @@
     <string name="menu_test">Test API</string>
     <string name="test_result">The Android system returns data for the following number of past periods including the ongoing one:
     \n\nDaily: %d
+    \nDays with events: %d
     \n\nWeekly: %d
     \n\nMonthly: %d
     \n\nYearly: %d
