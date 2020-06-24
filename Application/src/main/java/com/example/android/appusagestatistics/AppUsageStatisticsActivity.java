@@ -89,12 +89,12 @@ public class AppUsageStatisticsActivity extends FragmentActivity {
 
                 int months = 0;
                 do {
-                    stats = usageStatsWrapper.getUsageStatistics(UsageStatsWrapper.StatsUsageInterval.WEEKLY, months++);
+                    stats = usageStatsWrapper.getUsageStatistics(UsageStatsWrapper.StatsUsageInterval.MONTHLY, months++);
                 } while (stats.size() > 0);
 
                 int years = 0;
                 do {
-                    stats = usageStatsWrapper.getUsageStatistics(UsageStatsWrapper.StatsUsageInterval.WEEKLY, years++);
+                    stats = usageStatsWrapper.getUsageStatistics(UsageStatsWrapper.StatsUsageInterval.YEARLY, years++);
                 } while (stats.size() > 0);
 
                 new AlertDialog.Builder(this)
