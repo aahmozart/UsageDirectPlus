@@ -23,7 +23,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import godau.fynn.librariesdirect.AboutLibrariesActivity;
 import godau.fynn.librariesdirect.AboutLibrariesConfig;
 import godau.fynn.librariesdirect.Library;
@@ -40,11 +47,38 @@ public class AppUsageStatisticsActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_usage_statistics);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, AppUsageStatisticsFragment.newInstance())
-                    .commit();
-        }
+
+        PagerAdapter adapter = new FragmentPagerAdapter(
+                getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+        ) {
+            @NonNull
+            @Override
+            public Fragment getItem(int position) {
+                return AppUsageStatisticsFragment.newInstance(UsageStatsWrapper.StatsUsageInterval.values()[position]);
+            }
+
+            @Override
+            public int getCount() {
+                return 4;
+            }
+
+            @Nullable
+            @Override
+            public CharSequence getPageTitle(int position) {
+                switch (position) {
+                    case 0: return getString(R.string.span_daily);
+                    case 1: return getString(R.string.span_weekly);
+                    case 2: return getString(R.string.span_monthly);
+                    case 3: return getString(R.string.span_yearly);
+                    default: return null;
+                }
+            }
+        };
+        ViewPager viewPager = findViewById(R.id.viewpager);
+        viewPager.setAdapter(adapter);
+
+        SmartTabLayout tabs = findViewById(R.id.viewpagertab);
+        tabs.setViewPager(viewPager);
     }
 
     @Override
@@ -60,6 +94,7 @@ public class AppUsageStatisticsActivity extends FragmentActivity {
                                 "\n" +
                                 "Copyright (c) 2013 Ding Wenhao", "Ding Wenhao", "https://github.com/HackPlan/AndroidCharts"),
                         new Library("Humanize", License.APACHE_20_LICENSE, null, "mfornos", "http://mfornos.github.io/humanize/"),
+                        new Library("SmartTabLayout", License.APACHE_20_LICENSE, null, "ogaclejapan", "https://github.com/ogaclejapan/SmartTabLayout"),
                         new Library("librariesDirect", License.CC0_LICENSE, null, "Fynn Godau", "https://codeberg.org/fynngodau/librariesDirect"),
                 });
 

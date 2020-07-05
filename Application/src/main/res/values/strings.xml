@@ -37,4 +37,8 @@
     \n\nMonthly: %d
     \n\nYearly: %d
     </string>
+    <string name="span_daily">Daily</string>
+    <string name="span_weekly">Weekly</string>
+    <string name="span_monthly">Monthly</string>
+    <string name="span_yearly">Yearly</string>
 </resources>

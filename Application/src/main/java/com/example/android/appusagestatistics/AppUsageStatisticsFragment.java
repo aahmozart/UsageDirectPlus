@@ -29,10 +29,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,16 +40,25 @@ public class AppUsageStatisticsFragment extends Fragment {
 
     private static final String TAG = AppUsageStatisticsFragment.class.getSimpleName();
 
+    private static final String EXTRA_INTERVAL = "interval";
+
     private UsageStatsWrapper usageStatsWrapper;
 
     private UsageListAdapter mUsageListAdapter;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private Spinner mSpinner;
 
     private static final int REQUEST_SETTINGS = 0;
 
     public AppUsageStatisticsFragment() {
+    }
+
+    public static final AppUsageStatisticsFragment newInstance(UsageStatsWrapper.StatsUsageInterval interval) {
+        AppUsageStatisticsFragment fragment = new AppUsageStatisticsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(EXTRA_INTERVAL, interval.ordinal());
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     /**
@@ -90,57 +95,42 @@ public class AppUsageStatisticsFragment extends Fragment {
         mRecyclerView.setAdapter(mUsageListAdapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
-        mSpinner = rootView.findViewById(R.id.spinner_time_span);
-        SpinnerAdapter spinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.action_list, android.R.layout.simple_spinner_dropdown_item);
-        mSpinner.setAdapter(spinnerAdapter);
-        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        UsageStatsWrapper.StatsUsageInterval statsUsageInterval = UsageStatsWrapper.StatsUsageInterval
+                .values()[getArguments().getInt(EXTRA_INTERVAL)];
 
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                UsageStatsWrapper.StatsUsageInterval statsUsageInterval = UsageStatsWrapper.StatsUsageInterval
-                        .values()[position];
+        if (usageStatsWrapper.isPermissionGranted()) {
+            List<UsageStats> usageStatsList =
+                    usageStatsWrapper.getUsageStatistics(statsUsageInterval, 0);
 
-                if (usageStatsWrapper.isPermissionGranted()) {
-                    List<UsageStats> usageStatsList =
-                            usageStatsWrapper.getUsageStatistics(statsUsageInterval, 0);
-
-                    // Filter unused apps
-                    for (int i = usageStatsList.size() - 1; i >= 0; i--) {
-                        UsageStats usageStats = usageStatsList.get(i);
-                        if (usageStats.getTotalTimeInForeground() <= 0)
-                            usageStatsList.remove(i);
-                    }
-
-                    Collections.sort(usageStatsList, new Comparator.TimeInForegroundComparatorDesc());
-
-                    updateAppsList(usageStatsList);
-                } else {
-                    new AlertDialog.Builder(getActivity())
-                            .setTitle(R.string.explanation_access_appusage_title)
-                            .setMessage(R.string.explanation_access_appusage_message)
-                            .setPositiveButton(R.string.go, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    startActivityForResult(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS), REQUEST_SETTINGS);
-                                }
-                            })
-                            .setNegativeButton(R.string.leave_app, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    getActivity().finish();
-                                }
-                            })
-                            .setCancelable(false)
-                            .show();
-                }
-
+            // Filter unused apps
+            for (int i = usageStatsList.size() - 1; i >= 0; i--) {
+                UsageStats usageStats = usageStatsList.get(i);
+                if (usageStats.getTotalTimeInForeground() <= 0)
+                    usageStatsList.remove(i);
             }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
+            Collections.sort(usageStatsList, new Comparator.TimeInForegroundComparatorDesc());
+
+            updateAppsList(usageStatsList);
+        } else {
+            new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.explanation_access_appusage_title)
+                    .setMessage(R.string.explanation_access_appusage_message)
+                    .setPositiveButton(R.string.go, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startActivityForResult(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS), REQUEST_SETTINGS);
+                        }
+                    })
+                    .setNegativeButton(R.string.leave_app, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            getActivity().finish();
+                        }
+                    })
+                    .setCancelable(false)
+                    .show();
+        }
     }
 
     /**
