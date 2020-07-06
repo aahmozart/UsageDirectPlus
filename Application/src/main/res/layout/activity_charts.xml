@@ -6,18 +6,40 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/charts_daily"
+            android:layout_margin="8dp"
+            android:textColor="@android:color/black" />
 
         <im.dacer.androidcharts.BarView
             android:id="@+id/bar_chart"
             android:layout_width="match_parent"
             android:layout_height="300dp" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/charts_clock_pie"
+            android:layout_margin="8dp"
+            android:textColor="@android:color/black" />
+
         <im.dacer.androidcharts.ClockPieView
             android:id="@+id/clock_chart"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/charts_wip"
+            android:layout_margin="8dp"
+            android:layout_marginBottom="8dp" />
 
     </LinearLayout>
 
