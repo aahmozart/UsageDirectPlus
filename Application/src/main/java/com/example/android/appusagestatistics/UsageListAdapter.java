@@ -119,7 +119,9 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
 
         long lastTimeUsed = usageStats.getLastTimeUsed();
 
-        if (lastTimeUsed > 1)
+        if (usageStats.getPackageName().equals(BuildConfig.APPLICATION_ID))
+            viewHolder.getLastTimeUsed().setText(R.string.last_used_now);
+        else if (lastTimeUsed > 1)
             viewHolder.getLastTimeUsed().setText(
                     mContext.getString(R.string.last_used, Humanize.naturalTime(new Date(lastTimeUsed)))
             );
