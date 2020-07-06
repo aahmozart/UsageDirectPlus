@@ -31,6 +31,7 @@ import humanize.Humanize;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Provide views to RecyclerView with the directory entries.
@@ -125,8 +126,10 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
         else
             viewHolder.getLastTimeUsed().setText(R.string.not_used);
 
-        long timeUsed = usageStats.getTotalTimeInForeground();
-        viewHolder.getTimeUsed().setText(Humanize.duration(timeUsed / 1000));
+        long secondsUsed = usageStats.getTotalTimeInForeground() / 1000;
+        viewHolder.getTimeUsed().setText(String.format(Locale.ENGLISH, "%d:%02d:%02d",
+                        secondsUsed / 3600, (secondsUsed / 60) % 60, secondsUsed % 60)
+        );
 
         viewHolder.getAppIcon().setImageDrawable(IconThread.iconMap.get(usageStats));
 
