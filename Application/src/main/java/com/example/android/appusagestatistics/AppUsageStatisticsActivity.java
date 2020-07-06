@@ -48,6 +48,13 @@ public class AppUsageStatisticsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_usage_statistics);
 
+        SmartTabLayout tabs = findViewById(R.id.viewpagertab);
+
+        tabs.setElevation(getActionBar().getElevation());
+
+        getActionBar().setElevation(0f);
+
+
         final UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(AppUsageStatisticsActivity.this);
 
         if (!usageStatsWrapper.isPermissionGranted()) {
@@ -124,7 +131,6 @@ public class AppUsageStatisticsActivity extends Activity {
         viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(adapter);
 
-        SmartTabLayout tabs = findViewById(R.id.viewpagertab);
         tabs.setViewPager(viewPager);
     }
 

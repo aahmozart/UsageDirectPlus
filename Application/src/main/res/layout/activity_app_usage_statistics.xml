@@ -38,7 +38,7 @@
         app:stl_indicatorThickness="36dp"
         app:stl_underlineColor="@android:color/transparent"
         app:stl_underlineThickness="0dp"
-        android:background="#3C515C"
+        android:background="@color/primary"
         />
 
     <androidx.viewpager.widget.ViewPager
