@@ -19,7 +19,6 @@ package com.example.android.appusagestatistics;
 import android.app.usage.UsageStats;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -139,7 +138,8 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
         return mUsageStatsList.size();
     }
 
-    public void setCustomUsageStatsList(List<UsageStats> usageStats) {
+    public void setUsageStatsList(List<UsageStats> usageStats) {
         mUsageStatsList = usageStats;
+        notifyDataSetChanged();
     }
 }

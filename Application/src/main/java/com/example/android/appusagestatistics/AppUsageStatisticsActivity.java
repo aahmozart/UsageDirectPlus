@@ -16,50 +16,95 @@
 
 package com.example.android.appusagestatistics;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.usage.UsageStats;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.util.Log;
+import android.view.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+import com.example.android.appusagestatistics.view.UsageListView;
+import com.example.android.appusagestatistics.view.dialog.GrantPermissionDialog;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import godau.fynn.librariesdirect.AboutLibrariesActivity;
 import godau.fynn.librariesdirect.AboutLibrariesConfig;
 import godau.fynn.librariesdirect.Library;
 import godau.fynn.librariesdirect.License;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Launcher Activity for the App Usage Statistics sample app.
  */
-public class AppUsageStatisticsActivity extends FragmentActivity {
+public class AppUsageStatisticsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_usage_statistics);
 
-        PagerAdapter adapter = new FragmentPagerAdapter(
-                getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
-        ) {
+        final UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(AppUsageStatisticsActivity.this);
+
+        if (!usageStatsWrapper.isPermissionGranted()) {
+            new GrantPermissionDialog(this).show();
+        }
+
+
+        final PagerAdapter adapter = new PagerAdapter() {
+
             @NonNull
             @Override
-            public Fragment getItem(int position) {
-                return AppUsageStatisticsFragment.newInstance(UsageStatsWrapper.StatsUsageInterval.values()[position]);
+            public Object instantiateItem(@NonNull ViewGroup container, int position) {
+
+                // Setup view
+
+                UsageListView usageListView = new UsageListView(AppUsageStatisticsActivity.this);
+                container.addView(usageListView);
+
+
+                // Get data
+
+                UsageStatsWrapper.StatsUsageInterval statsUsageInterval = UsageStatsWrapper.StatsUsageInterval
+                        .values()[position];
+
+                List<UsageStats> usageStatsList = usageStatsWrapper.getUsageStatistics(statsUsageInterval, 0);
+
+                // Filter unused apps
+                for (int i = usageStatsList.size() - 1; i >= 0; i--) {
+                    UsageStats usageStats = usageStatsList.get(i);
+                    if (usageStats.getTotalTimeInForeground() <= 0)
+                        usageStatsList.remove(i);
+                }
+
+                Collections.sort(usageStatsList, new Comparator.TimeInForegroundComparatorDesc());
+
+                usageListView.setUsageStatsList(usageStatsList);
+
+                // Get missing icons from system
+                new IconThread(usageStatsList, usageListView.getLayoutManager(), AppUsageStatisticsActivity.this).start();
+
+                return usageListView;
             }
 
             @Override
             public int getCount() {
                 return 4;
+            }
+
+            @Override
+            public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+                return object == view;
+            }
+
+            @Override
+            public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+                Log.d("AUSA", "Destroying item " + position);
+                container.removeView((View) object);
             }
 
             @Nullable
@@ -74,7 +119,9 @@ public class AppUsageStatisticsActivity extends FragmentActivity {
                 }
             }
         };
+
         ViewPager viewPager = findViewById(R.id.viewpager);
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(adapter);
 
         SmartTabLayout tabs = findViewById(R.id.viewpagertab);
@@ -152,5 +199,11 @@ public class AppUsageStatisticsActivity extends FragmentActivity {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu, menu);
         return true;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == GrantPermissionDialog.REQUEST_CODE)
+            recreate();
     }
 }

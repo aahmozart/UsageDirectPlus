@@ -38,12 +38,16 @@ public class IconThread extends Thread {
         for (final UsageStats u : usageStats) {
 
             try {
-                final Drawable appIcon = packageManager.getApplicationIcon(u.getPackageName());
-                iconMap.put(u, appIcon);
+                if (!iconMap.containsKey(u)) {
+                    final Drawable appIcon = packageManager.getApplicationIcon(u.getPackageName());
+                    iconMap.put(u, appIcon);
+                }
 
-                ApplicationInfo appInfo = packageManager.getApplicationInfo(u.getPackageName(), 0);
-                final String appName = (String) packageManager.getApplicationLabel(appInfo);
-                nameMap.put(u, appName);
+                if (!nameMap.containsKey(u)) {
+                    ApplicationInfo appInfo = packageManager.getApplicationInfo(u.getPackageName(), 0);
+                    final String appName = (String) packageManager.getApplicationLabel(appInfo);
+                    nameMap.put(u, appName);
+                }
 
                 context.runOnUiThread(new Runnable() {
                     @Override
@@ -53,15 +57,15 @@ public class IconThread extends Thread {
                         if (view == null) return;
 
                         ImageView imageView = view.findViewById(R.id.app_icon);
-                        imageView.setImageDrawable(appIcon);
+                        imageView.setImageDrawable(iconMap.get(u));
 
                         TextView textView = view.findViewById(R.id.textview_package_name);
-                        textView.setText(appName);
+                        textView.setText(nameMap.get(u));
                     }
                 });
 
             } catch (PackageManager.NameNotFoundException e) {
-                Log.w("ICONTHREAD", String.format("App Icon is not found for %s", u.getPackageName()));
+                Log.i("ICONTHREAD", String.format("App Icon not found for %s", u.getPackageName()));
             }
 
         }
