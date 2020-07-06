@@ -23,6 +23,9 @@ public class UsageListView extends RecyclerView {
         setLayoutManager(new LinearLayoutManager(context));
         addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
 
+        // Reduce lag upon initial scroll
+        setItemViewCacheSize(6);
+
     }
 
     public void setUsageStatsList(List<UsageStats> usageStatsList) {
