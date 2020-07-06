@@ -19,6 +19,8 @@ public class ChartsActivity extends Activity {
 
         setContentView(R.layout.activity_charts);
 
+        getActionBar().setTitle(R.string.title_feature_preview);
+
         UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(this);
 
         List<Integer> accumulatedTimes = usageStatsWrapper.getAccumulatedTimes(UsageStatsWrapper.StatsUsageInterval.DAILY, 7);

@@ -19,7 +19,7 @@
         <im.dacer.androidcharts.BarView
             android:id="@+id/bar_chart"
             android:layout_width="match_parent"
-            android:layout_height="300dp" />
+            android:layout_height="220dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -30,7 +30,7 @@
 
         <im.dacer.androidcharts.ClockPieView
             android:id="@+id/clock_chart"
-            android:layout_width="300dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"/>
 

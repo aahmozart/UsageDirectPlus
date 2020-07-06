@@ -36,7 +36,7 @@
     \n\nWeekly: %d
     \n\nMonthly: %d
     \n\nYearly: %d
-    \n\nHistoric will be displayed in the usageDirect user interface in future versions.
+    \n\nHistoric data will be displayed in the usageDirect user interface in future versions.
     </string>
     <string name="span_daily">Daily</string>
     <string name="span_weekly">Weekly</string>
@@ -46,4 +46,5 @@
     <string name="charts_daily">App usage per day</string>
     <string name="charts_clock_pie">Today as a clock pie chart</string>
     <string name="charts_wip">This screen is still work in progress. More charts will be added in the future and their visual appearance and presentation in the user interface will be improved.</string>
+    <string name="title_feature_preview">usageDirect feature preview</string>
 </resources>
