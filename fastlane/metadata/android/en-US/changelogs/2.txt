@@ -1,0 +1,3 @@
+Visual improvements (tabs, less tight content, larger icons) while maintaining high performance
+Fix bug with hour values "modulo 60"
+Feature preview: charts
