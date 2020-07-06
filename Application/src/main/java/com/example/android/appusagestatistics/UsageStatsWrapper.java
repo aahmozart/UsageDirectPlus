@@ -157,6 +157,22 @@ public class UsageStatsWrapper {
     }
 
     /**
+     * Incrementally tests intervals further in the past to find out the total amount
+     * of intervals that have data associated with them.
+     * <p>Take care, this method has <b>bad performance</b>.
+     *
+     * @return Amount of intervals with a corresponding dataset
+     */
+    public int getDatasetAmount(StatsUsageInterval interval) {
+        List<UsageStats> stats;
+        int amount = 0;
+        do {
+            stats = getUsageStatistics(interval, amount++);
+        } while (stats.size() > 0);
+        return --amount;
+    }
+
+    /**
      * Tests whether usage stats permission has been granted by the user.
      * If not, user needs to be prompted to grant permission in settings.
      *

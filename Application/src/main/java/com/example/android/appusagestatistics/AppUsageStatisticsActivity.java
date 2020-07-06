@@ -158,36 +158,21 @@ public class AppUsageStatisticsActivity extends Activity {
 
                 UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(this);
 
-                List<UsageStats> stats;
-                int days = 0;
-                do {
-                    stats = usageStatsWrapper.getUsageStatistics(UsageStatsWrapper.StatsUsageInterval.DAILY, days++);
-                } while (stats.size() > 0);
-
                 int eventDays = 0;
                 List<UsageStatsWrapper.ComponentForegroundStat> events;
                 do {
                     events = usageStatsWrapper.getForegroundStatsByRelativeDay(eventDays++);
                 } while (events.size() > 0);
 
-                int weeks = 0;
-                do {
-                    stats = usageStatsWrapper.getUsageStatistics(UsageStatsWrapper.StatsUsageInterval.WEEKLY, weeks++);
-                } while (stats.size() > 0);
-
-                int months = 0;
-                do {
-                    stats = usageStatsWrapper.getUsageStatistics(UsageStatsWrapper.StatsUsageInterval.MONTHLY, months++);
-                } while (stats.size() > 0);
-
-                int years = 0;
-                do {
-                    stats = usageStatsWrapper.getUsageStatistics(UsageStatsWrapper.StatsUsageInterval.YEARLY, years++);
-                } while (stats.size() > 0);
-
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.menu_test)
-                        .setMessage(getString(R.string.test_result, --days, --eventDays, --weeks, --months, --years))
+                        .setMessage(getString(R.string.test_result,
+                                usageStatsWrapper.getDatasetAmount(UsageStatsWrapper.StatsUsageInterval.DAILY),
+                                --eventDays,
+                                usageStatsWrapper.getDatasetAmount(UsageStatsWrapper.StatsUsageInterval.WEEKLY),
+                                usageStatsWrapper.getDatasetAmount(UsageStatsWrapper.StatsUsageInterval.MONTHLY),
+                                usageStatsWrapper.getDatasetAmount(UsageStatsWrapper.StatsUsageInterval.YEARLY)
+                        ))
                         .show();
         }
 
