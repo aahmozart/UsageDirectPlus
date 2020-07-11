@@ -24,6 +24,4 @@
         android:title="@string/menu_charts" />
     <item android:id="@+id/menu_about"
         android:title="@string/menu_about" />
-    <item android:id="@+id/menu_test"
-        android:title="@string/menu_test" />
 </menu>

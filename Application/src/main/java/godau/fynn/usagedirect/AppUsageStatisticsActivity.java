@@ -109,27 +109,6 @@ public class AppUsageStatisticsActivity extends Activity {
                 UsageStatsWrapper.flushCache();
                 viewPager.getAdapter().notifyDataSetChanged();
                 break;
-
-            case R.id.menu_test:
-
-                UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(this);
-
-                int eventDays = 0;
-                List<ComponentForegroundStat> events;
-                do {
-                    events = usageStatsWrapper.getForegroundStatsByRelativeDay(eventDays++);
-                } while (events.size() > 0);
-
-                new AlertDialog.Builder(this)
-                        .setTitle(R.string.menu_test)
-                        .setMessage(getString(R.string.test_result,
-                                usageStatsWrapper.getDatasetAmount(Interval.DAILY),
-                                --eventDays,
-                                usageStatsWrapper.getDatasetAmount(Interval.WEEKLY),
-                                usageStatsWrapper.getDatasetAmount(Interval.MONTHLY),
-                                usageStatsWrapper.getDatasetAmount(Interval.YEARLY)
-                        ))
-                        .show();
         }
 
         return super.onOptionsItemSelected(item);
