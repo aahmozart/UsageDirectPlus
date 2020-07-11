@@ -12,13 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class IconThread extends Thread {
 
-    public static HashMap<UsageStats, Drawable> iconMap = new HashMap<>();
-    public static HashMap<UsageStats, String> nameMap = new HashMap<>();
+    public static Map<UsageStats, Drawable> iconMap = new ConcurrentHashMap<>();
+    public static Map<UsageStats, String> nameMap = new ConcurrentHashMap<>();
 
     private List<UsageStats> usageStats;
     private RecyclerView.LayoutManager layout;
