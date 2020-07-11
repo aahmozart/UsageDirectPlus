@@ -62,11 +62,13 @@ public class AppUsageStatisticsActivity extends Activity {
             new GrantPermissionDialog(this).show();
         }
 
-        final PagerAdapter timespanAdapter = new TimespanPagerAdapter(this);
+        final TimespanPagerAdapter timespanAdapter = new TimespanPagerAdapter(this);
 
         ViewPager viewPager = findViewById(R.id.timespanpager);
         viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(timespanAdapter);
+
+        viewPager.addOnPageChangeListener(timespanAdapter);
 
         viewPager.setPageMargin(
                 (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics())

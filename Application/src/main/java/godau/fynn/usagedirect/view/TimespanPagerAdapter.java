@@ -29,9 +29,16 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.wrapper.Interval;
 
-public class TimespanPagerAdapter extends PagerAdapter {
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Parent pager, pages {@link UsageListViewPagerAdapter}
+ */
+public class TimespanPagerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener {
 
     private final Activity context;
+    private Map<Integer, ViewPager> viewPagerMap = new HashMap<>();
 
     public TimespanPagerAdapter(Activity context) {
         this.context = context;
@@ -56,12 +63,15 @@ public class TimespanPagerAdapter extends PagerAdapter {
 
         tabLayout.setViewPager(viewPager);
 
+        viewPagerMap.put(position, viewPager);
+
         return view;
     }
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View) object);
+        viewPagerMap.remove(position);
     }
 
     @Override
@@ -84,5 +94,22 @@ public class TimespanPagerAdapter extends PagerAdapter {
             case 3: return context.getString(R.string.span_yearly);
             default: return null;
         }
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        // Scroll back to initial position
+        if (viewPagerMap.containsKey(position)) {
+            ViewPager viewPager = viewPagerMap.get(position);
+            viewPager.setCurrentItem(viewPager.getAdapter().getCount() - 1);
+        }
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
     }
 }

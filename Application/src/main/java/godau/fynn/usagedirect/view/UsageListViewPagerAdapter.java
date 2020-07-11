@@ -37,6 +37,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * Child pager of {@link TimespanPagerAdapter}, pages {@link UsageListView}s
+ */
 public class UsageListViewPagerAdapter extends PagerAdapter {
     private final Queue<UsageListView> recycleViewList = new LinkedList<>();
     private final Interval interval;
