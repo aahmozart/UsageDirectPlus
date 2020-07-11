@@ -38,7 +38,7 @@ public abstract class NaturalText {
                 } else {
                     Calendar then = interval.backInTime(offset);
                     SimpleDateFormat format = new SimpleDateFormat(
-                            offset <= 7?
+                            offset < 7?
                                     "EEEE" : // Weekday ("Saturday")
                                     "MMM d"  // Abbr. month and day ("Jul 11")
                     );
