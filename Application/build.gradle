@@ -22,7 +22,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.viewpager:viewpager:1.0.0'
     implementation 'com.github.mfornos:humanize-slim:1.2.2'
-    implementation 'org.codeberg.fynngodau:librariesDirect:d661730104b20c2607fcd83cb051a5e6c26e345b'
+    implementation 'org.codeberg.fynngodau:librariesDirect:fd6a5f370179b0f85b69c018a8037e1fa0ac37c2'
     implementation 'com.github.fynngodau:AndroidCharts:978bf8b333efda84340a30e6140f9302adb25a3f'
     implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
 }
