@@ -23,12 +23,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.*;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import godau.fynn.usagedirect.R;
-import godau.fynn.usagedirect.view.UsageListViewPagerAdapter;
+import godau.fynn.usagedirect.view.TimespanPagerAdapter;
 import godau.fynn.usagedirect.view.dialog.GrantPermissionDialog;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import godau.fynn.librariesdirect.AboutLibrariesActivity;
@@ -64,58 +62,7 @@ public class AppUsageStatisticsActivity extends Activity {
             new GrantPermissionDialog(this).show();
         }
 
-        final PagerAdapter timespanAdapter = new PagerAdapter() {
-
-            @NonNull
-            @Override
-            public Object instantiateItem(@NonNull ViewGroup container, int position) {
-
-                View view = getLayoutInflater().inflate(R.layout.content_timespan, container, false);
-                container.addView(view);
-
-                SmartTabLayout tabLayout = view.findViewById(R.id.viewpagertab);
-
-                ViewPager viewPager = view.findViewById(R.id.viewpager);
-                viewPager.setAdapter(
-                        new UsageListViewPagerAdapter(Interval.values()[position],
-                                AppUsageStatisticsActivity.this)
-                );
-
-                viewPager.setCurrentItem(viewPager.getAdapter().getCount() - 1);
-                viewPager.setOffscreenPageLimit(3);
-
-                tabLayout.setViewPager(viewPager);
-
-                return view;
-            }
-
-            @Override
-            public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-                container.removeView((View) object);
-            }
-
-            @Override
-            public int getCount() {
-                return 4;
-            }
-
-            @Override
-            public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-                return view == object || ((View) object).getParent() == object;
-            }
-
-            @Nullable
-            @Override
-            public CharSequence getPageTitle(int position) {
-                switch (position) {
-                    case 0: return getString(R.string.span_daily);
-                    case 1: return getString(R.string.span_weekly);
-                    case 2: return getString(R.string.span_monthly);
-                    case 3: return getString(R.string.span_yearly);
-                    default: return null;
-                }
-            }
-        };
+        final PagerAdapter timespanAdapter = new TimespanPagerAdapter(this);
 
         ViewPager viewPager = findViewById(R.id.timespanpager);
         viewPager.setOffscreenPageLimit(3);
