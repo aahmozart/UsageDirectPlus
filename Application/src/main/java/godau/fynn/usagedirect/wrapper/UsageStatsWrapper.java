@@ -67,18 +67,16 @@ public class UsageStatsWrapper {
     public List<UsageStats> getUsageStatistics(Interval interval, int offset) {
 
         long hash = Objects.hash(interval, offset);
-        if (!cache.containsKey(hash)) {
-
-
+        if (cache.containsKey(hash)) {
+            return cache.get(hash);
+        } else {
             long endTime = interval.backInTime(offset).getTimeInMillis();
             long beginTime = endTime - 60000;
 
-            cache.put(hash,
-                    usageStatsManager.queryUsageStats(interval.interval, beginTime, endTime)
-            );
+            List<UsageStats> usageStats = usageStatsManager.queryUsageStats(interval.interval, beginTime, endTime);
+            cache.put(hash, usageStats);
+            return usageStats;
         }
-
-        return cache.get(hash);
     }
 
     /**
