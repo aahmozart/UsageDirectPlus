@@ -29,6 +29,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import godau.fynn.usagedirect.Comparator;
 import godau.fynn.usagedirect.IconThread;
 import godau.fynn.usagedirect.wrapper.Interval;
+import godau.fynn.usagedirect.wrapper.NaturalText;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
 import java.util.Collections;
@@ -126,6 +127,6 @@ public class UsageListViewPagerAdapter extends PagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return "Span -" + (getCount() - position - 1);
+        return NaturalText.format(interval, getCount() - position - 1, context);
     }
 }
