@@ -33,15 +33,15 @@ import godau.fynn.usagedirect.wrapper.NaturalText;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Child pager of {@link TimespanPagerAdapter}, pages {@link UsageListView}s
  */
 public class UsageListViewPagerAdapter extends PagerAdapter {
-    private final Queue<UsageListView> recycleViewList = new LinkedList<>();
+    private static final Queue<UsageListView> recycleViewList = new LinkedBlockingQueue<>();
     private final Interval interval;
     private final Activity context;
 
