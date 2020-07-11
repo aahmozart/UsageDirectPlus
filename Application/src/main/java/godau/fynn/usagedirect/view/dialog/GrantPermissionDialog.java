@@ -1,11 +1,11 @@
-package com.example.android.appusagestatistics.view.dialog;
+package godau.fynn.usagedirect.view.dialog;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.Settings;
-import com.example.android.appusagestatistics.R;
+import godau.fynn.usagedirect.R;
 
 public class GrantPermissionDialog extends AlertDialog.Builder {
 

@@ -1,10 +1,10 @@
-package com.example.android.appusagestatistics;
+package godau.fynn.usagedirect;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import androidx.annotation.Nullable;
+import godau.fynn.usagedirect.R;
 import im.dacer.androidcharts.BarView;
 import im.dacer.androidcharts.ClockPieHelper;
 import im.dacer.androidcharts.ClockPieView;

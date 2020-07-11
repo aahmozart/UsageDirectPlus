@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.example.android.appusagestatistics;
+package godau.fynn.usagedirect;
 
 import android.app.usage.UsageStats;
 import android.content.Context;
@@ -26,9 +26,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import godau.fynn.usagedirect.BuildConfig;
+import godau.fynn.usagedirect.R;
 import humanize.Humanize;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;

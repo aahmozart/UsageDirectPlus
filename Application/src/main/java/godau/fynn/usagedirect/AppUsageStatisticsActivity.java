@@ -14,24 +14,22 @@
 * limitations under the License.
 */
 
-package com.example.android.appusagestatistics;
+package godau.fynn.usagedirect;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.usage.UsageStats;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import com.example.android.appusagestatistics.view.UsageListView;
-import com.example.android.appusagestatistics.view.UsageListViewPagerAdapter;
-import com.example.android.appusagestatistics.view.dialog.GrantPermissionDialog;
+import godau.fynn.usagedirect.R;
+import godau.fynn.usagedirect.view.UsageListViewPagerAdapter;
+import godau.fynn.usagedirect.view.dialog.GrantPermissionDialog;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import godau.fynn.librariesdirect.AboutLibrariesActivity;
 import godau.fynn.librariesdirect.AboutLibrariesConfig;

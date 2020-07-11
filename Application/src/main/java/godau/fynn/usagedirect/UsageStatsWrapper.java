@@ -1,4 +1,4 @@
-package com.example.android.appusagestatistics;
+package godau.fynn.usagedirect;
 
 import android.annotation.SuppressLint;
 import android.app.AppOpsManager;
@@ -6,7 +6,6 @@ import android.app.usage.UsageEvents;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
-import android.util.Log;
 
 import java.util.*;
 

@@ -1,4 +1,4 @@
-package com.example.android.appusagestatistics.view;
+package godau.fynn.usagedirect.view;
 
 import android.app.usage.UsageStats;
 import android.content.Context;
@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.android.appusagestatistics.UsageListAdapter;
+import godau.fynn.usagedirect.UsageListAdapter;
 
 import java.util.List;
 

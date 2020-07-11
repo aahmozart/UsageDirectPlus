@@ -1,4 +1,4 @@
-package com.example.android.appusagestatistics.view;
+package godau.fynn.usagedirect.view;
 
 import android.app.Activity;
 import android.app.usage.UsageStats;
@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
-import com.example.android.appusagestatistics.Comparator;
-import com.example.android.appusagestatistics.IconThread;
-import com.example.android.appusagestatistics.UsageStatsWrapper;
+import godau.fynn.usagedirect.Comparator;
+import godau.fynn.usagedirect.IconThread;
+import godau.fynn.usagedirect.UsageStatsWrapper;
 
 import java.util.Collections;
 import java.util.LinkedList;

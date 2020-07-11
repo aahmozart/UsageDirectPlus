@@ -1,8 +1,7 @@
-package com.example.android.appusagestatistics;
+package godau.fynn.usagedirect;
 
 import android.app.Activity;
 import android.app.usage.UsageStats;
-import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -11,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
+import godau.fynn.usagedirect.R;
 
 import java.util.List;
 import java.util.Map;

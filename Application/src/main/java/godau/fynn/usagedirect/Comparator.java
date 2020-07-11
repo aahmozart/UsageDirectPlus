@@ -1,4 +1,4 @@
-package com.example.android.appusagestatistics;
+package godau.fynn.usagedirect;
 
 import android.app.usage.UsageStats;
 
