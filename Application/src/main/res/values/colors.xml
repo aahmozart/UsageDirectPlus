@@ -21,5 +21,7 @@
     <color name="tab_indicator">#33000000</color>
     <color name="primary">#546E7A</color>
     <color name="primaryDark">#37474F</color>
-    <color name="page_switch_indicator">#1A000000</color>
+    <color name="primaryLight">#78909C</color>
+    <color name="page_switch_indicator">#455A64</color>
+    <color name="tabText">#ffe9ecee</color>
 </resources>

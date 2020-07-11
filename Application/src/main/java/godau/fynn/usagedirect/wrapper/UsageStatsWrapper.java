@@ -79,7 +79,8 @@ public class UsageStatsWrapper {
     /**
      * Accumulates UsageStatistics of multiple days
      * @param intervals How many intervals back in time should be added to the list
-     * @return A chronologically ordered list of time values in seconds
+     * @return A chronologically ordered list of time values in seconds, containing
+     *         <code>intervals + 1</code> items
      */
     public ArrayList<Integer> getAccumulatedTimes(Interval interval, int intervals) {
         ArrayList<Integer> accumulation = new ArrayList<>();
