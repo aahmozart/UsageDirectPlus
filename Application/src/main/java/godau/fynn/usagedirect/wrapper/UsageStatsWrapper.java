@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package godau.fynn.usagedirect;
+package godau.fynn.usagedirect.wrapper;
 
 import android.annotation.SuppressLint;
 import android.app.AppOpsManager;
@@ -195,57 +195,11 @@ public class UsageStatsWrapper {
      *
      * @see <a href="https://stackoverflow.com/a/28921586">StackOverflow</a>
      */
-    boolean isPermissionGranted() {
+    public boolean isPermissionGranted() {
         AppOpsManager appOps = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
         int mode = appOps.checkOpNoThrow("android:get_usage_stats",
                 android.os.Process.myUid(), context.getPackageName());
         return mode == AppOpsManager.MODE_ALLOWED;
     }
 
-    /**
-     * Enum represents the intervals for {@link android.app.usage.UsageStatsManager} so that
-     * values for intervals can be found by a String representation. Furthermore calculates
-     * a timepoint somewhen in a past interval.
-     */
-    public enum StatsUsageInterval {
-
-        DAILY(UsageStatsManager.INTERVAL_DAILY, Calendar.DAY_OF_MONTH),
-        WEEKLY(UsageStatsManager.INTERVAL_WEEKLY, Calendar.WEEK_OF_MONTH),
-        MONTHLY(UsageStatsManager.INTERVAL_MONTHLY, Calendar.MONTH),
-        YEARLY(UsageStatsManager.INTERVAL_YEARLY, Calendar.YEAR);
-
-
-        private final int interval;
-        private final int calendarField;
-
-        /**
-         * @param interval             {@link UsageStatsManager} interval
-         * @param calendarField        Duration of the interval in milliseconds
-         */
-        StatsUsageInterval(int interval, int calendarField) {
-            this.interval = interval;
-            this.calendarField = calendarField;
-        }
-
-        /**
-         * @param times Amount of intervals to go back
-         * @return A calendar that lies within the <code>times</code>-th interval back in time
-         */
-        public Calendar backInTime(int times) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(calendarField, -times);
-            return calendar;
-        }
-    }
-
-    public static class ComponentForegroundStat {
-        final long beginTime, endTime;
-        final String packageName;
-
-        public ComponentForegroundStat(long beginTime, long endTime, String packageName) {
-            this.beginTime = beginTime;
-            this.endTime = endTime;
-            this.packageName = packageName;
-        }
-    }
 }

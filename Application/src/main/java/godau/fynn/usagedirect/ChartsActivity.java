@@ -23,6 +23,9 @@ import android.os.Bundle;
 import android.util.Log;
 import androidx.annotation.Nullable;
 import godau.fynn.usagedirect.R;
+import godau.fynn.usagedirect.wrapper.ComponentForegroundStat;
+import godau.fynn.usagedirect.wrapper.StatsUsageInterval;
+import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 import im.dacer.androidcharts.BarView;
 import im.dacer.androidcharts.ClockPieHelper;
 import im.dacer.androidcharts.ClockPieView;
@@ -41,7 +44,7 @@ public class ChartsActivity extends Activity {
 
         UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(this);
 
-        List<Integer> accumulatedTimes = usageStatsWrapper.getAccumulatedTimes(UsageStatsWrapper.StatsUsageInterval.DAILY, 7);
+        List<Integer> accumulatedTimes = usageStatsWrapper.getAccumulatedTimes(StatsUsageInterval.DAILY, 7);
 
         // Use maximum of timespan plus 30 minutes so no bar hits the top
         int max = Collections.max(accumulatedTimes) + (60 * 30);
@@ -58,12 +61,12 @@ public class ChartsActivity extends Activity {
 
         ArrayList<ClockPieHelper> clockPieHelperList = new ArrayList<>();
 
-        List<UsageStatsWrapper.ComponentForegroundStat> foregroundStats = usageStatsWrapper.getForegroundStatsByRelativeDay(0);
+        List<ComponentForegroundStat> foregroundStats = usageStatsWrapper.getForegroundStatsByRelativeDay(0);
 
         Calendar beginCalendar = Calendar.getInstance();
         Calendar endCalendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-        for (UsageStatsWrapper.ComponentForegroundStat stat : foregroundStats) {
+        for (ComponentForegroundStat stat : foregroundStats) {
             beginCalendar.setTimeInMillis(stat.beginTime);
             endCalendar.setTimeInMillis(stat.endTime);
             clockPieHelperList.add(new ClockPieHelper(

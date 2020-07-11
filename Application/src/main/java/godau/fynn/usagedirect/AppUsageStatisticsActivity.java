@@ -35,6 +35,9 @@ import godau.fynn.librariesdirect.AboutLibrariesActivity;
 import godau.fynn.librariesdirect.AboutLibrariesConfig;
 import godau.fynn.librariesdirect.Library;
 import godau.fynn.librariesdirect.License;
+import godau.fynn.usagedirect.wrapper.ComponentForegroundStat;
+import godau.fynn.usagedirect.wrapper.StatsUsageInterval;
+import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
 import java.util.*;
 
@@ -74,7 +77,7 @@ public class AppUsageStatisticsActivity extends Activity {
 
                 ViewPager viewPager = view.findViewById(R.id.viewpager);
                 viewPager.setAdapter(
-                        new UsageListViewPagerAdapter(UsageStatsWrapper.StatsUsageInterval.values()[position],
+                        new UsageListViewPagerAdapter(StatsUsageInterval.values()[position],
                                 AppUsageStatisticsActivity.this)
                 );
 
@@ -157,7 +160,7 @@ public class AppUsageStatisticsActivity extends Activity {
                 UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(this);
 
                 int eventDays = 0;
-                List<UsageStatsWrapper.ComponentForegroundStat> events;
+                List<ComponentForegroundStat> events;
                 do {
                     events = usageStatsWrapper.getForegroundStatsByRelativeDay(eventDays++);
                 } while (events.size() > 0);
@@ -165,11 +168,11 @@ public class AppUsageStatisticsActivity extends Activity {
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.menu_test)
                         .setMessage(getString(R.string.test_result,
-                                usageStatsWrapper.getDatasetAmount(UsageStatsWrapper.StatsUsageInterval.DAILY),
+                                usageStatsWrapper.getDatasetAmount(StatsUsageInterval.DAILY),
                                 --eventDays,
-                                usageStatsWrapper.getDatasetAmount(UsageStatsWrapper.StatsUsageInterval.WEEKLY),
-                                usageStatsWrapper.getDatasetAmount(UsageStatsWrapper.StatsUsageInterval.MONTHLY),
-                                usageStatsWrapper.getDatasetAmount(UsageStatsWrapper.StatsUsageInterval.YEARLY)
+                                usageStatsWrapper.getDatasetAmount(StatsUsageInterval.WEEKLY),
+                                usageStatsWrapper.getDatasetAmount(StatsUsageInterval.MONTHLY),
+                                usageStatsWrapper.getDatasetAmount(StatsUsageInterval.YEARLY)
                         ))
                         .show();
         }
