@@ -27,7 +27,7 @@ import java.util.Calendar;
  * values for intervals can be found by a String representation. Furthermore calculates
  * a timepoint somewhen in a past interval.
  */
-public enum StatsUsageInterval {
+public enum Interval {
 
     DAILY(UsageStatsManager.INTERVAL_DAILY, Calendar.DAY_OF_MONTH),
     WEEKLY(UsageStatsManager.INTERVAL_WEEKLY, Calendar.WEEK_OF_MONTH),
@@ -42,7 +42,7 @@ public enum StatsUsageInterval {
      * @param interval             {@link UsageStatsManager} interval
      * @param calendarField        Duration of the interval in milliseconds
      */
-    StatsUsageInterval(int interval, int calendarField) {
+    Interval(int interval, int calendarField) {
         this.interval = interval;
         this.calendarField = calendarField;
     }

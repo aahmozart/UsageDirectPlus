@@ -36,7 +36,7 @@ import godau.fynn.librariesdirect.AboutLibrariesConfig;
 import godau.fynn.librariesdirect.Library;
 import godau.fynn.librariesdirect.License;
 import godau.fynn.usagedirect.wrapper.ComponentForegroundStat;
-import godau.fynn.usagedirect.wrapper.StatsUsageInterval;
+import godau.fynn.usagedirect.wrapper.Interval;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
 import java.util.*;
@@ -77,7 +77,7 @@ public class AppUsageStatisticsActivity extends Activity {
 
                 ViewPager viewPager = view.findViewById(R.id.viewpager);
                 viewPager.setAdapter(
-                        new UsageListViewPagerAdapter(StatsUsageInterval.values()[position],
+                        new UsageListViewPagerAdapter(Interval.values()[position],
                                 AppUsageStatisticsActivity.this)
                 );
 
@@ -168,11 +168,11 @@ public class AppUsageStatisticsActivity extends Activity {
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.menu_test)
                         .setMessage(getString(R.string.test_result,
-                                usageStatsWrapper.getDatasetAmount(StatsUsageInterval.DAILY),
+                                usageStatsWrapper.getDatasetAmount(Interval.DAILY),
                                 --eventDays,
-                                usageStatsWrapper.getDatasetAmount(StatsUsageInterval.WEEKLY),
-                                usageStatsWrapper.getDatasetAmount(StatsUsageInterval.MONTHLY),
-                                usageStatsWrapper.getDatasetAmount(StatsUsageInterval.YEARLY)
+                                usageStatsWrapper.getDatasetAmount(Interval.WEEKLY),
+                                usageStatsWrapper.getDatasetAmount(Interval.MONTHLY),
+                                usageStatsWrapper.getDatasetAmount(Interval.YEARLY)
                         ))
                         .show();
         }

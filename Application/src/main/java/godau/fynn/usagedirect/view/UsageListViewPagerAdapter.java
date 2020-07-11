@@ -28,7 +28,7 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 import godau.fynn.usagedirect.Comparator;
 import godau.fynn.usagedirect.IconThread;
-import godau.fynn.usagedirect.wrapper.StatsUsageInterval;
+import godau.fynn.usagedirect.wrapper.Interval;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
 import java.util.Collections;
@@ -38,14 +38,14 @@ import java.util.Queue;
 
 public class UsageListViewPagerAdapter extends PagerAdapter {
     private final Queue<UsageListView> recycleViewList = new LinkedList<>();
-    private final StatsUsageInterval interval;
+    private final Interval interval;
     private final Activity context;
 
     private int count = -1;
 
     private static UsageStatsWrapper usageStats;
 
-    public UsageListViewPagerAdapter(StatsUsageInterval interval, Activity context) {
+    public UsageListViewPagerAdapter(Interval interval, Activity context) {
         this.interval = interval;
         this.context = context;
 

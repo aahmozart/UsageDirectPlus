@@ -50,7 +50,7 @@ public class UsageStatsWrapper {
      * @param offset   Amount of intervals to go back in time
      * @return A list of {@link android.app.usage.UsageStats}.
      */
-    public List<UsageStats> getUsageStatistics(StatsUsageInterval interval, int offset) {
+    public List<UsageStats> getUsageStatistics(Interval interval, int offset) {
 
         long endTime = interval.backInTime(offset).getTimeInMillis();
         long beginTime = endTime - 60000;
@@ -60,10 +60,10 @@ public class UsageStatsWrapper {
 
     /**
      * Accumulate UsageStatistics of a day
-     * @see #getUsageStatistics(StatsUsageInterval, int)
+     * @see #getUsageStatistics(Interval, int)
      * @return A time value in seconds
      */
-    public int getAccumulatedTime(StatsUsageInterval interval, int offset) {
+    public int getAccumulatedTime(Interval interval, int offset) {
 
         List<UsageStats> usageStats = getUsageStatistics(interval, offset);
 
@@ -81,7 +81,7 @@ public class UsageStatsWrapper {
      * @param intervals How many intervals back in time should be added to the list
      * @return A chronologically ordered list of time values in seconds
      */
-    public ArrayList<Integer> getAccumulatedTimes(StatsUsageInterval interval, int intervals) {
+    public ArrayList<Integer> getAccumulatedTimes(Interval interval, int intervals) {
         ArrayList<Integer> accumulation = new ArrayList<>();
 
         for (int i = intervals; i >= 0; i--) {
@@ -180,7 +180,7 @@ public class UsageStatsWrapper {
      *
      * @return Amount of intervals with a corresponding dataset
      */
-    public int getDatasetAmount(StatsUsageInterval interval) {
+    public int getDatasetAmount(Interval interval) {
         List<UsageStats> stats;
         int amount = 0;
         do {

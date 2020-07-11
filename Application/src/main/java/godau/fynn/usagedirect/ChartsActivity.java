@@ -24,7 +24,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.wrapper.ComponentForegroundStat;
-import godau.fynn.usagedirect.wrapper.StatsUsageInterval;
+import godau.fynn.usagedirect.wrapper.Interval;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 import im.dacer.androidcharts.BarView;
 import im.dacer.androidcharts.ClockPieHelper;
@@ -44,7 +44,7 @@ public class ChartsActivity extends Activity {
 
         UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(this);
 
-        List<Integer> accumulatedTimes = usageStatsWrapper.getAccumulatedTimes(StatsUsageInterval.DAILY, 7);
+        List<Integer> accumulatedTimes = usageStatsWrapper.getAccumulatedTimes(Interval.DAILY, 7);
 
         // Use maximum of timespan plus 30 minutes so no bar hits the top
         int max = Collections.max(accumulatedTimes) + (60 * 30);
