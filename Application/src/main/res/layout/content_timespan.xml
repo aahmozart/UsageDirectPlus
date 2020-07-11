@@ -23,14 +23,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <im.dacer.androidcharts.BarView
-        android:id="@+id/chart"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/primaryLight"
-        android:elevation="4dp"
-        />
-
     <com.ogaclejapan.smarttablayout.SmartTabLayout
         android:id="@+id/viewpagertab"
         android:layout_width="match_parent"

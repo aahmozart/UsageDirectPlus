@@ -1,0 +1,2 @@
+Display data of past periods while maintaining relatively high performance
+Add reload functionality
