@@ -190,7 +190,7 @@ public class UsageStatsWrapper {
      * values for intervals can be found by a String representation. Furthermore calculates
      * a timepoint somewhen in a past interval.
      */
-    enum StatsUsageInterval {
+    public enum StatsUsageInterval {
 
         DAILY(UsageStatsManager.INTERVAL_DAILY, Calendar.DAY_OF_MONTH),
         WEEKLY(UsageStatsManager.INTERVAL_WEEKLY, Calendar.WEEK_OF_MONTH),

@@ -38,7 +38,7 @@ import java.util.Locale;
  */
 public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.ViewHolder> {
 
-    private List<UsageStats> mUsageStatsList = new ArrayList<>();
+    private List<UsageStats> mUsageStatsList;
     private Context mContext;
 
     /**
@@ -140,7 +140,10 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
 
     @Override
     public int getItemCount() {
-        return mUsageStatsList.size();
+        if (mUsageStatsList == null)
+            return 0;
+        else
+            return mUsageStatsList.size();
     }
 
     public void setUsageStatsList(List<UsageStats> usageStats) {

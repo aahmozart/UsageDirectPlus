@@ -20,14 +20,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.usage.UsageStats;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import com.example.android.appusagestatistics.view.UsageListView;
+import com.example.android.appusagestatistics.view.UsageListViewPagerAdapter;
 import com.example.android.appusagestatistics.view.dialog.GrantPermissionDialog;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import godau.fynn.librariesdirect.AboutLibrariesActivity;
@@ -35,8 +38,7 @@ import godau.fynn.librariesdirect.AboutLibrariesConfig;
 import godau.fynn.librariesdirect.Library;
 import godau.fynn.librariesdirect.License;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Launcher Activity for the App Usage Statistics sample app.
@@ -61,41 +63,34 @@ public class AppUsageStatisticsActivity extends Activity {
             new GrantPermissionDialog(this).show();
         }
 
-
-        final PagerAdapter adapter = new PagerAdapter() {
+        final PagerAdapter timespanAdapter = new PagerAdapter() {
 
             @NonNull
             @Override
             public Object instantiateItem(@NonNull ViewGroup container, int position) {
 
-                // Setup view
+                View view = getLayoutInflater().inflate(R.layout.content_timespan, container, false);
+                container.addView(view);
 
-                UsageListView usageListView = new UsageListView(AppUsageStatisticsActivity.this);
-                container.addView(usageListView);
+                SmartTabLayout tabLayout = view.findViewById(R.id.viewpagertab);
 
+                ViewPager viewPager = view.findViewById(R.id.viewpager);
+                viewPager.setAdapter(
+                        new UsageListViewPagerAdapter(UsageStatsWrapper.StatsUsageInterval.values()[position],
+                                AppUsageStatisticsActivity.this)
+                );
 
-                // Get data
+                viewPager.setCurrentItem(viewPager.getAdapter().getCount() - 1);
+                viewPager.setOffscreenPageLimit(3);
 
-                UsageStatsWrapper.StatsUsageInterval statsUsageInterval = UsageStatsWrapper.StatsUsageInterval
-                        .values()[position];
+                tabLayout.setViewPager(viewPager);
 
-                List<UsageStats> usageStatsList = usageStatsWrapper.getUsageStatistics(statsUsageInterval, 0);
+                return view;
+            }
 
-                // Filter unused apps
-                for (int i = usageStatsList.size() - 1; i >= 0; i--) {
-                    UsageStats usageStats = usageStatsList.get(i);
-                    if (usageStats.getTotalTimeInForeground() <= 0)
-                        usageStatsList.remove(i);
-                }
-
-                Collections.sort(usageStatsList, new Comparator.TimeInForegroundComparatorDesc());
-
-                usageListView.setUsageStatsList(usageStatsList);
-
-                // Get missing icons from system
-                new IconThread(usageStatsList, usageListView.getLayoutManager(), AppUsageStatisticsActivity.this).start();
-
-                return usageListView;
+            @Override
+            public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+                container.removeView((View) object);
             }
 
             @Override
@@ -105,13 +100,7 @@ public class AppUsageStatisticsActivity extends Activity {
 
             @Override
             public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-                return object == view;
-            }
-
-            @Override
-            public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-                Log.d("AUSA", "Destroying item " + position);
-                container.removeView((View) object);
+                return view == object || ((View) object).getParent() == object;
             }
 
             @Nullable
@@ -127,9 +116,14 @@ public class AppUsageStatisticsActivity extends Activity {
             }
         };
 
-        ViewPager viewPager = findViewById(R.id.viewpager);
+        ViewPager viewPager = findViewById(R.id.timespanpager);
         viewPager.setOffscreenPageLimit(3);
-        viewPager.setAdapter(adapter);
+        viewPager.setAdapter(timespanAdapter);
+
+        viewPager.setPageMargin(
+                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics())
+        );
+        viewPager.setPageMarginDrawable(new ColorDrawable(getColor(R.color.page_switch_indicator)));
 
         tabs.setViewPager(viewPager);
     }
