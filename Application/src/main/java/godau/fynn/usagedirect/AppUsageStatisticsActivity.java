@@ -24,7 +24,6 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.*;
 import androidx.annotation.Nullable;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import godau.fynn.usagedirect.view.TimespanPagerAdapter;
 import godau.fynn.usagedirect.view.dialog.GrantPermissionDialog;
@@ -43,6 +42,8 @@ import java.util.*;
  * Launcher Activity for the App Usage Statistics sample app.
  */
 public class AppUsageStatisticsActivity extends Activity {
+
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,7 @@ public class AppUsageStatisticsActivity extends Activity {
 
         final TimespanPagerAdapter timespanAdapter = new TimespanPagerAdapter(this);
 
-        ViewPager viewPager = findViewById(R.id.timespanpager);
+        viewPager = findViewById(R.id.timespanpager);
         viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(timespanAdapter);
 
@@ -104,6 +105,11 @@ public class AppUsageStatisticsActivity extends Activity {
                 startActivity(new Intent(this, ChartsActivity.class));
                 break;
 
+            case R.id.menu_reload:
+                UsageStatsWrapper.flushCache();
+                viewPager.getAdapter().notifyDataSetChanged();
+                break;
+
             case R.id.menu_test:
 
                 UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(this);
@@ -140,5 +146,11 @@ public class AppUsageStatisticsActivity extends Activity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == GrantPermissionDialog.REQUEST_CODE)
             recreate();
+    }
+
+    @Override
+    protected void onStop() {
+        UsageStatsWrapper.flushCache();
+        super.onStop();
     }
 }

@@ -32,9 +32,7 @@ import godau.fynn.usagedirect.wrapper.Interval;
 import godau.fynn.usagedirect.wrapper.NaturalText;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -131,5 +129,22 @@ public class UsageListViewPagerAdapter extends PagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return NaturalText.format(interval, getCount() - position - 1, context);
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return POSITION_NONE;
+        /* TODO this is a kind of inproper way to do it
+         * We are doing it anyway because our destroy and recreate process
+         * makes use of recycling, which should make it somewhat as performant
+         * as updating each usage list view directly.
+         */
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        count = -1;
+        super.notifyDataSetChanged();
+
     }
 }

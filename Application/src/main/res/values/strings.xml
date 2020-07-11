@@ -53,4 +53,5 @@
     <string name="ts_last_week">Last week</string>
     <string name="ts_weeks_ago">%d weeks ago</string>
     <string name="ts_this_month">This month</string>
+    <string name="menu_reload">Reload</string>
 </resources>

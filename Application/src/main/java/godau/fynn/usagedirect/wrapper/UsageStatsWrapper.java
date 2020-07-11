@@ -26,25 +26,39 @@ import android.app.usage.UsageStatsManager;
 import android.content.Context;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Wrapper class for UsageStatsManager class
+ * <p>Uses a cache to speed up requests. If you want to clear the cache,
+ * call {@link #flushCache()}.
  */
 public class UsageStatsWrapper {
 
     private final Context context;
-    private final UsageStatsManager usageStatsManager;
+    private static UsageStatsManager usageStatsManager;
+
+    private static Map<Long, List<UsageStats>> cache = new ConcurrentHashMap<>();
 
     @SuppressLint("WrongConstant")
     public UsageStatsWrapper(Context context) {
         this.context = context;
         usageStatsManager = (UsageStatsManager) context
-                .getSystemService("usagestats"); //Context.USAGE_STATS_SERVICE
+                .getSystemService("usagestats"); // Context.USAGE_STATS_SERVICE
+    }
+
+    /**
+     * Clears cache
+     */
+    public static void flushCache() {
+        cache = new ConcurrentHashMap<>();
     }
 
     /**
      * <p>Assumes usage stats permission is granted, check beforehand using
      * {@link #isPermissionGranted()}.
+     * <p>Uses a local cache to be speed up requests and thus does not guarantee
+     * live data
      *
      * @param interval The time interval by which the stats are aggregated.
      * @param offset   Amount of intervals to go back in time
@@ -52,10 +66,19 @@ public class UsageStatsWrapper {
      */
     public List<UsageStats> getUsageStatistics(Interval interval, int offset) {
 
-        long endTime = interval.backInTime(offset).getTimeInMillis();
-        long beginTime = endTime - 60000;
+        long hash = Objects.hash(interval, offset);
+        if (!cache.containsKey(hash)) {
 
-        return usageStatsManager.queryUsageStats(interval.interval, beginTime, endTime);
+
+            long endTime = interval.backInTime(offset).getTimeInMillis();
+            long beginTime = endTime - 60000;
+
+            cache.put(hash,
+                    usageStatsManager.queryUsageStats(interval.interval, beginTime, endTime)
+            );
+        }
+
+        return cache.get(hash);
     }
 
     /**

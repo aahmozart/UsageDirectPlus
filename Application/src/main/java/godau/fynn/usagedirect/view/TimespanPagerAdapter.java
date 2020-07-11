@@ -28,6 +28,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.wrapper.Interval;
+import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,30 +41,49 @@ public class TimespanPagerAdapter extends PagerAdapter implements ViewPager.OnPa
     private final Activity context;
     private Map<Integer, ViewPager> viewPagerMap = new HashMap<>();
 
+    private UsageStatsWrapper usageStatsWrapper;
+
     public TimespanPagerAdapter(Activity context) {
         this.context = context;
+        usageStatsWrapper = new UsageStatsWrapper(context);
     }
 
     @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, final int position) {
 
-        View view = context.getLayoutInflater().inflate(R.layout.content_timespan, container, false);
+        final View view = context.getLayoutInflater().inflate(R.layout.content_timespan, container, false);
         container.addView(view);
 
-        SmartTabLayout tabLayout = view.findViewById(R.id.viewpagertab);
+        final Interval interval = Interval.values()[position];
 
-        ViewPager viewPager = view.findViewById(R.id.viewpager);
-        viewPager.setAdapter(
-                new UsageListViewPagerAdapter(Interval.values()[position], context)
-        );
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // Fill cache for interval
+                usageStatsWrapper.getDatasetAmount(interval);
 
-        viewPager.setCurrentItem(viewPager.getAdapter().getCount() - 1);
-        viewPager.setOffscreenPageLimit(3);
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        SmartTabLayout tabLayout = view.findViewById(R.id.viewpagertab);
 
-        tabLayout.setViewPager(viewPager);
+                        ViewPager viewPager = view.findViewById(R.id.viewpager);
+                        viewPager.setAdapter(
+                                new UsageListViewPagerAdapter(interval, context)
+                        );
 
-        viewPagerMap.put(position, viewPager);
+                        viewPager.setCurrentItem(viewPager.getAdapter().getCount() - 1);
+                        viewPager.setOffscreenPageLimit(2);
+
+                        tabLayout.setViewPager(viewPager);
+
+                        viewPagerMap.put(position, viewPager);
+                    }
+                });
+            }
+        }).start();
+
 
         return view;
     }
@@ -93,6 +113,13 @@ public class TimespanPagerAdapter extends PagerAdapter implements ViewPager.OnPa
             case 2: return context.getString(R.string.span_monthly);
             case 3: return context.getString(R.string.span_yearly);
             default: return null;
+        }
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        for (ViewPager pager : viewPagerMap.values()) {
+            pager.getAdapter().notifyDataSetChanged();
         }
     }
 
