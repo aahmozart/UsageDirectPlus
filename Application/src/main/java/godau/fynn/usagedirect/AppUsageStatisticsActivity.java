@@ -86,7 +86,7 @@ public class AppUsageStatisticsActivity extends Activity {
             case R.id.menu_about:
 
                 AboutLibrariesConfig.setLibraries(new Library[]{
-                        new Library("usageDirect", License.GNU_GPL_V3_OR_LATER_LICENSE, null, "Fynn Godau", "https://codeberg.org/fynngodau/usageDirect"),
+                        new Library("usageDirect" + ' ' + BuildConfig.VERSION_NAME, License.GNU_GPL_V3_OR_LATER_LICENSE, null, "Fynn Godau", "https://codeberg.org/fynngodau/usageDirect"),
                         new Library("AppUsageStatistics", License.APACHE_20_LICENSE, null, "The Android Open Source Project, Inc", "https://github.com/googlesamples/android-AppUsageStatistics"),
                         new Library("AndroidCharts", License.MIT_LICENSE, "The MIT License (MIT)\n" +
                                 "\n" +
