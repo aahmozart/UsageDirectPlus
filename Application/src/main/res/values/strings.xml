@@ -36,7 +36,7 @@
     <string name="span_yearly">Yearly</string>
     <string name="last_used_now">Currently in use</string>
     <string name="charts_daily">App usage per day</string>
-    <string name="charts_clock_pie">Today as a clock pie chart</string>
+    <string name="charts_clock_pie">%s as a clock pie chart</string>
     <string name="charts_wip">This screen is still work in progress. More charts will be added in the future and their visual appearance and presentation in the user interface will be improved.
     \n\nThey are not included in this release yet, unfortunately, because they are somewhat difficult to work with.
     </string>

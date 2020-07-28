@@ -20,19 +20,16 @@ package godau.fynn.usagedirect;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.HorizontalScrollView;
-import android.widget.ScrollView;
 import androidx.annotation.Nullable;
-import godau.fynn.usagedirect.wrapper.ComponentForegroundStat;
+import androidx.viewpager.widget.ViewPager;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import godau.fynn.usagedirect.view.ClockPieViewPagerAdapter;
 import godau.fynn.usagedirect.wrapper.Interval;
 import godau.fynn.usagedirect.wrapper.NaturalText;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 import im.dacer.androidcharts.BarView;
-import im.dacer.androidcharts.ClockPieHelper;
-import im.dacer.androidcharts.ClockPieView;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ChartsActivity extends Activity {
@@ -71,33 +68,13 @@ public class ChartsActivity extends Activity {
             }
         });
 
-        ClockPieView pieView = findViewById(R.id.clock_chart);
+        ViewPager clockPager = findViewById(R.id.clock_pie_view_pager);
 
-        ArrayList<ClockPieHelper> clockPieHelperList = new ArrayList<>();
+        clockPager.setAdapter(new ClockPieViewPagerAdapter(this, usageStatsWrapper));
+        clockPager.setCurrentItem(9);
 
-        List<ComponentForegroundStat> foregroundStats = usageStatsWrapper.getForegroundStatsByRelativeDay(0);
-
-        Calendar beginCalendar = Calendar.getInstance();
-        Calendar endCalendar = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-        for (ComponentForegroundStat stat : foregroundStats) {
-            beginCalendar.setTimeInMillis(stat.beginTime);
-            endCalendar.setTimeInMillis(stat.endTime);
-            clockPieHelperList.add(new ClockPieHelper(
-                    beginCalendar.get(Calendar.HOUR_OF_DAY), beginCalendar.get(Calendar.MINUTE), beginCalendar.get(Calendar.SECOND),
-                    endCalendar.get(Calendar.HOUR_OF_DAY), endCalendar.get(Calendar.MINUTE), endCalendar.get(Calendar.SECOND)
-            ));
-            Log.d("ChartsActivity", "Stat begins at " + sdf.format(beginCalendar.getTime()) + ", ends at "
-                    + sdf.format(endCalendar.getTime()) + " and is of package " + stat.packageName);
-            Log.d("ChartsActivity rep", Arrays.asList(beginCalendar.get(Calendar.HOUR_OF_DAY), beginCalendar.get(Calendar.MINUTE), beginCalendar.get(Calendar.SECOND),
-                    endCalendar.get(Calendar.HOUR_OF_DAY), endCalendar.get(Calendar.MINUTE), endCalendar.get(Calendar.SECOND)).toString());
-
-        }
-
-        Log.d("ChartsActivity", "Displaying " + foregroundStats.size() + " foreground stats");
-
-        pieView.setDate(clockPieHelperList);
-
+        SmartTabLayout tabLayout = findViewById(R.id.clock_pie_view_pager_tab);
+        tabLayout.setViewPager(clockPager);
 
     }
 }
