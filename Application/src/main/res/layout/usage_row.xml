@@ -48,21 +48,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <LinearLayout
+
+        <TextView
+            android:id="@+id/textview_time_used"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textview_time_used_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/time_used" />
-
-            <TextView
-                android:id="@+id/textview_time_used"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            android:text="@string/time_used" />
     </LinearLayout>
 </LinearLayout>

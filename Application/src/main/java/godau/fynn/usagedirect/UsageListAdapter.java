@@ -138,8 +138,8 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
         }
 
         long secondsUsed = usageStats.getTotalTimeInForeground() / 1000;
-        viewHolder.getTimeUsed().setText(String.format(Locale.ENGLISH, "%d:%02d:%02d",
-                        secondsUsed / 3600, (secondsUsed / 60) % 60, secondsUsed % 60)
+        viewHolder.getTimeUsed().setText(mContext.getString(R.string.time_used,
+                secondsUsed / 3600, (secondsUsed / 60) % 60, secondsUsed % 60)
         );
 
         viewHolder.getAppIcon().setImageDrawable(IconThread.iconMap.get(usageStats));
