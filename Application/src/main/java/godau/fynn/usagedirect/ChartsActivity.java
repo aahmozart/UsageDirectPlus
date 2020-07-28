@@ -26,6 +26,7 @@ import android.widget.ScrollView;
 import androidx.annotation.Nullable;
 import godau.fynn.usagedirect.wrapper.ComponentForegroundStat;
 import godau.fynn.usagedirect.wrapper.Interval;
+import godau.fynn.usagedirect.wrapper.NaturalText;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 import im.dacer.androidcharts.BarView;
 import im.dacer.androidcharts.ClockPieHelper;
@@ -51,7 +52,10 @@ public class ChartsActivity extends Activity {
         int max = Collections.max(accumulatedTimes) + (60 * 30);
 
         ArrayList<String> bottomText = new ArrayList<>();
-        bottomText.addAll(Arrays.asList("-9", "-8", "-7", "-6", "-5", "-4", "-3", "-2", "-1", "0"));
+
+        for (int i = 9; i >= 0; i--) {
+            bottomText.add(NaturalText.formatShort(Interval.DAILY, i));
+        }
 
         BarView barView = findViewById(R.id.bar_chart);
 
