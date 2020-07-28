@@ -21,10 +21,13 @@ package godau.fynn.usagedirect;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import godau.fynn.usagedirect.view.BarViewPagerAdapter;
 import godau.fynn.usagedirect.view.ClockPieViewPagerAdapter;
+import godau.fynn.usagedirect.view.FramedBarView;
 import godau.fynn.usagedirect.wrapper.Interval;
 import godau.fynn.usagedirect.wrapper.NaturalText;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
@@ -43,38 +46,20 @@ public class ChartsActivity extends Activity {
 
         UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(this);
 
-        List<Integer> accumulatedTimes = usageStatsWrapper.getAccumulatedTimes(Interval.DAILY, 9);
+        ViewPager barPager = findViewById(R.id.bar_view_pager);
 
-        // Use maximum of timespan plus 30 minutes so no bar hits the top
-        int max = Collections.max(accumulatedTimes) + (60 * 30);
+        barPager.setAdapter(new BarViewPagerAdapter(this, usageStatsWrapper));
 
-        ArrayList<String> bottomText = new ArrayList<>();
-
-        for (int i = 9; i >= 0; i--) {
-            bottomText.add(NaturalText.formatShort(Interval.DAILY, i));
-        }
-
-        BarView barView = findViewById(R.id.bar_chart);
-
-        barView.setDataList(accumulatedTimes, max);
-        barView.setBottomTextList(bottomText);
-
-        final HorizontalScrollView barScrollView = findViewById(R.id.bar_chart_scroll);
-
-        barScrollView.post(new Runnable() {
-            @Override
-            public void run() {
-                barScrollView.scrollTo(5000, 0);
-            }
-        });
+        SmartTabLayout barTabLayout = findViewById(R.id.bar_view_pager_tab);
+        barTabLayout.setViewPager(barPager);
 
         ViewPager clockPager = findViewById(R.id.clock_pie_view_pager);
 
         clockPager.setAdapter(new ClockPieViewPagerAdapter(this, usageStatsWrapper));
         clockPager.setCurrentItem(9);
 
-        SmartTabLayout tabLayout = findViewById(R.id.clock_pie_view_pager_tab);
-        tabLayout.setViewPager(clockPager);
+        SmartTabLayout chartTabLayout = findViewById(R.id.clock_pie_view_pager_tab);
+        chartTabLayout.setViewPager(clockPager);
 
     }
 }

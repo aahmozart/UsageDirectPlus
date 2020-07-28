@@ -24,42 +24,33 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <godau.fynn.usagedirect.view.DynamicViewPager
+            android:id="@+id/bar_view_pager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/charts_daily"
-            android:layout_margin="8dp"
-            android:textColor="@android:color/black" />
+            android:layout_height="wrap_content" />
 
-        <HorizontalScrollView
-            android:id="@+id/bar_chart_scroll"
-            android:layout_width="match_parent"
-            android:layout_height="220dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <im.dacer.androidcharts.BarView
-                    android:id="@+id/bar_chart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="220dp" />
-
-                <!-- BarView is missing space to the right
-                     and cannot handle padding attribute   -->
-                <View
-                    android:layout_width="22dp"
-                    android:layout_height="match_parent" />
-
-
-            </LinearLayout>
-
-
-        </HorizontalScrollView>
+        <com.ogaclejapan.smarttablayout.SmartTabLayout
+            android:id="@+id/bar_view_pager_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_gravity="bottom|center_horizontal"
+            app:stl_clickable="false"
+            app:stl_customTabTextLayoutId="@layout/custom_tab_circle"
+            app:stl_dividerColor="@android:color/transparent"
+            app:stl_dividerThickness="0dp"
+            app:stl_indicatorColor="@color/primaryLight"
+            app:stl_indicatorCornerRadius="4dp"
+            app:stl_indicatorGravity="center"
+            app:stl_indicatorInterpolation="linear"
+            app:stl_indicatorThickness="8dp"
+            app:stl_underlineColor="@android:color/transparent"
+            app:stl_underlineThickness="0dp"
+            />
 
         <godau.fynn.usagedirect.view.DynamicViewPager
             android:id="@+id/clock_pie_view_pager"
