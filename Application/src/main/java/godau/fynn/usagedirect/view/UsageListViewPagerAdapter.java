@@ -45,15 +45,13 @@ public class UsageListViewPagerAdapter extends PagerAdapter {
 
     private int count = -1;
 
-    private static UsageStatsWrapper usageStats;
+    private UsageStatsWrapper usageStats;
 
-    public UsageListViewPagerAdapter(Interval interval, Activity context) {
+    public UsageListViewPagerAdapter(Interval interval, Activity context, UsageStatsWrapper usageStatsWrapper) {
         this.interval = interval;
         this.context = context;
 
-        if (usageStats == null) {
-            usageStats = new UsageStatsWrapper(context);
-        }
+        usageStats = usageStatsWrapper;
     }
 
     @NonNull

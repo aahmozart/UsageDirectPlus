@@ -43,9 +43,9 @@ public class TimespanPagerAdapter extends PagerAdapter implements ViewPager.OnPa
 
     private UsageStatsWrapper usageStatsWrapper;
 
-    public TimespanPagerAdapter(Activity context) {
+    public TimespanPagerAdapter(Activity context, UsageStatsWrapper usageStatsWrapper) {
         this.context = context;
-        usageStatsWrapper = new UsageStatsWrapper(context);
+        this.usageStatsWrapper = usageStatsWrapper;
     }
 
     @NonNull
@@ -70,7 +70,7 @@ public class TimespanPagerAdapter extends PagerAdapter implements ViewPager.OnPa
 
                         ViewPager viewPager = view.findViewById(R.id.viewpager);
                         viewPager.setAdapter(
-                                new UsageListViewPagerAdapter(interval, context)
+                                new UsageListViewPagerAdapter(interval, context, usageStatsWrapper)
                         );
 
                         viewPager.setCurrentItem(viewPager.getAdapter().getCount() - 1);

@@ -63,7 +63,7 @@ public class AppUsageStatisticsActivity extends Activity {
             new GrantPermissionDialog(this).show();
         }
 
-        final TimespanPagerAdapter timespanAdapter = new TimespanPagerAdapter(this);
+        final TimespanPagerAdapter timespanAdapter = new TimespanPagerAdapter(this, usageStatsWrapper);
 
         viewPager = findViewById(R.id.timespanpager);
         viewPager.setOffscreenPageLimit(3);
