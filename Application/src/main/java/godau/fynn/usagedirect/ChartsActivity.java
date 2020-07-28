@@ -21,8 +21,9 @@ package godau.fynn.usagedirect;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.HorizontalScrollView;
+import android.widget.ScrollView;
 import androidx.annotation.Nullable;
-import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.wrapper.ComponentForegroundStat;
 import godau.fynn.usagedirect.wrapper.Interval;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
@@ -44,18 +45,27 @@ public class ChartsActivity extends Activity {
 
         UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(this);
 
-        List<Integer> accumulatedTimes = usageStatsWrapper.getAccumulatedTimes(Interval.DAILY, 7);
+        List<Integer> accumulatedTimes = usageStatsWrapper.getAccumulatedTimes(Interval.DAILY, 9);
 
         // Use maximum of timespan plus 30 minutes so no bar hits the top
         int max = Collections.max(accumulatedTimes) + (60 * 30);
 
         ArrayList<String> bottomText = new ArrayList<>();
-        bottomText.addAll(Arrays.asList("-7", "-6", "-5", "-4", "-3", "-2", "-1", "0"));
+        bottomText.addAll(Arrays.asList("-9", "-8", "-7", "-6", "-5", "-4", "-3", "-2", "-1", "0"));
 
         BarView barView = findViewById(R.id.bar_chart);
 
         barView.setDataList(accumulatedTimes, max);
         barView.setBottomTextList(bottomText);
+
+        final HorizontalScrollView barScrollView = findViewById(R.id.bar_chart_scroll);
+
+        barScrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                barScrollView.scrollTo(5000, 0);
+            }
+        });
 
         ClockPieView pieView = findViewById(R.id.clock_chart);
 

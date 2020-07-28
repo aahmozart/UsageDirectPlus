@@ -34,10 +34,33 @@
             android:layout_margin="8dp"
             android:textColor="@android:color/black" />
 
-        <im.dacer.androidcharts.BarView
-            android:id="@+id/bar_chart"
+        <HorizontalScrollView
+            android:id="@+id/bar_chart_scroll"
             android:layout_width="match_parent"
-            android:layout_height="220dp" />
+            android:layout_height="220dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <im.dacer.androidcharts.BarView
+                    android:id="@+id/bar_chart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="220dp" />
+
+                <!-- BarView is missing space to the right
+                     and cannot handle padding attribute   -->
+                <View
+                    android:layout_width="22dp"
+                    android:layout_height="match_parent" />
+
+
+            </LinearLayout>
+
+
+        </HorizontalScrollView>
+
+
 
         <TextView
             android:layout_width="match_parent"
