@@ -28,6 +28,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.wrapper.Interval;
+import godau.fynn.usagedirect.wrapper.NaturalText;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
 import java.util.HashMap;
@@ -107,13 +108,7 @@ public class TimespanPagerAdapter extends PagerAdapter implements ViewPager.OnPa
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position) {
-            case 0: return context.getString(R.string.span_daily);
-            case 1: return context.getString(R.string.span_weekly);
-            case 2: return context.getString(R.string.span_monthly);
-            case 3: return context.getString(R.string.span_yearly);
-            default: return null;
-        }
+        return context.getString(NaturalText.getIntervalName(Interval.values()[position]));
     }
 
     @Override

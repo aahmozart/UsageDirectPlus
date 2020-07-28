@@ -19,6 +19,8 @@
 package godau.fynn.usagedirect.wrapper;
 
 import android.content.Context;
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import godau.fynn.usagedirect.R;
 
 import java.text.SimpleDateFormat;
@@ -72,6 +74,22 @@ public abstract class NaturalText {
                 return formatToPattern("yy", interval, offset);
             default:
                 throw new IllegalArgumentException("Unexpected value: " + interval);
+        }
+    }
+
+    public static @NonNull
+    @StringRes Integer getIntervalName(Interval interval) {
+        switch (interval) {
+            case DAILY:
+                return R.string.span_daily;
+            case WEEKLY:
+                return R.string.span_weekly;
+            case MONTHLY:
+                return R.string.span_monthly;
+            case YEARLY:
+                return R.string.span_yearly;
+            default:
+                return null;
         }
     }
 
