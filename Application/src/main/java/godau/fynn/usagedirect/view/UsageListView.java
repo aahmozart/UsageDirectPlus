@@ -49,4 +49,8 @@ public class UsageListView extends RecyclerView {
     public void setUsageStatsList(List<UsageStats> usageStatsList) {
         adapter.setUsageStatsList(usageStatsList);
     }
+
+    public void setShowLastUsed(boolean value) {
+        adapter.setShowLastUsed(value);
+    }
 }

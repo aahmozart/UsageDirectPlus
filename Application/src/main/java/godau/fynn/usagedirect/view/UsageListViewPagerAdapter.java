@@ -72,6 +72,8 @@ public class UsageListViewPagerAdapter extends PagerAdapter {
         }
         container.addView(usageListView);
 
+        usageListView.setShowLastUsed(position == getCount() - 1);
+
 
         // Get data
 

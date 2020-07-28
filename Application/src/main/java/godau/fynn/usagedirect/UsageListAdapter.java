@@ -41,6 +41,7 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
 
     private List<UsageStats> mUsageStatsList;
     private Context mContext;
+    private boolean showLastUsed = true;
 
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
@@ -117,17 +118,24 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
                 usageStats.getPackageName() : name
         );
 
+        if (showLastUsed) {
 
-        long lastTimeUsed = usageStats.getLastTimeUsed();
+            viewHolder.getLastTimeUsed().setVisibility(View.VISIBLE);
 
-        if (usageStats.getPackageName().equals(BuildConfig.APPLICATION_ID))
-            viewHolder.getLastTimeUsed().setText(R.string.last_used_now);
-        else if (lastTimeUsed > 1)
-            viewHolder.getLastTimeUsed().setText(
-                    mContext.getString(R.string.last_used, Humanize.naturalTime(new Date(lastTimeUsed)))
-            );
-        else
-            viewHolder.getLastTimeUsed().setText(R.string.not_used);
+            long lastTimeUsed = usageStats.getLastTimeUsed();
+
+            if (usageStats.getPackageName().equals(BuildConfig.APPLICATION_ID))
+                viewHolder.getLastTimeUsed().setText(R.string.last_used_now);
+            else if (lastTimeUsed > 1)
+                viewHolder.getLastTimeUsed().setText(
+                        mContext.getString(R.string.last_used, Humanize.naturalTime(new Date(lastTimeUsed)))
+                );
+            else
+                viewHolder.getLastTimeUsed().setText(R.string.not_used);
+
+        } else {
+            viewHolder.getLastTimeUsed().setVisibility(View.GONE);
+        }
 
         long secondsUsed = usageStats.getTotalTimeInForeground() / 1000;
         viewHolder.getTimeUsed().setText(String.format(Locale.ENGLISH, "%d:%02d:%02d",
@@ -150,5 +158,9 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
     public void setUsageStatsList(List<UsageStats> usageStats) {
         mUsageStatsList = usageStats;
         notifyDataSetChanged();
+    }
+
+    public void setShowLastUsed(boolean value) {
+        showLastUsed = value;
     }
 }
