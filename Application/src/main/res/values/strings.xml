@@ -45,7 +45,7 @@
     <string name="ts_yesterday">Yesterday</string>
     <string name="ts_this_week">This week</string>
     <string name="ts_last_week">Last week</string>
-    <string name="ts_weeks_ago">%d weeks ago</string>
+    <string name="ts_calendar_week">Week %s</string>
     <string name="ts_this_month">This month</string>
     <string name="menu_reload">Reload</string>
 </resources>

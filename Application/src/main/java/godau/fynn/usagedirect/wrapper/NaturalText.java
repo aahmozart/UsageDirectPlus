@@ -36,13 +36,10 @@ public abstract class NaturalText {
                 } else if (offset == 1) {
                     return context.getString(R.string.ts_yesterday);
                 } else {
-                    Calendar then = interval.backInTime(offset);
-                    SimpleDateFormat format = new SimpleDateFormat(
-                            offset < 7?
+                    return formatToPattern(offset < 7?
                                     "EEEE" : // Weekday ("Saturday")
-                                    "MMM d"  // Abbr. month and day ("Jul 11")
-                    );
-                    return format.format(new Date(then.getTimeInMillis()));
+                                    "MMM d",  // Abbr. month and day ("Jul 11")
+                            interval, offset);
                 }
 
             case WEEKLY:
@@ -51,23 +48,36 @@ public abstract class NaturalText {
                 } else if (offset == 1) {
                     return context.getString(R.string.ts_last_week);
                 } else {
-                    return context.getString(R.string.ts_weeks_ago, offset);
+                    return context.getString(R.string.ts_calendar_week, formatToPattern("w", interval, offset));
                 }
-            case MONTHLY: {
-                Calendar then = interval.backInTime(offset);
-                SimpleDateFormat format = new SimpleDateFormat(
-                        "MMMM"
-                );
-                return format.format(new Date(then.getTimeInMillis()));
-            }
+            case MONTHLY:
+                return formatToPattern("MMMM", interval, offset);
             case YEARLY:
-                Calendar then = interval.backInTime(offset);
-                SimpleDateFormat format = new SimpleDateFormat(
-                        "yyyy"
-                );
-                return format.format(new Date(then.getTimeInMillis()));
+                return formatToPattern("yyyy", interval, offset);
             default:
                 return "Span -" + offset;
         }
+    }
+
+    public static String formatShort(Interval interval, int offset) {
+
+        switch (interval) {
+            case DAILY:
+                return formatToPattern("E", interval, offset).substring(0, 1);
+            case WEEKLY:
+                return formatToPattern("w", interval, offset);
+            case MONTHLY:
+                return formatToPattern("M", interval, offset);
+            case YEARLY:
+                return formatToPattern("yy", interval, offset);
+            default:
+                throw new IllegalArgumentException("Unexpected value: " + interval);
+        }
+    }
+
+    private static String formatToPattern(String pattern, Interval interval, int offset) {
+        Calendar then = interval.backInTime(offset);
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        return format.format(new Date(then.getTimeInMillis()));
     }
 }
