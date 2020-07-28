@@ -42,17 +42,15 @@
             android:layout_height="wrap_content"
             style="@style/PackageNameFont" />
 
-
-        <TextView
-            android:id="@+id/textview_last_time_used"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-
         <TextView
             android:id="@+id/textview_time_used"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/time_used" />
+
+        <TextView
+            android:id="@+id/textview_last_time_used"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>
