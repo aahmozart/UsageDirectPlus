@@ -30,14 +30,16 @@ import godau.fynn.usagedirect.wrapper.NaturalText;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 import im.dacer.androidcharts.BarView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class BarViewPagerAdapter extends PagerAdapter {
 
     private final Context context;
     private final UsageStatsWrapper usageStatsWrapper;
+
+    private final FramedBarView[] viewArray = new FramedBarView[4];
+
+    private int boldPosition = 9;
 
     public BarViewPagerAdapter(Context context, UsageStatsWrapper usageStatsWrapper) {
         this.context = context;
@@ -49,6 +51,8 @@ public class BarViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         FramedBarView barViewFrame = new FramedBarView(context);
         container.addView(barViewFrame);
+
+        viewArray[position] = barViewFrame;
 
         Interval interval = Interval.values()[position];
         int datasetAmount = usageStatsWrapper.getDatasetAmount(interval) - 1;
@@ -88,6 +92,10 @@ public class BarViewPagerAdapter extends PagerAdapter {
         barView.setDataList(accumulatedTimes, max);
         barView.setBottomTextList(bottomText);
 
+        if (interval == Interval.DAILY) {
+            barView.setBoldPosition(boldPosition);
+        }
+
         barViewFrame.scrollToEnd();
 
         return barViewFrame;
@@ -96,6 +104,7 @@ public class BarViewPagerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View) object);
+        viewArray[position] = null;
         //recycleViewList.add((FramedClockPieView) object);
     }
 
@@ -107,5 +116,12 @@ public class BarViewPagerAdapter extends PagerAdapter {
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return view == object;
+    }
+
+    public void setDailyBoldPosition(int position) {
+        boldPosition = position;
+        if (viewArray[0] != null) {
+            viewArray[0].getBarView().setBoldPosition(position);
+        }
     }
 }

@@ -20,6 +20,7 @@ package godau.fynn.usagedirect;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
@@ -46,9 +47,10 @@ public class ChartsActivity extends Activity {
 
         UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(this);
 
-        ViewPager barPager = findViewById(R.id.bar_view_pager);
+        final ViewPager barPager = findViewById(R.id.bar_view_pager);
 
-        barPager.setAdapter(new BarViewPagerAdapter(this, usageStatsWrapper));
+        final BarViewPagerAdapter barAdapter = new BarViewPagerAdapter(this, usageStatsWrapper);
+        barPager.setAdapter(barAdapter);
 
         SmartTabLayout barTabLayout = findViewById(R.id.bar_view_pager_tab);
         barTabLayout.setViewPager(barPager);
@@ -60,6 +62,24 @@ public class ChartsActivity extends Activity {
 
         SmartTabLayout chartTabLayout = findViewById(R.id.clock_pie_view_pager_tab);
         chartTabLayout.setViewPager(clockPager);
+
+        clockPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.d("ChartsActivity", "Page selected: " + position);
+                barAdapter.setDailyBoldPosition(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
     }
 }
