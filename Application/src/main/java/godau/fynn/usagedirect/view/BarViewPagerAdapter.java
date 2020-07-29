@@ -79,7 +79,8 @@ public class BarViewPagerAdapter extends PagerAdapter {
                 interval, datasetAmount);
 
         // Use maximum of timespan plus 30 minutes so no bar hits the top
-        int max = Collections.max(accumulatedTimes) + (60 * 30);
+        int max = Collections.max(accumulatedTimes);
+        int chartMax = max + (60 * 30);
 
         ArrayList<String> bottomText = new ArrayList<>();
 
@@ -89,12 +90,29 @@ public class BarViewPagerAdapter extends PagerAdapter {
 
         BarView barView = barViewFrame.getBarView();
 
-        barView.setDataList(accumulatedTimes, max);
+        barView.setDataList(accumulatedTimes, chartMax);
         barView.setBottomTextList(bottomText);
 
+        // Set bottom text as bold according to selected item of clock pie chart
         if (interval == Interval.DAILY) {
             barView.setBoldPosition(boldPosition);
         }
+
+        // Calculate vertical line frequency
+        int maxHours = (max / 60 / 60) + 1;
+        int frequency = 1;
+        while (maxHours / 15 > frequency) {
+            frequency *= 10;
+        }
+
+        // Add lines
+        List<Integer> lines = new ArrayList<>();
+        int counter = frequency;
+        do {
+            lines.add(counter * 60 * 60);
+        } while ((counter += frequency) < maxHours);
+
+        barView.setVerticalLines(lines, chartMax);
 
         barViewFrame.scrollToEnd();
 
