@@ -28,7 +28,7 @@
         android:layout_margin="8dp"
         android:textColor="@android:color/black" />
 
-    <HorizontalScrollView
+    <godau.fynn.usagedirect.view.CustomHorizontalScrollView
         android:id="@+id/bar_chart_scroll"
         android:layout_width="match_parent"
         android:layout_height="220dp">
@@ -38,6 +38,6 @@
             android:layout_width="wrap_content"
             android:layout_height="220dp" />
 
-    </HorizontalScrollView>
+    </godau.fynn.usagedirect.view.CustomHorizontalScrollView>
 
 </LinearLayout>
