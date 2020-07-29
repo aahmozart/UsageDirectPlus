@@ -48,4 +48,5 @@
     <string name="ts_calendar_week">Week %s</string>
     <string name="ts_this_month">This month</string>
     <string name="menu_reload">Reload</string>
+    <string name="error_no_data">An error occured: the system has returned no data. Please try restarting the application</string>
 </resources>

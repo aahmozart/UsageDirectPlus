@@ -21,6 +21,7 @@ package godau.fynn.usagedirect.view;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.viewpager.widget.PagerAdapter;
@@ -77,6 +78,11 @@ public class BarViewPagerAdapter extends PagerAdapter {
 
         List<Integer> accumulatedTimes = usageStatsWrapper.getAccumulatedTimes(
                 interval, datasetAmount);
+
+        if (accumulatedTimes.size() == 0) {
+            Toast.makeText(context, R.string.error_no_data, Toast.LENGTH_LONG).show();
+            return barViewFrame;
+        }
 
         // Use maximum of timespan plus 30 minutes so no bar hits the top
         int max = Collections.max(accumulatedTimes);
