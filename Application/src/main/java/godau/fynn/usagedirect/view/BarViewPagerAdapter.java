@@ -113,12 +113,22 @@ public class BarViewPagerAdapter extends PagerAdapter {
 
         // Add lines
         List<Integer> lines = new ArrayList<>();
+        List<String> lineLabels = new ArrayList<>();
         int counter = frequency;
         do {
             lines.add(counter * 60 * 60);
+            lineLabels.add(String.valueOf(counter));
         } while ((counter += frequency) < maxHours);
 
         barView.setVerticalLines(lines, chartMax);
+
+        // Don't display more than 4 vertical line labels
+        if (lineLabels.size() > 4) {
+            lineLabels.clear();
+            lineLabels.add(String.valueOf(frequency));
+        }
+
+        barView.setVerticalLineLabels(lineLabels);
 
         barViewFrame.scrollToEnd();
 
