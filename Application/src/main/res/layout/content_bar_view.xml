@@ -33,24 +33,10 @@
         android:layout_width="match_parent"
         android:layout_height="220dp">
 
-        <LinearLayout
+        <im.dacer.androidcharts.BarView
+            android:id="@+id/bar_chart"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-
-            <im.dacer.androidcharts.BarView
-                android:id="@+id/bar_chart"
-                android:layout_width="wrap_content"
-                android:layout_height="220dp" />
-
-            <!-- BarView is missing space to the right
-                 and cannot handle padding attribute   -->
-            <View
-                android:layout_width="22dp"
-                android:layout_height="match_parent" />
-
-
-        </LinearLayout>
-
+            android:layout_height="220dp" />
 
     </HorizontalScrollView>
 

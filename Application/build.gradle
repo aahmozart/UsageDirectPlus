@@ -23,7 +23,7 @@ dependencies {
     implementation 'androidx.viewpager:viewpager:1.0.0'
     implementation 'com.github.mfornos:humanize-slim:1.2.2'
     implementation 'org.codeberg.fynngodau:librariesDirect:fd6a5f370179b0f85b69c018a8037e1fa0ac37c2'
-    implementation 'com.github.fynngodau:AndroidCharts:dbc19a41b8348c71a1fc17839818cf734be633c'
+    implementation 'com.github.fynngodau:AndroidCharts:f493098f4ccaf0f0985243a839fe714769833674'
     implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
 }
 
