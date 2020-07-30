@@ -57,7 +57,7 @@
         \n\nIf you like, you can already start filling this database with currently available log data, which is up to 10 days.
     </string>
     <string name="db_feature_announcement_explanation">This decision was made considering the current data source (aggregated data from the Android system) has turned out to be terribly unreliable.
-        \n\nIt causes a number of unfixable bugs: sometimes, one application supposedly was in the foreground for multiple days in a row; sometimes the data for one ongoing period are the same as for another when they shoudln\'t; sometimes the system refuses to return any data at all after some time.
+        \n\nIt causes a number of unfixable bugs: sometimes, one application supposedly was in the foreground for multiple days in a row; sometimes the data for one ongoing period is the same as for another when it shouldn\'t; sometimes the system refuses to return any data at all after some time.
         \n\nThis is why future versions of usageDirect will aggregate log data themselves instead of relying on the system to do it.
         \n\nI hope this will lead to a much less frustrating user experience.
 
@@ -68,4 +68,5 @@
         \n\nTo avoid working with this terribly broken structure, I have decided that from the next version on, usageDirect will work just like other usage statistics applications supposedly work as well: it will parse data from the events log (which is also used to draw the new clock pie charts) into an internal database and then periodically fill it up with more recent data. This should hopefully turn out to be much more reliable than the current implementation.
         \n\nIn this version, you can already save and thus \"clock in\" usage time from the events log, which keeps a maximum of 10 days. Then, once the next version is available, this data will become available to you instead of the data aggregated by the system, for example, there might be a daily chart for a period longer than 10 days.
         </string>
+    <string name="db_chart_title">App usage by day with data from database</string>
 </resources>

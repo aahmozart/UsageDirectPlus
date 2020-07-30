@@ -20,7 +20,6 @@ package godau.fynn.usagedirect;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -28,7 +27,13 @@ import androidx.annotation.Nullable;
 import androidx.room.Room;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
 import godau.fynn.usagedirect.persistence.UsageStatsDao;
+import godau.fynn.usagedirect.view.FramedBarView;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public class DatabaseManagerActivity extends Activity {
 
@@ -38,6 +43,7 @@ public class DatabaseManagerActivity extends Activity {
 
     private TextView status;
     private Button insert;
+    private FramedBarView barView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,11 +60,14 @@ public class DatabaseManagerActivity extends Activity {
 
         status = findViewById(R.id.text_status);
         insert = findViewById(R.id.button_insert);
+        barView = findViewById(R.id.bar_view);
+
+        barView.setText(getString(R.string.db_chart_title));
 
         insert.setEnabled(false);
 
 
-        updateStatus();
+        updateViews();
 
         insert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,28 +84,85 @@ public class DatabaseManagerActivity extends Activity {
                                 usageStatsWrapper.getAllSimpleUsageStats()
                         );
 
-                        updateStatus();
+                        updateViews();
 
                     }
                 }).start();
             }
         });
 
-
-    }
-
-    private void updateStatus() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final int daysStored = usageStats.getDaysStored();
+
+
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
+            }
+        }).start();
+
+
+    }
+
+    private void updateViews() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final int daysStored = usageStats.getDaysStoredAmount();
                 final long totalHours = usageStats.getTotalTimeUsed() / 1000 / 60 / 60;
+
+                Map<Day, Long> map = usageStats.getTotalTimePerDay();
+
+                final List<String> labels = new ArrayList<>();
+                final List<Integer> data = new ArrayList<>();
+                for (Day d : map.keySet()) {
+                    labels.add(String.valueOf(d.day));
+                    int seconds = (int) (map.get(d) / 1000);
+                    data.add(seconds);
+                }
+
+                int max = Collections.max(data);
+                final int chartMax = max + (30 * 60);
+
+                // Calculate vertical line frequency
+                int maxHours = (max / 60 / 60) + 1;
+                int frequency = 1;
+                while (maxHours / 15 > frequency) {
+                    frequency *= 10;
+                }
+
+                // Add lines
+                final List<Integer> lines = new ArrayList<>();
+                final List<String> lineLabels = new ArrayList<>();
+                int counter = frequency;
+                do {
+                    lines.add(counter * 60 * 60);
+                    lineLabels.add(String.valueOf(counter));
+                } while ((counter += frequency) < maxHours);
+
+                // Don't display more than 4 vertical line labels
+                if (lineLabels.size() > 4) {
+                    lineLabels.clear();
+                    lineLabels.add(String.valueOf(frequency));
+                }
+
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         status.setText(getString(R.string.db_status, daysStored, totalHours));
                         insert.setEnabled(true);
+
+                        barView.getBarView().setDataList(data, chartMax);
+                        barView.getBarView().setBottomTextList(labels);
+                        barView.getBarView().setVerticalLines(lines, chartMax);
+                        barView.getBarView().setVerticalLineLabels(lineLabels);
+
                     }
                 });
             }

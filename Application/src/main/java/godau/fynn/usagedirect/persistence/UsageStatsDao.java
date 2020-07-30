@@ -22,18 +22,44 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import godau.fynn.usagedirect.Day;
 
-import java.util.List;
+import java.util.*;
 
 @Dao
-public interface UsageStatsDao {
+public abstract class UsageStatsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(List<SimpleUsageStat> entities);
+    public abstract void insert(List<SimpleUsageStat> entities);
 
     @Query("SELECT sum(timeUsed) FROM usageStats")
-    long getTotalTimeUsed();
+    public abstract long getTotalTimeUsed();
 
     @Query("SELECT count(*) FROM (SELECT DISTINCT day, month, year FROM usageStats)")
-    int getDaysStored();
+    public abstract int getDaysStoredAmount();
+
+    @Query("SELECT DISTINCT day, month, year FROM usageStats ORDER BY year, month, day")
+    public abstract Day[] getDaysStored();
+
+    @Query("SELECT sum(timeUsed) FROM usageStats WHERE day == :day AND month == :month AND year == :year")
+    protected abstract int getTotalTimeUsed(int day, int month, int year);
+
+    public long getTotalTimeUsed(Day day) {
+        return getTotalTimeUsed(day.day, day.month, day.year);
+    }
+
+    /**
+     * @param calendar A calendar set to the day you want to query
+     */
+    public long getTotalTimeUsed(Calendar calendar) {
+        return getTotalTimeUsed(new Day(calendar.getTimeInMillis()));
+    }
+
+    public Map<Day, Long> getTotalTimePerDay() {
+        Map<Day, Long> map = new LinkedHashMap<>();
+        for (Day d : getDaysStored()) {
+            map.put(d, getTotalTimeUsed(d));
+        }
+        return map;
+    }
 }

@@ -19,6 +19,7 @@
 package godau.fynn.usagedirect.view;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
@@ -32,8 +33,8 @@ public class FramedBarView extends FrameLayout {
     private final BarView barView;
     private final HorizontalScrollView scrollView;
 
-    public FramedBarView(Context context) {
-        super(context);
+    public FramedBarView(Context context, AttributeSet attrs) {
+        super(context, attrs);
 
         addView(
                 LayoutInflater.from(context).inflate(R.layout.content_bar_view, this, false)
@@ -42,6 +43,10 @@ public class FramedBarView extends FrameLayout {
         textView = findViewById(R.id.bar_chart_label);
         barView = findViewById(R.id.bar_chart);
         scrollView = findViewById(R.id.bar_chart_scroll);
+    }
+
+    public FramedBarView(Context context) {
+        this(context, null);
     }
 
     public void setText(String text) {
