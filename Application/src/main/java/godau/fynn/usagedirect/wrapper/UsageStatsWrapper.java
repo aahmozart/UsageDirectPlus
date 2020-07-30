@@ -24,6 +24,8 @@ import android.app.usage.UsageEvents;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
+import godau.fynn.usagedirect.Day;
+import godau.fynn.usagedirect.persistence.SimpleUsageStat;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -193,6 +195,56 @@ public class UsageStatsWrapper {
         }
 
         return componentForegroundStats;
+    }
+
+
+    /**
+     * Collects <b>all</b> event information from system to calculate and aggregate precise
+     * foreground time statistics and presents this information as {@link SimpleUsageStat}s.
+     * <p><b>This method call causes lag.</b>
+     * @return
+     */
+    public List<SimpleUsageStat> getAllSimpleUsageStats() {
+        List<ComponentForegroundStat> foregroundStats;
+        int relativeDay;
+
+        foregroundStats = getForegroundStatsByRelativeDay(relativeDay = 0);
+
+        List<SimpleUsageStat> usageStats = new ArrayList<>();
+
+        while (foregroundStats.size() > 0) {
+
+            Map<String, Long> applicationTotalForegroundTime = new HashMap<>();
+
+            for (ComponentForegroundStat foregroundStat : foregroundStats) {
+                if (applicationTotalForegroundTime.containsKey(foregroundStat.packageName)) {
+
+                    long newTotal = applicationTotalForegroundTime.get(foregroundStat.packageName)
+                            + (foregroundStat.endTime - foregroundStat.beginTime);
+
+                    applicationTotalForegroundTime.put(foregroundStat.packageName, newTotal);
+
+                } else {
+
+                    applicationTotalForegroundTime.put(foregroundStat.packageName,
+                            (foregroundStat.endTime - foregroundStat.beginTime)
+                    );
+
+                }
+            }
+
+            Day day = new Day(foregroundStats.get(0).beginTime);
+
+            for (String application : applicationTotalForegroundTime.keySet()) {
+                usageStats.add(
+                        new SimpleUsageStat(day, applicationTotalForegroundTime.get(application), application)
+                );
+            }
+
+            foregroundStats = getForegroundStatsByRelativeDay(++relativeDay);
+        }
+
+        return usageStats;
     }
 
     /**

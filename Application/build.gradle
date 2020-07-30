@@ -25,6 +25,11 @@ dependencies {
     implementation 'org.codeberg.fynngodau:librariesDirect:fd6a5f370179b0f85b69c018a8037e1fa0ac37c2'
     implementation 'com.github.fynngodau:AndroidCharts:c71022830d9535bdc316bb0605287d2911bc4497'
     implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
+
+    def room_version = "2.2.5"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
 }
 
 // The sample build uses multiple directories to
