@@ -34,6 +34,6 @@ public interface UsageStatsDao {
     @Query("SELECT sum(timeUsed) FROM usageStats")
     long getTotalTimeUsed();
 
-    @Query("SELECT count(DISTINCT day) FROM usageStats")
+    @Query("SELECT count(*) FROM (SELECT DISTINCT day, month, year FROM usageStats)")
     int getDaysStored();
 }
