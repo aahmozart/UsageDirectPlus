@@ -21,20 +21,12 @@ package godau.fynn.usagedirect;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.HorizontalScrollView;
-import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import godau.fynn.usagedirect.view.BarViewPagerAdapter;
 import godau.fynn.usagedirect.view.ClockPieViewPagerAdapter;
-import godau.fynn.usagedirect.view.FramedBarView;
-import godau.fynn.usagedirect.wrapper.Interval;
-import godau.fynn.usagedirect.wrapper.NaturalText;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
-import im.dacer.androidcharts.BarView;
-
-import java.util.*;
 
 public class ChartsActivity extends Activity {
     @Override
@@ -42,8 +34,6 @@ public class ChartsActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_charts);
-
-        getActionBar().setTitle(R.string.title_feature_preview);
 
         UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(this);
 
@@ -66,7 +56,6 @@ public class ChartsActivity extends Activity {
         clockPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -77,7 +66,6 @@ public class ChartsActivity extends Activity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
 
