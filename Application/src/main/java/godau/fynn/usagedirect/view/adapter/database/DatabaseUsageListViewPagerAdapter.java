@@ -16,12 +16,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package godau.fynn.usagedirect.view;
+package godau.fynn.usagedirect.view.adapter.database;
 
 import android.app.Activity;
 import androidx.annotation.Nullable;
 import godau.fynn.usagedirect.Day;
-import godau.fynn.usagedirect.persistence.SimpleUsageStat;
+import godau.fynn.usagedirect.SimpleUsageStat;
+import godau.fynn.usagedirect.view.adapter.UsageListViewPagerAdapter;
 import godau.fynn.usagedirect.wrapper.Interval;
 import godau.fynn.usagedirect.wrapper.NaturalText;
 

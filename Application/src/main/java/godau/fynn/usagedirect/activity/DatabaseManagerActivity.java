@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package godau.fynn.usagedirect;
+package godau.fynn.usagedirect.activity;
 
 import android.app.Activity;
 import android.app.job.JobInfo;
@@ -27,6 +27,8 @@ import android.view.View;
 import android.widget.*;
 import androidx.annotation.Nullable;
 import androidx.room.Room;
+import godau.fynn.usagedirect.Day;
+import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.persistence.EventLogService;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
 import godau.fynn.usagedirect.persistence.UsageStatsDao;

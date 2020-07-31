@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package godau.fynn.usagedirect.view;
+package godau.fynn.usagedirect.view.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -26,6 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.viewpager.widget.PagerAdapter;
 import godau.fynn.usagedirect.R;
+import godau.fynn.usagedirect.view.FramedBarView;
 import godau.fynn.usagedirect.wrapper.Interval;
 import godau.fynn.usagedirect.wrapper.NaturalText;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;

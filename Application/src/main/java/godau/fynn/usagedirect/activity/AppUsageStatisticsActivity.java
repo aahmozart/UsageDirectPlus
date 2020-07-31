@@ -1,20 +1,22 @@
 /*
-* Copyright 2014 The Android Open Source Project
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * usageDirect
+ * Copyright (C) 2020 Fynn Godau
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 
-package godau.fynn.usagedirect;
+package godau.fynn.usagedirect.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -24,8 +26,10 @@ import android.util.TypedValue;
 import android.view.*;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
-import godau.fynn.usagedirect.view.DatabaseTimespanPagerAdapter;
-import godau.fynn.usagedirect.view.TimespanPagerAdapter;
+import godau.fynn.usagedirect.BuildConfig;
+import godau.fynn.usagedirect.R;
+import godau.fynn.usagedirect.view.adapter.database.DatabaseTimespanPagerAdapter;
+import godau.fynn.usagedirect.view.adapter.TimespanPagerAdapter;
 import godau.fynn.usagedirect.view.dialog.GrantPermissionDialog;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import godau.fynn.librariesdirect.AboutLibrariesActivity;
@@ -33,8 +37,6 @@ import godau.fynn.librariesdirect.AboutLibrariesConfig;
 import godau.fynn.librariesdirect.Library;
 import godau.fynn.librariesdirect.License;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
-
-import java.util.*;
 
 /**
  * Launcher Activity for the App Usage Statistics sample app.

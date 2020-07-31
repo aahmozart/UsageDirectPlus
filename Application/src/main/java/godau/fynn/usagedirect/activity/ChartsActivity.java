@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package godau.fynn.usagedirect;
+package godau.fynn.usagedirect.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -24,8 +24,9 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
-import godau.fynn.usagedirect.view.BarViewPagerAdapter;
-import godau.fynn.usagedirect.view.ClockPieViewPagerAdapter;
+import godau.fynn.usagedirect.R;
+import godau.fynn.usagedirect.view.adapter.BarViewPagerAdapter;
+import godau.fynn.usagedirect.view.adapter.ClockPieViewPagerAdapter;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
 public class ChartsActivity extends Activity {

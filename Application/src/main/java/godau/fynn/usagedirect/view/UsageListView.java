@@ -18,14 +18,13 @@
 
 package godau.fynn.usagedirect.view;
 
-import android.app.usage.UsageStats;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import godau.fynn.usagedirect.UsageListAdapter;
-import godau.fynn.usagedirect.persistence.SimpleUsageStat;
+import godau.fynn.usagedirect.view.adapter.UsageListAdapter;
+import godau.fynn.usagedirect.SimpleUsageStat;
 
 import java.util.List;
 

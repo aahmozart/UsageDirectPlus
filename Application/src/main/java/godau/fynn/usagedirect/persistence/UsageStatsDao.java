@@ -18,12 +18,12 @@
 
 package godau.fynn.usagedirect.persistence;
 
-import android.app.usage.UsageStats;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import godau.fynn.usagedirect.Day;
+import godau.fynn.usagedirect.SimpleUsageStat;
 
 import java.util.*;
 

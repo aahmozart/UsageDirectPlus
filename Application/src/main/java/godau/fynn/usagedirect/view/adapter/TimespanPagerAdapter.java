@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package godau.fynn.usagedirect.view;
+package godau.fynn.usagedirect.view.adapter;
 
 import android.app.Activity;
 import android.view.View;

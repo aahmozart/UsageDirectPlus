@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package godau.fynn.usagedirect;
+package godau.fynn.usagedirect.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -26,12 +26,12 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
-import godau.fynn.usagedirect.view.SystemTimespanPagerAdapter;
-import godau.fynn.usagedirect.view.TimespanPagerAdapter;
+import godau.fynn.usagedirect.R;
+import godau.fynn.usagedirect.view.adapter.system.SystemTimespanPagerAdapter;
+import godau.fynn.usagedirect.view.adapter.TimespanPagerAdapter;
 import godau.fynn.usagedirect.view.dialog.GrantPermissionDialog;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 

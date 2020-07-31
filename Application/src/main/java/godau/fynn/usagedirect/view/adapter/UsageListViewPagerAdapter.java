@@ -16,10 +16,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package godau.fynn.usagedirect.view;
+package godau.fynn.usagedirect.view.adapter;
 
 import android.app.Activity;
-import android.app.usage.UsageStats;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,10 +27,8 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 import godau.fynn.usagedirect.Comparator;
 import godau.fynn.usagedirect.IconThread;
-import godau.fynn.usagedirect.persistence.SimpleUsageStat;
-import godau.fynn.usagedirect.wrapper.Interval;
-import godau.fynn.usagedirect.wrapper.NaturalText;
-import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
+import godau.fynn.usagedirect.SimpleUsageStat;
+import godau.fynn.usagedirect.view.UsageListView;
 
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;

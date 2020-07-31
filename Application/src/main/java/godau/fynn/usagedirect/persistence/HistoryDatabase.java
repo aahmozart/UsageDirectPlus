@@ -20,6 +20,7 @@ package godau.fynn.usagedirect.persistence;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
+import godau.fynn.usagedirect.SimpleUsageStat;
 
 /**
  * This database stores:

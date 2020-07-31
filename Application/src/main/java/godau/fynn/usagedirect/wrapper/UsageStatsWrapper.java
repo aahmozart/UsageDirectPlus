@@ -25,7 +25,7 @@ import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import godau.fynn.usagedirect.Day;
-import godau.fynn.usagedirect.persistence.SimpleUsageStat;
+import godau.fynn.usagedirect.SimpleUsageStat;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

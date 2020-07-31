@@ -19,7 +19,6 @@
 package godau.fynn.usagedirect;
 
 import android.app.usage.UsageStats;
-import godau.fynn.usagedirect.persistence.SimpleUsageStat;
 
 public class Comparator {
     /**

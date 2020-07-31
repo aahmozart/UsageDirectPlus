@@ -16,13 +16,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package godau.fynn.usagedirect.persistence;
+package godau.fynn.usagedirect;
 
 import android.app.usage.UsageStats;
 import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 import androidx.room.Entity;
-import godau.fynn.usagedirect.Day;
+import godau.fynn.usagedirect.persistence.HistoryDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
