@@ -19,6 +19,7 @@
 package godau.fynn.usagedirect;
 
 import android.app.usage.UsageStats;
+import godau.fynn.usagedirect.persistence.SimpleUsageStat;
 
 public class Comparator {
     /**
@@ -36,11 +37,11 @@ public class Comparator {
     /**
      * A {@link java.util.Comparator} to sort a collection of {@link UsageStats} by total screen time.
      */
-    public static class TimeInForegroundComparatorDesc implements java.util.Comparator<UsageStats> {
+    public static class TimeInForegroundComparatorDesc implements java.util.Comparator<SimpleUsageStat> {
 
         @Override
-        public int compare(UsageStats left, UsageStats right) {
-            return Long.compare(right.getTotalTimeInForeground(), left.getTotalTimeInForeground());
+        public int compare(SimpleUsageStat left, SimpleUsageStat right) {
+            return Long.compare(right.getTimeUsed(), left.getTimeUsed());
         }
     }
 }

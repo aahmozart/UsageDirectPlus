@@ -19,7 +19,6 @@
 package godau.fynn.usagedirect;
 
 import android.app.Activity;
-import android.app.usage.UsageStats;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -28,7 +27,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
-import godau.fynn.usagedirect.R;
+import godau.fynn.usagedirect.persistence.SimpleUsageStat;
 
 import java.util.List;
 import java.util.Map;
@@ -36,14 +35,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class IconThread extends Thread {
 
-    public static Map<UsageStats, Drawable> iconMap = new ConcurrentHashMap<>();
-    public static Map<UsageStats, String> nameMap = new ConcurrentHashMap<>();
+    public static Map<String, Drawable> iconMap = new ConcurrentHashMap<>();
+    public static Map<String, String> nameMap = new ConcurrentHashMap<>();
 
-    private List<UsageStats> usageStats;
-    private RecyclerView.LayoutManager layout;
-    private Activity context;
+    private final List<SimpleUsageStat> usageStats;
+    private final RecyclerView.LayoutManager layout;
+    private final Activity context;
 
-    public IconThread(List<UsageStats> usageStats, RecyclerView.LayoutManager layout, Activity context) {
+    public IconThread(List<SimpleUsageStat> usageStats, RecyclerView.LayoutManager layout, Activity context) {
         this.usageStats = usageStats;
         this.layout = layout;
         this.context = context;
@@ -54,18 +53,18 @@ public class IconThread extends Thread {
 
         PackageManager packageManager = context.getPackageManager();
 
-        for (final UsageStats u : usageStats) {
+        for (final SimpleUsageStat u : usageStats) {
 
             try {
-                if (!iconMap.containsKey(u)) {
-                    final Drawable appIcon = packageManager.getApplicationIcon(u.getPackageName());
-                    iconMap.put(u, appIcon);
+                if (!iconMap.containsKey(u.getApplicationId())) {
+                    final Drawable appIcon = packageManager.getApplicationIcon(u.getApplicationId());
+                    iconMap.put(u.getApplicationId(), appIcon);
                 }
 
-                if (!nameMap.containsKey(u)) {
-                    ApplicationInfo appInfo = packageManager.getApplicationInfo(u.getPackageName(), 0);
+                if (!nameMap.containsKey(u.getApplicationId())) {
+                    ApplicationInfo appInfo = packageManager.getApplicationInfo(u.getApplicationId(), 0);
                     final String appName = (String) packageManager.getApplicationLabel(appInfo);
-                    nameMap.put(u, appName);
+                    nameMap.put(u.getApplicationId(), appName);
                 }
 
                 context.runOnUiThread(new Runnable() {
@@ -76,15 +75,15 @@ public class IconThread extends Thread {
                         if (view == null) return;
 
                         ImageView imageView = view.findViewById(R.id.app_icon);
-                        imageView.setImageDrawable(iconMap.get(u));
+                        imageView.setImageDrawable(iconMap.get(u.getApplicationId()));
 
                         TextView textView = view.findViewById(R.id.textview_package_name);
-                        textView.setText(nameMap.get(u));
+                        textView.setText(nameMap.get(u.getApplicationId()));
                     }
                 });
 
             } catch (PackageManager.NameNotFoundException e) {
-                Log.i("ICONTHREAD", String.format("App Icon not found for %s", u.getPackageName()));
+                Log.i("ICONTHREAD", String.format("App Icon not found for %s", u.getApplicationId()));
             }
 
         }

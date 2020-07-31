@@ -17,7 +17,6 @@
 package godau.fynn.usagedirect;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -25,6 +24,7 @@ import android.util.TypedValue;
 import android.view.*;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
+import godau.fynn.usagedirect.view.DatabaseTimespanPagerAdapter;
 import godau.fynn.usagedirect.view.TimespanPagerAdapter;
 import godau.fynn.usagedirect.view.dialog.GrantPermissionDialog;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -32,8 +32,6 @@ import godau.fynn.librariesdirect.AboutLibrariesActivity;
 import godau.fynn.librariesdirect.AboutLibrariesConfig;
 import godau.fynn.librariesdirect.Library;
 import godau.fynn.librariesdirect.License;
-import godau.fynn.usagedirect.wrapper.ComponentForegroundStat;
-import godau.fynn.usagedirect.wrapper.Interval;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
 import java.util.*;
@@ -57,13 +55,11 @@ public class AppUsageStatisticsActivity extends Activity {
         getActionBar().setElevation(0f);
 
 
-        final UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(AppUsageStatisticsActivity.this);
-
-        if (!usageStatsWrapper.isPermissionGranted()) {
+        if (!new UsageStatsWrapper(this).isPermissionGranted()) {
             new GrantPermissionDialog(this).show();
         }
 
-        final TimespanPagerAdapter timespanAdapter = new TimespanPagerAdapter(this, usageStatsWrapper);
+        final TimespanPagerAdapter timespanAdapter = new DatabaseTimespanPagerAdapter(this);
 
         viewPager = findViewById(R.id.timespanpager);
         viewPager.setOffscreenPageLimit(3);
@@ -114,8 +110,19 @@ public class AppUsageStatisticsActivity extends Activity {
                 break;
 
             case R.id.menu_reload:
-                UsageStatsWrapper.flushCache();
-                viewPager.getAdapter().notifyDataSetChanged();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ((DatabaseTimespanPagerAdapter) viewPager.getAdapter()).prepare(0);
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                viewPager.getAdapter().notifyDataSetChanged();
+                            }
+                        });
+                    }
+                }).start();
                 break;
         }
 

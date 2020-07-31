@@ -30,6 +30,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import godau.fynn.usagedirect.view.SystemTimespanPagerAdapter;
 import godau.fynn.usagedirect.view.TimespanPagerAdapter;
 import godau.fynn.usagedirect.view.dialog.GrantPermissionDialog;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
@@ -63,7 +64,7 @@ public class SystemStatsActivity extends Activity {
             new GrantPermissionDialog(this).show();
         }
 
-        final TimespanPagerAdapter timespanAdapter = new TimespanPagerAdapter(this, usageStatsWrapper);
+        final TimespanPagerAdapter timespanAdapter = new SystemTimespanPagerAdapter(this, usageStatsWrapper);
 
         viewPager = findViewById(R.id.timespanpager);
         viewPager.setOffscreenPageLimit(3);

@@ -18,6 +18,8 @@
 
 package godau.fynn.usagedirect;
 
+import androidx.annotation.Nullable;
+
 import java.util.Calendar;
 
 /**
@@ -46,5 +48,13 @@ public class Day {
         this.year = year;
         this.month = month;
         this.day = day;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj instanceof Day) {
+            Day d = (Day) obj;
+            return d.year == year && d.month == month && d.day == day;
+        } else return super.equals(obj);
     }
 }

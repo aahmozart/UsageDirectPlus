@@ -25,12 +25,13 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import godau.fynn.usagedirect.UsageListAdapter;
+import godau.fynn.usagedirect.persistence.SimpleUsageStat;
 
 import java.util.List;
 
 public class UsageListView extends RecyclerView {
 
-    private UsageListAdapter adapter;
+    private final UsageListAdapter adapter;
 
     public UsageListView(@NonNull Context context) {
         super(context);
@@ -46,7 +47,7 @@ public class UsageListView extends RecyclerView {
 
     }
 
-    public void setUsageStatsList(List<UsageStats> usageStatsList) {
+    public void setUsageStatsList(List<SimpleUsageStat> usageStatsList) {
         adapter.setUsageStatsList(usageStatsList);
     }
 

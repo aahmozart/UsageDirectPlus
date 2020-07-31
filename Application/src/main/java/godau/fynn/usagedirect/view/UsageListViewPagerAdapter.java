@@ -28,6 +28,7 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 import godau.fynn.usagedirect.Comparator;
 import godau.fynn.usagedirect.IconThread;
+import godau.fynn.usagedirect.persistence.SimpleUsageStat;
 import godau.fynn.usagedirect.wrapper.Interval;
 import godau.fynn.usagedirect.wrapper.NaturalText;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
@@ -38,20 +39,12 @@ import java.util.concurrent.LinkedBlockingQueue;
 /**
  * Child pager of {@link TimespanPagerAdapter}, pages {@link UsageListView}s
  */
-public class UsageListViewPagerAdapter extends PagerAdapter {
+public abstract class UsageListViewPagerAdapter extends PagerAdapter {
     private static final Queue<UsageListView> recycleViewList = new LinkedBlockingQueue<>();
-    private final Interval interval;
-    private final Activity context;
+    protected final Activity context;
 
-    private int count = -1;
-
-    private UsageStatsWrapper usageStats;
-
-    public UsageListViewPagerAdapter(Interval interval, Activity context, UsageStatsWrapper usageStatsWrapper) {
-        this.interval = interval;
+    public UsageListViewPagerAdapter(Activity context) {
         this.context = context;
-
-        usageStats = usageStatsWrapper;
     }
 
     @NonNull
@@ -78,12 +71,13 @@ public class UsageListViewPagerAdapter extends PagerAdapter {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final List<UsageStats> usageStatsList = usageStats.getUsageStatistics(interval, getCount() - position - 1);
+
+                final List<SimpleUsageStat> usageStatsList = getUsageStats(position);
 
                 // Filter unused apps
                 for (int i = usageStatsList.size() - 1; i >= 0; i--) {
-                    UsageStats usageStats = usageStatsList.get(i);
-                    if (usageStats.getTotalTimeInForeground() <= 0)
+                    SimpleUsageStat usageStat = usageStatsList.get(i);
+                    if (usageStat.getTimeUsed() <= 0)
                         usageStatsList.remove(i);
                 }
 
@@ -108,12 +102,6 @@ public class UsageListViewPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public int getCount() {
-        if (count == -1) count = usageStats.getDatasetAmount(interval);
-        return count;
-    }
-
-    @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return object == view;
     }
@@ -127,9 +115,7 @@ public class UsageListViewPagerAdapter extends PagerAdapter {
 
     @Nullable
     @Override
-    public CharSequence getPageTitle(int position) {
-        return NaturalText.format(interval, getCount() - position - 1, context);
-    }
+    public abstract CharSequence getPageTitle(int position);
 
     @Override
     public int getItemPosition(@NonNull Object object) {
@@ -141,10 +127,5 @@ public class UsageListViewPagerAdapter extends PagerAdapter {
          */
     }
 
-    @Override
-    public void notifyDataSetChanged() {
-        count = -1;
-        super.notifyDataSetChanged();
-
-    }
+    protected abstract List<SimpleUsageStat> getUsageStats(int position);
 }

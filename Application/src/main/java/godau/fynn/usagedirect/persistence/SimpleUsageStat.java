@@ -18,10 +18,14 @@
 
 package godau.fynn.usagedirect.persistence;
 
+import android.app.usage.UsageStats;
 import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import godau.fynn.usagedirect.Day;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Similar to UsageStats, but contains less data and is stored in the
@@ -44,15 +48,38 @@ public class SimpleUsageStat {
         this.applicationId = applicationId;
     }
 
+    public SimpleUsageStat(UsageStats systemUsageStat) {
+        timeUsed = systemUsageStat.getTotalTimeInForeground();
+        applicationId = systemUsageStat.getPackageName();
+        day = new Day(systemUsageStat.getLastTimeUsed());
+    }
+
+    /**
+     * @return The Day that this object concerns
+     */
     public @NonNull Day getDay() {
         return day;
     }
 
+    /**
+     * @return The time that the application has been in the foreground in milliseconds on this day
+     */
     public long getTimeUsed() {
         return timeUsed;
     }
 
+    /**
+     * @return The package name of the application that this object concerns
+     */
     public @NonNull String getApplicationId() {
         return applicationId;
+    }
+
+    public static List<SimpleUsageStat> asSimpleStats(List<UsageStats> usageStats) {
+        List<SimpleUsageStat> result = new ArrayList<>();
+        for (UsageStats usageStat : usageStats) {
+            result.add(new SimpleUsageStat(usageStat));
+        }
+        return result;
     }
 }

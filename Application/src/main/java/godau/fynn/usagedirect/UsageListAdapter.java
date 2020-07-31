@@ -28,8 +28,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import godau.fynn.usagedirect.BuildConfig;
 import godau.fynn.usagedirect.R;
+import godau.fynn.usagedirect.persistence.SimpleUsageStat;
 import humanize.Humanize;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -39,7 +41,7 @@ import java.util.Locale;
  */
 public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.ViewHolder> {
 
-    private List<UsageStats> mUsageStatsList;
+    private List<SimpleUsageStat> mUsageStatsList;
     private Context mContext;
     private boolean showLastUsed = true;
 
@@ -110,14 +112,16 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
-        UsageStats usageStats = mUsageStatsList.get(position);
+        SimpleUsageStat usageStat = mUsageStatsList.get(position);
 
-        String name = IconThread.nameMap.get(usageStats);
+        String name = IconThread.nameMap.get(usageStat.getApplicationId());
         viewHolder.getPackageName().setText(
                 name == null?
-                usageStats.getPackageName() : name
+                usageStat.getApplicationId() : name
         );
 
+        viewHolder.getLastTimeUsed().setVisibility(View.GONE);
+        /* TODO show last used
         if (showLastUsed) {
 
             viewHolder.getLastTimeUsed().setVisibility(View.VISIBLE);
@@ -136,16 +140,17 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
         } else {
             viewHolder.getLastTimeUsed().setVisibility(View.GONE);
         }
+         */
 
-        long secondsUsed = usageStats.getTotalTimeInForeground() / 1000;
+        long secondsUsed = usageStat.getTimeUsed() / 1000;
         viewHolder.getTimeUsed().setText(mContext.getString(
                 showLastUsed? R.string.time_used : R.string.time_used_time_only,
                 secondsUsed / 3600, (secondsUsed / 60) % 60, secondsUsed % 60)
         );
 
-        viewHolder.getAppIcon().setImageDrawable(IconThread.iconMap.get(usageStats));
+        viewHolder.getAppIcon().setImageDrawable(IconThread.iconMap.get(usageStat.getApplicationId()));
 
-        viewHolder.getAppIcon().setTag(usageStats.getPackageName());
+        viewHolder.getAppIcon().setTag(usageStat.getApplicationId());
     }
 
     @Override
@@ -156,7 +161,7 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
             return mUsageStatsList.size();
     }
 
-    public void setUsageStatsList(List<UsageStats> usageStats) {
+    public void setUsageStatsList(List<SimpleUsageStat> usageStats) {
         mUsageStatsList = usageStats;
         notifyDataSetChanged();
     }

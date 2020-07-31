@@ -18,6 +18,7 @@
 
 package godau.fynn.usagedirect.persistence;
 
+import android.app.usage.UsageStats;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -41,11 +42,21 @@ public abstract class UsageStatsDao {
     @Query("SELECT DISTINCT day, month, year FROM usageStats ORDER BY year, month, day")
     public abstract Day[] getDaysStored();
 
+    @Query("SELECT * FROM usageStats")
+    public abstract List<SimpleUsageStat> getUsageStats();
+
     @Query("SELECT sum(timeUsed) FROM usageStats WHERE day == :day AND month == :month AND year == :year")
     protected abstract int getTotalTimeUsed(int day, int month, int year);
 
+    @Query("SELECT * FROM usageStats WHERE day == :day AND month == :month AND year == :year")
+    protected abstract List<SimpleUsageStat> getUsageStats(int day, int month, int year);
+
     public long getTotalTimeUsed(Day day) {
         return getTotalTimeUsed(day.day, day.month, day.year);
+    }
+
+    public List<SimpleUsageStat> getUsageStats(Day day) {
+        return getUsageStats(day.day, day.month, day.year);
     }
 
     /**

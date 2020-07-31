@@ -29,7 +29,6 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.wrapper.Interval;
 import godau.fynn.usagedirect.wrapper.NaturalText;
-import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,16 +36,14 @@ import java.util.Map;
 /**
  * Parent pager, pages {@link UsageListViewPagerAdapter}
  */
-public class TimespanPagerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener {
+public abstract class TimespanPagerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener {
 
-    private final Activity context;
+    protected final Activity context;
     private Map<Integer, ViewPager> viewPagerMap = new HashMap<>();
 
-    private UsageStatsWrapper usageStatsWrapper;
 
-    public TimespanPagerAdapter(Activity context, UsageStatsWrapper usageStatsWrapper) {
+    public TimespanPagerAdapter(Activity context) {
         this.context = context;
-        this.usageStatsWrapper = usageStatsWrapper;
     }
 
     @NonNull
@@ -56,13 +53,11 @@ public class TimespanPagerAdapter extends PagerAdapter implements ViewPager.OnPa
         final View view = context.getLayoutInflater().inflate(R.layout.content_timespan, container, false);
         container.addView(view);
 
-        final Interval interval = Interval.values()[position];
-
         new Thread(new Runnable() {
             @Override
             public void run() {
-                // Fill cache for interval
-                usageStatsWrapper.getDatasetAmount(interval);
+
+                prepare(position);
 
                 context.runOnUiThread(new Runnable() {
                     @Override
@@ -71,7 +66,7 @@ public class TimespanPagerAdapter extends PagerAdapter implements ViewPager.OnPa
 
                         ViewPager viewPager = view.findViewById(R.id.viewpager);
                         viewPager.setAdapter(
-                                new UsageListViewPagerAdapter(interval, context, usageStatsWrapper)
+                                getUsageListViewPagerAdapter(position)
                         );
 
                         viewPager.setCurrentItem(viewPager.getAdapter().getCount() - 1);
@@ -93,11 +88,6 @@ public class TimespanPagerAdapter extends PagerAdapter implements ViewPager.OnPa
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View) object);
         viewPagerMap.remove(position);
-    }
-
-    @Override
-    public int getCount() {
-        return 4;
     }
 
     @Override
@@ -134,4 +124,8 @@ public class TimespanPagerAdapter extends PagerAdapter implements ViewPager.OnPa
     @Override
     public void onPageScrollStateChanged(int state) {
     }
+
+    public abstract void prepare(int position);
+
+    public abstract UsageListViewPagerAdapter getUsageListViewPagerAdapter(int position);
 }
