@@ -39,6 +39,10 @@
         <activity android:name=".ChartsActivity" />
         <activity android:name=".DatabaseManagerActivity" />
 
+        <activity
+            android:name=".SystemStatsActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
+
         <service android:name=".persistence.EventLogService"
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:exported="true" />

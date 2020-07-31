@@ -105,6 +105,10 @@ public class AppUsageStatisticsActivity extends Activity {
                 startActivity(new Intent(this, ChartsActivity.class));
                 break;
 
+            case R.id.menu_system_stats:
+                startActivity(new Intent(this, SystemStatsActivity.class));
+                break;
+
             case R.id.menu_database:
                 startActivity(new Intent(this, DatabaseManagerActivity.class));
                 break;
