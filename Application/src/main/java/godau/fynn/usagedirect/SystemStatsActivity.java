@@ -44,13 +44,6 @@ public class SystemStatsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_system_stats);
 
-        /*findViewById(R.id.system_stats_warning_ok).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                findViewById(R.id.system_stats_warning).setVisibility(View.GONE);
-            }
-        });*/
-
         SmartTabLayout tabs = findViewById(R.id.viewpagertab);
 
         tabs.setElevation(getActionBar().getElevation());

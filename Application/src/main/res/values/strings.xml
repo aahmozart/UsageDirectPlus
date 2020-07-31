@@ -74,5 +74,4 @@
     <string name="menu_system_stats">System stats</string>
     <string name="title_system_stats">usageDirect system stats viewer</string>
     <string name="system_stats_warning">This data is displayed exactly as it is output by the Android system. It has turned out to be unreliable.</string>
-    <string name="ok">OK</string>
 </resources>
