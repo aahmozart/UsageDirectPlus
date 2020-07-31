@@ -56,6 +56,13 @@
                 android:text="@string/db_insert"
                 />
 
+            <CheckBox
+                android:id="@+id/button_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/db_schedule"
+                />
+
         </LinearLayout>
 
         <TextView

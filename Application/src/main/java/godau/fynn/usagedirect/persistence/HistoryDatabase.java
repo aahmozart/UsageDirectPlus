@@ -28,6 +28,8 @@ import androidx.room.RoomDatabase;
 @Database(version = 1, entities = {SimpleUsageStat.class})
 public abstract class HistoryDatabase extends RoomDatabase {
 
+    public static final String DATABASE_NAME = "history";
+
     public abstract UsageStatsDao getUsageStatsDao();
 
 }

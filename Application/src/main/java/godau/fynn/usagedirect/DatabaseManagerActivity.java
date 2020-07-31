@@ -19,12 +19,15 @@
 package godau.fynn.usagedirect;
 
 import android.app.Activity;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.*;
 import androidx.annotation.Nullable;
 import androidx.room.Room;
+import godau.fynn.usagedirect.persistence.EventLogService;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
 import godau.fynn.usagedirect.persistence.UsageStatsDao;
 import godau.fynn.usagedirect.view.FramedBarView;
@@ -35,9 +38,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class DatabaseManagerActivity extends Activity {
+import static godau.fynn.usagedirect.persistence.HistoryDatabase.DATABASE_NAME;
 
-    private static final String DATABASE_NAME = "history";
+public class DatabaseManagerActivity extends Activity {
 
     private UsageStatsDao usageStats;
 
@@ -61,6 +64,50 @@ public class DatabaseManagerActivity extends Activity {
         status = findViewById(R.id.text_status);
         insert = findViewById(R.id.button_insert);
         barView = findViewById(R.id.bar_view);
+        final CheckBox schedule = findViewById(R.id.button_schedule);
+
+        final JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        boolean scheduled = scheduler.getPendingJob(EventLogService.JOB_ID) != null;
+
+        schedule.setChecked(scheduled);
+
+        schedule.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked) {
+
+                    // Schedule job
+
+                    JobInfo jobInfo = new JobInfo.Builder(
+                            EventLogService.JOB_ID, new ComponentName(DatabaseManagerActivity.this, EventLogService.class)
+                    )
+                            .setPeriodic(24 * 60 * 60 * 1000)
+                            .setPersisted(true)
+                            .build();
+
+                    int result = scheduler.schedule(jobInfo);
+
+                    if (result == JobScheduler.RESULT_FAILURE) {
+                        Toast.makeText(DatabaseManagerActivity.this, R.string.db_job_schedule_failure, Toast.LENGTH_SHORT).show();
+                        schedule.setChecked(false);
+                    }
+                } else {
+
+                    // Cancel job
+                    scheduler.cancel(EventLogService.JOB_ID);
+                }
+            }
+        });
+        schedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+
+            }
+        });
 
         barView.setText(getString(R.string.db_chart_title));
 
