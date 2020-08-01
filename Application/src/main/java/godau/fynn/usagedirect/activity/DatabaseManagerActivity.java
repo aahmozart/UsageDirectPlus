@@ -68,35 +68,7 @@ public class DatabaseManagerActivity extends Activity {
         boolean scheduled = scheduler.getAllPendingJobs().size() > 0;
 
         schedule.setChecked(scheduled);
-
-        schedule.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if (isChecked) {
-
-                    // Schedule job
-
-                    JobInfo jobInfo = new JobInfo.Builder(
-                            EventLogService.JOB_ID, new ComponentName(DatabaseManagerActivity.this, EventLogService.class)
-                    )
-                            .setPeriodic(24 * 60 * 60 * 1000)
-                            .setPersisted(true)
-                            .build();
-
-                    int result = scheduler.schedule(jobInfo);
-
-                    if (result == JobScheduler.RESULT_FAILURE) {
-                        Toast.makeText(DatabaseManagerActivity.this, R.string.db_job_schedule_failure, Toast.LENGTH_SHORT).show();
-                        schedule.setChecked(false);
-                    }
-                } else {
-
-                    // Cancel job
-                    scheduler.cancel(EventLogService.JOB_ID);
-                }
-            }
-        });
+        schedule.setEnabled(false);
 
         barView.setText(getString(R.string.db_chart_title));
 

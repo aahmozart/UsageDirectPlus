@@ -69,8 +69,8 @@
         \n\nIn this version, you can already save and thus \"clock in\" usage time from the events log, which keeps a maximum of 10 days. Then, once the next version is available, this data will become available to you instead of the data aggregated by the system, for example, there might be a daily chart for a period longer than 10 days.
         </string>
     <string name="db_chart_title">App usage by day with data from database</string>
-    <string name="db_schedule">Schedule automatic inserts</string>
-    <string name="db_job_schedule_failure">Could not schedule job</string>
+    <string name="db_schedule">Automatic inserts scheduled</string>
+    <string name="db_job_schedule_failure">Warning: automatic data collection could not be set up, please check back regularly</string>
     <string name="menu_system_stats">System stats</string>
     <string name="title_system_stats">usageDirect system stats viewer</string>
     <string name="system_stats_warning">This data is displayed exactly as it is output by the Android system. It has turned out to be unreliable.</string>
