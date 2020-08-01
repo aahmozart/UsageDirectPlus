@@ -108,7 +108,7 @@ public class BarViewPagerAdapter extends PagerAdapter {
         // Calculate vertical line frequency
         int maxHours = (max / 60 / 60) + 1;
         int frequency = 1;
-        while (maxHours / 15 > frequency) {
+        while (maxHours / 10 >= frequency) {
             frequency *= 10;
         }
 
