@@ -30,7 +30,7 @@ import im.dacer.androidcharts.BarView;
 public class FramedBarView extends FrameLayout {
 
     private final TextView textView;
-    private final BarView barView;
+    protected final BarView barView;
     private final HorizontalScrollView scrollView;
 
     public FramedBarView(Context context, AttributeSet attrs) {

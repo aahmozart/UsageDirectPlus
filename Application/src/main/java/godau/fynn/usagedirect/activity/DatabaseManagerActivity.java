@@ -32,12 +32,9 @@ import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.persistence.EventLogService;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
 import godau.fynn.usagedirect.persistence.UsageStatsDao;
-import godau.fynn.usagedirect.view.FramedBarView;
+import godau.fynn.usagedirect.view.UsageStatBarView;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import static godau.fynn.usagedirect.persistence.HistoryDatabase.DATABASE_NAME;
@@ -48,7 +45,7 @@ public class DatabaseManagerActivity extends Activity {
 
     private TextView status;
     private Button insert;
-    private FramedBarView barView;
+    private UsageStatBarView barView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,15 +98,6 @@ public class DatabaseManagerActivity extends Activity {
                 }
             }
         });
-        schedule.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-
-
-            }
-        });
 
         barView.setText(getString(R.string.db_chart_title));
 
@@ -140,22 +128,6 @@ public class DatabaseManagerActivity extends Activity {
             }
         });
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                });
-            }
-        }).start();
-
-
     }
 
     private void updateViews() {
@@ -165,40 +137,7 @@ public class DatabaseManagerActivity extends Activity {
                 final int daysStored = usageStats.getDaysStoredAmount();
                 final long totalHours = usageStats.getTotalTimeUsed() / 1000 / 60 / 60;
 
-                Map<Day, Long> map = usageStats.getTotalTimePerDay();
-
-                final List<String> labels = new ArrayList<>();
-                final List<Integer> data = new ArrayList<>();
-                for (Day d : map.keySet()) {
-                    labels.add(String.valueOf(d.day));
-                    int seconds = (int) (map.get(d) / 1000);
-                    data.add(seconds);
-                }
-
-                int max = Collections.max(data);
-                final int chartMax = max + (30 * 60);
-
-                // Calculate vertical line frequency
-                int maxHours = (max / 60 / 60) + 1;
-                int frequency = 1;
-                while (maxHours / 10 >= frequency) {
-                    frequency *= 10;
-                }
-
-                // Add lines
-                final List<Integer> lines = new ArrayList<>();
-                final List<String> lineLabels = new ArrayList<>();
-                int counter = frequency;
-                do {
-                    lines.add(counter * 60 * 60);
-                    lineLabels.add(String.valueOf(counter));
-                } while ((counter += frequency) < maxHours);
-
-                // Don't display more than 4 vertical line labels
-                if (lineLabels.size() > 4) {
-                    lineLabels.clear();
-                    lineLabels.add(String.valueOf(frequency));
-                }
+                final Map<Day, Long> map = usageStats.getTotalTimePerDay();
 
 
                 runOnUiThread(new Runnable() {
@@ -207,10 +146,7 @@ public class DatabaseManagerActivity extends Activity {
                         status.setText(getString(R.string.db_status, daysStored, totalHours));
                         insert.setEnabled(true);
 
-                        barView.getBarView().setDataList(data, chartMax);
-                        barView.getBarView().setBottomTextList(labels);
-                        barView.getBarView().setVerticalLines(lines, chartMax);
-                        barView.getBarView().setVerticalLineLabels(lineLabels);
+                        barView.setData(map);
 
                     }
                 });

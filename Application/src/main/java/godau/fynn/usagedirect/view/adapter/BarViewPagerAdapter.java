@@ -26,11 +26,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.viewpager.widget.PagerAdapter;
 import godau.fynn.usagedirect.R;
-import godau.fynn.usagedirect.view.FramedBarView;
+import godau.fynn.usagedirect.view.UsageStatBarView;
 import godau.fynn.usagedirect.wrapper.Interval;
-import godau.fynn.usagedirect.wrapper.NaturalText;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
-import im.dacer.androidcharts.BarView;
 
 import java.util.*;
 
@@ -39,7 +37,7 @@ public class BarViewPagerAdapter extends PagerAdapter {
     private final Context context;
     private final UsageStatsWrapper usageStatsWrapper;
 
-    private final FramedBarView[] viewArray = new FramedBarView[4];
+    private final UsageStatBarView[] viewArray = new UsageStatBarView[4];
 
     private int boldPosition = 9;
 
@@ -51,7 +49,7 @@ public class BarViewPagerAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        FramedBarView barViewFrame = new FramedBarView(context);
+        UsageStatBarView barViewFrame = new UsageStatBarView(context);
         container.addView(barViewFrame);
 
         viewArray[position] = barViewFrame;
@@ -85,51 +83,12 @@ public class BarViewPagerAdapter extends PagerAdapter {
             return barViewFrame;
         }
 
-        // Use maximum of timespan plus 30 minutes so no bar hits the top
-        int max = Collections.max(accumulatedTimes);
-        int chartMax = max + (60 * 30);
-
-        ArrayList<String> bottomText = new ArrayList<>();
-
-        for (int i = datasetAmount; i >= 0; i--) {
-            bottomText.add(NaturalText.formatShort(interval, i));
-        }
-
-        BarView barView = barViewFrame.getBarView();
-
-        barView.setDataList(accumulatedTimes, chartMax);
-        barView.setBottomTextList(bottomText);
+        barViewFrame.setSystemData(accumulatedTimes, interval);
 
         // Set bottom text as bold according to selected item of clock pie chart
         if (interval == Interval.DAILY) {
-            barView.setBoldPosition(boldPosition);
+            barViewFrame.getBarView().setBoldPosition(boldPosition);
         }
-
-        // Calculate vertical line frequency
-        int maxHours = (max / 60 / 60) + 1;
-        int frequency = 1;
-        while (maxHours / 10 >= frequency) {
-            frequency *= 10;
-        }
-
-        // Add lines
-        List<Integer> lines = new ArrayList<>();
-        List<String> lineLabels = new ArrayList<>();
-        int counter = frequency;
-        do {
-            lines.add(counter * 60 * 60);
-            lineLabels.add(String.valueOf(counter));
-        } while ((counter += frequency) < maxHours);
-
-        barView.setVerticalLines(lines, chartMax);
-
-        // Don't display more than 4 vertical line labels
-        if (lineLabels.size() > 4) {
-            lineLabels.clear();
-            lineLabels.add(String.valueOf(frequency));
-        }
-
-        barView.setVerticalLineLabels(lineLabels);
 
         barViewFrame.scrollToEnd();
 
