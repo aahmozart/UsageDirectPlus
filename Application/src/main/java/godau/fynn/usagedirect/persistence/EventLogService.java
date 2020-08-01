@@ -20,8 +20,11 @@ package godau.fynn.usagedirect.persistence;
 
 import android.app.job.JobParameters;
 import android.app.job.JobService;
+import android.content.SharedPreferences;
 import android.util.Log;
 import androidx.room.Room;
+
+import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
 import static godau.fynn.usagedirect.persistence.HistoryDatabase.DATABASE_NAME;
@@ -39,12 +42,18 @@ public class EventLogService extends JobService {
 
                 Log.d("EvLS", "The job is running");
 
+                SharedPreferences sharedPreferences = getSharedPreferences(DATABASE_NAME, MODE_PRIVATE);
+                long since = sharedPreferences.getLong("lastWrite", 0);
+
                 HistoryDatabase database = Room.databaseBuilder(EventLogService.this, HistoryDatabase.class, DATABASE_NAME).build();
                 UsageStatsDao usageStats = database.getUsageStatsDao();
 
+                UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(EventLogService.this);
                 usageStats.insert(
-                        new UsageStatsWrapper(EventLogService.this).getAllSimpleUsageStats()
+                        usageStatsWrapper.getAllSimpleUsageStats(new Day(since, usageStatsWrapper.getTimezone()))
                 );
+
+                sharedPreferences.edit().putLong("lastWrite", System.currentTimeMillis()).apply();
 
                 jobFinished(params, false);
 

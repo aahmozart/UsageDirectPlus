@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
@@ -36,6 +37,7 @@ import godau.fynn.usagedirect.view.UsageStatBarView;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
 import java.util.Map;
+import java.util.TimeZone;
 
 import static godau.fynn.usagedirect.persistence.HistoryDatabase.DATABASE_NAME;
 
@@ -117,9 +119,17 @@ public class DatabaseManagerActivity extends Activity {
                     @Override
                     public void run() {
 
+                        SharedPreferences sharedPreferences = getSharedPreferences(DATABASE_NAME, MODE_PRIVATE);
+                        long since = sharedPreferences.getLong("lastWrite", 0);
+
+                        HistoryDatabase database = Room.databaseBuilder(DatabaseManagerActivity.this, HistoryDatabase.class, DATABASE_NAME).build();
+                        UsageStatsDao usageStats = database.getUsageStatsDao();
+
                         usageStats.insert(
-                                usageStatsWrapper.getAllSimpleUsageStats()
+                                usageStatsWrapper.getAllSimpleUsageStats(new Day(since, usageStatsWrapper.getTimezone()))
                         );
+
+                        sharedPreferences.edit().putLong("lastWrite", System.currentTimeMillis()).apply();
 
                         updateViews();
 

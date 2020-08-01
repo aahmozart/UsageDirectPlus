@@ -25,6 +25,7 @@ import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.SimpleUsageStat;
@@ -226,10 +227,11 @@ public class UsageStatsWrapper {
     /**
      * Collects <b>all</b> event information from system to calculate and aggregate precise
      * foreground time statistics and presents this information as {@link SimpleUsageStat}s.
-     * <p><b>This method call causes lag.</b>
-     * @return
+     * <p><b>This method call causes lag</b> if called with a low since value.
+     *
+     * @param since Return data from this day onwards (respects {@link #timezone})
      */
-    public List<SimpleUsageStat> getAllSimpleUsageStats() {
+    public List<SimpleUsageStat> getAllSimpleUsageStats(Day since) {
         List<ComponentForegroundStat> foregroundStats;
         int relativeDay;
 
@@ -266,9 +268,15 @@ public class UsageStatsWrapper {
                 );
             }
 
+            if (day.equals(since)) {
+                // Reached first day that should be returned by this query
+                break;
+            }
+
             foregroundStats = getForegroundStatsByRelativeDay(++relativeDay);
         }
 
+        Log.d("USW", "Returning data for up to day -" + relativeDay + " (" + usageStats.size() + " entries)");
         return usageStats;
     }
 
