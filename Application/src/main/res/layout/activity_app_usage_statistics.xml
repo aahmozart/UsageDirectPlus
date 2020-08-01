@@ -14,11 +14,10 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <com.ogaclejapan.smarttablayout.SmartTabLayout
         android:id="@+id/viewpagertab"
@@ -45,6 +44,15 @@
         android:id="@+id/timespanpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/viewpagertab"
         />
-</LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+</RelativeLayout>
 

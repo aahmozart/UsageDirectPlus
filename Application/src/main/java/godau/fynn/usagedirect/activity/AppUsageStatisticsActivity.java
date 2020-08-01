@@ -24,10 +24,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.*;
+import android.widget.ProgressBar;
+
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 import godau.fynn.usagedirect.BuildConfig;
 import godau.fynn.usagedirect.R;
+import godau.fynn.usagedirect.persistence.EventLogRunnable;
 import godau.fynn.usagedirect.view.adapter.database.DatabaseTimespanPagerAdapter;
 import godau.fynn.usagedirect.view.adapter.TimespanPagerAdapter;
 import godau.fynn.usagedirect.view.dialog.GrantPermissionDialog;
@@ -44,13 +47,14 @@ import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 public class AppUsageStatisticsActivity extends Activity {
 
     private ViewPager viewPager;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_usage_statistics);
 
-        SmartTabLayout tabs = findViewById(R.id.viewpagertab);
+        final SmartTabLayout tabs = findViewById(R.id.viewpagertab);
 
         tabs.setElevation(getActionBar().getElevation());
 
@@ -61,20 +65,39 @@ public class AppUsageStatisticsActivity extends Activity {
             new GrantPermissionDialog(this).show();
         }
 
-        final TimespanPagerAdapter timespanAdapter = new DatabaseTimespanPagerAdapter(this);
+        progressBar = findViewById(R.id.progress);
+        progressBar.setVisibility(View.VISIBLE);
 
-        viewPager = findViewById(R.id.timespanpager);
-        viewPager.setOffscreenPageLimit(3);
-        viewPager.setAdapter(timespanAdapter);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-        viewPager.addOnPageChangeListener(timespanAdapter);
+                new EventLogRunnable(AppUsageStatisticsActivity.this).run();
 
-        viewPager.setPageMargin(
-                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics())
-        );
-        viewPager.setPageMarginDrawable(new ColorDrawable(getColor(R.color.page_switch_indicator)));
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final TimespanPagerAdapter timespanAdapter = new DatabaseTimespanPagerAdapter(AppUsageStatisticsActivity.this);
 
-        tabs.setViewPager(viewPager);
+                        viewPager = findViewById(R.id.timespanpager);
+                        viewPager.setOffscreenPageLimit(3);
+                        viewPager.setAdapter(timespanAdapter);
+
+                        viewPager.addOnPageChangeListener(timespanAdapter);
+
+                        viewPager.setPageMargin(
+                                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics())
+                        );
+                        viewPager.setPageMarginDrawable(new ColorDrawable(getResources().getColor(R.color.page_switch_indicator)));
+
+                        tabs.setViewPager(viewPager);
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
+            }
+        }).start();
+
+
     }
 
     @Override
@@ -112,15 +135,18 @@ public class AppUsageStatisticsActivity extends Activity {
                 break;
 
             case R.id.menu_reload:
+                progressBar.setVisibility(View.VISIBLE);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        new EventLogRunnable(AppUsageStatisticsActivity.this).run();
                         ((DatabaseTimespanPagerAdapter) viewPager.getAdapter()).prepare(0);
 
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 viewPager.getAdapter().notifyDataSetChanged();
+                                progressBar.setVisibility(View.GONE);
                             }
                         });
                     }

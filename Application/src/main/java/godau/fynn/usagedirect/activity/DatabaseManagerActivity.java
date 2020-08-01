@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
@@ -30,6 +29,7 @@ import androidx.annotation.Nullable;
 import androidx.room.Room;
 import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.R;
+import godau.fynn.usagedirect.persistence.EventLogRunnable;
 import godau.fynn.usagedirect.persistence.EventLogService;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
 import godau.fynn.usagedirect.persistence.UsageStatsDao;
@@ -37,7 +37,6 @@ import godau.fynn.usagedirect.view.UsageStatBarView;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
 import java.util.Map;
-import java.util.TimeZone;
 
 import static godau.fynn.usagedirect.persistence.HistoryDatabase.DATABASE_NAME;
 
@@ -59,8 +58,6 @@ public class DatabaseManagerActivity extends Activity {
 
         HistoryDatabase database = Room.databaseBuilder(this, HistoryDatabase.class, DATABASE_NAME).build();
         usageStats = database.getUsageStatsDao();
-
-        final UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(this);
 
         status = findViewById(R.id.text_status);
         insert = findViewById(R.id.button_insert);
@@ -119,18 +116,7 @@ public class DatabaseManagerActivity extends Activity {
                     @Override
                     public void run() {
 
-                        SharedPreferences sharedPreferences = getSharedPreferences(DATABASE_NAME, MODE_PRIVATE);
-                        long since = sharedPreferences.getLong("lastWrite", 0);
-
-                        HistoryDatabase database = Room.databaseBuilder(DatabaseManagerActivity.this, HistoryDatabase.class, DATABASE_NAME).build();
-                        UsageStatsDao usageStats = database.getUsageStatsDao();
-
-                        usageStats.insert(
-                                usageStatsWrapper.getAllSimpleUsageStats(new Day(since, usageStatsWrapper.getTimezone()))
-                        );
-
-                        sharedPreferences.edit().putLong("lastWrite", System.currentTimeMillis()).apply();
-
+                        new EventLogRunnable(DatabaseManagerActivity.this).run();
                         updateViews();
 
                     }

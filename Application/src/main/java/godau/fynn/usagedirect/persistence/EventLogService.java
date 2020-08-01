@@ -42,18 +42,7 @@ public class EventLogService extends JobService {
 
                 Log.d("EvLS", "The job is running");
 
-                SharedPreferences sharedPreferences = getSharedPreferences(DATABASE_NAME, MODE_PRIVATE);
-                long since = sharedPreferences.getLong("lastWrite", 0);
-
-                HistoryDatabase database = Room.databaseBuilder(EventLogService.this, HistoryDatabase.class, DATABASE_NAME).build();
-                UsageStatsDao usageStats = database.getUsageStatsDao();
-
-                UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(EventLogService.this);
-                usageStats.insert(
-                        usageStatsWrapper.getAllSimpleUsageStats(new Day(since, usageStatsWrapper.getTimezone()))
-                );
-
-                sharedPreferences.edit().putLong("lastWrite", System.currentTimeMillis()).apply();
+                new EventLogRunnable(EventLogService.this).run();
 
                 jobFinished(params, false);
 
