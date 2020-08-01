@@ -33,28 +33,25 @@ import java.util.List;
 public class DatabaseUsageListViewPagerAdapter extends UsageListViewPagerAdapter {
 
     private List<SimpleUsageStat> usageStats;
-    private final int count;
+    private Day[] days;
 
-    public DatabaseUsageListViewPagerAdapter(Activity context, List<SimpleUsageStat> usageStats, int dayCount) {
+    public DatabaseUsageListViewPagerAdapter(Activity context, List<SimpleUsageStat> usageStats, Day[] days) {
         super(context);
 
         this.usageStats = usageStats;
-        this.count = dayCount;
+        this.days = days;
     }
 
     @Override
     public int getCount() {
-        return count;
+        return days.length;
     }
 
     @Override
     protected List<SimpleUsageStat> getUsageStats(int position) {
         List<SimpleUsageStat> result = new ArrayList<>();
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH, -(getCount() - position - 1));
-
-        Day day = new Day(calendar.getTimeInMillis());
+        Day day = days[position];
 
         for (SimpleUsageStat stat : usageStats) {
             if (stat.getDay().equals(day)) {
@@ -68,10 +65,21 @@ public class DatabaseUsageListViewPagerAdapter extends UsageListViewPagerAdapter
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return NaturalText.format(Interval.DAILY, getCount() - position - 1, context);
+        Day day = days[position];
+
+        int offset = 0;
+
+        Calendar calendar = Calendar.getInstance();
+        while (calendar.get(Calendar.DAY_OF_MONTH) != day.day || calendar.get(Calendar.MONTH) != day.month || calendar.get(Calendar.YEAR) != day.year) {
+            calendar.add(Calendar.DAY_OF_MONTH, -1);
+            offset++;
+        }
+
+        return NaturalText.format(Interval.DAILY, offset, context);
     }
 
-    public void setUsageStatsList(List<SimpleUsageStat> usageStatsList) {
+    public void setUsageStats(List<SimpleUsageStat> usageStatsList, Day[] days) {
         usageStats = usageStatsList;
+        this.days = days;
     }
 }
