@@ -44,7 +44,10 @@ public class SystemUsageListViewPagerAdapter extends UsageListViewPagerAdapter {
 
     @Override
     protected List<SimpleUsageStat> getUsageStats(int position) {
-        return SimpleUsageStat.asSimpleStats(usageStatsWrapper.getUsageStatistics(interval, getCount() - position - 1));
+        return SimpleUsageStat.asSimpleStats(
+                usageStatsWrapper.getUsageStatistics(interval, getCount() - position - 1),
+                usageStatsWrapper.getTimezone()
+        );
     }
 
     @Nullable

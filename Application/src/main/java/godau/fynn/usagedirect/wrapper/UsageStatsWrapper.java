@@ -24,6 +24,8 @@ import android.app.usage.UsageEvents;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
+import android.content.SharedPreferences;
+
 import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.SimpleUsageStat;
 
@@ -42,11 +44,25 @@ public class UsageStatsWrapper {
 
     private static Map<Long, List<UsageStats>> cache = new ConcurrentHashMap<>();
 
+    private TimeZone timezone;
+
     @SuppressLint("WrongConstant")
     public UsageStatsWrapper(Context context) {
         this.context = context;
         usageStatsManager = (UsageStatsManager) context
                 .getSystemService("usagestats"); // Context.USAGE_STATS_SERVICE
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences("timezone", Context.MODE_PRIVATE);
+
+        if (sharedPreferences.contains("timezone")) {
+            timezone =
+                    TimeZone.getTimeZone(
+                            sharedPreferences.getString("timezone", null)
+                    );
+        } else {
+            resetTimezone();
+        }
+
     }
 
     /**
@@ -126,10 +142,19 @@ public class UsageStatsWrapper {
         // Calculate timespan to query
 
         Calendar calendar = Calendar.getInstance();
+
+        calendar.setTimeZone(timezone);
+
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
+
+        // Calendar might have moved to a different day when setting the timezone
+        Calendar reference = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, reference.get(Calendar.YEAR));
+        calendar.set(Calendar.MONTH, reference.get(Calendar.MONTH));
+        calendar.set(Calendar.DAY_OF_MONTH, reference.get(Calendar.DAY_OF_MONTH));
 
         calendar.add(Calendar.DAY_OF_MONTH, -offset);
 
@@ -233,7 +258,7 @@ public class UsageStatsWrapper {
                 }
             }
 
-            Day day = new Day(foregroundStats.get(0).beginTime);
+            Day day = new Day(foregroundStats.get(0).beginTime, timezone);
 
             for (String application : applicationTotalForegroundTime.keySet()) {
                 usageStats.add(
@@ -261,6 +286,20 @@ public class UsageStatsWrapper {
             stats = getUsageStatistics(interval, amount++);
         } while (stats.size() > 0);
         return --amount;
+    }
+
+    public TimeZone getTimezone() {
+        return timezone;
+    }
+
+    /**
+     * Sets time zone to current system time zone and persists this value
+     * in shared preferences.
+     */
+    private void resetTimezone() {
+        timezone = TimeZone.getDefault();
+        context.getSharedPreferences("timezone", Context.MODE_PRIVATE)
+                .edit().putString("timezone", timezone.getID()).apply();
     }
 
     /**

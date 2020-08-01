@@ -21,6 +21,7 @@ package godau.fynn.usagedirect;
 import androidx.annotation.Nullable;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 /**
  * Idenitifes a day by its year, month and day.
@@ -32,11 +33,14 @@ public class Day {
     /**
      * From a millisecond value, construct a Day object corresponding
      * to the day that this millisecond is in
-     * @param millis
+     * @param timezone Timezone to use for calculation
      */
-    public Day(long millis) {
+    public Day(long millis, TimeZone timezone) {
 
         Calendar calendar = Calendar.getInstance();
+
+        calendar.setTimeZone(timezone);
+
         calendar.setTimeInMillis(millis);
 
         year = calendar.get(Calendar.YEAR);

@@ -26,6 +26,7 @@ import godau.fynn.usagedirect.persistence.HistoryDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Similar to UsageStats, but contains less data and is stored in the
@@ -48,10 +49,10 @@ public class SimpleUsageStat {
         this.applicationId = applicationId;
     }
 
-    public SimpleUsageStat(UsageStats systemUsageStat) {
+    public SimpleUsageStat(UsageStats systemUsageStat, TimeZone timezone) {
         timeUsed = systemUsageStat.getTotalTimeInForeground();
         applicationId = systemUsageStat.getPackageName();
-        day = new Day(systemUsageStat.getLastTimeUsed());
+        day = new Day(systemUsageStat.getLastTimeUsed(), timezone);
     }
 
     /**
@@ -75,10 +76,10 @@ public class SimpleUsageStat {
         return applicationId;
     }
 
-    public static List<SimpleUsageStat> asSimpleStats(List<UsageStats> usageStats) {
+    public static List<SimpleUsageStat> asSimpleStats(List<UsageStats> usageStats, TimeZone timezone) {
         List<SimpleUsageStat> result = new ArrayList<>();
         for (UsageStats usageStat : usageStats) {
-            result.add(new SimpleUsageStat(usageStat));
+            result.add(new SimpleUsageStat(usageStat, timezone));
         }
         return result;
     }
