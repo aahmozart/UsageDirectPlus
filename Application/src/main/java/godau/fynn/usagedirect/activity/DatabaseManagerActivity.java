@@ -69,7 +69,7 @@ public class DatabaseManagerActivity extends Activity {
         final CheckBox schedule = findViewById(R.id.button_schedule);
 
         final JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
-        boolean scheduled = scheduler.getPendingJob(EventLogService.JOB_ID) != null;
+        boolean scheduled = scheduler.getAllPendingJobs().size() > 0;
 
         schedule.setChecked(scheduled);
 
