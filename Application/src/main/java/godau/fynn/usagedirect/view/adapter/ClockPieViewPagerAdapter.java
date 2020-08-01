@@ -73,7 +73,9 @@ public class ClockPieViewPagerAdapter extends PagerAdapter {
         List<ComponentForegroundStat> foregroundStats = usageStatsWrapper.getForegroundStatsByRelativeDay(getCount() - 1 - position);
 
         Calendar beginCalendar = Calendar.getInstance();
+        beginCalendar.setTimeZone(usageStatsWrapper.getTimezone());
         Calendar endCalendar = Calendar.getInstance();
+        endCalendar.setTimeZone(usageStatsWrapper.getTimezone());
         for (ComponentForegroundStat stat : foregroundStats) {
             beginCalendar.setTimeInMillis(stat.beginTime);
             endCalendar.setTimeInMillis(stat.endTime);
