@@ -66,11 +66,4 @@ public class DatabaseAppUsageStatisticsActivity extends AppUsageStatisticsActivi
             }
         }).start();
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu, menu);
-        return true;
-    }
 }

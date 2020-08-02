@@ -148,9 +148,10 @@ public abstract class AppUsageStatisticsActivity extends Activity {
     }
 
     @Override
-    protected void onStop() {
-        UsageStatsWrapper.flushCache();
-        super.onStop();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return true;
     }
 
     protected abstract void prepare();

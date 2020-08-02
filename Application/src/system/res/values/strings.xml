@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ usageDirect
   ~ Copyright (C) 2020 Fynn Godau
   ~
@@ -17,9 +16,6 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_reload"
-        android:title="@string/menu_reload"
-        android:icon="@drawable/ic_reload"
-        android:showAsAction="always" />
-</menu>
+<resources>
+    <string name="app_name">System usage stats</string>
+</resources>

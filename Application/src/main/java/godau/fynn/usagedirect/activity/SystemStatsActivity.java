@@ -47,13 +47,6 @@ public class SystemStatsActivity extends AppUsageStatisticsActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_system_stats, menu);
-        return true;
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == GrantPermissionDialog.REQUEST_CODE)
             recreate();
