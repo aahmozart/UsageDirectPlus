@@ -19,8 +19,9 @@
 package godau.fynn.usagedirect.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.util.TypedValue;
 import android.widget.ProgressBar;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
@@ -39,6 +40,8 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_system_stats);
         super.onCreate(savedInstanceState);
+
+        getActionBar().setElevation(0f);
     }
 
     @Override
@@ -58,8 +61,17 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
     }
 
     @Override
-    protected TimespanPagerAdapter getAdapter() {
-        return new SystemTimespanPagerAdapter(this, new UsageStatsWrapper(this));
+    protected void setAdapter(ViewPager viewPager) {
+
+        TimespanPagerAdapter timespanAdapter = new SystemTimespanPagerAdapter(this, new UsageStatsWrapper(this));
+
+        viewPager.setAdapter(timespanAdapter);
+        viewPager.addOnPageChangeListener(timespanAdapter);
+
+        viewPager.setPageMargin(
+                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics())
+        );
+        viewPager.setPageMarginDrawable(new ColorDrawable(getResources().getColor(R.color.page_switch_indicator)));
     }
 
     @Override

@@ -55,8 +55,6 @@ public abstract class AppUsageStatisticsActivity extends Activity {
 
         tabs.setElevation(getActionBar().getElevation());
 
-        getActionBar().setElevation(0f);
-
 
         if (!new UsageStatsWrapper(this).isPermissionGranted()) {
             new GrantPermissionDialog(this).show();
@@ -64,6 +62,7 @@ public abstract class AppUsageStatisticsActivity extends Activity {
 
         progressBar = findViewById(R.id.progress);
         progressBar.setVisibility(View.VISIBLE);
+        viewPager = findViewById(R.id.viewpager);
 
         new Thread(new Runnable() {
             @Override
@@ -74,18 +73,10 @@ public abstract class AppUsageStatisticsActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        final TimespanPagerAdapter timespanAdapter = getAdapter();
 
-                        viewPager = findViewById(R.id.timespanpager);
+                        setAdapter(viewPager);
+
                         viewPager.setOffscreenPageLimit(3);
-                        viewPager.setAdapter(timespanAdapter);
-
-                        viewPager.addOnPageChangeListener(timespanAdapter);
-
-                        viewPager.setPageMargin(
-                                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics())
-                        );
-                        viewPager.setPageMarginDrawable(new ColorDrawable(getResources().getColor(R.color.page_switch_indicator)));
 
                         tabs.setViewPager(viewPager);
                         progressBar.setVisibility(View.GONE);
@@ -144,9 +135,18 @@ public abstract class AppUsageStatisticsActivity extends Activity {
         return true;
     }
 
+    /**
+     * Not on the main thread. Executed before {@link #setAdapter(ViewPager)} is called.
+     */
     protected abstract void prepare();
 
-    protected abstract TimespanPagerAdapter getAdapter();
+    /**
+     * Responsible for setting an adapter to the passed view pager and possibly
+     * configuring it further.
+     *
+     * @param viewPager ViewPager to configure
+     */
+    protected abstract void setAdapter(ViewPager viewPager);
 
     protected abstract void onReload(ViewPager viewPager, ProgressBar progressBar);
 }

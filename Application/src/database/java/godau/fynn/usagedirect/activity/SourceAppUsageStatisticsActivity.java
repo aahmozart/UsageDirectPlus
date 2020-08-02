@@ -27,27 +27,37 @@ import androidx.viewpager.widget.ViewPager;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.persistence.EventLogRunnable;
 import godau.fynn.usagedirect.view.adapter.TimespanPagerAdapter;
+import godau.fynn.usagedirect.view.adapter.UsageListViewPagerAdapter;
 import godau.fynn.usagedirect.view.adapter.database.DatabaseTimespanPagerAdapter;
+import godau.fynn.usagedirect.view.adapter.database.DatabaseUsageListViewPagerAdapter;
 
 /**
  * Different implementation of AUSA for the two source flavors
  */
 public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity {
 
+    private DatabaseTimespanPagerAdapter databaseTimespanPagerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_app_usage_statistics);
         super.onCreate(savedInstanceState);
+
+        databaseTimespanPagerAdapter = new DatabaseTimespanPagerAdapter(SourceAppUsageStatisticsActivity.this);
     }
 
     @Override
     protected void prepare() {
         new EventLogRunnable(this).run();
+
+        databaseTimespanPagerAdapter.prepare(0);
     }
 
     @Override
-    protected TimespanPagerAdapter getAdapter() {
-        return new DatabaseTimespanPagerAdapter(this);
+    protected void setAdapter(ViewPager viewPager) {
+        UsageListViewPagerAdapter usageListViewPagerAdapter = databaseTimespanPagerAdapter.getUsageListViewPagerAdapter(0);
+        viewPager.setAdapter(usageListViewPagerAdapter);
+        viewPager.setCurrentItem(usageListViewPagerAdapter.getCount());
     }
 
     @Override
@@ -56,13 +66,14 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
         new Thread(new Runnable() {
             @Override
             public void run() {
-                new EventLogRunnable(SourceAppUsageStatisticsActivity.this).run();
-                ((DatabaseTimespanPagerAdapter) viewPager.getAdapter()).prepare(0);
+                prepare();
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        databaseTimespanPagerAdapter.notifyDataSetChanged();
                         viewPager.getAdapter().notifyDataSetChanged();
+
                         progressBar.setVisibility(View.GONE);
                     }
                 });
