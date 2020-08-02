@@ -1,0 +1,74 @@
+/*
+ * usageDirect
+ * Copyright (C) 2020 Fynn Godau
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package godau.fynn.usagedirect.activity;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.util.Log;
+import androidx.annotation.Nullable;
+import androidx.viewpager.widget.ViewPager;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import godau.fynn.usagedirect.R;
+import godau.fynn.usagedirect.view.adapter.BarViewPagerAdapter;
+import godau.fynn.usagedirect.view.adapter.ClockPieViewPagerAdapter;
+import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
+
+public class ChartsActivity extends Activity {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_charts);
+
+        UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(this);
+
+        final ViewPager barPager = findViewById(R.id.bar_view_pager);
+
+        final BarViewPagerAdapter barAdapter = new BarViewPagerAdapter(this, usageStatsWrapper);
+        barPager.setAdapter(barAdapter);
+
+        SmartTabLayout barTabLayout = findViewById(R.id.bar_view_pager_tab);
+        barTabLayout.setViewPager(barPager);
+
+        final ViewPager clockPager = findViewById(R.id.clock_pie_view_pager);
+
+        clockPager.setAdapter(new ClockPieViewPagerAdapter(this, usageStatsWrapper));
+        clockPager.setCurrentItem(9);
+
+        SmartTabLayout chartTabLayout = findViewById(R.id.clock_pie_view_pager_tab);
+        chartTabLayout.setViewPager(clockPager);
+
+        clockPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.d("ChartsActivity", "Page selected: " + position);
+                barAdapter.setDailyBoldPosition(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+
+    }
+}

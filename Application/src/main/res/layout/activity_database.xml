@@ -71,10 +71,5 @@
             android:layout_margin="8dp"
             android:text="@string/db_feature_announcement_explanation" />
 
-        <godau.fynn.usagedirect.view.UsageStatBarView
-            android:id="@+id/bar_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
     </LinearLayout>
 </ScrollView>

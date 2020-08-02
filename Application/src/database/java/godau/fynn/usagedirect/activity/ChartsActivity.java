@@ -22,33 +22,56 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import androidx.annotation.Nullable;
+import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.R;
-import godau.fynn.usagedirect.view.adapter.BarViewPagerAdapter;
+import godau.fynn.usagedirect.persistence.HistoryDatabase;
+import godau.fynn.usagedirect.persistence.UsageStatsDao;
+import godau.fynn.usagedirect.view.UsageStatBarView;
 import godau.fynn.usagedirect.view.adapter.ClockPieViewPagerAdapter;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
+import java.util.Map;
+
+import static godau.fynn.usagedirect.persistence.HistoryDatabase.DATABASE_NAME;
+
 public class ChartsActivity extends Activity {
+
+    private Map<Day, Long> usagePerDayMap;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_charts);
 
-        UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(this);
+        // Display data from database in bar view
+        final UsageStatBarView barView = findViewById(R.id.bar_view);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-        final ViewPager barPager = findViewById(R.id.bar_view_pager);
+                HistoryDatabase database = Room.databaseBuilder(ChartsActivity.this, HistoryDatabase.class, DATABASE_NAME).build();
+                UsageStatsDao usageStats = database.getUsageStatsDao();
 
-        final BarViewPagerAdapter barAdapter = new BarViewPagerAdapter(this, usageStatsWrapper);
-        barPager.setAdapter(barAdapter);
+                usagePerDayMap = usageStats.getTotalTimePerDay();
 
-        SmartTabLayout barTabLayout = findViewById(R.id.bar_view_pager_tab);
-        barTabLayout.setViewPager(barPager);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        barView.setData(usagePerDayMap);
+                        barView.getBarView().setBoldPosition(usagePerDayMap.keySet().size() - 1);
+                    }
+                });
+            }
+        }).start();
 
-        ViewPager clockPager = findViewById(R.id.clock_pie_view_pager);
 
-        clockPager.setAdapter(new ClockPieViewPagerAdapter(this, usageStatsWrapper));
+        final ViewPager clockPager = findViewById(R.id.clock_pie_view_pager);
+
+        clockPager.setAdapter(new ClockPieViewPagerAdapter(this, new UsageStatsWrapper(ChartsActivity.this)));
         clockPager.setCurrentItem(9);
 
         SmartTabLayout chartTabLayout = findViewById(R.id.clock_pie_view_pager_tab);
@@ -61,8 +84,9 @@ public class ChartsActivity extends Activity {
 
             @Override
             public void onPageSelected(int position) {
-                Log.d("ChartsActivity", "Page selected: " + position);
-                barAdapter.setDailyBoldPosition(position);
+                if (usagePerDayMap != null) {
+                    barView.getBarView().setBoldPosition(usagePerDayMap.keySet().size() - clockPager.getAdapter().getCount() + position);
+                }
             }
 
             @Override

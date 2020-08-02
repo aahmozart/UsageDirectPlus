@@ -67,16 +67,4 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
         UsageStatsWrapper.flushCache();
         viewPager.getAdapter().notifyDataSetChanged();
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.menu_charts:
-                startActivity(new Intent(this, ChartsActivity.class));
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

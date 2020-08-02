@@ -25,14 +25,10 @@ import android.view.View;
 import android.widget.*;
 import androidx.annotation.Nullable;
 import androidx.room.Room;
-import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.persistence.EventLogRunnable;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
 import godau.fynn.usagedirect.persistence.UsageStatsDao;
-import godau.fynn.usagedirect.view.UsageStatBarView;
-
-import java.util.Map;
 
 import static godau.fynn.usagedirect.persistence.HistoryDatabase.DATABASE_NAME;
 
@@ -42,7 +38,6 @@ public class DatabaseManagerActivity extends Activity {
 
     private TextView status;
     private Button insert;
-    private UsageStatBarView barView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,7 +52,6 @@ public class DatabaseManagerActivity extends Activity {
 
         status = findViewById(R.id.text_status);
         insert = findViewById(R.id.button_insert);
-        barView = findViewById(R.id.bar_view);
         final CheckBox schedule = findViewById(R.id.button_schedule);
 
         final JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
@@ -65,8 +59,6 @@ public class DatabaseManagerActivity extends Activity {
 
         schedule.setChecked(scheduled);
         schedule.setEnabled(false);
-
-        barView.setText(getString(R.string.db_chart_title));
 
         insert.setEnabled(false);
 
@@ -101,17 +93,11 @@ public class DatabaseManagerActivity extends Activity {
                 final int daysStored = usageStats.getDaysStoredAmount();
                 final long totalHours = usageStats.getTotalTimeUsed() / 1000 / 60 / 60;
 
-                final Map<Day, Long> map = usageStats.getTotalTimePerDay();
-
-
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         status.setText(getString(R.string.db_status, daysStored, totalHours));
                         insert.setEnabled(true);
-
-                        barView.setData(map);
-
                     }
                 });
             }
