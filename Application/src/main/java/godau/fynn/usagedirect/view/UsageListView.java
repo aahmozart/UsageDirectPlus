@@ -27,6 +27,7 @@ import godau.fynn.usagedirect.view.adapter.UsageListAdapter;
 import godau.fynn.usagedirect.SimpleUsageStat;
 
 import java.util.List;
+import java.util.Map;
 
 public class UsageListView extends RecyclerView {
 
@@ -50,7 +51,7 @@ public class UsageListView extends RecyclerView {
         adapter.setUsageStatsList(usageStatsList);
     }
 
-    public void setShowLastUsed(boolean value) {
-        adapter.setShowLastUsed(value);
+    public void setLastUsedMap(Map<String, Long> map) {
+        adapter.setLastUsedMap(map);
     }
 }

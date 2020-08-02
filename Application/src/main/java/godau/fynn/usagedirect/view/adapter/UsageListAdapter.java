@@ -27,11 +27,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import godau.fynn.usagedirect.BuildConfig;
 import godau.fynn.usagedirect.IconThread;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.SimpleUsageStat;
+import humanize.Humanize;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provide views to RecyclerView with the directory entries.
@@ -40,7 +44,8 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
 
     private List<SimpleUsageStat> mUsageStatsList;
     private Context mContext;
-    private boolean showLastUsed = true;
+
+    private Map<String, Long> lastUsedMap;
 
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
@@ -118,14 +123,14 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
         );
 
         viewHolder.getLastTimeUsed().setVisibility(View.GONE);
-        /* TODO show last used
-        if (showLastUsed) {
+
+        if (lastUsedMap != null && lastUsedMap.containsKey(usageStat.getApplicationId())) {
 
             viewHolder.getLastTimeUsed().setVisibility(View.VISIBLE);
 
-            long lastTimeUsed = usageStats.getLastTimeUsed();
+            long lastTimeUsed = lastUsedMap.get(usageStat.getApplicationId());
 
-            if (usageStats.getPackageName().equals(BuildConfig.APPLICATION_ID))
+            if (usageStat.getApplicationId().equals(BuildConfig.APPLICATION_ID))
                 viewHolder.getLastTimeUsed().setText(R.string.last_used_now);
             else if (lastTimeUsed > 1)
                 viewHolder.getLastTimeUsed().setText(
@@ -137,11 +142,10 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
         } else {
             viewHolder.getLastTimeUsed().setVisibility(View.GONE);
         }
-         */
 
         long secondsUsed = usageStat.getTimeUsed() / 1000;
         viewHolder.getTimeUsed().setText(mContext.getString(
-                showLastUsed? R.string.time_used : R.string.time_used_time_only,
+                lastUsedMap == null ? R.string.time_used_time_only : R.string.time_used,
                 secondsUsed / 3600, (secondsUsed / 60) % 60, secondsUsed % 60)
         );
 
@@ -163,7 +167,7 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
         notifyDataSetChanged();
     }
 
-    public void setShowLastUsed(boolean value) {
-        showLastUsed = value;
+    public void setLastUsedMap(Map<String, Long> map) {
+        lastUsedMap = map;
     }
 }

@@ -29,6 +29,7 @@ import godau.fynn.usagedirect.wrapper.NaturalText;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 public class DatabaseUsageListViewPagerAdapter extends UsageListViewPagerAdapter {
 
@@ -60,6 +61,11 @@ public class DatabaseUsageListViewPagerAdapter extends UsageListViewPagerAdapter
         }
 
         return result;
+    }
+
+    @Override
+    protected Map<String, Long> getLastUsedMap() {
+        return null;
     }
 
     @Nullable

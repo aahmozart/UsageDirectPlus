@@ -60,9 +60,6 @@ public abstract class UsageListViewPagerAdapter extends PagerAdapter {
         }
         container.addView(usageListView);
 
-        usageListView.setShowLastUsed(position == getCount() - 1);
-
-
         // Get data
 
         new Thread(new Runnable() {
@@ -80,9 +77,17 @@ public abstract class UsageListViewPagerAdapter extends PagerAdapter {
 
                 Collections.sort(usageStatsList, new Comparator.TimeInForegroundComparatorDesc());
 
+                final Map<String, Long> lastUsedMap;
+                if (position == getCount() - 1) {
+                     lastUsedMap = getLastUsedMap();
+                } else {
+                    lastUsedMap = null;
+                }
+
                 context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        usageListView.setLastUsedMap(lastUsedMap);
                         usageListView.setUsageStatsList(usageStatsList);
 
                         // Get missing icons from system
@@ -125,4 +130,11 @@ public abstract class UsageListViewPagerAdapter extends PagerAdapter {
     }
 
     protected abstract List<SimpleUsageStat> getUsageStats(int position);
+
+    /**
+     * Called after {@link #getUsageStats(int)}
+     *
+     * @return A mapping of package names to last used timestamp (may be null)
+     */
+    protected abstract Map<String, Long> getLastUsedMap();
 }

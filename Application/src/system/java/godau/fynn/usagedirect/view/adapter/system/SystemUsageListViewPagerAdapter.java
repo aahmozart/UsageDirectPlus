@@ -19,6 +19,7 @@
 package godau.fynn.usagedirect.view.adapter.system;
 
 import android.app.Activity;
+import android.app.usage.UsageStats;
 import androidx.annotation.Nullable;
 import godau.fynn.usagedirect.SimpleUsageStat;
 import godau.fynn.usagedirect.view.adapter.UsageListViewPagerAdapter;
@@ -26,12 +27,16 @@ import godau.fynn.usagedirect.wrapper.Interval;
 import godau.fynn.usagedirect.wrapper.NaturalText;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SystemUsageListViewPagerAdapter extends UsageListViewPagerAdapter {
 
     private final Interval interval;
     private final UsageStatsWrapper usageStatsWrapper;
+
+    private Map<String, Long> lastUsedMap;
 
     private int count = -1;
 
@@ -44,10 +49,27 @@ public class SystemUsageListViewPagerAdapter extends UsageListViewPagerAdapter {
 
     @Override
     protected List<SimpleUsageStat> getUsageStats(int position) {
+        int offset = getCount() - position - 1;
+
+        List<UsageStats> usageStats = usageStatsWrapper.getUsageStatistics(interval, offset);
+
+        if (offset == 0) {
+            lastUsedMap = new HashMap<>();
+
+            for (UsageStats u : usageStats) {
+                lastUsedMap.put(u.getPackageName(), u.getLastTimeUsed());
+            }
+        }
+
         return SimpleUsageStat.asSimpleStats(
-                usageStatsWrapper.getUsageStatistics(interval, getCount() - position - 1),
+                usageStats,
                 usageStatsWrapper.getTimezone()
         );
+    }
+
+    @Override
+    protected Map<String, Long> getLastUsedMap() {
+        return lastUsedMap;
     }
 
     @Nullable
