@@ -119,10 +119,6 @@ public abstract class AppUsageStatisticsActivity extends Activity {
                 startActivity(new Intent(this, AboutLibrariesActivity.class));
                 break;
 
-            case R.id.menu_charts:
-                startActivity(new Intent(this, ChartsActivity.class));
-                break;
-
             case R.id.menu_reload:
                 onReload(viewPager, progressBar);
                 break;

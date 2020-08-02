@@ -20,6 +20,7 @@ package godau.fynn.usagedirect.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ProgressBar;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
@@ -65,5 +66,17 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
     protected void onReload(ViewPager viewPager, ProgressBar progressBar) {
         UsageStatsWrapper.flushCache();
         viewPager.getAdapter().notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_charts:
+                startActivity(new Intent(this, ChartsActivity.class));
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
