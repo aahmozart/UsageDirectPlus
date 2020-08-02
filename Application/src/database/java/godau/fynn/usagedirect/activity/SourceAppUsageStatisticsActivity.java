@@ -19,8 +19,6 @@
 package godau.fynn.usagedirect.activity;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 import androidx.viewpager.widget.ViewPager;
@@ -29,7 +27,10 @@ import godau.fynn.usagedirect.persistence.EventLogRunnable;
 import godau.fynn.usagedirect.view.adapter.TimespanPagerAdapter;
 import godau.fynn.usagedirect.view.adapter.database.DatabaseTimespanPagerAdapter;
 
-public class DatabaseAppUsageStatisticsActivity extends AppUsageStatisticsActivity {
+/**
+ * Different implementation of AUSA for the two source flavors
+ */
+public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class DatabaseAppUsageStatisticsActivity extends AppUsageStatisticsActivi
         new Thread(new Runnable() {
             @Override
             public void run() {
-                new EventLogRunnable(DatabaseAppUsageStatisticsActivity.this).run();
+                new EventLogRunnable(SourceAppUsageStatisticsActivity.this).run();
                 ((DatabaseTimespanPagerAdapter) viewPager.getAdapter()).prepare(0);
 
                 runOnUiThread(new Runnable() {

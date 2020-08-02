@@ -42,7 +42,7 @@ import godau.fynn.librariesdirect.License;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
 /**
- * Launcher Activity for the App Usage Statistics sample app.
+ * Shared code for both source flavors
  */
 public abstract class AppUsageStatisticsActivity extends Activity {
 
@@ -123,10 +123,6 @@ public abstract class AppUsageStatisticsActivity extends Activity {
 
             case R.id.menu_charts:
                 startActivity(new Intent(this, ChartsActivity.class));
-                break;
-
-            case R.id.menu_system_stats:
-                startActivity(new Intent(this, SystemStatsActivity.class));
                 break;
 
             case R.id.menu_database:

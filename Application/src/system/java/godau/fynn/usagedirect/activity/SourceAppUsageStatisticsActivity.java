@@ -36,7 +36,10 @@ import godau.fynn.usagedirect.view.adapter.TimespanPagerAdapter;
 import godau.fynn.usagedirect.view.dialog.GrantPermissionDialog;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
-public class SystemStatsActivity extends AppUsageStatisticsActivity {
+/**
+ * Different implementation of AUSA for the two source flavors
+ */
+public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

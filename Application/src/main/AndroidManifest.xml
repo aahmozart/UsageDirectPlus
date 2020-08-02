@@ -27,7 +27,7 @@
         android:icon="@drawable/ic_launcher"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activity.DatabaseAppUsageStatisticsActivity"
+        <activity android:name=".activity.SourceAppUsageStatisticsActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:label="@string/app_name">
             <intent-filter>
@@ -38,10 +38,6 @@
 
         <activity android:name=".activity.ChartsActivity" />
         <activity android:name=".activity.DatabaseManagerActivity" />
-
-        <activity
-            android:name=".activity.SystemStatsActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
 
         <service android:name=".persistence.EventLogService"
             android:permission="android.permission.BIND_JOB_SERVICE"
