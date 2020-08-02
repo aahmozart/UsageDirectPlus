@@ -31,7 +31,7 @@ import static godau.fynn.usagedirect.persistence.HistoryDatabase.DATABASE_NAME;
 
 public class EventLogService extends JobService {
 
-    public static final int JOB_ID = 3577; // EvL on a numpad
+    public static final int JOB_ID = 3577; // EvLS on a numpad
 
     @Override
     public boolean onStartJob(final JobParameters params) {

@@ -44,7 +44,7 @@ import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 /**
  * Launcher Activity for the App Usage Statistics sample app.
  */
-public class AppUsageStatisticsActivity extends Activity {
+public abstract class AppUsageStatisticsActivity extends Activity {
 
     private ViewPager viewPager;
     private ProgressBar progressBar;
@@ -52,7 +52,6 @@ public class AppUsageStatisticsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_app_usage_statistics);
 
         final SmartTabLayout tabs = findViewById(R.id.viewpagertab);
 
@@ -72,12 +71,12 @@ public class AppUsageStatisticsActivity extends Activity {
             @Override
             public void run() {
 
-                new EventLogRunnable(AppUsageStatisticsActivity.this).run();
+                prepare();
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        final TimespanPagerAdapter timespanAdapter = new DatabaseTimespanPagerAdapter(AppUsageStatisticsActivity.this);
+                        final TimespanPagerAdapter timespanAdapter = getAdapter();
 
                         viewPager = findViewById(R.id.timespanpager);
                         viewPager.setOffscreenPageLimit(3);
@@ -107,7 +106,7 @@ public class AppUsageStatisticsActivity extends Activity {
             case R.id.menu_about:
 
                 AboutLibrariesConfig.setLibraries(new Library[]{
-                        new Library("usageDirect" + ' ' + BuildConfig.VERSION_NAME, License.GNU_GPL_V3_OR_LATER_LICENSE, null, "Fynn Godau", "https://codeberg.org/fynngodau/usageDirect"),
+                        new Library(getString(R.string.app_name) + ' ' + BuildConfig.VERSION_NAME, License.GNU_GPL_V3_OR_LATER_LICENSE, null, "Fynn Godau", "https://codeberg.org/fynngodau/usageDirect"),
                         new Library("AppUsageStatistics", License.APACHE_20_LICENSE, null, "The Android Open Source Project, Inc", "https://github.com/googlesamples/android-AppUsageStatistics"),
                         new Library("AndroidCharts", License.MIT_LICENSE, "The MIT License (MIT)\n" +
                                 "\n" +
@@ -135,33 +134,11 @@ public class AppUsageStatisticsActivity extends Activity {
                 break;
 
             case R.id.menu_reload:
-                progressBar.setVisibility(View.VISIBLE);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        new EventLogRunnable(AppUsageStatisticsActivity.this).run();
-                        ((DatabaseTimespanPagerAdapter) viewPager.getAdapter()).prepare(0);
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                viewPager.getAdapter().notifyDataSetChanged();
-                                progressBar.setVisibility(View.GONE);
-                            }
-                        });
-                    }
-                }).start();
+                onReload(viewPager, progressBar);
                 break;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu, menu);
-        return true;
     }
 
     @Override
@@ -175,4 +152,10 @@ public class AppUsageStatisticsActivity extends Activity {
         UsageStatsWrapper.flushCache();
         super.onStop();
     }
+
+    protected abstract void prepare();
+
+    protected abstract TimespanPagerAdapter getAdapter();
+
+    protected abstract void onReload(ViewPager viewPager, ProgressBar progressBar);
 }

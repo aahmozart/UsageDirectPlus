@@ -26,6 +26,7 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -35,55 +36,14 @@ import godau.fynn.usagedirect.view.adapter.TimespanPagerAdapter;
 import godau.fynn.usagedirect.view.dialog.GrantPermissionDialog;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
-public class SystemStatsActivity extends Activity {
-
-    private ViewPager viewPager;
+public class SystemStatsActivity extends AppUsageStatisticsActivity {
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_system_stats);
-
-        SmartTabLayout tabs = findViewById(R.id.viewpagertab);
-
-        tabs.setElevation(getActionBar().getElevation());
+        super.onCreate(savedInstanceState);
 
         getActionBar().setTitle(R.string.title_system_stats);
-        getActionBar().setElevation(0f);
-
-        final UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(SystemStatsActivity.this);
-
-        if (!usageStatsWrapper.isPermissionGranted()) {
-            new GrantPermissionDialog(this).show();
-        }
-
-        final TimespanPagerAdapter timespanAdapter = new SystemTimespanPagerAdapter(this, usageStatsWrapper);
-
-        viewPager = findViewById(R.id.timespanpager);
-        viewPager.setOffscreenPageLimit(3);
-        viewPager.setAdapter(timespanAdapter);
-
-        viewPager.addOnPageChangeListener(timespanAdapter);
-
-        viewPager.setPageMargin(
-                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics())
-        );
-        viewPager.setPageMarginDrawable(new ColorDrawable(getColor(R.color.page_switch_indicator)));
-
-        tabs.setViewPager(viewPager);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.menu_reload:
-                UsageStatsWrapper.flushCache();
-                viewPager.getAdapter().notifyDataSetChanged();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -103,5 +63,20 @@ public class SystemStatsActivity extends Activity {
     protected void onStop() {
         UsageStatsWrapper.flushCache();
         super.onStop();
+    }
+
+    @Override
+    protected void prepare() {
+    }
+
+    @Override
+    protected TimespanPagerAdapter getAdapter() {
+        return new SystemTimespanPagerAdapter(this, new UsageStatsWrapper(this));
+    }
+
+    @Override
+    protected void onReload(ViewPager viewPager, ProgressBar progressBar) {
+        UsageStatsWrapper.flushCache();
+        viewPager.getAdapter().notifyDataSetChanged();
     }
 }
