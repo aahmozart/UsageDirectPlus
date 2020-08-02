@@ -19,9 +19,7 @@
 package godau.fynn.usagedirect.activity;
 
 import android.app.Activity;
-import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
-import android.content.ComponentName;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
@@ -30,11 +28,9 @@ import androidx.room.Room;
 import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.persistence.EventLogRunnable;
-import godau.fynn.usagedirect.persistence.EventLogService;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
 import godau.fynn.usagedirect.persistence.UsageStatsDao;
 import godau.fynn.usagedirect.view.UsageStatBarView;
-import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
 import java.util.Map;
 

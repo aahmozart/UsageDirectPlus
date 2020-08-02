@@ -22,7 +22,6 @@ import android.app.usage.UsageStats;
 import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 import androidx.room.Entity;
-import godau.fynn.usagedirect.persistence.HistoryDatabase;
 
 import java.util.ArrayList;
 import java.util.List;

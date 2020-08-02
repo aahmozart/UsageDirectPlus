@@ -71,6 +71,5 @@
     <string name="db_chart_title">App usage by day with data from database</string>
     <string name="db_schedule">Automatic inserts scheduled</string>
     <string name="db_job_schedule_failure">Warning: automatic data collection could not be set up, please check back regularly</string>
-    <string name="title_system_stats">usageDirect system stats viewer</string>
     <string name="system_stats_warning">This data is displayed exactly as it is output by the Android system. It has turned out to be unreliable.</string>
 </resources>

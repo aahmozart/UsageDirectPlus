@@ -11,7 +11,6 @@ import androidx.room.Room;
 
 import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.R;
-import godau.fynn.usagedirect.activity.DatabaseManagerActivity;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
 import static godau.fynn.usagedirect.persistence.HistoryDatabase.DATABASE_NAME;

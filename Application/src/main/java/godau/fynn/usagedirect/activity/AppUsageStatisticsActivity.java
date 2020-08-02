@@ -30,8 +30,6 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 import godau.fynn.usagedirect.BuildConfig;
 import godau.fynn.usagedirect.R;
-import godau.fynn.usagedirect.persistence.EventLogRunnable;
-import godau.fynn.usagedirect.view.adapter.database.DatabaseTimespanPagerAdapter;
 import godau.fynn.usagedirect.view.adapter.TimespanPagerAdapter;
 import godau.fynn.usagedirect.view.dialog.GrantPermissionDialog;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -123,10 +121,6 @@ public abstract class AppUsageStatisticsActivity extends Activity {
 
             case R.id.menu_charts:
                 startActivity(new Intent(this, ChartsActivity.class));
-                break;
-
-            case R.id.menu_database:
-                startActivity(new Intent(this, DatabaseManagerActivity.class));
                 break;
 
             case R.id.menu_reload:

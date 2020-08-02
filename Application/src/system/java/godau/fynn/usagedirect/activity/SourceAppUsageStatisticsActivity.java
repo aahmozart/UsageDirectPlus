@@ -18,18 +18,11 @@
 
 package godau.fynn.usagedirect.activity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.TypedValue;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.ProgressBar;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.view.adapter.system.SystemTimespanPagerAdapter;
 import godau.fynn.usagedirect.view.adapter.TimespanPagerAdapter;
@@ -45,8 +38,6 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_system_stats);
         super.onCreate(savedInstanceState);
-
-        getActionBar().setTitle(R.string.title_system_stats);
     }
 
     @Override

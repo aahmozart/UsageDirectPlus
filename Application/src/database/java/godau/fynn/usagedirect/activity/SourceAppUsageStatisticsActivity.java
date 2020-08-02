@@ -18,7 +18,9 @@
 
 package godau.fynn.usagedirect.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import androidx.viewpager.widget.ViewPager;
@@ -66,5 +68,17 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
                 });
             }
         }).start();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_database:
+                startActivity(new Intent(this, DatabaseManagerActivity.class));
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
