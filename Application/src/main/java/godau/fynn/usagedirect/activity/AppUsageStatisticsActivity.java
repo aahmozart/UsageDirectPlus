@@ -114,7 +114,7 @@ public abstract class AppUsageStatisticsActivity extends Activity {
                         new Library("librariesDirect", License.CC0_LICENSE, null, "Fynn Godau", "https://codeberg.org/fynngodau/librariesDirect"),
                 });
 
-                AboutLibrariesConfig.setHeaderText(getString(R.string.about_libraries_header));
+                AboutLibrariesConfig.setHeaderText(getString(R.string.about_libraries_header, getString(R.string.app_name)));
 
                 startActivity(new Intent(this, AboutLibrariesActivity.class));
                 break;
