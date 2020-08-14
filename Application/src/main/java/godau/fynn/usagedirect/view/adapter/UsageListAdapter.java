@@ -21,12 +21,13 @@ package godau.fynn.usagedirect.view.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import godau.fynn.typedrecyclerview.SimpleRecyclerViewAdapter;
 import godau.fynn.usagedirect.BuildConfig;
 import godau.fynn.usagedirect.IconThread;
 import godau.fynn.usagedirect.R;
@@ -38,18 +39,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Provide views to RecyclerView with the directory entries.
+ * Recycler view adapter for displaying (aggregated) usage stats
  */
-public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.ViewHolder> {
-
-    private List<SimpleUsageStat> mUsageStatsList;
-    private Context mContext;
+public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat, UsageListAdapter.ViewHolder> {
 
     private Map<String, Long> lastUsedMap;
 
-    /**
-     * Provide a reference to the type of views that you are using (custom ViewHolder)
-     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView mPackageName;
         private final TextView mLastTimeUsed;
@@ -58,10 +53,10 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
 
         public ViewHolder(View v) {
             super(v);
-            mPackageName = (TextView) v.findViewById(R.id.textview_package_name);
-            mLastTimeUsed = (TextView) v.findViewById(R.id.textview_last_time_used);
-            mTimeUsed = (TextView) v.findViewById(R.id.textview_time_used);
-            mAppIcon = (ImageView) v.findViewById(R.id.app_icon);
+            mPackageName = v.findViewById(R.id.textview_package_name);
+            mLastTimeUsed = v.findViewById(R.id.textview_last_time_used);
+            mTimeUsed = v.findViewById(R.id.textview_time_used);
+            mAppIcon = v.findViewById(R.id.app_icon);
         }
 
         public TextView getLastTimeUsed() {
@@ -82,13 +77,13 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
     }
 
     public UsageListAdapter(Context context) {
-        mContext = context;
+        super(context);
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.usage_row, viewGroup, false);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        View v = inflater.inflate(R.layout.usage_row, viewGroup, false);
 
         final ViewHolder viewHolder = new ViewHolder(v);
 
@@ -99,11 +94,11 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
                 // Launch app that this icon is associated with
                 try {
                     String packageName = (String) viewHolder.getAppIcon().getTag();
-                    Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(packageName);
-                    mContext.startActivity(intent);
+                    Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+                    context.startActivity(intent);
                 } catch (NullPointerException e) {
                     e.printStackTrace();
-                    Toast.makeText(mContext, R.string.launch_unavailable, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.launch_unavailable, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -112,9 +107,7 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-
-        SimpleUsageStat usageStat = mUsageStatsList.get(position);
+    public void onBindViewHolder(ViewHolder viewHolder, SimpleUsageStat usageStat, final int position) {
 
         String name = IconThread.nameMap.get(usageStat.getApplicationId());
         viewHolder.getPackageName().setText(
@@ -134,7 +127,7 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
                 viewHolder.getLastTimeUsed().setText(R.string.last_used_now);
             else if (lastTimeUsed > 1)
                 viewHolder.getLastTimeUsed().setText(
-                        mContext.getString(R.string.last_used, Humanize.naturalTime(new Date(lastTimeUsed)))
+                        context.getString(R.string.last_used, Humanize.naturalTime(new Date(lastTimeUsed)))
                 );
             else
                 viewHolder.getLastTimeUsed().setText(R.string.not_used);
@@ -144,7 +137,7 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
         }
 
         long secondsUsed = usageStat.getTimeUsed() / 1000;
-        viewHolder.getTimeUsed().setText(mContext.getString(
+        viewHolder.getTimeUsed().setText(context.getString(
                 lastUsedMap == null ? R.string.time_used_time_only : R.string.time_used,
                 secondsUsed / 3600, (secondsUsed / 60) % 60, secondsUsed % 60)
         );
@@ -156,14 +149,17 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
 
     @Override
     public int getItemCount() {
-        if (mUsageStatsList == null)
+        if (content == null)
             return 0;
         else
-            return mUsageStatsList.size();
+            return content.size();
     }
 
     public void setUsageStatsList(List<SimpleUsageStat> usageStats) {
-        mUsageStatsList = usageStats;
+        content.clear();
+        if (usageStats != null) {
+            content.addAll(usageStats);
+        }
         notifyDataSetChanged();
     }
 
