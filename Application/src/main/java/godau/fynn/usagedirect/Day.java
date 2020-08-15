@@ -61,4 +61,16 @@ public class Day {
             return d.year == year && d.month == month && d.day == day;
         } else return super.equals(obj);
     }
+
+    public Calendar asCalendar() {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONDAY, month);
+        c.set(Calendar.DAY_OF_MONTH, day);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+        return c;
+    }
 }

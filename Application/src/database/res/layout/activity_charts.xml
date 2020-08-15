@@ -27,7 +27,8 @@
         android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="8dp">
 
         <godau.fynn.usagedirect.view.UsageStatBarView
             android:id="@+id/bar_view"
@@ -56,6 +57,11 @@
             app:stl_underlineColor="@android:color/transparent"
             app:stl_underlineThickness="0dp"
             />
+
+        <godau.fynn.usagedirect.view.WeeklyAverageBarView
+            android:id="@+id/average_bar_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

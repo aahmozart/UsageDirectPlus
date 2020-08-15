@@ -18,7 +18,6 @@
 
 package godau.fynn.usagedirect.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,10 +27,8 @@ import androidx.viewpager.widget.ViewPager;
 import godau.fynn.usagedirect.BuildConfig;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.persistence.EventLogRunnable;
-import godau.fynn.usagedirect.view.adapter.TimespanPagerAdapter;
 import godau.fynn.usagedirect.view.adapter.UsageListViewPagerAdapter;
 import godau.fynn.usagedirect.view.adapter.database.DatabaseTimespanPagerAdapter;
-import godau.fynn.usagedirect.view.adapter.database.DatabaseUsageListViewPagerAdapter;
 import godau.fynn.usagedirect.view.dialog.DatabaseDebugDialog;
 
 /**

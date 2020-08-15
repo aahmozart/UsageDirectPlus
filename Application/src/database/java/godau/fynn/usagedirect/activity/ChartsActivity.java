@@ -30,6 +30,7 @@ import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
 import godau.fynn.usagedirect.persistence.UsageStatsDao;
 import godau.fynn.usagedirect.view.UsageStatBarView;
+import godau.fynn.usagedirect.view.WeeklyAverageBarView;
 import godau.fynn.usagedirect.view.adapter.ClockPieViewPagerAdapter;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
@@ -49,6 +50,7 @@ public class ChartsActivity extends Activity {
 
         // Display data from database in bar view
         final UsageStatBarView barView = findViewById(R.id.bar_view);
+        final WeeklyAverageBarView averageBarView = findViewById(R.id.average_bar_view);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -64,6 +66,8 @@ public class ChartsActivity extends Activity {
                         barView.setData(usagePerDayMap);
                         barView.getBarView().setBoldPosition(usagePerDayMap.keySet().size() - 1);
                         barView.scrollToEnd();
+
+                        averageBarView.setData(usagePerDayMap);
                     }
                 });
             }

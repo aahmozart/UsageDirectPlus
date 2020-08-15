@@ -77,6 +77,12 @@ public abstract class NaturalText {
         }
     }
 
+    public static String formatWeekday(int weekday) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.DAY_OF_WEEK, weekday);
+        return new SimpleDateFormat("E").format(new Date(c.getTimeInMillis()));
+    }
+
     public static @NonNull
     @StringRes Integer getIntervalName(Interval interval) {
         switch (interval) {

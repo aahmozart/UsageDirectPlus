@@ -6,4 +6,5 @@
     <string name="db_wait">Gathering data…</string>
     <string name="db_schedule">Automatic inserts scheduled</string>
     <string name="db_job_schedule_failure">Warning: automatic data collection could not be set up, please check back regularly</string>
+    <string name="chart_average">Average app usage per weekday</string>
 </resources>

@@ -67,7 +67,7 @@ public class UsageStatBarView extends FramedBarView {
      *
      * @param data A list of second values
      */
-    private void setData(List<Integer> data) {
+    protected void setData(List<Integer> data) {
         int max = Collections.max(data);
 
         // Use maximum of timespan plus 30 minutes so no bar hits the top
