@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.ProgressBar;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
@@ -42,6 +43,13 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
         super.onCreate(savedInstanceState);
 
         getActionBar().setElevation(0f);
+
+        findViewById(R.id.system_stats_warning).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SourceAppUsageStatisticsActivity.this, HelpActivity.class));
+            }
+        });
     }
 
     @Override

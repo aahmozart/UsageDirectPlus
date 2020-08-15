@@ -72,8 +72,12 @@
         android:orientation="vertical"
         android:layout_alignParentBottom="true"
         android:background="#FDD835"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:focusable="true"
+        android:clickable="true"
         android:padding="8dp"
-        android:gravity="end">
+        android:gravity="end"
+        android:elevation="8dp">
 
         <TextView
             android:layout_width="match_parent"
