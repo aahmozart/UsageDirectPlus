@@ -30,6 +30,7 @@ import godau.fynn.usagedirect.view.adapter.TimespanPagerAdapter;
 import godau.fynn.usagedirect.view.adapter.UsageListViewPagerAdapter;
 import godau.fynn.usagedirect.view.adapter.database.DatabaseTimespanPagerAdapter;
 import godau.fynn.usagedirect.view.adapter.database.DatabaseUsageListViewPagerAdapter;
+import godau.fynn.usagedirect.view.dialog.DatabaseDebugDialog;
 
 /**
  * Different implementation of AUSA for the two source flavors
@@ -86,7 +87,7 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
 
         switch (item.getItemId()) {
             case R.id.menu_database:
-                startActivity(new Intent(this, DatabaseManagerActivity.class));
+                new DatabaseDebugDialog(this).show();
                 break;
         }
 
