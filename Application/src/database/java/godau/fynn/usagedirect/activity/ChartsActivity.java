@@ -63,6 +63,7 @@ public class ChartsActivity extends Activity {
                     public void run() {
                         barView.setData(usagePerDayMap);
                         barView.getBarView().setBoldPosition(usagePerDayMap.keySet().size() - 1);
+                        barView.scrollToEnd();
                     }
                 });
             }
