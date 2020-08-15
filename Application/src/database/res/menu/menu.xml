@@ -26,8 +26,6 @@
         android:title="@string/menu_charts"
         android:icon="@drawable/ic_chart"
         android:showAsAction="always" />
-    <item android:id="@+id/menu_database"
-        android:title="@string/menu_database" />
     <item android:id="@+id/menu_about"
         android:title="@string/menu_about" />
 </menu>

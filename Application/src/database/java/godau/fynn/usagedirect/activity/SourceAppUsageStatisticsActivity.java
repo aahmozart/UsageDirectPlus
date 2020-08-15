@@ -20,10 +20,12 @@ package godau.fynn.usagedirect.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import androidx.viewpager.widget.ViewPager;
+import godau.fynn.usagedirect.BuildConfig;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.persistence.EventLogRunnable;
 import godau.fynn.usagedirect.view.adapter.TimespanPagerAdapter;
@@ -85,12 +87,20 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()) {
-            case R.id.menu_database:
-                new DatabaseDebugDialog(this).show();
-                break;
+        if (item.getTitle().equals(getString(R.string.menu_database))) {
+            new DatabaseDebugDialog(this).show();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (BuildConfig.DEBUG) {
+            menu.add(R.string.menu_database);
+        }
+        super.onCreateOptionsMenu(menu);
+        return true;
     }
 }
