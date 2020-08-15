@@ -28,10 +28,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import godau.fynn.typedrecyclerview.SimpleRecyclerViewAdapter;
-import godau.fynn.usagedirect.BuildConfig;
-import godau.fynn.usagedirect.IconThread;
-import godau.fynn.usagedirect.R;
-import godau.fynn.usagedirect.SimpleUsageStat;
+import godau.fynn.usagedirect.*;
 import humanize.Humanize;
 
 import java.util.Date;
@@ -80,30 +77,46 @@ public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat,
         super(context);
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        // 0 for the first, 1 for all other positions
+        return Math.min(position, 1);
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View v = inflater.inflate(R.layout.usage_row, viewGroup, false);
 
-        final ViewHolder viewHolder = new ViewHolder(v);
+        View v;
+        if (viewType == 0) {
 
-        // For performance, only set OnClickListener once
-        viewHolder.getAppIcon().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Launch app that this icon is associated with
-                try {
-                    String packageName = (String) viewHolder.getAppIcon().getTag();
-                    Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
-                    context.startActivity(intent);
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                    Toast.makeText(context, R.string.launch_unavailable, Toast.LENGTH_SHORT).show();
+            v = inflater.inflate(R.layout.usage_row_total, viewGroup, false);
+
+            return new ViewHolder(v);
+        } else {
+
+            v = inflater.inflate(R.layout.usage_row, viewGroup, false);
+
+            final ViewHolder viewHolder = new ViewHolder(v);
+
+            // For performance, only set OnClickListener once
+            viewHolder.getAppIcon().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Launch app that this icon is associated with
+                    try {
+                        String packageName = (String) viewHolder.getAppIcon().getTag();
+                        Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+                        context.startActivity(intent);
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
+                        Toast.makeText(context, R.string.launch_unavailable, Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
 
-        return new ViewHolder(v);
+            return viewHolder;
+        }
     }
 
     @Override
@@ -138,7 +151,7 @@ public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat,
 
         long secondsUsed = usageStat.getTimeUsed() / 1000;
         viewHolder.getTimeUsed().setText(context.getString(
-                lastUsedMap == null ? R.string.time_used_time_only : R.string.time_used,
+                lastUsedMap == null || position == 0 ? R.string.time_used_time_only : R.string.time_used,
                 secondsUsed / 3600, (secondsUsed / 60) % 60, secondsUsed % 60)
         );
 
@@ -147,17 +160,17 @@ public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat,
         viewHolder.getAppIcon().setTag(usageStat.getApplicationId());
     }
 
-    @Override
-    public int getItemCount() {
-        if (content == null)
-            return 0;
-        else
-            return content.size();
-    }
-
     public void setUsageStatsList(List<SimpleUsageStat> usageStats) {
         content.clear();
         if (usageStats != null) {
+
+            // Calculate total amount
+            long total = 0;
+            for (SimpleUsageStat stat : usageStats) {
+                total += stat.getTimeUsed();
+            }
+            content.add(new SimpleUsageStat(null, total, context.getString(R.string.total)));
+
             content.addAll(usageStats);
         }
         notifyDataSetChanged();

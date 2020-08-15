@@ -69,7 +69,7 @@ public class IconThread extends Thread {
                 context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        View view = layout.findViewByPosition(usageStats.indexOf(u));
+                        View view = layout.findViewByPosition(usageStats.indexOf(u) + 1);
 
                         if (view == null) return;
 
