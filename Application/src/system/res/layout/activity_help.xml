@@ -97,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#01579b"
-                android:text="@string/help_database_flavor"
+                android:text="@string/help_database_flavor_download"
                 android:layout_margin="8dp"/>
 
         </LinearLayout>

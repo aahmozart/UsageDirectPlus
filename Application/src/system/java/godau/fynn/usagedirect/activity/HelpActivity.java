@@ -20,13 +20,17 @@ package godau.fynn.usagedirect.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import androidx.annotation.Nullable;
 import godau.fynn.usagedirect.R;
 
 public class HelpActivity extends Activity {
+
+    private static final String DATABASE_FLAVOR_PACKAGE_NAME = "godau.fynn.usagedirect";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,13 +38,23 @@ public class HelpActivity extends Activity {
 
         setContentView(R.layout.activity_help);
 
-        View database = findViewById(R.id.database_layout);
+        final View databaseBox = findViewById(R.id.database_layout);
+        TextView databaseText = findViewById(R.id.text_database);
 
-        database.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://f-droid.org/packages/godau.fynn.usagedirect")));
-            }
-        });
+        Intent databaseIntent = getPackageManager().getLaunchIntentForPackage(DATABASE_FLAVOR_PACKAGE_NAME);
+        boolean databaseInstalled = databaseIntent != null;
+
+        if (databaseInstalled) {
+            databaseText.setText(R.string.help_database_flavor_installed);
+            databaseBox.setElevation(0f);
+            databaseBox.setClickable(false);
+        } else {
+            databaseBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://f-droid.org/packages/" + DATABASE_FLAVOR_PACKAGE_NAME)));
+                }
+            });
+        }
     }
 }
