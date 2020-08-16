@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.wrapper.NaturalText;
+import im.dacer.androidcharts.bar.Value;
 
 import java.util.*;
 
@@ -38,37 +39,29 @@ public class WeeklyAverageBarView extends UsageStatBarView {
             a.add(seconds);
         }
 
-        List<String> labels = new ArrayList<>();
-        List<Integer> values = new ArrayList<>();
-        for (int i = Calendar.MONDAY; i <= Calendar.SATURDAY; i++) {
+        Value[] values = new Value[7];
+        // weekday contains the values 2 (MONDAY) to 7 (SATURDAY), then 1 (SUNDAY)
+        for (int i = 0, weekday = Calendar.MONDAY; i <= 6 ; i++, weekday = (i + 1) % 7 + 1) {
 
-            if (weekdayMap.containsKey(i)) {
-                values.add(weekdayMap.get(i).average());
+            if (weekdayMap.containsKey(weekday)) {
+                values[i] = new Value(weekdayMap.get(weekday).average(), NaturalText.formatWeekday(i));
             } else {
-                values.add(0);
+                values[i] = new Value(0, NaturalText.formatWeekday(i));
             }
-
-            labels.add(NaturalText.formatWeekday(i));
         }
 
-        // Sunday
-        {
-            if (weekdayMap.containsKey(Calendar.SUNDAY)) {
-                values.add(weekdayMap.get(Calendar.SUNDAY).average());
-            } else {
-                values.add(0);
-            }
+        int max = Collections.max(weekdayMap.values()).average();
 
-            labels.add(NaturalText.formatWeekday(Calendar.SUNDAY));
-        }
+        // Use maximum of timespan plus 30 minutes so no bar hits the top
+        int chartMax = max + (60 * 30);
 
-        barView.setBottomTextList(labels);
+        barView.setData(values);
 
-        setData(values);
+        addScale(max, chartMax);
     }
 
 
-    private static class Average {
+    private static class Average implements Comparable<Average> {
         private int count;
         private int sum;
 
@@ -79,6 +72,11 @@ public class WeeklyAverageBarView extends UsageStatBarView {
 
         public int average() {
             return sum / count;
+        }
+
+        @Override
+        public int compareTo(Average o) {
+            return Integer.compare(average(), o.average());
         }
     }
 }

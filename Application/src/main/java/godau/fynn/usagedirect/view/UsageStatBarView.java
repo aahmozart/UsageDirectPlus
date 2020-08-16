@@ -11,6 +11,8 @@ import java.util.Map;
 import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.wrapper.Interval;
 import godau.fynn.usagedirect.wrapper.NaturalText;
+import im.dacer.androidcharts.bar.Line;
+import im.dacer.androidcharts.bar.Value;
 
 public class UsageStatBarView extends FramedBarView {
     public UsageStatBarView(Context context, AttributeSet attrs) {
@@ -28,16 +30,24 @@ public class UsageStatBarView extends FramedBarView {
      */
     public void setData(Map<Day, Long> map) {
         // Collect data and labels
-        final List<String> labels = new ArrayList<>();
-        final List<Integer> data = new ArrayList<>();
+
+        Value[] values = new Value[map.size()];
+
+        int i = 0;
         for (Day d : map.keySet()) {
-            labels.add(String.valueOf(d.day));
             int seconds = (int) (map.get(d) / 1000);
-            data.add(seconds);
+            values[i++] = new Value(seconds, String.valueOf(d.day));
         }
 
-        setData(data);
-        barView.setBottomTextList(labels);
+        int max = (int) (Collections.max(map.values()) / 1000);
+
+        // Use maximum of timespan plus 30 minutes so no bar hits the top
+        int chartMax = max + (60 * 30);
+
+        barView.setData(values, chartMax);
+
+        addScale(max, chartMax);
+
     }
 
     /**
@@ -51,29 +61,20 @@ public class UsageStatBarView extends FramedBarView {
     public void setSystemData(List<Integer> accumulatedTimes, Interval interval) {
 
 
-        ArrayList<String> bottomText = new ArrayList<>();
+        Value[] values = new Value[accumulatedTimes.size()];
 
-        for (int i = accumulatedTimes.size() - 1; i >= 0; i--) {
-            bottomText.add(NaturalText.formatShort(interval, i));
+        for (int i = 0; i < accumulatedTimes.size(); i++) {
+            values[i] = new Value(accumulatedTimes.get(i),
+                    NaturalText.formatShort(interval, accumulatedTimes.size() - 1 - i)
+            );
         }
 
-        setData(accumulatedTimes);
-        barView.setBottomTextList(bottomText);
-    }
-
-    /**
-     * Set the provided integer list as data for the chart. Afterwards,
-     * add scale to bar view.
-     *
-     * @param data A list of second values
-     */
-    protected void setData(List<Integer> data) {
-        int max = Collections.max(data);
+        int max = Collections.max(accumulatedTimes);
 
         // Use maximum of timespan plus 30 minutes so no bar hits the top
         int chartMax = max + (60 * 30);
 
-        barView.setDataList(data, chartMax);
+        barView.setData(values, chartMax);
 
         addScale(max, chartMax);
     }
@@ -85,7 +86,7 @@ public class UsageStatBarView extends FramedBarView {
      *            chart
      * @param chartMax Maximum value (upper border) in the chart
      */
-    private void addScale(int max, int chartMax) {
+    protected void addScale(int max, int chartMax) {
         // Calculate vertical line frequency
         int maxHours = (max / 60 / 60) + 1;
         int frequency = 1;
@@ -94,24 +95,18 @@ public class UsageStatBarView extends FramedBarView {
         }
 
         // Add lines
-        List<Integer> lines = new ArrayList<>();
-        List<String> lineLabels = new ArrayList<>();
-        int counter = frequency;
-        do {
-            lines.add(counter * 60 * 60);
-            lineLabels.add(String.valueOf(counter));
-        } while ((counter += frequency) < maxHours);
+        // Note: maxHours is overestimating the total hours by up to one
+        Line[] lines = new Line[(maxHours - 1) / frequency];
 
-        barView.setVerticalLines(lines, chartMax);
-
-        // Don't display more than 4 vertical line labels
-        if (lineLabels.size() > 4) {
-            lineLabels.clear();
-            lineLabels.add(String.valueOf(frequency));
+        for (int counter = frequency, i = 0; counter < maxHours; counter += frequency, i++) {
+            //if (lines.length > 5 & i != 0) {
+            //    lines[i] = new Line(counter * 60 * 60);
+            //} else {
+                lines[i] = new Line(counter * 60 * 60, String.valueOf(counter));
+            //}
         }
 
         barView.setVerticalLines(lines, chartMax);
-        barView.setVerticalLineLabels(lineLabels);
 
     }
 }

@@ -25,7 +25,7 @@ import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 import godau.fynn.usagedirect.R;
-import im.dacer.androidcharts.BarView;
+import im.dacer.androidcharts.bar.BarView;
 
 public class FramedBarView extends FrameLayout {
 

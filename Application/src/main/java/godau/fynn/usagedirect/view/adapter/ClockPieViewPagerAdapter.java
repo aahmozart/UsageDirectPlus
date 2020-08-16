@@ -30,10 +30,8 @@ import godau.fynn.usagedirect.wrapper.ComponentForegroundStat;
 import godau.fynn.usagedirect.wrapper.Interval;
 import godau.fynn.usagedirect.wrapper.NaturalText;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
-import im.dacer.androidcharts.ClockPieHelper;
-import im.dacer.androidcharts.ClockPieView;
+import im.dacer.androidcharts.clockpie.*;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -68,7 +66,7 @@ public class ClockPieViewPagerAdapter extends PagerAdapter {
 
         ClockPieView pieView = clockPieFrame.getClockPieView();
 
-        ArrayList<ClockPieHelper> clockPieHelperList = new ArrayList<>();
+        ArrayList<ClockPieSegment> clockPieHelperList = new ArrayList<>();
 
         List<ComponentForegroundStat> foregroundStats = usageStatsWrapper.getForegroundStatsByRelativeDay(getCount() - 1 - position);
 
@@ -79,7 +77,7 @@ public class ClockPieViewPagerAdapter extends PagerAdapter {
         for (ComponentForegroundStat stat : foregroundStats) {
             beginCalendar.setTimeInMillis(stat.beginTime);
             endCalendar.setTimeInMillis(stat.endTime);
-            clockPieHelperList.add(new ClockPieHelper(
+            clockPieHelperList.add(new ClockPieSegment(
                     beginCalendar.get(Calendar.HOUR_OF_DAY), beginCalendar.get(Calendar.MINUTE), beginCalendar.get(Calendar.SECOND),
                     endCalendar.get(Calendar.HOUR_OF_DAY), endCalendar.get(Calendar.MINUTE), endCalendar.get(Calendar.SECOND)
             ));
@@ -87,7 +85,7 @@ public class ClockPieViewPagerAdapter extends PagerAdapter {
 
         Log.d("ChartsActivity", "Displaying " + foregroundStats.size() + " foreground stats");
 
-        pieView.setDate(clockPieHelperList);
+        pieView.setData(clockPieHelperList);
 
         return clockPieFrame;
     }

@@ -25,9 +25,8 @@ import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import androidx.annotation.StringRes;
 import godau.fynn.usagedirect.R;
-import im.dacer.androidcharts.ClockPieView;
+import im.dacer.androidcharts.clockpie.ClockPieView;
 
 public class FramedClockPieView extends LinearLayout {
 
