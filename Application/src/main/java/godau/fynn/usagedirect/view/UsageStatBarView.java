@@ -90,8 +90,19 @@ public class UsageStatBarView extends FramedBarView {
         // Calculate vertical line frequency
         int maxHours = (max / 60 / 60) + 1;
         int frequency = 1;
-        while (maxHours / 10 >= frequency) {
-            frequency *= 10;
+        while (maxHours / frequency > 6) {
+            // If a power of 10, increase by the factor 2
+            if (Math.log10(frequency) % 1 == 0) {
+                frequency *= 2;
+            } else {
+                // If last step was a multiplication with 2, go back and multiply with 5
+                if (Math.log10(frequency / 2) % 1 == 0) {
+                    frequency = frequency / 2 * 5;
+                } else {
+                    // If last step was this multiplication with 5, go to next power of 10
+                    frequency *= 2;
+                }
+            }
         }
 
         // Add lines
@@ -99,11 +110,7 @@ public class UsageStatBarView extends FramedBarView {
         Line[] lines = new Line[(maxHours - 1) / frequency];
 
         for (int counter = frequency, i = 0; counter < maxHours; counter += frequency, i++) {
-            //if (lines.length > 5 & i != 0) {
-            //    lines[i] = new Line(counter * 60 * 60);
-            //} else {
-                lines[i] = new Line(counter * 60 * 60, String.valueOf(counter));
-            //}
+            lines[i] = new Line(counter * 60 * 60, String.valueOf(counter));
         }
 
         barView.setVerticalLines(lines, chartMax);
