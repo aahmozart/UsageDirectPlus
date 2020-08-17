@@ -44,9 +44,9 @@ public class WeeklyAverageBarView extends UsageStatBarView {
         for (int i = 0, weekday = Calendar.MONDAY; i <= 6 ; i++, weekday = (i + 1) % 7 + 1) {
 
             if (weekdayMap.containsKey(weekday)) {
-                values[i] = new Value(weekdayMap.get(weekday).average(), NaturalText.formatWeekday(i));
+                values[i] = new Value(weekdayMap.get(weekday).average(), NaturalText.formatWeekday(weekday));
             } else {
-                values[i] = new Value(0, NaturalText.formatWeekday(i));
+                values[i] = new Value(0, NaturalText.formatWeekday(weekday));
             }
         }
 
