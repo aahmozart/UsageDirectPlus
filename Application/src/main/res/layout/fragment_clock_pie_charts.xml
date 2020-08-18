@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <godau.fynn.usagedirect.view.DynamicViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/clock_pie_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/clock_pie_view_pager_tab"/>
 
     <com.ogaclejapan.smarttablayout.SmartTabLayout
         android:id="@+id/clock_pie_view_pager_tab"
         android:layout_width="wrap_content"
         android:layout_height="16dp"
         android:layout_gravity="bottom|center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
         app:stl_clickable="false"
         app:stl_customTabTextLayoutId="@layout/custom_tab_circle"
         app:stl_dividerColor="@android:color/transparent"
@@ -27,5 +31,4 @@
         app:stl_underlineColor="@android:color/transparent"
         app:stl_underlineThickness="0dp" />
 
-
-</LinearLayout>
+</RelativeLayout>

@@ -19,16 +19,13 @@
 package godau.fynn.usagedirect.view;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.view.LayoutInflater;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import godau.fynn.usagedirect.R;
 import im.dacer.androidcharts.clockpie.ClockPieView;
 
-public class FramedClockPieView extends LinearLayout {
+public class FramedClockPieView extends FrameLayout {
 
     private final TextView textView;
     private final ClockPieView clockPieView;
@@ -36,32 +33,10 @@ public class FramedClockPieView extends LinearLayout {
     public FramedClockPieView(Context context) {
         super(context);
 
-        setOrientation(VERTICAL);
+        LayoutInflater.from(context).inflate(R.layout.content_clock_pie_chart, this);
 
-        int margin = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                8,
-                context.getResources().getDisplayMetrics()
-        );
-
-        textView = new TextView(context);
-        textView.setText(R.string.charts_clock_pie);
-        textView.setTextColor(Color.BLACK);
-        LayoutParams textLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        textLayoutParams.setMargins(margin, margin, margin, margin);
-        textView.setLayoutParams(textLayoutParams);
-        addView(textView);
-
-        int size = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                220,
-                context.getResources().getDisplayMetrics()
-        );
-        clockPieView = new ClockPieView(context);
-        LayoutParams layoutParams = new LinearLayout.LayoutParams(size, size);
-        layoutParams.gravity = Gravity.CENTER;
-        clockPieView.setLayoutParams(layoutParams);
-        addView(clockPieView);
+        textView = findViewById(R.id.clock_pie_label);
+        clockPieView = findViewById(R.id.clock_pie_view);
     }
 
     public void setText(String text) {
