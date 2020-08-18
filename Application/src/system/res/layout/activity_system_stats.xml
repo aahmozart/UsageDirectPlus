@@ -94,7 +94,8 @@
                 android:layout_margin="8dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_right" />
+                android:src="@drawable/ic_right"
+                android:tint="#7F5924" />
 
     </RelativeLayout>
 

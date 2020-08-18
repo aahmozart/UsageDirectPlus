@@ -69,9 +69,9 @@ public abstract class NaturalText {
             case WEEKLY:
                 return formatToPattern("w", interval, offset);
             case MONTHLY:
-                return formatToPattern("M", interval, offset);
+                return formatToPattern("MMM", interval, offset);
             case YEARLY:
-                return formatToPattern("yy", interval, offset);
+                return formatToPattern("yyyy", interval, offset);
             default:
                 throw new IllegalArgumentException("Unexpected value: " + interval);
         }

@@ -40,6 +40,7 @@
     <string name="bar_chart_monthly">App usage per month</string>
     <string name="bar_chart_yearly">App usage per year</string>
     <string name="charts_clock_pie">%s as a clock pie chart</string>
+    <string name="charts_clock_pie_general">Recent clock pie charts</string>
     <string name="title_feature_preview">usageDirect feature preview</string>
     <string name="ts_today">Today</string>
     <string name="ts_yesterday">Yesterday</string>

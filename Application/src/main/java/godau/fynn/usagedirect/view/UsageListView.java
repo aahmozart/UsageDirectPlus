@@ -36,7 +36,7 @@ public class UsageListView extends RecyclerView {
     public UsageListView(@NonNull Context context) {
         super(context);
 
-        adapter = new UsageListAdapter(context);
+        adapter = new UsageListAdapter();
 
         setAdapter(adapter);
         setLayoutManager(new LinearLayoutManager(context));

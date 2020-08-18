@@ -1,6 +1,7 @@
-package godau.fynn.usagedirect.view;
+package godau.fynn.usagedirect.activity.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.AttributeSet;
 
 import java.util.ArrayList;
@@ -8,19 +9,43 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.fragment.app.Fragment;
 import godau.fynn.usagedirect.Day;
+import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.wrapper.Interval;
 import godau.fynn.usagedirect.wrapper.NaturalText;
+import im.dacer.androidcharts.bar.BarView;
 import im.dacer.androidcharts.bar.Line;
 import im.dacer.androidcharts.bar.Value;
 
-public class UsageStatBarView extends FramedBarView {
-    public UsageStatBarView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+public abstract class UsageStatBarFragment extends Fragment {
+
+    private TextView textView;
+    protected BarView barView;
+    private HorizontalScrollView scrollView;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.content_bar_view, container, false);
+
+        textView = view.findViewById(R.id.bar_chart_label);
+        barView = view.findViewById(R.id.bar_chart);
+        scrollView = view.findViewById(R.id.bar_chart_scroll);
+
+        return view;
     }
 
-    public UsageStatBarView(Context context) {
-        super(context);
+    protected void setText(@StringRes int text) {
+        textView.setText(text);
     }
 
     /**
@@ -28,7 +53,7 @@ public class UsageStatBarView extends FramedBarView {
      * is displayed in the order of the map's key set. The day in month is
      * used as a label. Adds scale to bar view.
      */
-    public void setData(Map<Day, Long> map) {
+    protected void setData(Map<Day, Long> map) {
         // Collect data and labels
 
         Value[] values = new Value[map.size()];
@@ -48,35 +73,6 @@ public class UsageStatBarView extends FramedBarView {
 
         addScale(max, chartMax);
 
-    }
-
-    /**
-     * Set the bar view's data to the provided list of accumulated times.
-     * The last integer is assumed to be for the currently ongoing period,
-     * the previous integers to be the respective periods before that.
-     * Also adds scale to bar view.
-     *
-     * @param interval Interval for bottom text calculation
-     */
-    public void setSystemData(List<Integer> accumulatedTimes, Interval interval) {
-
-
-        Value[] values = new Value[accumulatedTimes.size()];
-
-        for (int i = 0; i < accumulatedTimes.size(); i++) {
-            values[i] = new Value(accumulatedTimes.get(i),
-                    NaturalText.formatShort(interval, accumulatedTimes.size() - 1 - i)
-            );
-        }
-
-        int max = Collections.max(accumulatedTimes);
-
-        // Use maximum of timespan plus 30 minutes so no bar hits the top
-        int chartMax = max + (60 * 30);
-
-        barView.setData(values, chartMax);
-
-        addScale(max, chartMax);
     }
 
     /**
@@ -115,5 +111,14 @@ public class UsageStatBarView extends FramedBarView {
 
         barView.setVerticalLines(lines, chartMax);
 
+    }
+
+    protected void scrollToEnd() {
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.scrollTo(Integer.MAX_VALUE / 2 /* Integer.MAX_VALUE broke things… */, 0);
+            }
+        });
     }
 }

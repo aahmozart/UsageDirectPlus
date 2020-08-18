@@ -1,32 +1,28 @@
-package godau.fynn.usagedirect.view;
+package godau.fynn.usagedirect.charts;
 
-import android.content.Context;
-import android.util.AttributeSet;
 import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.wrapper.NaturalText;
 import im.dacer.androidcharts.bar.Value;
 
-import java.util.*;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
-public class WeeklyAverageBarView extends UsageStatBarView {
-    public WeeklyAverageBarView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        setText(context.getString(R.string.chart_average));
-    }
+public class WeeklyAverageBarChart extends DailyBarChart {
 
-    public WeeklyAverageBarView(Context context) {
-        super(context);
-        setText(context.getString(R.string.chart_average));
+    @Override
+    protected int getText() {
+        return R.string.chart_average;
     }
 
     @Override
-    public void setData(Map<Day, Long> map) {
-
+    protected void onDataLoaded(Map<Day, Long> usagePerDayMap) {
         Map<Integer, Average> weekdayMap = new HashMap<>();
 
-        for (Day d : map.keySet()) {
-            int seconds = (int) (map.get(d) / 1000);
+        for (Day d : usagePerDayMap.keySet()) {
+            int seconds = (int) (usagePerDayMap.get(d) / 1000);
 
             Average a;
             Integer weekday = d.asCalendar().get(Calendar.DAY_OF_WEEK);
@@ -41,7 +37,7 @@ public class WeeklyAverageBarView extends UsageStatBarView {
 
         Value[] values = new Value[7];
         // weekday contains the values 2 (MONDAY) to 7 (SATURDAY), then 1 (SUNDAY)
-        for (int i = 0, weekday = Calendar.MONDAY; i <= 6 ; i++, weekday = (i + 1) % 7 + 1) {
+        for (int i = 0, weekday = Calendar.MONDAY; i <= 6; i++, weekday = (i + 1) % 7 + 1) {
 
             if (weekdayMap.containsKey(weekday)) {
                 values[i] = new Value(weekdayMap.get(weekday).average(), NaturalText.formatWeekday(weekday));
@@ -58,8 +54,8 @@ public class WeeklyAverageBarView extends UsageStatBarView {
         barView.setData(values);
 
         addScale(max, chartMax);
-    }
 
+    }
 
     private static class Average implements Comparable<Average> {
         private int count;

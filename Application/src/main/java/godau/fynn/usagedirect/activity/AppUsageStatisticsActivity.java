@@ -20,9 +20,7 @@ package godau.fynn.usagedirect.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.*;
 import android.widget.ProgressBar;
 
@@ -30,7 +28,6 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 import godau.fynn.usagedirect.BuildConfig;
 import godau.fynn.usagedirect.R;
-import godau.fynn.usagedirect.view.adapter.TimespanPagerAdapter;
 import godau.fynn.usagedirect.view.dialog.GrantPermissionDialog;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import godau.fynn.librariesdirect.AboutLibrariesActivity;

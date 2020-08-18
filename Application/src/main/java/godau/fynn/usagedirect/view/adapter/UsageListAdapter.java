@@ -73,10 +73,6 @@ public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat,
         }
     }
 
-    public UsageListAdapter(Context context) {
-        super(context);
-    }
-
     @Override
     public int getItemViewType(int position) {
         // 0 for the first, 1 for all other positions

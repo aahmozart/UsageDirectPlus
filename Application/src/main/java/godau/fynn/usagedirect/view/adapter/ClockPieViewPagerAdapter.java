@@ -19,6 +19,8 @@
 package godau.fynn.usagedirect.view.adapter;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +51,7 @@ public class ClockPieViewPagerAdapter extends PagerAdapter {
 
     @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, final int position) {
 
         final FramedClockPieView clockPieFrame;
         if (recycleViewList.peek() == null) {
@@ -57,6 +59,7 @@ public class ClockPieViewPagerAdapter extends PagerAdapter {
         } else {
             Log.d("CPVPA", "Recycling clock pie frame view from recycle bin");
             clockPieFrame = recycleViewList.poll();
+            clockPieFrame.getClockPieView().setData(new ClockPieSegment[0]);
         }
         container.addView(clockPieFrame);
 
@@ -64,28 +67,39 @@ public class ClockPieViewPagerAdapter extends PagerAdapter {
                 NaturalText.format(Interval.DAILY, getCount() - 1 - position, context)
         ));
 
-        ClockPieView pieView = clockPieFrame.getClockPieView();
+        final ClockPieView pieView = clockPieFrame.getClockPieView();
 
-        ArrayList<ClockPieSegment> clockPieHelperList = new ArrayList<>();
+        final ArrayList<ClockPieSegment> clockPieHelperList = new ArrayList<>();
 
-        List<ComponentForegroundStat> foregroundStats = usageStatsWrapper.getForegroundStatsByRelativeDay(getCount() - 1 - position);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-        Calendar beginCalendar = Calendar.getInstance();
-        beginCalendar.setTimeZone(usageStatsWrapper.getTimezone());
-        Calendar endCalendar = Calendar.getInstance();
-        endCalendar.setTimeZone(usageStatsWrapper.getTimezone());
-        for (ComponentForegroundStat stat : foregroundStats) {
-            beginCalendar.setTimeInMillis(stat.beginTime);
-            endCalendar.setTimeInMillis(stat.endTime);
-            clockPieHelperList.add(new ClockPieSegment(
-                    beginCalendar.get(Calendar.HOUR_OF_DAY), beginCalendar.get(Calendar.MINUTE), beginCalendar.get(Calendar.SECOND),
-                    endCalendar.get(Calendar.HOUR_OF_DAY), endCalendar.get(Calendar.MINUTE), endCalendar.get(Calendar.SECOND)
-            ));
-        }
+                final List<ComponentForegroundStat> foregroundStats = usageStatsWrapper.getForegroundStatsByRelativeDay(getCount() - 1 - position);
 
-        Log.d("ChartsActivity", "Displaying " + foregroundStats.size() + " foreground stats");
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Calendar beginCalendar = Calendar.getInstance();
+                        beginCalendar.setTimeZone(usageStatsWrapper.getTimezone());
+                        Calendar endCalendar = Calendar.getInstance();
+                        endCalendar.setTimeZone(usageStatsWrapper.getTimezone());
+                        for (ComponentForegroundStat stat : foregroundStats) {
+                            beginCalendar.setTimeInMillis(stat.beginTime);
+                            endCalendar.setTimeInMillis(stat.endTime);
+                            clockPieHelperList.add(new ClockPieSegment(
+                                    beginCalendar.get(Calendar.HOUR_OF_DAY), beginCalendar.get(Calendar.MINUTE), beginCalendar.get(Calendar.SECOND),
+                                    endCalendar.get(Calendar.HOUR_OF_DAY), endCalendar.get(Calendar.MINUTE), endCalendar.get(Calendar.SECOND)
+                            ));
+                        }
 
-        pieView.setData(clockPieHelperList);
+                        pieView.setData(clockPieHelperList);
+                    }
+                });
+            }
+        }).start();
+
+
 
         return clockPieFrame;
     }
