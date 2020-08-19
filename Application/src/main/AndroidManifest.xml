@@ -35,6 +35,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.ChartsActivity" />
+        <activity android:name=".activity.ChartsActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
     </application>
 </manifest>
