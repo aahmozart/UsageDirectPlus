@@ -30,4 +30,6 @@
     <string name="help_database_flavor_installed">usageDirect provides reliable and persistent data.</string>
     <string name="help_reliable">Clock pie charts can be considered reliable. They use the same data source as usageDirect.</string>
     <string name="system_stats_warning">Data may be unreliable.</string>
+    <string name="title_system_stats">Usage statistics</string>
+    <string name="title_help">Data source warning</string>
 </resources>

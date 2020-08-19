@@ -23,6 +23,6 @@
     <color name="primaryDark">#37474F</color>
     <color name="primaryLight">#78909C</color>
     <color name="accent">#FC496D</color>
-    <color name="page_switch_indicator">#455A64</color>
-    <color name="tabText">#ffe9ecee</color>
+    <color name="page_switch_indicator">#33000000</color>
+    <color name="tab_text_light">#ffe9ecee</color>
 </resources>

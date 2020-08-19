@@ -36,6 +36,7 @@
         </activity>
 
         <activity android:name=".activity.ChartsActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:parentActivityName=".activity.SourceAppUsageStatisticsActivity" />
     </application>
 </manifest>

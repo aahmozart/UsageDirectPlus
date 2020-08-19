@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AppTheme">
+        <attr name="primaryTabBackground" format="reference" />
+        <attr name="tabText" format="reference" />
+    </declare-styleable>
+</resources>

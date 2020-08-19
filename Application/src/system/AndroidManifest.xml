@@ -19,7 +19,9 @@
 
     <application>
 
-        <activity android:name=".activity.HelpActivity">
+        <activity android:name=".activity.HelpActivity"
+            android:label="@string/title_help"
+            android:parentActivityName=".activity.SourceAppUsageStatisticsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>

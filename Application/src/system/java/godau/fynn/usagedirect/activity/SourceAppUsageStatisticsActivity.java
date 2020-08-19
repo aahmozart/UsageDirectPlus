@@ -18,10 +18,17 @@
 
 package godau.fynn.usagedirect.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import androidx.annotation.Nullable;
@@ -42,7 +49,7 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
         setContentView(R.layout.activity_system_stats);
         super.onCreate(savedInstanceState);
 
-        getActionBar().setElevation(0f);
+        setTitle(R.string.title_system_stats);
 
         findViewById(R.id.system_stats_warning).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,5 +93,31 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
     protected void onReload(ViewPager viewPager, ProgressBar progressBar) {
         UsageStatsWrapper.flushCache();
         viewPager.getAdapter().notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+
+        for (int i = 0; i < menu.size(); i++)  {
+            MenuItem item = menu.getItem(i);
+
+            if (item.getIcon() != null) {
+                Drawable newIcon = item.getIcon();
+                newIcon.mutate().setColorFilter(getThemeAccentColor(), PorterDuff.Mode.SRC_IN);
+                item.setIcon(newIcon);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @return The accent color from the currently set theme
+     */
+    private int getThemeAccentColor() {
+        TypedValue outValue = new TypedValue();
+        getTheme().resolveAttribute(android.R.attr.colorAccent, outValue, true);
+
+        return outValue.data;
     }
 }

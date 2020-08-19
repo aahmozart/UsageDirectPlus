@@ -28,7 +28,7 @@
         android:paddingRight="4dp"
         android:background="@color/primaryLight"
         android:elevation="4dp"
-        app:stl_defaultTabTextColor="@color/tabText"
+        app:stl_defaultTabTextColor="?attr/tabText"
         app:stl_defaultTabTextHorizontalPadding="18dp"
         app:stl_dividerColor="@android:color/transparent"
         app:stl_dividerThickness="0dp"
