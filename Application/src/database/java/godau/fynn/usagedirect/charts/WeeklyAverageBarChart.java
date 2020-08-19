@@ -53,7 +53,7 @@ public class WeeklyAverageBarChart extends DailyBarChart {
 
         barView.setData(values);
 
-        addScale(max, chartMax);
+        addScale(chartMax);
 
     }
 

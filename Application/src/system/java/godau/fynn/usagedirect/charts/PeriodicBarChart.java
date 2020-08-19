@@ -62,7 +62,7 @@ public abstract class PeriodicBarChart extends UsageStatBarChart {
 
         barView.setData(values, chartMax);
 
-        addScale(max, chartMax);
+        addScale(chartMax);
     }
 
     protected abstract @StringRes int getTitle();

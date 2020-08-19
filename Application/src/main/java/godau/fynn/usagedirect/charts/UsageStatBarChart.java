@@ -64,18 +64,16 @@ public abstract class UsageStatBarChart extends Fragment {
 
         barView.setData(values, chartMax);
 
-        addScale(max, chartMax);
+        addScale(chartMax);
 
     }
 
     /**
      * Calculate positions of vertical lines and their texts for scale
      *
-     * @param max Maximum second value in the dataset displayed in the
-     *            chart
      * @param chartMax Maximum value (upper border) in the chart
      */
-    protected void addScale(int max, int chartMax) {
+    protected void addScale(int chartMax) {
         // Calculate vertical line frequency
         int maxHours = (chartMax / 60 / 60) + 1;
         int frequency = 1;
