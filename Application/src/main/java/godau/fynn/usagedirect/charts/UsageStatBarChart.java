@@ -79,7 +79,7 @@ public abstract class UsageStatBarChart extends Fragment {
         // Calculate vertical line frequency
         int maxHours = (max / 60 / 60) + 1;
         int frequency = 1;
-        while (maxHours / frequency > 6) {
+        while (maxHours / frequency > 10) {
             // If a power of 10, increase by the factor 2
             if (Math.log10(frequency) % 1 == 0) {
                 frequency *= 2;
