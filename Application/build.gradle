@@ -25,7 +25,7 @@ dependencies {
 
     implementation 'com.github.mfornos:humanize-slim:1.2.2'
     implementation 'org.codeberg.fynngodau:librariesDirect:fd6a5f370179b0f85b69c018a8037e1fa0ac37c2'
-    implementation 'com.github.fynngodau:AndroidCharts:35e5e357ab88523aff4fbc2750b3c067256e6d78'
+    implementation 'com.github.fynngodau:AndroidCharts:f8fe87a1604936c554a36bfa36e4b839a0a14d65'
     implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
     implementation 'org.codeberg.fynngodau:TypedRecyclerView:1.1'
 
