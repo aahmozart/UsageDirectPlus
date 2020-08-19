@@ -51,4 +51,5 @@
     <string name="menu_reload">Reload</string>
     <string name="error_no_data">An error occurred: the system has returned no data. Please try restarting the application</string>
     <string name="total">Total</string>
+    <string name="help_future_charts">Future releases of usageDirect will carefully readd previously available features using accurate data.</string>
 </resources>
