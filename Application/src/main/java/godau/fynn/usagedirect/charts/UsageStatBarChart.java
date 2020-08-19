@@ -1,14 +1,6 @@
-package godau.fynn.usagedirect.activity.fragment;
+package godau.fynn.usagedirect.charts;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.AttributeSet;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +12,14 @@ import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.R;
-import godau.fynn.usagedirect.wrapper.Interval;
-import godau.fynn.usagedirect.wrapper.NaturalText;
 import im.dacer.androidcharts.bar.BarView;
 import im.dacer.androidcharts.bar.Line;
 import im.dacer.androidcharts.bar.Value;
 
-public abstract class UsageStatBarFragment extends Fragment {
+import java.util.Collections;
+import java.util.Map;
+
+public abstract class UsageStatBarChart extends Fragment {
 
     private TextView textView;
     protected BarView barView;

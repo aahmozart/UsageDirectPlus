@@ -1,13 +1,11 @@
 package godau.fynn.usagedirect.charts;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import godau.fynn.usagedirect.R;
-import godau.fynn.usagedirect.activity.fragment.UsageStatBarFragment;
 import godau.fynn.usagedirect.wrapper.Interval;
 import godau.fynn.usagedirect.wrapper.NaturalText;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
@@ -16,7 +14,7 @@ import im.dacer.androidcharts.bar.Value;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class PeriodicBarChart extends UsageStatBarFragment {
+public abstract class PeriodicBarChart extends UsageStatBarChart {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
