@@ -1,3 +1,7 @@
-Since Android 5.0, the Android system collects usage statistics, like how long applications are in foreground, in the background. This simple application allows viewing this information similar to the view present in stock Android in the INFO debug menu.
+– Display reliable app usage statistics from up to ten days before the app was installed
+– Display historical data in chart
+– Show usage times on a clock pie chart per day
+– Display weekday average chart
+– More charts to come!
 
-It a fork of the Android sample "AppUsageStatistics".
+All available statistics are stored in the app's database for historic data.
