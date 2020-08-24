@@ -18,10 +18,7 @@
 
 package godau.fynn.usagedirect.persistence;
 
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
+import androidx.room.*;
 import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.SimpleUsageStat;
 
@@ -74,5 +71,46 @@ public abstract class UsageStatsDao {
             map.put(d, getTotalTimeUsed(d));
         }
         return map;
+    }
+
+    /**
+     * Takes a list of entities and adds their values to the data already stored
+     * in the database, and stores the result in the database.
+     *
+     * @param entities List of simple usage stats that must all be on the same day
+     */
+    @Transaction
+    public void insertIncremental(List<SimpleUsageStat> entities) {
+        if (entities.size() == 0) {
+            return;
+        }
+
+        Day day = entities.get(0).getDay();
+
+        List<SimpleUsageStat> oldUsageStats = getUsageStats(day);
+
+        Map<String, Long> applicationMillisMap = new HashMap<>();
+
+        for (SimpleUsageStat stat : oldUsageStats) {
+            applicationMillisMap.put(stat.getApplicationId(), stat.getTimeUsed());
+        }
+
+        for (SimpleUsageStat stat : entities) {
+            long millis = stat.getTimeUsed();
+            if (applicationMillisMap.containsKey(stat.getApplicationId())) {
+                millis += applicationMillisMap.get(stat.getApplicationId());
+            }
+
+            applicationMillisMap.put(stat.getApplicationId(), millis);
+        }
+
+        List<SimpleUsageStat> newUsageStats = new ArrayList<>();
+        for (String application : applicationMillisMap.keySet()) {
+            long millis = applicationMillisMap.get(application);
+
+            newUsageStats.add(new SimpleUsageStat(day, millis, application));
+        }
+
+        insert(newUsageStats);
     }
 }

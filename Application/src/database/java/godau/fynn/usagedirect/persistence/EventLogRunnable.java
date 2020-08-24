@@ -32,8 +32,11 @@ public class EventLogRunnable implements Runnable {
         UsageStatsDao usageStats = database.getUsageStatsDao();
 
         UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(context);
+        usageStats.insertIncremental(
+                usageStatsWrapper.getIncrementalSimpleUsageStats(since)
+        );
         usageStats.insert(
-                usageStatsWrapper.getAllSimpleUsageStats(new Day(since, usageStatsWrapper.getTimezone()))
+                usageStatsWrapper.getAllSimpleUsageStats(new Day(since, usageStatsWrapper.getTimezone()).nextDay())
         );
 
         sharedPreferences.edit().putLong("lastWrite", System.currentTimeMillis()).apply();

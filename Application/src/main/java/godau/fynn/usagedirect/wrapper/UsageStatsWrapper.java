@@ -134,38 +134,15 @@ public class UsageStatsWrapper {
 
     /**
      * Collects event information from system to calculate and aggregate precise
-     * foreground time statistics.
+     * foreground time statistics for the specified period.
      *
-     * @param offset Day to query back in time relative to today
+     * @param start First point in time to include in results
+     * @param end   Last point in time to include in results
+     * @return A list of foreground stats for the specified period
      */
-    public List<ComponentForegroundStat> getForegroundStatsByRelativeDay(int offset) {
-
-        // Calculate timespan to query
-
-        Calendar calendar = Calendar.getInstance();
-
-        calendar.setTimeZone(timezone);
-
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-        // Calendar might have moved to a different day when setting the timezone
-        Calendar reference = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, reference.get(Calendar.YEAR));
-        calendar.set(Calendar.MONTH, reference.get(Calendar.MONTH));
-        calendar.set(Calendar.DAY_OF_MONTH, reference.get(Calendar.DAY_OF_MONTH));
-
-        calendar.add(Calendar.DAY_OF_MONTH, -offset);
-
-        long beginTime = calendar.getTimeInMillis();
-
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
-        long endTime = calendar.getTimeInMillis();
-
+    public List<ComponentForegroundStat> getForegroundStatsByTimestamps(long start, long end) {
         // Assumption: events are ordered chronologically
-        UsageEvents events = usageStatsManager.queryEvents(beginTime, endTime);
+        UsageEvents events = usageStatsManager.queryEvents(start, end);
 
         // Map package names to the last moveToForeground event
         Map<String, Long> moveToForegroundMap = new HashMap<>();
@@ -223,6 +200,114 @@ public class UsageStatsWrapper {
         return componentForegroundStats;
     }
 
+    /**
+     * Collects event information from system to calculate and aggregate precise
+     * foreground time statistics for the specified relative day.
+     *
+     * @param offset Day to query back in time relative to today
+     */
+    public List<ComponentForegroundStat> getForegroundStatsByRelativeDay(int offset) {
+
+        // Calculate timespan to query
+
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.setTimeZone(timezone);
+
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        // Calendar might have moved to a different day when setting the timezone
+        Calendar reference = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, reference.get(Calendar.YEAR));
+        calendar.set(Calendar.MONTH, reference.get(Calendar.MONTH));
+        calendar.set(Calendar.DAY_OF_MONTH, reference.get(Calendar.DAY_OF_MONTH));
+
+        calendar.add(Calendar.DAY_OF_MONTH, -offset);
+
+        long beginTime = calendar.getTimeInMillis();
+
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        long endTime = calendar.getTimeInMillis();
+
+        return getForegroundStatsByTimestamps(beginTime, endTime);
+    }
+
+    /**
+     * Collects event information from system to calculate and aggregate precise
+     * foreground time statistics for the specified day.
+     *
+     * @param day Day object to query
+     */
+    public List<ComponentForegroundStat> getForegroundStatsByDay(Day day) {
+        Calendar c = day.asCalendar();
+        long beginTime = c.getTimeInMillis();
+
+        c.add(Calendar.DAY_OF_MONTH, 1);
+        long endTime = c.getTimeInMillis();
+
+        return getForegroundStatsByTimestamps(beginTime, endTime);
+    }
+
+    /**
+     * Collects event information from system to calculate and aggregate precise
+     * foreground time statistics starting at <code>start</code> and ending at
+     * the end of the day that contains <code>start</code>.
+     *
+     * @param start Starting time of query
+     * @param day Day whose end represents the end of the query
+     */
+    public List<ComponentForegroundStat> getForegroundStatsByPartialDay(long start) {
+        Calendar c = new Day(start, timezone).asCalendar();
+        c.add(Calendar.DAY_OF_MONTH, 1);
+        long endTime = c.getTimeInMillis();
+
+        return getForegroundStatsByTimestamps(start, endTime);
+    }
+
+    /**
+     * Takes a list of foreground stats and aggregates them to usage stats.
+     */
+    private List<SimpleUsageStat> aggregateForegroundStats(List<ComponentForegroundStat> foregroundStats) {
+
+        List<SimpleUsageStat> usageStats = new ArrayList<>();
+
+        if (foregroundStats.size() == 0) {
+            return usageStats;
+        }
+
+        Map<String, Long> applicationTotalForegroundTime = new HashMap<>();
+
+        for (ComponentForegroundStat foregroundStat : foregroundStats) {
+            if (applicationTotalForegroundTime.containsKey(foregroundStat.packageName)) {
+
+                long newTotal = applicationTotalForegroundTime.get(foregroundStat.packageName)
+                        + (foregroundStat.endTime - foregroundStat.beginTime);
+
+                applicationTotalForegroundTime.put(foregroundStat.packageName, newTotal);
+
+            } else {
+
+                applicationTotalForegroundTime.put(foregroundStat.packageName,
+                        (foregroundStat.endTime - foregroundStat.beginTime)
+                );
+
+            }
+        }
+
+        Day day = new Day(foregroundStats.get(0).beginTime, timezone);
+
+        for (String application : applicationTotalForegroundTime.keySet()) {
+            usageStats.add(
+                    new SimpleUsageStat(day, applicationTotalForegroundTime.get(application), application)
+            );
+        }
+
+        return usageStats;
+
+    }
 
     /**
      * Collects <b>all</b> event information from system to calculate and aggregate precise
@@ -241,34 +326,11 @@ public class UsageStatsWrapper {
 
         while (foregroundStats.size() > 0) {
 
-            Map<String, Long> applicationTotalForegroundTime = new HashMap<>();
+            List<SimpleUsageStat> newUsageStats = aggregateForegroundStats(foregroundStats);
 
-            for (ComponentForegroundStat foregroundStat : foregroundStats) {
-                if (applicationTotalForegroundTime.containsKey(foregroundStat.packageName)) {
+            usageStats.addAll(newUsageStats);
 
-                    long newTotal = applicationTotalForegroundTime.get(foregroundStat.packageName)
-                            + (foregroundStat.endTime - foregroundStat.beginTime);
-
-                    applicationTotalForegroundTime.put(foregroundStat.packageName, newTotal);
-
-                } else {
-
-                    applicationTotalForegroundTime.put(foregroundStat.packageName,
-                            (foregroundStat.endTime - foregroundStat.beginTime)
-                    );
-
-                }
-            }
-
-            Day day = new Day(foregroundStats.get(0).beginTime, timezone);
-
-            for (String application : applicationTotalForegroundTime.keySet()) {
-                usageStats.add(
-                        new SimpleUsageStat(day, applicationTotalForegroundTime.get(application), application)
-                );
-            }
-
-            if (day.equals(since)) {
+            if (newUsageStats.get(0).getDay().equals(since)) {
                 // Reached first day that should be returned by this query
                 break;
             }
@@ -278,6 +340,16 @@ public class UsageStatsWrapper {
 
         Log.d("USW", "Returning data for up to day -" + relativeDay + " (" + usageStats.size() + " entries)");
         return usageStats;
+    }
+
+    /**
+     * Returns only usage statistics that have not been counted yet for
+     * only the day that contains <code>timestamp</code>
+     */
+    public List<SimpleUsageStat> getIncrementalSimpleUsageStats(long timestamp) {
+
+        List<ComponentForegroundStat> foregroundStats = getForegroundStatsByPartialDay(timestamp);
+        return aggregateForegroundStats(foregroundStats);
     }
 
     /**

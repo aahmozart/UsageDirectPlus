@@ -62,6 +62,12 @@ public class Day {
         } else return super.equals(obj);
     }
 
+    public Day nextDay() {
+        Calendar c = asCalendar();
+        c.add(Calendar.DAY_OF_MONTH, 1);
+        return new Day(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+    }
+
     public Calendar asCalendar() {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR, year);
