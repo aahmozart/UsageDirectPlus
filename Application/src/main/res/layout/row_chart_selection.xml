@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:textColor="@android:color/primary_text_light"
+        android:textColor="?android:attr/textColorPrimary"
         android:layout_toStartOf="@id/arrow"
         android:layout_alignParentStart="true" />
 
@@ -28,6 +28,6 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:src="@drawable/ic_right"
-        android:tint="@android:color/black" />
+        android:tint="?android:attr/textColorPrimary" />
 
 </RelativeLayout>
