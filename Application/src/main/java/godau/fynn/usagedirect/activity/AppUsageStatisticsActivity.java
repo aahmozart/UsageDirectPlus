@@ -31,7 +31,6 @@ import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.view.dialog.GrantPermissionDialog;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import godau.fynn.librariesdirect.AboutLibrariesActivity;
-import godau.fynn.librariesdirect.AboutLibrariesConfig;
 import godau.fynn.librariesdirect.Library;
 import godau.fynn.librariesdirect.License;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
@@ -91,20 +90,21 @@ public abstract class AppUsageStatisticsActivity extends Activity {
         switch (item.getItemId()) {
             case R.id.menu_about:
 
-                AboutLibrariesConfig.setLibraries(new Library[]{
-                        new Library(getString(R.string.app_name) + ' ' + BuildConfig.VERSION_NAME, License.GNU_GPL_V3_OR_LATER_LICENSE, null, "Fynn Godau", "https://codeberg.org/fynngodau/usageDirect"),
-                        new Library("AppUsageStatistics", License.APACHE_20_LICENSE, null, "The Android Open Source Project, Inc", "https://github.com/googlesamples/android-AppUsageStatistics"),
-                        new Library("AndroidCharts", License.MIT_LICENSE, "The MIT License (MIT)\n" +
-                                "\n" +
-                                "Copyright (c) 2013 Ding Wenhao", "Ding Wenhao", "https://github.com/HackPlan/AndroidCharts"),
-                        new Library("Humanize", License.APACHE_20_LICENSE, null, "mfornos", "http://mfornos.github.io/humanize/"),
-                        new Library("SmartTabLayout", License.APACHE_20_LICENSE, null, "ogaclejapan", "https://github.com/ogaclejapan/SmartTabLayout"),
-                        new Library("librariesDirect", License.CC0_LICENSE, null, "Fynn Godau", "https://codeberg.org/fynngodau/librariesDirect"),
-                });
+                Intent intent = new AboutLibrariesActivity.IntentBuilder(this)
+                        .setLibraries(new Library[]{
+                                new Library(getString(R.string.app_name) + ' ' + BuildConfig.VERSION_NAME, License.GNU_GPL_V3_OR_LATER_LICENSE, null, "Fynn Godau", "https://codeberg.org/fynngodau/usageDirect"),
+                            new Library("AppUsageStatistics", License.APACHE_20_LICENSE, null, "The Android Open Source Project, Inc", "https://github.com/googlesamples/android-AppUsageStatistics"),
+                            new Library("AndroidCharts", License.MIT_LICENSE, "The MIT License (MIT)\n" +
+                                    "\n" +
+                                    "Copyright (c) 2013 Ding Wenhao", "Ding Wenhao", "https://github.com/HackPlan/AndroidCharts"),
+                            new Library("Humanize", License.APACHE_20_LICENSE, null, "mfornos", "http://mfornos.github.io/humanize/"),
+                            new Library("SmartTabLayout", License.APACHE_20_LICENSE, null, "ogaclejapan", "https://github.com/ogaclejapan/SmartTabLayout"),
+                            new Library("librariesDirect", License.CC0_LICENSE, null, "Fynn Godau", "https://codeberg.org/fynngodau/librariesDirect"),
+                        })
+                        .setHeaderText(getString(R.string.about_libraries_header, getString(R.string.app_name)))
+                        .build();
 
-                AboutLibrariesConfig.setHeaderText(getString(R.string.about_libraries_header, getString(R.string.app_name)));
-
-                startActivity(new Intent(this, AboutLibrariesActivity.class));
+                startActivity(intent);
                 break;
 
             case R.id.menu_reload:
