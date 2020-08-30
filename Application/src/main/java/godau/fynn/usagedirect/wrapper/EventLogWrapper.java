@@ -7,6 +7,8 @@ import android.util.Log;
 import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.SimpleUsageStat;
 
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.*;
 
 /**
@@ -196,7 +198,10 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
             }
         }
 
-        Day day = new Day(foregroundStats.get(0).beginTime, timezone);
+        long day = Instant.ofEpochMilli(foregroundStats.get(0).beginTime)
+                .atZone(ZoneId.of(timezone.getID()))
+                .toLocalDate()
+                .toEpochDay();
 
         for (String application : applicationTotalForegroundTime.keySet()) {
             usageStats.add(
@@ -213,9 +218,9 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
      * foreground time statistics and presents this information as {@link SimpleUsageStat}s.
      * <p><b>This method call causes lag</b> if called with a low since value.
      *
-     * @param since Return data from this day onwards (respects {@link #timezone})
+     * @param daySince Return data from this day onwards (respects {@link #timezone})
      */
-    public List<SimpleUsageStat> getAllSimpleUsageStats(Day since) {
+    public List<SimpleUsageStat> getAllSimpleUsageStats(long daySince) {
         List<ComponentForegroundStat> foregroundStats;
         int relativeDay;
 
@@ -229,7 +234,7 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
 
             usageStats.addAll(newUsageStats);
 
-            if (newUsageStats.get(0).getDay().equals(since)) {
+            if (newUsageStats.get(0).getDay() == daySince) {
                 // Reached first day that should be returned by this query
                 break;
             }

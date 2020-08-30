@@ -18,19 +18,80 @@
 
 package godau.fynn.usagedirect.persistence;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import androidx.annotation.NonNull;
 import androidx.room.Database;
+import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SimpleSQLiteQuery;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 import godau.fynn.usagedirect.SimpleUsageStat;
+
+import java.time.LocalDate;
 
 /**
  * This database stores:
- * usage stats: day | app id | times this app was used
+ * <p>usage stats: day | app id | times this app was used</p>
+ *
+ * <h5>Versions</h5>
+ * <ul><b>1</b>: initial version</ul>
+ * <ul><b>2</b>: <code>Day</code> object replaced with date integer</ul>
  */
-@Database(version = 1, entities = {SimpleUsageStat.class})
+@Database(version = 2, entities = {SimpleUsageStat.class})
 public abstract class HistoryDatabase extends RoomDatabase {
 
     public static final String DATABASE_NAME = "history";
 
-    public abstract UsageStatsDao getUsageStatsDao();
+    protected abstract UsageStatsDao getUsageStatsDao();
 
+    public static UsageStatsDao getUsageStatsDao(Context context) {
+        return Room.databaseBuilder(context, HistoryDatabase.class, DATABASE_NAME)
+                .addMigrations(MIGRATION_DAY_TO_DATE)
+                .build()
+                .getUsageStatsDao();
+    }
+
+    private static final Migration MIGRATION_DAY_TO_DATE = new Migration(1, 2) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+
+            // Create new table
+            database.execSQL("CREATE TABLE mig_usageStats(day INTEGER NOT NULL, timeUsed INTEGER NOT NULL, applicationId TEXT NOT NULL, PRIMARY KEY(day, applicationId))");
+
+            // Read existing data
+
+            Cursor cursor = database.query("SELECT day, month, year, timeUsed, applicationId FROM usageStats");
+
+            while (cursor.moveToNext()) {
+                int day = cursor.getInt(0);
+                int month = cursor.getInt(1);
+                int year = cursor.getInt(2);
+                long timeUsed = cursor.getLong(3);
+                String applicationId = cursor.getString(4);
+
+                // Calculate epoch day
+                long date = LocalDate.of(year, month + 1, day)
+                        .toEpochDay();
+
+                // Insert into new table
+                ContentValues values = new ContentValues(3);
+                values.put("day", date);
+                values.put("timeUsed", timeUsed);
+                values.put("applicationId", applicationId);
+                database.insert("mig_usageStats", SQLiteDatabase.CONFLICT_FAIL, values);
+
+            }
+            cursor.close();
+
+            // Drop old table
+            database.execSQL("DROP TABLE usageStats");
+
+            // Rename new table
+            database.execSQL("ALTER TABLE mig_usageStats RENAME TO usageStats");
+        }
+    };
 }

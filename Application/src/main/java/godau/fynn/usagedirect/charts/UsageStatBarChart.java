@@ -16,6 +16,8 @@ import im.dacer.androidcharts.bar.BarView;
 import im.dacer.androidcharts.bar.Line;
 import im.dacer.androidcharts.bar.Value;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.Map;
 
@@ -46,15 +48,15 @@ public abstract class UsageStatBarChart extends Fragment {
      * is displayed in the order of the map's key set. The day in month is
      * used as a label. Adds scale to bar view.
      */
-    protected void setData(Map<Day, Long> map) {
+    protected void setData(Map<Long, Long> map) {
         // Collect data and labels
 
         Value[] values = new Value[map.size()];
 
         int i = 0;
-        for (Day d : map.keySet()) {
+        for (Long d : map.keySet()) {
             int seconds = (int) (map.get(d) / 1000);
-            values[i++] = new Value(seconds, String.valueOf(d.day));
+            values[i++] = new Value(seconds, String.valueOf(LocalDate.ofEpochDay(d).getDayOfMonth()));
         }
 
         int max = (int) (Collections.max(map.values()) / 1000);

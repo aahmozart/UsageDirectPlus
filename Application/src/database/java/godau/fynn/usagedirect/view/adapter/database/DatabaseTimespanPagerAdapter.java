@@ -33,7 +33,7 @@ import java.util.List;
 public class DatabaseTimespanPagerAdapter extends TimespanPagerAdapter {
 
     private List<SimpleUsageStat> usageStatsList;
-    private Day[] days;
+    private long[] days;
     private DatabaseUsageListViewPagerAdapter adapter;
 
     public DatabaseTimespanPagerAdapter(Activity context) {
@@ -43,8 +43,7 @@ public class DatabaseTimespanPagerAdapter extends TimespanPagerAdapter {
     @Override
     public void prepare(int position) {
         Log.d("DTPA", "prepare called – reading DB");
-        HistoryDatabase database = Room.databaseBuilder(context, HistoryDatabase.class, HistoryDatabase.DATABASE_NAME).build();
-        UsageStatsDao usageStats = database.getUsageStatsDao();
+        UsageStatsDao usageStats = HistoryDatabase.getUsageStatsDao(context);
 
         usageStatsList = usageStats.getUsageStats();
         days = usageStats.getDaysStored();

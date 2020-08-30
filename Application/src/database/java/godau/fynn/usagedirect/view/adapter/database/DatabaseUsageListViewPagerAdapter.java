@@ -19,6 +19,7 @@
 package godau.fynn.usagedirect.view.adapter.database;
 
 import android.app.Activity;
+import android.content.Context;
 import androidx.annotation.Nullable;
 import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.SimpleUsageStat;
@@ -26,6 +27,8 @@ import godau.fynn.usagedirect.view.adapter.UsageListViewPagerAdapter;
 import godau.fynn.usagedirect.wrapper.Interval;
 import godau.fynn.usagedirect.wrapper.NaturalText;
 
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -34,10 +37,16 @@ import java.util.Map;
 public class DatabaseUsageListViewPagerAdapter extends UsageListViewPagerAdapter {
 
     private List<SimpleUsageStat> usageStats;
-    private Day[] days;
+    private long[] days;
+    private String zoneId;
 
-    public DatabaseUsageListViewPagerAdapter(Activity context, List<SimpleUsageStat> usageStats, Day[] days) {
+    public DatabaseUsageListViewPagerAdapter(Activity context, List<SimpleUsageStat> usageStats, long[] days) {
         super(context);
+
+        zoneId = context.getSharedPreferences("timezone", Context.MODE_PRIVATE)
+                .getString("timezone",
+                        ZoneId.systemDefault().getId()
+                );
 
         this.usageStats = usageStats;
         this.days = days;
@@ -52,10 +61,10 @@ public class DatabaseUsageListViewPagerAdapter extends UsageListViewPagerAdapter
     protected List<SimpleUsageStat> getUsageStats(int position) {
         List<SimpleUsageStat> result = new ArrayList<>();
 
-        Day day = days[position];
+        long day = days[position];
 
         for (SimpleUsageStat stat : usageStats) {
-            if (stat.getDay().equals(day)) {
+            if (stat.getDay() == day) {
                 result.add(stat);
             }
         }
@@ -71,20 +80,19 @@ public class DatabaseUsageListViewPagerAdapter extends UsageListViewPagerAdapter
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        Day day = days[position];
+        long day = days[position];
 
-        int offset = 0;
+        long dayNow = Instant.now()
+                .atZone(ZoneId.of(zoneId))
+                .toLocalDate()
+                .toEpochDay();
 
-        Calendar calendar = Calendar.getInstance();
-        while (calendar.get(Calendar.DAY_OF_MONTH) != day.day || calendar.get(Calendar.MONTH) != day.month || calendar.get(Calendar.YEAR) != day.year) {
-            calendar.add(Calendar.DAY_OF_MONTH, -1);
-            offset++;
-        }
+        int offset = (int) (dayNow - day);
 
         return NaturalText.format(Interval.DAILY, offset, context);
     }
 
-    public void setUsageStats(List<SimpleUsageStat> usageStatsList, Day[] days) {
+    public void setUsageStats(List<SimpleUsageStat> usageStatsList, long[] days) {
         usageStats = usageStatsList;
         this.days = days;
     }

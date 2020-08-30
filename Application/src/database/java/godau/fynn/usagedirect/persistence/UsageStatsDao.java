@@ -33,41 +33,24 @@ public abstract class UsageStatsDao {
     @Query("SELECT sum(timeUsed) FROM usageStats")
     public abstract long getTotalTimeUsed();
 
-    @Query("SELECT count(*) FROM (SELECT DISTINCT day, month, year FROM usageStats)")
+    @Query("SELECT count(*) FROM (SELECT DISTINCT day FROM usageStats)")
     public abstract int getDaysStoredAmount();
 
-    @Query("SELECT DISTINCT day, month, year FROM usageStats ORDER BY year, month, day")
-    public abstract Day[] getDaysStored();
+    @Query("SELECT DISTINCT day FROM usageStats ORDER BY day")
+    public abstract long[] getDaysStored();
 
     @Query("SELECT * FROM usageStats")
     public abstract List<SimpleUsageStat> getUsageStats();
 
-    @Query("SELECT sum(timeUsed) FROM usageStats WHERE day == :day AND month == :month AND year == :year")
-    protected abstract int getTotalTimeUsed(int day, int month, int year);
+    @Query("SELECT sum(timeUsed) FROM usageStats WHERE day == :day")
+    public abstract long getTotalTimeUsed(long day);
 
-    @Query("SELECT * FROM usageStats WHERE day == :day AND month == :month AND year == :year")
-    protected abstract List<SimpleUsageStat> getUsageStats(int day, int month, int year);
+    @Query("SELECT * FROM usageStats WHERE day == :day")
+    public abstract List<SimpleUsageStat> getUsageStats(long day);
 
-    public long getTotalTimeUsed(Day day) {
-        return getTotalTimeUsed(day.day, day.month, day.year);
-    }
-
-    public List<SimpleUsageStat> getUsageStats(Day day) {
-        return getUsageStats(day.day, day.month, day.year);
-    }
-
-    /**
-     * @param calendar A calendar set to the day you want to query
-     */
-    public long getTotalTimeUsed(Calendar calendar) {
-        return getTotalTimeUsed(
-                calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR)
-        );
-    }
-
-    public Map<Day, Long> getTotalTimePerDay() {
-        Map<Day, Long> map = new LinkedHashMap<>();
-        for (Day d : getDaysStored()) {
+    public Map<Long, Long> getTotalTimePerDay() {
+        Map<Long, Long> map = new LinkedHashMap<>();
+        for (Long d : getDaysStored()) {
             map.put(d, getTotalTimeUsed(d));
         }
         return map;
@@ -85,7 +68,7 @@ public abstract class UsageStatsDao {
             return;
         }
 
-        Day day = entities.get(0).getDay();
+        long day = entities.get(0).getDay();
 
         List<SimpleUsageStat> oldUsageStats = getUsageStats(day);
 

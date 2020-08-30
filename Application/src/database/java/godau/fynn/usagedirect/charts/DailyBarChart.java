@@ -27,10 +27,9 @@ public class DailyBarChart extends UsageStatBarChart {
             @Override
             public void run() {
 
-                HistoryDatabase database = Room.databaseBuilder(getContext(), HistoryDatabase.class, DATABASE_NAME).build();
-                UsageStatsDao usageStats = database.getUsageStatsDao();
+                UsageStatsDao usageStats = HistoryDatabase.getUsageStatsDao(getContext());
 
-                final Map<Day, Long> usagePerDayMap = usageStats.getTotalTimePerDay();
+                final Map<Long, Long> usagePerDayMap = usageStats.getTotalTimePerDay();
 
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
@@ -51,7 +50,7 @@ public class DailyBarChart extends UsageStatBarChart {
      * Responsible for displaying the data loaded from database in view.
      * Run on UI thread.
      */
-    protected void onDataLoaded(Map<Day, Long> usagePerDayMap) {
+    protected void onDataLoaded(Map<Long, Long> usagePerDayMap) {
         setData(usagePerDayMap);
         scrollToEnd();
     }

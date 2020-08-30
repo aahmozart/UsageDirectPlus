@@ -20,29 +20,32 @@ package godau.fynn.usagedirect;
 
 import android.app.usage.UsageStats;
 import androidx.annotation.NonNull;
-import androidx.room.Embedded;
 import androidx.room.Entity;
 
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
 /**
  * Similar to UsageStats, but contains less data and is stored in the
- * {@link HistoryDatabase}
+ * {@link godau.fynn.usagedirect.persistence.HistoryDatabase}
  */
 @Entity(tableName = "usageStats", primaryKeys = {"day", "applicationId"})
 public class SimpleUsageStat {
 
-    @Embedded @NonNull
-    private final Day day;
+    /**
+     * Days since epoch
+     */
+    private final long day;
 
     private final long timeUsed;
 
     private final @NonNull
     String applicationId;
 
-    public SimpleUsageStat(@NonNull Day day, long timeUsed, @NonNull String applicationId) {
+    public SimpleUsageStat(long day, long timeUsed, @NonNull String applicationId) {
         this.day = day;
         this.timeUsed = timeUsed;
         this.applicationId = applicationId;
@@ -51,13 +54,16 @@ public class SimpleUsageStat {
     public SimpleUsageStat(UsageStats systemUsageStat, TimeZone timezone) {
         timeUsed = systemUsageStat.getTotalTimeInForeground();
         applicationId = systemUsageStat.getPackageName();
-        day = new Day(systemUsageStat.getLastTimeUsed(), timezone);
+        day = Instant.ofEpochMilli(systemUsageStat.getLastTimeUsed())
+                .atZone(ZoneId.of(timezone.getID()))
+                .toLocalDate()
+                .toEpochDay();
     }
 
     /**
-     * @return The Day that this object concerns
+     * @return The day since epoch that this object concerns
      */
-    public @NonNull Day getDay() {
+    public long getDay() {
         return day;
     }
 

@@ -165,7 +165,7 @@ public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat,
             for (SimpleUsageStat stat : usageStats) {
                 total += stat.getTimeUsed();
             }
-            content.add(new SimpleUsageStat(null, total, context.getString(R.string.total)));
+            content.add(new SimpleUsageStat(0, total, context.getString(R.string.total)));
 
             content.addAll(usageStats);
         }

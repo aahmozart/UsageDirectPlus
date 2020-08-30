@@ -5,6 +5,8 @@ import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.wrapper.NaturalText;
 import im.dacer.androidcharts.bar.Value;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
@@ -18,14 +20,14 @@ public class WeeklyAverageBarChart extends DailyBarChart {
     }
 
     @Override
-    protected void onDataLoaded(Map<Day, Long> usagePerDayMap) {
-        Map<Integer, Average> weekdayMap = new HashMap<>();
+    protected void onDataLoaded(Map<Long, Long> usagePerDayMap) {
+        Map<DayOfWeek, Average> weekdayMap = new HashMap<>();
 
-        for (Day d : usagePerDayMap.keySet()) {
+        for (Long d : usagePerDayMap.keySet()) {
             int seconds = (int) (usagePerDayMap.get(d) / 1000);
 
             Average a;
-            Integer weekday = d.asCalendar().get(Calendar.DAY_OF_WEEK);
+            DayOfWeek weekday = LocalDate.ofEpochDay(d).getDayOfWeek();
             if (weekdayMap.containsKey(weekday)) {
                 a = weekdayMap.get(weekday);
             } else {
@@ -37,12 +39,12 @@ public class WeeklyAverageBarChart extends DailyBarChart {
 
         Value[] values = new Value[7];
         // weekday contains the values 2 (MONDAY) to 7 (SATURDAY), then 1 (SUNDAY)
-        for (int i = 0, weekday = Calendar.MONDAY; i <= 6; i++, weekday = (i + 1) % 7 + 1) {
+        for (DayOfWeek weekday : DayOfWeek.values()) {
 
             if (weekdayMap.containsKey(weekday)) {
-                values[i] = new Value(weekdayMap.get(weekday).average(), NaturalText.formatWeekday(weekday));
+                values[weekday.getValue() - 1] = new Value(weekdayMap.get(weekday).average(), NaturalText.formatWeekday(weekday));
             } else {
-                values[i] = new Value(0, NaturalText.formatWeekday(weekday));
+                values[weekday.getValue() - 1] = new Value(0, NaturalText.formatWeekday(weekday));
             }
         }
 

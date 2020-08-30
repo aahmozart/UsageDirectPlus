@@ -11,6 +11,9 @@ import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.wrapper.EventLogWrapper;
 
+import java.time.Instant;
+import java.time.ZoneId;
+
 import static godau.fynn.usagedirect.persistence.HistoryDatabase.DATABASE_NAME;
 
 public class EventLogRunnable implements Runnable {
@@ -26,15 +29,19 @@ public class EventLogRunnable implements Runnable {
         SharedPreferences sharedPreferences = context.getSharedPreferences(DATABASE_NAME, Context.MODE_PRIVATE);
         long since = sharedPreferences.getLong("lastWrite", 0);
 
-        HistoryDatabase database = Room.databaseBuilder(context, HistoryDatabase.class, DATABASE_NAME).build();
-        UsageStatsDao usageStats = database.getUsageStatsDao();
+        UsageStatsDao usageStats = HistoryDatabase.getUsageStatsDao(context);
 
         EventLogWrapper eventLogWrapper = new EventLogWrapper(context);
         usageStats.insertIncremental(
                 eventLogWrapper.getIncrementalSimpleUsageStats(since)
         );
         usageStats.insert(
-                eventLogWrapper.getAllSimpleUsageStats(new Day(since, eventLogWrapper.getTimezone()).nextDay())
+                eventLogWrapper.getAllSimpleUsageStats(
+                        Instant.ofEpochMilli(since)
+                                .atZone(ZoneId.of(eventLogWrapper.getTimezone().getID()))
+                                .toLocalDate()
+                                .toEpochDay() + 1
+                )
         );
 
         sharedPreferences.edit().putLong("lastWrite", System.currentTimeMillis()).apply();

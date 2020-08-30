@@ -24,8 +24,11 @@ import androidx.annotation.StringRes;
 import godau.fynn.usagedirect.R;
 
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.format.TextStyle;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public abstract class NaturalText {
     private NaturalText() {}
@@ -81,6 +84,10 @@ public abstract class NaturalText {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, weekday);
         return new SimpleDateFormat("E").format(new Date(c.getTimeInMillis()));
+    }
+
+    public static String formatWeekday(DayOfWeek weekday) {
+        return weekday.getDisplayName(TextStyle.SHORT_STANDALONE, Locale.getDefault());
     }
 
     public static @NonNull

@@ -30,8 +30,7 @@ public class DatabaseDebugDialog extends AlertDialog.Builder {
 
         setView(R.layout.dialog_database);
 
-        HistoryDatabase database = Room.databaseBuilder(context, HistoryDatabase.class, DATABASE_NAME).build();
-        usageStats = database.getUsageStatsDao();
+        usageStats = HistoryDatabase.getUsageStatsDao(context);
     }
 
     @Override
