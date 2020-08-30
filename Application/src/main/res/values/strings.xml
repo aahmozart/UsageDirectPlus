@@ -55,4 +55,5 @@
     <string name="widget_today_hour_french">%sh</string>
     <string name="widget_today_minute">%d:%02d</string>
     <string name="widget_today_second">%d:%02d:%02d</string>
+    <string name="widget_today_name">Time today</string>
 </resources>

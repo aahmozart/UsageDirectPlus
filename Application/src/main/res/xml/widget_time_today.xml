@@ -5,6 +5,8 @@
     android:minHeight="40dp"
     android:updatePeriodMillis="300000"
     android:resizeMode="horizontal|vertical"
-    android:widgetCategory="home_screen">
+    android:widgetCategory="home_screen"
+    android:previewImage="@drawable/widget_time_today_preview"
+    android:minResizeWidth="100dp">
 
 </appwidget-provider>

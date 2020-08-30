@@ -40,7 +40,8 @@
             android:parentActivityName=".activity.SourceAppUsageStatisticsActivity"
             android:label="@string/menu_charts"/>
 
-        <receiver android:name=".widget.TimeTodayWidgetProvider" >
+        <receiver android:name=".widget.TimeTodayWidgetProvider"
+            android:label="@string/widget_today_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
