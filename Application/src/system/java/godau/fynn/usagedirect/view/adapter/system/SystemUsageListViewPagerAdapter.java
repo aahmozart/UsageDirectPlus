@@ -30,6 +30,7 @@ import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class SystemUsageListViewPagerAdapter extends UsageListViewPagerAdapter {
 
@@ -63,7 +64,7 @@ public class SystemUsageListViewPagerAdapter extends UsageListViewPagerAdapter {
 
         return SimpleUsageStat.asSimpleStats(
                 usageStats,
-                usageStatsWrapper.getTimezone()
+                TimeZone.getDefault()
         );
     }
 

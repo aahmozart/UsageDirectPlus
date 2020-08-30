@@ -1,16 +1,17 @@
 package godau.fynn.usagedirect.widget;
 
 import android.content.Context;
+import godau.fynn.usagedirect.wrapper.EventLogWrapper;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
 public class TimeTodayProvider {
 
     public static long getTimeToday(Context context) {
-        UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(context);
+        EventLogWrapper eventLogWrapper = new EventLogWrapper(context);
 
-        return UsageStatsWrapper.aggregateSimpleUsageStats(
-                usageStatsWrapper.aggregateForegroundStats(
-                        usageStatsWrapper.getForegroundStatsByRelativeDay(0)
+        return EventLogWrapper.aggregateSimpleUsageStats(
+                eventLogWrapper.aggregateForegroundStats(
+                        eventLogWrapper.getForegroundStatsByRelativeDay(0)
                 )
         );
     }

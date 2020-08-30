@@ -18,6 +18,9 @@
 
 package godau.fynn.usagedirect.wrapper;
 
+/**
+ * Object representing a timespan that an application was in the foreground
+ */
 public class ComponentForegroundStat {
     public final long beginTime, endTime;
     public final String packageName;

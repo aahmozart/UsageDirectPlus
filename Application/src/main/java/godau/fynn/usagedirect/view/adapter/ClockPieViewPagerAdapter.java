@@ -28,10 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.view.FramedClockPieView;
-import godau.fynn.usagedirect.wrapper.ComponentForegroundStat;
-import godau.fynn.usagedirect.wrapper.Interval;
-import godau.fynn.usagedirect.wrapper.NaturalText;
-import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
+import godau.fynn.usagedirect.wrapper.*;
 import im.dacer.androidcharts.clockpie.*;
 
 import java.util.*;
@@ -40,13 +37,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class ClockPieViewPagerAdapter extends PagerAdapter {
 
     private final Context context;
-    private final UsageStatsWrapper usageStatsWrapper;
+    private final EventLogWrapper eventLogWrapper;
     private static final Queue<FramedClockPieView> recycleViewList = new LinkedBlockingQueue<>();
 
 
-    public ClockPieViewPagerAdapter(Context context, UsageStatsWrapper wrapper) {
+    public ClockPieViewPagerAdapter(Context context, EventLogWrapper wrapper) {
         this.context = context;
-        usageStatsWrapper = wrapper;
+        eventLogWrapper = wrapper;
     }
 
     @NonNull
@@ -75,15 +72,15 @@ public class ClockPieViewPagerAdapter extends PagerAdapter {
             @Override
             public void run() {
 
-                final List<ComponentForegroundStat> foregroundStats = usageStatsWrapper.getForegroundStatsByRelativeDay(getCount() - 1 - position);
+                final List<ComponentForegroundStat> foregroundStats = eventLogWrapper.getForegroundStatsByRelativeDay(getCount() - 1 - position);
 
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
                         Calendar beginCalendar = Calendar.getInstance();
-                        beginCalendar.setTimeZone(usageStatsWrapper.getTimezone());
+                        beginCalendar.setTimeZone(eventLogWrapper.getTimezone());
                         Calendar endCalendar = Calendar.getInstance();
-                        endCalendar.setTimeZone(usageStatsWrapper.getTimezone());
+                        endCalendar.setTimeZone(eventLogWrapper.getTimezone());
                         for (ComponentForegroundStat stat : foregroundStats) {
                             beginCalendar.setTimeInMillis(stat.beginTime);
                             endCalendar.setTimeInMillis(stat.endTime);

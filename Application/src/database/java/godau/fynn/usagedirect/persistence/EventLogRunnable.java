@@ -6,12 +6,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.Toast;
-
 import androidx.room.Room;
-
 import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.R;
-import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
+import godau.fynn.usagedirect.wrapper.EventLogWrapper;
 
 import static godau.fynn.usagedirect.persistence.HistoryDatabase.DATABASE_NAME;
 
@@ -31,12 +29,12 @@ public class EventLogRunnable implements Runnable {
         HistoryDatabase database = Room.databaseBuilder(context, HistoryDatabase.class, DATABASE_NAME).build();
         UsageStatsDao usageStats = database.getUsageStatsDao();
 
-        UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(context);
+        EventLogWrapper eventLogWrapper = new EventLogWrapper(context);
         usageStats.insertIncremental(
-                usageStatsWrapper.getIncrementalSimpleUsageStats(since)
+                eventLogWrapper.getIncrementalSimpleUsageStats(since)
         );
         usageStats.insert(
-                usageStatsWrapper.getAllSimpleUsageStats(new Day(since, usageStatsWrapper.getTimezone()).nextDay())
+                eventLogWrapper.getAllSimpleUsageStats(new Day(since, eventLogWrapper.getTimezone()).nextDay())
         );
 
         sharedPreferences.edit().putLong("lastWrite", System.currentTimeMillis()).apply();

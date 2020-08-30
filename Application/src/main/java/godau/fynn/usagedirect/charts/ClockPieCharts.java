@@ -11,7 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.view.adapter.ClockPieViewPagerAdapter;
-import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
+import godau.fynn.usagedirect.wrapper.EventLogWrapper;
 
 public class ClockPieCharts extends Fragment {
 
@@ -25,7 +25,7 @@ public class ClockPieCharts extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         final ViewPager clockPager = view.findViewById(R.id.clock_pie_view_pager);
 
-        clockPager.setAdapter(new ClockPieViewPagerAdapter(getContext(), new UsageStatsWrapper(getContext())));
+        clockPager.setAdapter(new ClockPieViewPagerAdapter(getContext(), new EventLogWrapper(getContext())));
         clockPager.setCurrentItem(9);
 
         clockPager.setOffscreenPageLimit(3);
