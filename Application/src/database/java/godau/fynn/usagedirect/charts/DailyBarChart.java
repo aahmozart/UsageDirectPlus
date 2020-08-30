@@ -6,15 +6,11 @@ import android.os.Looper;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
-import androidx.room.Room;
-import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
 import godau.fynn.usagedirect.persistence.UsageStatsDao;
 
 import java.util.Map;
-
-import static godau.fynn.usagedirect.persistence.HistoryDatabase.DATABASE_NAME;
 
 public class DailyBarChart extends UsageStatBarChart {
 

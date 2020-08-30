@@ -19,7 +19,6 @@
 package godau.fynn.usagedirect.persistence;
 
 import androidx.room.*;
-import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.SimpleUsageStat;
 
 import java.util.*;

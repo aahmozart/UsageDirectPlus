@@ -1,13 +1,11 @@
 package godau.fynn.usagedirect.charts;
 
-import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.wrapper.NaturalText;
 import im.dacer.androidcharts.bar.Value;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;

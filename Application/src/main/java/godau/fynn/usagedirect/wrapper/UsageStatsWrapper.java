@@ -18,17 +18,8 @@
 
 package godau.fynn.usagedirect.wrapper;
 
-import android.annotation.SuppressLint;
-import android.app.AppOpsManager;
-import android.app.usage.UsageEvents;
 import android.app.usage.UsageStats;
-import android.app.usage.UsageStatsManager;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
-
-import godau.fynn.usagedirect.Day;
-import godau.fynn.usagedirect.SimpleUsageStat;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

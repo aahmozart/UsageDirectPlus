@@ -21,7 +21,6 @@ package godau.fynn.usagedirect.view.adapter.database;
 import android.app.Activity;
 import android.content.Context;
 import androidx.annotation.Nullable;
-import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.SimpleUsageStat;
 import godau.fynn.usagedirect.view.adapter.UsageListViewPagerAdapter;
 import godau.fynn.usagedirect.wrapper.Interval;
@@ -30,7 +29,6 @@ import godau.fynn.usagedirect.wrapper.NaturalText;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 

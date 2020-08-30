@@ -20,8 +20,6 @@ package godau.fynn.usagedirect.view.adapter.database;
 
 import android.app.Activity;
 import android.util.Log;
-import androidx.room.Room;
-import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
 import godau.fynn.usagedirect.SimpleUsageStat;
 import godau.fynn.usagedirect.persistence.UsageStatsDao;

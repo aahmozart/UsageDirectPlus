@@ -20,14 +20,7 @@ package godau.fynn.usagedirect.persistence;
 
 import android.app.job.JobParameters;
 import android.app.job.JobService;
-import android.content.SharedPreferences;
 import android.util.Log;
-import androidx.room.Room;
-
-import godau.fynn.usagedirect.Day;
-import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
-
-import static godau.fynn.usagedirect.persistence.HistoryDatabase.DATABASE_NAME;
 
 public class EventLogService extends JobService {
 

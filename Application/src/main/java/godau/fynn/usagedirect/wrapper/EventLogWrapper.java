@@ -4,7 +4,6 @@ import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
-import godau.fynn.usagedirect.Day;
 import godau.fynn.usagedirect.SimpleUsageStat;
 
 import java.time.Instant;
@@ -139,31 +138,18 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
 
     /**
      * Collects event information from system to calculate and aggregate precise
-     * foreground time statistics for the specified day.
-     *
-     * @param day Day object to query
-     */
-    public List<ComponentForegroundStat> getForegroundStatsByDay(Day day) {
-        Calendar c = day.asCalendar();
-        long beginTime = c.getTimeInMillis();
-
-        c.add(Calendar.DAY_OF_MONTH, 1);
-        long endTime = c.getTimeInMillis();
-
-        return getForegroundStatsByTimestamps(beginTime, endTime);
-    }
-
-    /**
-     * Collects event information from system to calculate and aggregate precise
      * foreground time statistics starting at <code>start</code> and ending at
      * the end of the day that contains <code>start</code>.
      *
      * @param start Starting time of query and point in time in day to query
      */
     public List<ComponentForegroundStat> getForegroundStatsByPartialDay(long start) {
-        Calendar c = new Day(start, timezone).asCalendar();
-        c.add(Calendar.DAY_OF_MONTH, 1);
-        long endTime = c.getTimeInMillis();
+        long endTime = Instant.ofEpochMilli(start)
+                .atZone(ZoneId.of(timezone.getID()))
+                .toLocalDate() // remove time (and zone) information
+                .plusDays(1) // go one day ahead
+                .atStartOfDay(ZoneId.of(timezone.getID()))
+                .toEpochSecond();
 
         return getForegroundStatsByTimestamps(start, endTime);
     }
