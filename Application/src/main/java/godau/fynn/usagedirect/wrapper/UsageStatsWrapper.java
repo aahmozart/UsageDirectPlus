@@ -99,7 +99,7 @@ public class UsageStatsWrapper {
     }
 
     /**
-     * Accumulate UsageStatistics of a day
+     * Accumulate UsageStatistics of a period
      * @see #getUsageStatistics(Interval, int)
      * @return A time value in seconds
      */
@@ -256,8 +256,7 @@ public class UsageStatsWrapper {
      * foreground time statistics starting at <code>start</code> and ending at
      * the end of the day that contains <code>start</code>.
      *
-     * @param start Starting time of query
-     * @param day Day whose end represents the end of the query
+     * @param start Starting time of query and point in time in day to query
      */
     public List<ComponentForegroundStat> getForegroundStatsByPartialDay(long start) {
         Calendar c = new Day(start, timezone).asCalendar();
@@ -270,7 +269,7 @@ public class UsageStatsWrapper {
     /**
      * Takes a list of foreground stats and aggregates them to usage stats.
      */
-    private List<SimpleUsageStat> aggregateForegroundStats(List<ComponentForegroundStat> foregroundStats) {
+    public List<SimpleUsageStat> aggregateForegroundStats(List<ComponentForegroundStat> foregroundStats) {
 
         List<SimpleUsageStat> usageStats = new ArrayList<>();
 
@@ -307,6 +306,16 @@ public class UsageStatsWrapper {
 
         return usageStats;
 
+    }
+
+    public static long aggregateSimpleUsageStats(List<SimpleUsageStat> usageStats) {
+        long sum = 0;
+
+        for (SimpleUsageStat usageStat : usageStats) {
+            sum += usageStat.getTimeUsed();
+        }
+
+        return sum;
     }
 
     /**
