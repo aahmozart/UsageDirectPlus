@@ -7,6 +7,7 @@ import android.util.Log;
 import godau.fynn.usagedirect.SimpleUsageStat;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 
@@ -202,34 +203,49 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
 
     /**
      * Collects <b>all</b> event information from system to calculate and aggregate precise
+     * foreground time statistics for the provided day and presents this information as
+     * {@link SimpleUsageStat}s.
+     *
+     * @param day Day since epoch
+     */
+    private List<ComponentForegroundStat> getForegroundStatsByDay(long day) {
+        LocalDate date = LocalDate.ofEpochDay(day);
+        long start = date.atStartOfDay(ZoneId.of(timezone.getID()))
+                .toInstant().toEpochMilli();
+        long end = date.plusDays(1)
+                .atStartOfDay(ZoneId.of(timezone.getID()))
+                .toInstant().toEpochMilli();
+
+        return getForegroundStatsByTimestamps(start, end);
+    }
+
+    /**
+     * Collects <b>all</b> event information from system to calculate and aggregate precise
      * foreground time statistics and presents this information as {@link SimpleUsageStat}s.
      * <p><b>This method call causes lag</b> if called with a low since value.
      *
      * @param daySince Return data from this day onwards (respects {@link #timezone})
      */
-    public List<SimpleUsageStat> getAllSimpleUsageStats(long daySince) { // TODO
-        List<ComponentForegroundStat> foregroundStats;
-        int relativeDay;
-
-        foregroundStats = getForegroundStatsByRelativeDay(relativeDay = 0);
-
+    public List<SimpleUsageStat> getAllSimpleUsageStats(long daySince) {
         List<SimpleUsageStat> usageStats = new ArrayList<>();
+        List<ComponentForegroundStat> foregroundStats;
 
-        while (foregroundStats.size() > 0) {
+        long today = LocalDate.now(ZoneId.of(timezone.getID()))
+                .toEpochDay();
 
-            List<SimpleUsageStat> newUsageStats = aggregateForegroundStats(foregroundStats);
+        // Maximum event log size
+        daySince = Math.max(today - 10, daySince);
 
-            usageStats.addAll(newUsageStats);
+        while (daySince <= today) {
+            foregroundStats = getForegroundStatsByDay(daySince);
 
-            if (newUsageStats.get(0).getDay() <= daySince) {
-                // Reached first day that should be returned by this query
-                break;
-            }
+            usageStats.addAll(
+                    aggregateForegroundStats(foregroundStats)
+            );
 
-            foregroundStats = getForegroundStatsByRelativeDay(++relativeDay);
+            daySince++;
         }
 
-        Log.d("USW", "Returning data for up to day -" + relativeDay + " (" + usageStats.size() + " entries)");
         return usageStats;
     }
 
