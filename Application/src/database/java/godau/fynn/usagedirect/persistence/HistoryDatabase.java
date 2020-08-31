@@ -22,6 +22,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
@@ -61,6 +62,8 @@ public abstract class HistoryDatabase extends RoomDatabase {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
 
+            Log.d("HistoryDatabase", "Migration 1 → 2");
+
             // Create new table
             database.execSQL("CREATE TABLE mig_usageStats(day INTEGER NOT NULL, timeUsed INTEGER NOT NULL, applicationId TEXT NOT NULL, PRIMARY KEY(day, applicationId))");
 
@@ -84,7 +87,7 @@ public abstract class HistoryDatabase extends RoomDatabase {
                 values.put("day", date);
                 values.put("timeUsed", timeUsed);
                 values.put("applicationId", applicationId);
-                database.insert("mig_usageStats", SQLiteDatabase.CONFLICT_FAIL, values);
+                database.insert("mig_usageStats", SQLiteDatabase.CONFLICT_NONE, values);
 
             }
             cursor.close();

@@ -149,7 +149,8 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
                 .toLocalDate() // remove time (and zone) information
                 .plusDays(1) // go one day ahead
                 .atStartOfDay(ZoneId.of(timezone.getID()))
-                .toEpochSecond();
+                .toInstant()
+                .toEpochMilli();
 
         return getForegroundStatsByTimestamps(start, endTime);
     }
@@ -206,7 +207,7 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
      *
      * @param daySince Return data from this day onwards (respects {@link #timezone})
      */
-    public List<SimpleUsageStat> getAllSimpleUsageStats(long daySince) {
+    public List<SimpleUsageStat> getAllSimpleUsageStats(long daySince) { // TODO
         List<ComponentForegroundStat> foregroundStats;
         int relativeDay;
 
@@ -220,7 +221,7 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
 
             usageStats.addAll(newUsageStats);
 
-            if (newUsageStats.get(0).getDay() == daySince) {
+            if (newUsageStats.get(0).getDay() <= daySince) {
                 // Reached first day that should be returned by this query
                 break;
             }
