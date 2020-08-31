@@ -40,6 +40,8 @@ import java.time.LocalDate;
  * <h5>Versions</h5>
  * <ul><b>1</b>: initial version</ul>
  * <ul><b>2</b>: <code>Day</code> object replaced with date integer</ul>
+ *
+ * <p>See also: <code>/Application/schemas</code></p>
  */
 @Database(version = 2, entities = {SimpleUsageStat.class})
 public abstract class HistoryDatabase extends RoomDatabase {
