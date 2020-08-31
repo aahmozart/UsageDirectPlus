@@ -51,7 +51,7 @@ public class WeeklyAverageBarChart extends DailyBarChart {
         // Use maximum of timespan plus 30 minutes so no bar hits the top
         int chartMax = max + (60 * 30);
 
-        barView.setData(values);
+        barView.setData(values, chartMax);
 
         addScale(chartMax);
 
