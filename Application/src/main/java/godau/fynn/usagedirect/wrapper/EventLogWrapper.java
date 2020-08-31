@@ -1,9 +1,9 @@
 package godau.fynn.usagedirect.wrapper;
 
+import android.app.ActivityManager;
 import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 import godau.fynn.usagedirect.SimpleUsageStat;
 
 import java.time.Instant;
@@ -43,6 +43,29 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
      * @return A list of foreground stats for the specified period
      */
     public List<ComponentForegroundStat> getForegroundStatsByTimestamps(long start, long end) {
+
+        /*
+         * Because sometimes, open events do not have close events when they should, as a hack / workaround,
+         * we query the apps currently in the foreground and match them against the apps that are currently
+         * in the foreground if the query start date is very recent or in the future.
+         *
+         * We query processes in the beginning of this method call in case querying the event log takes a
+         * little longer.
+         */
+        List<String> foregroundProcesses = new ArrayList<>();
+        if (end >= System.currentTimeMillis() - 1500) {
+
+            // Get foreground tasks
+            ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+            List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
+            for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+                if (appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND || appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE) {
+                    foregroundProcesses.add(appProcess.processName);
+                }
+            }
+        }
+
+
         // Assumption: events are ordered chronologically
         UsageEvents events = usageStatsManager.queryEvents(start, end);
 
@@ -84,19 +107,44 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
                      * rolled-over. This is effectively treated as a {@link #MOVE_TO_BACKGROUND}."
                      */
                 case 3:
+                    long eventBeginTime;
                     if (moveToForegroundMap.containsKey(event.getPackageName())) {
-                        long eventBeginTime = moveToForegroundMap.get(event.getPackageName());
+                        eventBeginTime = moveToForegroundMap.get(event.getPackageName());
                         moveToForegroundMap.remove(event.getPackageName());
-
-                        componentForegroundStats.add(new ComponentForegroundStat(
-                                eventBeginTime,
-                                event.getTimeStamp(),
-                                event.getPackageName()
-                        ));
+                    } else {
+                        // App has been launched before start, take start as a starting timestamp
+                        eventBeginTime = start;
                     }
+
+                    componentForegroundStats.add(new ComponentForegroundStat(
+                            eventBeginTime,
+                            event.getTimeStamp(),
+                            event.getPackageName()
+                    ));
                     break;
 
             }
+        }
+
+        // Iterate over remaining start events
+        for (String packageName : moveToForegroundMap.keySet()) {
+
+            // Test if foreground app
+            boolean foregroundApp = false;
+            for (String foregroundProcess : foregroundProcesses) {
+                if (foregroundProcess.contains(packageName)) {
+                    foregroundApp = true;
+                    break;
+                }
+            }
+
+            if (foregroundApp) {
+                componentForegroundStats.add(new ComponentForegroundStat(
+                        moveToForegroundMap.get(packageName),
+                        Math.min(System.currentTimeMillis(), end),
+                        packageName
+                ));
+            } // else we drop the event
         }
 
         return componentForegroundStats;
