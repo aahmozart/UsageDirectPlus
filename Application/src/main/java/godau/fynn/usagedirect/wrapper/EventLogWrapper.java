@@ -69,6 +69,13 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
         // Assumption: events are ordered chronologically
         UsageEvents events = usageStatsManager.queryEvents(start, end);
 
+        /* …except that sometimes, the events that are close to each other are swapped in a way that
+         * breaks the assumption that all end times which do not have a matching start time have
+         * started before start. Therefore, we keep null entries in our moveToForegroundMap instead
+         * of removing the entries to prevent apps that had been opened previously in a period from
+         * being counted as "opened before start".
+        */
+
         // Map package names to the last moveToForeground event
         Map<String, Long> moveToForegroundMap = new HashMap<>();
 
@@ -108,13 +115,13 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
                      */
                 case 3:
                     long eventBeginTime;
-                    if (moveToForegroundMap.containsKey(event.getPackageName())) {
+                    if (moveToForegroundMap.get(event.getPackageName()) != null) {
                         eventBeginTime = moveToForegroundMap.get(event.getPackageName());
-                        moveToForegroundMap.remove(event.getPackageName());
-                    } else {
+                        moveToForegroundMap.put(event.getPackageName(), null);
+                    } else if (!moveToForegroundMap.containsKey(event.getPackageName())) {
                         // App has been launched before start, take start as a starting timestamp
                         eventBeginTime = start;
-                    }
+                    } else break;
 
                     componentForegroundStats.add(new ComponentForegroundStat(
                             eventBeginTime,
