@@ -28,13 +28,12 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.view.FramedClockPieView;
-import godau.fynn.usagedirect.wrapper.*;
+import godau.fynn.usagedirect.wrapper.ComponentForegroundStat;
+import godau.fynn.usagedirect.wrapper.EventLogWrapper;
+import godau.fynn.usagedirect.wrapper.TextFormat;
 import im.dacer.androidcharts.clockpie.ClockPieSegment;
 import im.dacer.androidcharts.clockpie.ClockPieView;
 
-import java.time.Instant;
-import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -80,19 +79,7 @@ public class ClockPieViewPagerAdapter extends PagerAdapter {
 
             new Handler(Looper.getMainLooper()).post(() -> {
                 for (ComponentForegroundStat stat : foregroundStats) {
-                    LocalTime beginTime = Instant
-                            .ofEpochMilli(stat.beginTime)
-                            .atZone(ZoneId.systemDefault())
-                            .toLocalTime();
-                    LocalTime endTime = Instant
-                            .ofEpochMilli(stat.endTime)
-                            .atZone(ZoneId.systemDefault())
-                            .toLocalTime();
-
-                    clockPieHelperList.add(new ClockPieSegment(
-                            beginTime.getHour(), beginTime.getMinute(), beginTime.getSecond(),
-                            endTime.getHour(), endTime.getMinute(), endTime.getSecond()
-                    ));
+                    clockPieHelperList.add(stat.asClockPieSegment());
                 }
 
                 pieView.setData(clockPieHelperList);

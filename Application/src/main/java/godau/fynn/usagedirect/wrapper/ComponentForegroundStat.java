@@ -18,6 +18,12 @@
 
 package godau.fynn.usagedirect.wrapper;
 
+import im.dacer.androidcharts.clockpie.ClockPieSegment;
+
+import java.time.Instant;
+import java.time.LocalTime;
+import java.time.ZoneId;
+
 /**
  * Object representing a timespan that an application was in the foreground
  */
@@ -29,5 +35,24 @@ public class ComponentForegroundStat {
         this.beginTime = beginTime;
         this.endTime = endTime;
         this.packageName = packageName;
+    }
+
+    /**
+     * @return A clock pie segment displaying this foreground stat
+     */
+    public ClockPieSegment asClockPieSegment() {
+        LocalTime beginTime = Instant
+                .ofEpochMilli(this.beginTime)
+                .atZone(ZoneId.systemDefault())
+                .toLocalTime();
+        LocalTime endTime = Instant
+                .ofEpochMilli(this.endTime)
+                .atZone(ZoneId.systemDefault())
+                .toLocalTime();
+
+        return new ClockPieSegment(
+                beginTime.getHour(), beginTime.getMinute(), beginTime.getSecond(),
+                endTime.getHour(), endTime.getMinute(), endTime.getSecond()
+        );
     }
 }
