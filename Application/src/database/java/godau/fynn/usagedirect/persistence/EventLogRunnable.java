@@ -28,7 +28,8 @@ public class EventLogRunnable implements Runnable {
         SharedPreferences sharedPreferences = context.getSharedPreferences(DATABASE_NAME, Context.MODE_PRIVATE);
         long since = sharedPreferences.getLong("lastWrite", 0);
 
-        UsageStatsDao usageStats = HistoryDatabase.getUsageStatsDao(context);
+        HistoryDatabase database = HistoryDatabase.get(context);
+        UsageStatsDao usageStats = database.getUsageStatsDao();
 
         EventLogWrapper eventLogWrapper = new EventLogWrapper(context);
 
@@ -47,6 +48,8 @@ public class EventLogRunnable implements Runnable {
                                 .toEpochDay()
                 )
         );
+
+        database.close();
 
         sharedPreferences.edit().putLong("lastWrite", System.currentTimeMillis()).apply();
 

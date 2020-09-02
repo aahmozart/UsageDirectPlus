@@ -41,10 +41,13 @@ public class DatabaseTimespanPagerAdapter extends TimespanPagerAdapter {
     @Override
     public void prepare(int position) {
         Log.d("DTPA", "prepare called – reading DB");
-        UsageStatsDao usageStats = HistoryDatabase.getUsageStatsDao(context);
+        HistoryDatabase database = HistoryDatabase.get(context);
+        UsageStatsDao usageStats = database.getUsageStatsDao();
 
         usageStatsList = usageStats.getUsageStats();
         days = usageStats.getDaysStored();
+
+        database.close();
     }
 
     @Override

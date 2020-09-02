@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
-import godau.fynn.usagedirect.persistence.UsageStatsDao;
 
 import java.util.Map;
 
@@ -19,21 +18,17 @@ public class DailyBarChart extends UsageStatBarChart {
 
         setText(getText());
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+        new Thread(() -> {
 
-                UsageStatsDao usageStats = HistoryDatabase.getUsageStatsDao(getContext());
+            HistoryDatabase database = HistoryDatabase.get(getContext());
 
-                final Map<Long, Long> usagePerDayMap = usageStats.getTotalTimePerDay();
+            final Map<Long, Long> usagePerDayMap = database.getUsageStatsDao().getTotalTimePerDay();
 
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        onDataLoaded(usagePerDayMap);
-                    }
-                });
-            }
+            database.close();
+
+            new Handler(Looper.getMainLooper()).post(() ->
+                    onDataLoaded(usagePerDayMap)
+            );
         }).start();
     }
 

@@ -28,7 +28,6 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
-import androidx.sqlite.db.SimpleSQLiteQuery;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import godau.fynn.usagedirect.SimpleUsageStat;
 
@@ -49,13 +48,12 @@ public abstract class HistoryDatabase extends RoomDatabase {
 
     public static final String DATABASE_NAME = "history";
 
-    protected abstract UsageStatsDao getUsageStatsDao();
+    public abstract UsageStatsDao getUsageStatsDao();
 
-    public static UsageStatsDao getUsageStatsDao(Context context) {
+    public static HistoryDatabase get(Context context) {
         return Room.databaseBuilder(context, HistoryDatabase.class, DATABASE_NAME)
                 .addMigrations(MIGRATION_DAY_TO_DATE)
-                .build()
-                .getUsageStatsDao();
+                .build();
     }
 
     private static final Migration MIGRATION_DAY_TO_DATE = new Migration(1, 2) {
