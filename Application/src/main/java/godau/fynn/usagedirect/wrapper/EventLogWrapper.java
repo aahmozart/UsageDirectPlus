@@ -142,21 +142,21 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
             }
 
             // Test if foreground app
-            boolean foregroundApp = false;
             for (String foregroundProcess : foregroundProcesses) {
                 if (foregroundProcess.contains(packageName)) {
-                    foregroundApp = true;
+
+                    // Is a foreground app
+                    componentForegroundStats.add(new ComponentForegroundStat(
+                            moveToForegroundMap.get(packageName),
+                            Math.min(System.currentTimeMillis(), end),
+                            packageName
+                    ));
+
                     break;
                 }
             }
 
-            if (foregroundApp) {
-                componentForegroundStats.add(new ComponentForegroundStat(
-                        moveToForegroundMap.get(packageName),
-                        Math.min(System.currentTimeMillis(), end),
-                        packageName
-                ));
-            } // else we drop the event
+            // If app is not in foreground, drop event
         }
 
         return componentForegroundStats;
