@@ -136,6 +136,11 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
         // Iterate over remaining start events
         for (String packageName : moveToForegroundMap.keySet()) {
 
+            if (moveToForegroundMap.get(packageName) == null) {
+                // Not a remaining start event
+                continue;
+            }
+
             // Test if foreground app
             boolean foregroundApp = false;
             for (String foregroundProcess : foregroundProcesses) {
