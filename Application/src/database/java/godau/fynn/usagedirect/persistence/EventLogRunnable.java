@@ -30,15 +30,20 @@ public class EventLogRunnable implements Runnable {
         UsageStatsDao usageStats = HistoryDatabase.getUsageStatsDao(context);
 
         EventLogWrapper eventLogWrapper = new EventLogWrapper(context);
+
+        // Insert the remainder of the day that contains the timestamp "since" (in current timezone)
         usageStats.insertIncremental(
                 eventLogWrapper.getIncrementalSimpleUsageStats(since)
         );
+
+        // Insert all days following the day that contains "since"
         usageStats.insert(
                 eventLogWrapper.getAllSimpleUsageStats(
                         Instant.ofEpochMilli(since)
-                                .atZone(ZoneId.of(eventLogWrapper.getTimezone().getID()))
+                                .atZone(ZoneId.systemDefault())
                                 .toLocalDate()
-                                .toEpochDay() + 1
+                                .plusDays(1)
+                                .toEpochDay()
                 )
         );
 

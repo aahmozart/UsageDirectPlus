@@ -28,10 +28,19 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.view.FramedClockPieView;
-import godau.fynn.usagedirect.wrapper.*;
-import im.dacer.androidcharts.clockpie.*;
+import godau.fynn.usagedirect.wrapper.ComponentForegroundStat;
+import godau.fynn.usagedirect.wrapper.EventLogWrapper;
+import godau.fynn.usagedirect.wrapper.Interval;
+import godau.fynn.usagedirect.wrapper.NaturalText;
+import im.dacer.androidcharts.clockpie.ClockPieSegment;
+import im.dacer.androidcharts.clockpie.ClockPieView;
 
-import java.util.*;
+import java.time.Instant;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ClockPieViewPagerAdapter extends PagerAdapter {
@@ -68,34 +77,30 @@ public class ClockPieViewPagerAdapter extends PagerAdapter {
 
         final ArrayList<ClockPieSegment> clockPieHelperList = new ArrayList<>();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+        new Thread(() -> {
 
-                final List<ComponentForegroundStat> foregroundStats = eventLogWrapper.getForegroundStatsByRelativeDay(getCount() - 1 - position);
+            final List<ComponentForegroundStat> foregroundStats = eventLogWrapper.getForegroundStatsByRelativeDay(getCount() - 1 - position);
 
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Calendar beginCalendar = Calendar.getInstance();
-                        beginCalendar.setTimeZone(eventLogWrapper.getTimezone());
-                        Calendar endCalendar = Calendar.getInstance();
-                        endCalendar.setTimeZone(eventLogWrapper.getTimezone());
-                        for (ComponentForegroundStat stat : foregroundStats) {
-                            beginCalendar.setTimeInMillis(stat.beginTime);
-                            endCalendar.setTimeInMillis(stat.endTime);
-                            clockPieHelperList.add(new ClockPieSegment(
-                                    beginCalendar.get(Calendar.HOUR_OF_DAY), beginCalendar.get(Calendar.MINUTE), beginCalendar.get(Calendar.SECOND),
-                                    endCalendar.get(Calendar.HOUR_OF_DAY), endCalendar.get(Calendar.MINUTE), endCalendar.get(Calendar.SECOND)
-                            ));
-                        }
+            new Handler(Looper.getMainLooper()).post(() -> {
+                for (ComponentForegroundStat stat : foregroundStats) {
+                    LocalTime beginTime = Instant
+                            .ofEpochMilli(stat.beginTime)
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalTime();
+                    LocalTime endTime = Instant
+                            .ofEpochMilli(stat.beginTime)
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalTime();
 
-                        pieView.setData(clockPieHelperList);
-                    }
-                });
-            }
+                    clockPieHelperList.add(new ClockPieSegment(
+                            beginTime.getHour(), beginTime.getMinute(), beginTime.getSecond(),
+                            endTime.getHour(), endTime.getMinute(), endTime.getSecond()
+                    ));
+                }
+
+                pieView.setData(clockPieHelperList);
+            });
         }).start();
-
 
 
         return clockPieFrame;

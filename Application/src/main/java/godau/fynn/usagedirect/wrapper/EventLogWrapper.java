@@ -6,30 +6,28 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import godau.fynn.usagedirect.SimpleUsageStat;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.*;
+import java.time.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Wrapper class for <code>queryEvents(…)</code> calls to the UsageStatsManager class
  */
 public class EventLogWrapper extends UsageStatsManagerWrapper {
 
-    private TimeZone timezone;
-
     public EventLogWrapper(Context context) {
         super(context);
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("timezone", Context.MODE_PRIVATE);
 
+        // Migration to remove timezone from shared preferences
         if (sharedPreferences.contains("timezone")) {
-            timezone =
-                    TimeZone.getTimeZone(
-                            sharedPreferences.getString("timezone", null)
-                    );
-        } else {
-            resetTimezone();
+            sharedPreferences
+                    .edit()
+                    .remove("timezone")
+                    .apply();
         }
 
     }
@@ -171,28 +169,19 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
     public List<ComponentForegroundStat> getForegroundStatsByRelativeDay(int offset) {
 
         // Calculate timespan to query
+        LocalDate queryDay = LocalDate.now()
+                .minusDays(offset);
 
-        Calendar calendar = Calendar.getInstance();
+        long beginTime = queryDay
+                .atStartOfDay(ZoneId.systemDefault())
+                .toInstant()
+                .toEpochMilli();
 
-        calendar.setTimeZone(timezone);
-
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-        // Calendar might have moved to a different day when setting the timezone
-        Calendar reference = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, reference.get(Calendar.YEAR));
-        calendar.set(Calendar.MONTH, reference.get(Calendar.MONTH));
-        calendar.set(Calendar.DAY_OF_MONTH, reference.get(Calendar.DAY_OF_MONTH));
-
-        calendar.add(Calendar.DAY_OF_MONTH, -offset);
-
-        long beginTime = calendar.getTimeInMillis();
-
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
-        long endTime = calendar.getTimeInMillis();
+        long endTime = queryDay
+                .plusDays(1)
+                .atStartOfDay(ZoneId.systemDefault())
+                .toInstant()
+                .toEpochMilli();
 
         return getForegroundStatsByTimestamps(beginTime, endTime);
     }
@@ -205,11 +194,12 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
      * @param start Starting time of query and point in time in day to query
      */
     public List<ComponentForegroundStat> getForegroundStatsByPartialDay(long start) {
+        ZoneId zone = ZoneId.systemDefault();
         long endTime = Instant.ofEpochMilli(start)
-                .atZone(ZoneId.of(timezone.getID()))
+                .atZone(zone)
                 .toLocalDate() // remove time (and zone) information
                 .plusDays(1) // go one day ahead
-                .atStartOfDay(ZoneId.of(timezone.getID()))
+                .atStartOfDay(zone)
                 .toInstant()
                 .toEpochMilli();
 
@@ -218,6 +208,7 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
 
     /**
      * Takes a list of foreground stats and aggregates them to usage stats.
+     * <p>Assumes all provided usage stats to be on the same day.</p>
      */
     public List<SimpleUsageStat> aggregateForegroundStats(List<ComponentForegroundStat> foregroundStats) {
 
@@ -247,7 +238,7 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
         }
 
         long day = Instant.ofEpochMilli(foregroundStats.get(0).beginTime)
-                .atZone(ZoneId.of(timezone.getID()))
+                .atZone(ZoneId.systemDefault())
                 .toLocalDate()
                 .toEpochDay();
 
@@ -270,10 +261,10 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
      */
     private List<ComponentForegroundStat> getForegroundStatsByDay(long day) {
         LocalDate date = LocalDate.ofEpochDay(day);
-        long start = date.atStartOfDay(ZoneId.of(timezone.getID()))
+        long start = date.atStartOfDay(ZoneId.systemDefault())
                 .toInstant().toEpochMilli();
         long end = date.plusDays(1)
-                .atStartOfDay(ZoneId.of(timezone.getID()))
+                .atStartOfDay(ZoneId.systemDefault())
                 .toInstant().toEpochMilli();
 
         return getForegroundStatsByTimestamps(start, end);
@@ -284,14 +275,13 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
      * foreground time statistics and presents this information as {@link SimpleUsageStat}s.
      * <p><b>This method call causes lag</b> if called with a low since value.
      *
-     * @param daySince Return data from this day onwards (respects {@link #timezone})
+     * @param daySince Return data from this day onwards
      */
     public List<SimpleUsageStat> getAllSimpleUsageStats(long daySince) {
         List<SimpleUsageStat> usageStats = new ArrayList<>();
         List<ComponentForegroundStat> foregroundStats;
 
-        long today = LocalDate.now(ZoneId.of(timezone.getID()))
-                .toEpochDay();
+        long today = LocalDate.now().toEpochDay();
 
         // Maximum event log size
         daySince = Math.max(today - 10, daySince);
@@ -317,19 +307,5 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
 
         List<ComponentForegroundStat> foregroundStats = getForegroundStatsByPartialDay(timestamp);
         return aggregateForegroundStats(foregroundStats);
-    }
-
-    public TimeZone getTimezone() {
-        return timezone;
-    }
-
-    /**
-     * Sets time zone to current system time zone and persists this value
-     * in shared preferences.
-     */
-    private void resetTimezone() {
-        timezone = TimeZone.getDefault();
-        context.getSharedPreferences("timezone", Context.MODE_PRIVATE)
-                .edit().putString("timezone", timezone.getID()).apply();
     }
 }
