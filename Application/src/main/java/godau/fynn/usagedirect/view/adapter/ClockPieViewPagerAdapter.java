@@ -88,7 +88,7 @@ public class ClockPieViewPagerAdapter extends PagerAdapter {
                             .atZone(ZoneId.systemDefault())
                             .toLocalTime();
                     LocalTime endTime = Instant
-                            .ofEpochMilli(stat.beginTime)
+                            .ofEpochMilli(stat.endTime)
                             .atZone(ZoneId.systemDefault())
                             .toLocalTime();
 
