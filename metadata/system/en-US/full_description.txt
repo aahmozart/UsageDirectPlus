@@ -1,0 +1,13 @@
+This tool displays usage statistics from the Android system.
+
+The Android system collects app usage statistics in the background even without this application. However, native Android contains no way to read out this data properly. That is why this tool exists.
+
+It shows view aggregated usage statistics per day for usually the past ten days, per week for the past four weeks, per month for the past six months as well data aggregated by year.
+
+Additionally, it can display this data as charts.
+
+Besides this, it can also display when precisely the device has been used in the past ten days using a great chart format, the clock pie chart.
+
+The app comes in the style of the settings app to highlight it as a tool that only reads out already available data, but does not store it.
+
+Warning: the data returned by the Android system is oftentimes unreliable. For more information, please see the in-app information.
