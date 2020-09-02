@@ -1,5 +1,6 @@
 package godau.fynn.usagedirect.persistence;
 
+import android.annotation.SuppressLint;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
@@ -62,6 +63,8 @@ public class EventLogRunnable implements Runnable {
         if (!scheduled) {
             // Schedule job
 
+            // The permission is granted and the service is registered in the database manifest only
+            @SuppressLint({"MissingPermission", "JobSchedulerService"})
             JobInfo jobInfo = new JobInfo.Builder(
                     EventLogService.JOB_ID, new ComponentName(context, EventLogService.class)
             )
