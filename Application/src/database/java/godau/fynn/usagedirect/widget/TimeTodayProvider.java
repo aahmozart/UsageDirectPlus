@@ -2,7 +2,6 @@ package godau.fynn.usagedirect.widget;
 
 import android.content.Context;
 import godau.fynn.usagedirect.wrapper.EventLogWrapper;
-import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
 public class TimeTodayProvider {
 

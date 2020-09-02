@@ -19,9 +19,11 @@
 package godau.fynn.usagedirect.view.adapter.system;
 
 import android.app.Activity;
+import androidx.annotation.Nullable;
 import godau.fynn.usagedirect.view.adapter.TimespanPagerAdapter;
 import godau.fynn.usagedirect.view.adapter.UsageListViewPagerAdapter;
 import godau.fynn.usagedirect.wrapper.Interval;
+import godau.fynn.usagedirect.wrapper.IntervalTextFormat;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
 public class SystemTimespanPagerAdapter extends TimespanPagerAdapter {
@@ -48,5 +50,11 @@ public class SystemTimespanPagerAdapter extends TimespanPagerAdapter {
     @Override
     public int getCount() {
         return Interval.values().length;
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return context.getString(IntervalTextFormat.getIntervalName(Interval.values()[position]));
     }
 }

@@ -21,19 +21,21 @@ package godau.fynn.usagedirect.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.*;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ProgressBar;
-
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
-import godau.fynn.usagedirect.BuildConfig;
-import godau.fynn.usagedirect.R;
-import godau.fynn.usagedirect.view.dialog.GrantPermissionDialog;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import godau.fynn.librariesdirect.AboutLibrariesActivity;
 import godau.fynn.librariesdirect.Library;
 import godau.fynn.librariesdirect.License;
-import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
+import godau.fynn.usagedirect.BuildConfig;
+import godau.fynn.usagedirect.R;
+import godau.fynn.usagedirect.view.dialog.GrantPermissionDialog;
+import godau.fynn.usagedirect.wrapper.UsageStatsManagerWrapper;
 
 /**
  * Shared code for both source flavors
@@ -54,7 +56,7 @@ public abstract class AppUsageStatisticsActivity extends Activity {
         progressBar = findViewById(R.id.progress);
         viewPager = findViewById(R.id.viewpager);
 
-        if (!new UsageStatsWrapper(this).isPermissionGranted()) {
+        if (!UsageStatsManagerWrapper.isPermissionGranted(this)) {
             new GrantPermissionDialog(this).show();
             return;
         }

@@ -22,13 +22,10 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import godau.fynn.usagedirect.R;
-import godau.fynn.usagedirect.wrapper.Interval;
-import godau.fynn.usagedirect.wrapper.NaturalText;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -93,12 +90,6 @@ public abstract class TimespanPagerAdapter extends PagerAdapter implements ViewP
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return view == object || ((View) object).getParent() == object;
-    }
-
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return context.getString(NaturalText.getIntervalName(Interval.values()[position]));
     }
 
     @Override

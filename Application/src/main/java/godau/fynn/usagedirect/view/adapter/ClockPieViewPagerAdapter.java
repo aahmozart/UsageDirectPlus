@@ -28,10 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.view.FramedClockPieView;
-import godau.fynn.usagedirect.wrapper.ComponentForegroundStat;
-import godau.fynn.usagedirect.wrapper.EventLogWrapper;
-import godau.fynn.usagedirect.wrapper.Interval;
-import godau.fynn.usagedirect.wrapper.NaturalText;
+import godau.fynn.usagedirect.wrapper.*;
 import im.dacer.androidcharts.clockpie.ClockPieSegment;
 import im.dacer.androidcharts.clockpie.ClockPieView;
 
@@ -70,7 +67,7 @@ public class ClockPieViewPagerAdapter extends PagerAdapter {
         container.addView(clockPieFrame);
 
         clockPieFrame.setText(context.getString(R.string.charts_clock_pie,
-                NaturalText.format(Interval.DAILY, getCount() - 1 - position, context)
+                TextFormat.formatDay(getCount() - 1 - position, context.getResources())
         ));
 
         final ClockPieView pieView = clockPieFrame.getClockPieView();

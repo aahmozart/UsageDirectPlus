@@ -23,8 +23,7 @@ import android.content.Context;
 import androidx.annotation.Nullable;
 import godau.fynn.usagedirect.SimpleUsageStat;
 import godau.fynn.usagedirect.view.adapter.UsageListViewPagerAdapter;
-import godau.fynn.usagedirect.wrapper.Interval;
-import godau.fynn.usagedirect.wrapper.NaturalText;
+import godau.fynn.usagedirect.wrapper.TextFormat;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -87,7 +86,7 @@ public class DatabaseUsageListViewPagerAdapter extends UsageListViewPagerAdapter
 
         int offset = (int) (dayNow - day);
 
-        return NaturalText.format(Interval.DAILY, offset, context);
+        return TextFormat.formatDay(offset, context.getResources());
     }
 
     public void setUsageStats(List<SimpleUsageStat> usageStatsList, long[] days) {

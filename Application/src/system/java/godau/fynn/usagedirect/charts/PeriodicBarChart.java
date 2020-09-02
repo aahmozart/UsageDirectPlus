@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.wrapper.Interval;
-import godau.fynn.usagedirect.wrapper.NaturalText;
+import godau.fynn.usagedirect.wrapper.IntervalTextFormat;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 import im.dacer.androidcharts.bar.Value;
 
@@ -51,7 +51,7 @@ public abstract class PeriodicBarChart extends UsageStatBarChart {
 
         for (int i = 0; i < accumulatedTimes.size(); i++) {
             values[i] = new Value(accumulatedTimes.get(i),
-                    NaturalText.formatShort(interval, accumulatedTimes.size() - 1 - i)
+                    IntervalTextFormat.formatShort(interval, accumulatedTimes.size() - 1 - i)
             );
         }
 

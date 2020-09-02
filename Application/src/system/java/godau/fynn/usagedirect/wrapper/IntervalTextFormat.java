@@ -30,23 +30,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public abstract class NaturalText {
-    private NaturalText() {}
+public abstract class IntervalTextFormat {
+    private IntervalTextFormat() {}
 
     public static String format(Interval interval, int offset, Context context) {
         switch (interval) {
             case DAILY:
-                if (offset == 0) {
-                    return context.getString(R.string.ts_today);
-                } else if (offset == 1) {
-                    return context.getString(R.string.ts_yesterday);
-                } else {
-                    return formatToPattern(offset < 7?
-                                    "EEEE" : // Weekday ("Saturday")
-                                    "MMM d",  // Abbr. month and day ("Jul 11")
-                            interval, offset);
-                }
-
+                return TextFormat.formatDay(offset, context.getResources());
             case WEEKLY:
                 if (offset == 0) {
                     return context.getString(R.string.ts_this_week);
@@ -78,16 +68,6 @@ public abstract class NaturalText {
             default:
                 throw new IllegalArgumentException("Unexpected value: " + interval);
         }
-    }
-
-    public static String formatWeekday(int weekday) {
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.DAY_OF_WEEK, weekday);
-        return new SimpleDateFormat("E").format(new Date(c.getTimeInMillis()));
-    }
-
-    public static String formatWeekday(DayOfWeek weekday) {
-        return weekday.getDisplayName(TextStyle.SHORT_STANDALONE, Locale.getDefault());
     }
 
     public static @NonNull

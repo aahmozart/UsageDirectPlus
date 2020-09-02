@@ -1,7 +1,7 @@
 package godau.fynn.usagedirect.charts;
 
 import godau.fynn.usagedirect.R;
-import godau.fynn.usagedirect.wrapper.NaturalText;
+import godau.fynn.usagedirect.wrapper.TextFormat;
 import im.dacer.androidcharts.bar.Value;
 
 import java.time.DayOfWeek;
@@ -40,9 +40,9 @@ public class WeeklyAverageBarChart extends DailyBarChart {
         for (DayOfWeek weekday : DayOfWeek.values()) {
 
             if (weekdayMap.containsKey(weekday)) {
-                values[weekday.getValue() - 1] = new Value(weekdayMap.get(weekday).average(), NaturalText.formatWeekday(weekday));
+                values[weekday.getValue() - 1] = new Value(weekdayMap.get(weekday).average(), TextFormat.formatWeekday(weekday));
             } else {
-                values[weekday.getValue() - 1] = new Value(0, NaturalText.formatWeekday(weekday));
+                values[weekday.getValue() - 1] = new Value(0, TextFormat.formatWeekday(weekday));
             }
         }
 

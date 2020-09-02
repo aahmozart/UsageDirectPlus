@@ -39,6 +39,14 @@ public abstract class UsageStatsManagerWrapper {
      * @see <a href="https://stackoverflow.com/a/28921586">StackOverflow</a>
      */
     public boolean isPermissionGranted() {
+        return isPermissionGranted(context);
+    }
+
+    /**
+     * Tests whether usage stats permission has been granted by the user.
+     * If not, user needs to be prompted to grant permission in settings.
+     */
+    public static boolean isPermissionGranted(Context context) {
         AppOpsManager appOps = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
         int mode = appOps.checkOpNoThrow("android:get_usage_stats",
                 android.os.Process.myUid(), context.getPackageName());

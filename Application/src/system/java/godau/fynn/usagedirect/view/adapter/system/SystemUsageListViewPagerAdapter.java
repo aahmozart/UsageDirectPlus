@@ -24,7 +24,7 @@ import androidx.annotation.Nullable;
 import godau.fynn.usagedirect.SimpleUsageStat;
 import godau.fynn.usagedirect.view.adapter.UsageListViewPagerAdapter;
 import godau.fynn.usagedirect.wrapper.Interval;
-import godau.fynn.usagedirect.wrapper.NaturalText;
+import godau.fynn.usagedirect.wrapper.IntervalTextFormat;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
 import java.util.HashMap;
@@ -76,7 +76,7 @@ public class SystemUsageListViewPagerAdapter extends UsageListViewPagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return NaturalText.format(interval, getCount() - position - 1, context);
+        return IntervalTextFormat.format(interval, getCount() - position - 1, context);
     }
 
     @Override
