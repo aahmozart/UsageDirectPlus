@@ -51,34 +51,29 @@ public abstract class AppUsageStatisticsActivity extends Activity {
 
         tabs.setElevation(getActionBar().getElevation());
 
+        progressBar = findViewById(R.id.progress);
+        viewPager = findViewById(R.id.viewpager);
 
         if (!new UsageStatsWrapper(this).isPermissionGranted()) {
             new GrantPermissionDialog(this).show();
+            return;
         }
 
-        progressBar = findViewById(R.id.progress);
         progressBar.setVisibility(View.VISIBLE);
-        viewPager = findViewById(R.id.viewpager);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+        new Thread(() -> {
 
-                prepare();
+            prepare();
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
+            runOnUiThread(() -> {
 
-                        setAdapter(viewPager);
+                setAdapter(viewPager);
 
-                        viewPager.setOffscreenPageLimit(3);
+                viewPager.setOffscreenPageLimit(3);
 
-                        tabs.setViewPager(viewPager);
-                        progressBar.setVisibility(View.GONE);
-                    }
-                });
-            }
+                tabs.setViewPager(viewPager);
+                progressBar.setVisibility(View.GONE);
+            });
         }).start();
 
 
