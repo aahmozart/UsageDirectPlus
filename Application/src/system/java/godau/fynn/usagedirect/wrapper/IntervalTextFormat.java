@@ -18,32 +18,29 @@
 
 package godau.fynn.usagedirect.wrapper;
 
-import android.content.Context;
+import android.content.res.Resources;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import godau.fynn.usagedirect.R;
 
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
-import java.time.format.TextStyle;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public abstract class IntervalTextFormat {
     private IntervalTextFormat() {}
 
-    public static String format(Interval interval, int offset, Context context) {
+    public static String format(Interval interval, int offset, Resources resources) {
         switch (interval) {
             case DAILY:
-                return TextFormat.formatDay(offset, context.getResources());
+                return TextFormat.formatDay(offset, resources);
             case WEEKLY:
                 if (offset == 0) {
-                    return context.getString(R.string.ts_this_week);
+                    return resources.getString(R.string.ts_this_week);
                 } else if (offset == 1) {
-                    return context.getString(R.string.ts_last_week);
+                    return resources.getString(R.string.ts_last_week);
                 } else {
-                    return context.getString(R.string.ts_calendar_week, formatToPattern("w", interval, offset));
+                    return resources.getString(R.string.ts_calendar_week, formatToPattern("w", interval, offset));
                 }
             case MONTHLY:
                 return formatToPattern("MMMM", interval, offset);

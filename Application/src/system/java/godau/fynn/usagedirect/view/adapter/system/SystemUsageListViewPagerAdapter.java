@@ -76,7 +76,7 @@ public class SystemUsageListViewPagerAdapter extends UsageListViewPagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return IntervalTextFormat.format(interval, getCount() - position - 1, context);
+        return IntervalTextFormat.format(interval, getCount() - position - 1, context.getResources());
     }
 
     @Override
