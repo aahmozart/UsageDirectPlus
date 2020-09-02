@@ -18,6 +18,7 @@
 
 package godau.fynn.usagedirect.persistence;
 
+import android.database.Cursor;
 import androidx.room.*;
 import godau.fynn.usagedirect.SimpleUsageStat;
 
@@ -47,10 +48,18 @@ public abstract class UsageStatsDao {
     @Query("SELECT * FROM usageStats WHERE day == :day")
     public abstract List<SimpleUsageStat> getUsageStats(long day);
 
+    @Query("SELECT day, sum(timeUsed) FROM usageStats GROUP BY day ORDER BY day")
+    protected abstract Cursor getTotalTimePerDayCursor();
+
+    /**
+     * @return A mapping of days to the accumulated time used on that day ordered
+     * by day
+     */
     public Map<Long, Long> getTotalTimePerDay() {
+        Cursor cursor = getTotalTimePerDayCursor();
         Map<Long, Long> map = new LinkedHashMap<>();
-        for (Long d : getDaysStored()) {
-            map.put(d, getTotalTimeUsed(d));
+        while (cursor.moveToNext()) {
+            map.put(cursor.getLong(0), cursor.getLong(1));
         }
         return map;
     }
