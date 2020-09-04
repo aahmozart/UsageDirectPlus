@@ -4,13 +4,12 @@ import android.app.ActivityManager;
 import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.util.Log;
 import godau.fynn.usagedirect.SimpleUsageStat;
 
 import java.time.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Wrapper class for <code>queryEvents(…)</code> calls to the UsageStatsManager class
@@ -156,6 +155,30 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
 
             // If app is not in foreground, drop event
         }
+
+        /* If nothing happened during the timespan but there is an app in the foreground,
+         * then this app was used the whole period time and there were no events for it.
+         * Because the foreground applications api call is documented as not to be used
+         * for purposes like this, we first query whether the process name is a valid
+         * package name and if not, we drop it.
+         */
+        if (moveToForegroundMap.keySet().size() == 0) {
+            PackageManager packageManager = context.getPackageManager();
+            for (String foregroundProcess : foregroundProcesses) {
+                if (packageManager.getLaunchIntentForPackage(foregroundProcess) != null) {
+                    componentForegroundStats.add(
+                            new ComponentForegroundStat(
+                                    start,
+                                    Math.min(System.currentTimeMillis(), end),
+                                    foregroundProcess
+                            )
+                    );
+                    Log.d("EventLogWrapper", "Assuming that application " + foregroundProcess + " has been used " +
+                            "the whole query time");
+                }
+            }
+        }
+
 
         return componentForegroundStats;
     }
