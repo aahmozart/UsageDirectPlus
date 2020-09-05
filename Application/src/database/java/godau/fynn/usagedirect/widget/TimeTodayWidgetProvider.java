@@ -6,23 +6,23 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 import godau.fynn.usagedirect.R;
-import godau.fynn.usagedirect.widget.TimeTodayProvider;
+import godau.fynn.usagedirect.wrapper.EventLogWrapper;
 
 public class TimeTodayWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
+        long timeToday = getTimeToday(context);
         for (int widgetId : appWidgetIds) {
-            update(context, appWidgetManager, widgetId);
+            update(context, appWidgetManager, widgetId, timeToday);
         }
     }
 
-    private void update(Context context, AppWidgetManager appWidgetManager, int widgetId) {
+    private void update(Context context, AppWidgetManager appWidgetManager, int widgetId, long timeToday) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_time_today);
 
         int height = appWidgetManager.getAppWidgetOptions(widgetId).getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT); // in dip
@@ -48,7 +48,6 @@ public class TimeTodayWidgetProvider extends AppWidgetProvider {
 
         String text;
 
-        long timeToday = TimeTodayProvider.getTimeToday(context);
         long secondsToday = timeToday / 1000;
 
         switch (accuracy) {
@@ -89,7 +88,17 @@ public class TimeTodayWidgetProvider extends AppWidgetProvider {
     @Override
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
-        update(context, appWidgetManager, appWidgetId);
+        update(context, appWidgetManager, appWidgetId, getTimeToday(context));
+    }
+
+    private static long getTimeToday(Context context) {
+        EventLogWrapper eventLogWrapper = new EventLogWrapper(context);
+
+        return EventLogWrapper.aggregateSimpleUsageStats(
+                eventLogWrapper.aggregateForegroundStats(
+                        eventLogWrapper.getForegroundStatsByRelativeDay(0)
+                )
+        );
     }
 
     private enum Accuracy {
