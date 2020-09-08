@@ -13,9 +13,9 @@
     <string name="help_system_flavor_download">Download System usage stats to access the previous selection of charts.</string>
     <string name="help_system_flavor_installed">System usage stats provides the previous selection of charts.</string>
     <string name="more_charts">More charts…</string>
-    <string name="widget_today_hour_french">%sh</string>
-    <string name="widget_today_minute">%d:%02d</string>
-    <string name="widget_today_second">%d:%02d:%02d</string>
+    <string name="widget_today_hour_french" translatable="false">%sh</string>
+    <string name="widget_today_minute" translatable="false">%d:%02d</string>
+    <string name="widget_today_second" translatable="false">%d:%02d:%02d</string>
     <string name="widget_today_name">Time today</string>
     <string name="help_future_charts">Future releases of usageDirect will carefully readd previously available features using accurate data.</string>
 </resources>
