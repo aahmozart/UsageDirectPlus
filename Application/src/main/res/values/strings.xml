@@ -17,7 +17,7 @@
 <resources>
     <string name="last_used">"Last used %s"</string>
     <string name="time_used">Time used: %d:%02d:%02d</string>
-    <string name="time_used_time_only">%d:%02d:%02d</string>
+    <string name="time_used_time_only" translatable="false">%d:%02d:%02d</string>
     <string name="explanation_access_appusage_title">App usage permission</string>
     <string name="explanation_access_appusage_message">Please grant access to your system\'s usage statistics on the next page.</string>
     <string name="go">Go</string>
