@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">usageDirect</string>
     <string name="db_status">At the moment, there are %d days stored in the database, amounting to a total of %dh.</string>
     <string name="menu_database">Database</string>
     <string name="db_insert">Copy up to 10 days into database</string>

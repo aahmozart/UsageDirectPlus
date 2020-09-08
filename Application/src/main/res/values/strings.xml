@@ -15,7 +15,6 @@
  limitations under the License.
 -->
 <resources>
-    <string name="app_name">usageDirect</string>
     <string name="last_used">"Last used %s"</string>
     <string name="time_span">"Time span: "</string>
     <string name="time_used">Time used: %d:%02d:%02d</string>
