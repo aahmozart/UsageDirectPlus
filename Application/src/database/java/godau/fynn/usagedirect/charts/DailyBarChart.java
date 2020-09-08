@@ -34,7 +34,7 @@ public class DailyBarChart extends UsageStatBarChart {
 
     protected @StringRes
     int getText() {
-        return R.string.bar_chart_daily;
+        return R.string.charts_bar_daily;
     }
 
     /**

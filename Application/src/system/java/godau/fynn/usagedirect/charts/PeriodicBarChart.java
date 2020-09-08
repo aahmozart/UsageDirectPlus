@@ -72,7 +72,7 @@ public abstract class PeriodicBarChart extends UsageStatBarChart {
     public static class DailyBarChart extends PeriodicBarChart {
         @Override
         protected int getTitle() {
-            return R.string.bar_chart_daily;
+            return R.string.charts_bar_daily;
         }
 
         @Override
@@ -84,7 +84,7 @@ public abstract class PeriodicBarChart extends UsageStatBarChart {
     public static class WeeklyBarChart extends PeriodicBarChart {
         @Override
         protected int getTitle() {
-            return R.string.bar_chart_weekly;
+            return R.string.charts_bar_weekly;
         }
 
         @Override
@@ -96,7 +96,7 @@ public abstract class PeriodicBarChart extends UsageStatBarChart {
     public static class MonthlyBarChart extends PeriodicBarChart {
         @Override
         protected int getTitle() {
-            return R.string.bar_chart_monthly;
+            return R.string.charts_bar_monthly;
         }
 
         @Override
@@ -108,7 +108,7 @@ public abstract class PeriodicBarChart extends UsageStatBarChart {
     public static class YearlyBarChart extends PeriodicBarChart {
         @Override
         protected int getTitle() {
-            return R.string.bar_chart_yearly;
+            return R.string.charts_bar_yearly;
         }
 
         @Override

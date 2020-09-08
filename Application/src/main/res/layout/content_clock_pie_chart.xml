@@ -6,7 +6,7 @@
         android:id="@+id/clock_pie_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/bar_chart_daily"
+        android:text="@string/charts_bar_daily"
         android:layout_margin="8dp"
         android:textColor="@android:color/black" />
 

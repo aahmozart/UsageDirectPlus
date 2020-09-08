@@ -16,4 +16,5 @@
     <string name="widget_today_minute">%d:%02d</string>
     <string name="widget_today_second">%d:%02d:%02d</string>
     <string name="widget_today_name">Time today</string>
+    <string name="help_future_charts">Future releases of usageDirect will carefully readd previously available features using accurate data.</string>
 </resources>

@@ -16,7 +16,6 @@
 -->
 <resources>
     <string name="app_name">usageDirect</string>
-    <string name="open_app_usage_setting">Open Apps with usage access settings</string>
     <string name="last_used">"Last used %s"</string>
     <string name="time_span">"Time span: "</string>
     <string name="time_used">Time used: %d:%02d:%02d</string>
@@ -30,15 +29,8 @@
     <string name="about_libraries_header">%s is forked from the Android sample AppUsageStatistics and has since been developed further by Fynn Godau.\n\nThe following list displays all components that make up this application.</string>
     <string name="launch_unavailable">Could not launch app</string>
     <string name="menu_charts">Charts</string>
-    <string name="span_daily">Daily</string>
-    <string name="span_weekly">Weekly</string>
-    <string name="span_monthly">Monthly</string>
-    <string name="span_yearly">Yearly</string>
     <string name="last_used_now">Currently in use</string>
-    <string name="bar_chart_daily">App usage per day</string>
-    <string name="bar_chart_weekly">App usage per week</string>
-    <string name="bar_chart_monthly">App usage per month</string>
-    <string name="bar_chart_yearly">App usage per year</string>
+    <string name="charts_bar_daily">App usage per day</string>
     <string name="charts_clock_pie">%s as a clock pie chart</string>
     <string name="charts_clock_pie_general">Recent clock pie charts</string>
     <string name="title_feature_preview">usageDirect feature preview</string>
@@ -49,7 +41,5 @@
     <string name="ts_calendar_week">Week %s</string>
     <string name="ts_this_month">This month</string>
     <string name="menu_reload">Reload</string>
-    <string name="error_no_data">An error occurred: the system has returned no data. Please try restarting the application</string>
     <string name="total">Total</string>
-    <string name="help_future_charts">Future releases of usageDirect will carefully readd previously available features using accurate data.</string>
 </resources>

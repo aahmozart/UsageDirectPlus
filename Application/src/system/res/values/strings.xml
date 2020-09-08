@@ -32,4 +32,12 @@
     <string name="system_stats_warning">Data may be unreliable.</string>
     <string name="title_system_stats">Usage statistics</string>
     <string name="title_help">Data source warning</string>
+    <string name="span_daily">Daily</string>
+    <string name="span_weekly">Weekly</string>
+    <string name="span_monthly">Monthly</string>
+    <string name="span_yearly">Yearly</string>
+    <string name="charts_bar_weekly">App usage per week</string>
+    <string name="charts_bar_monthly">App usage per month</string>
+    <string name="charts_bar_yearly">App usage per year</string>
+    <string name="error_no_data">An error occurred: the system has returned no data. Please try restarting the application</string>
 </resources>
