@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="span_daily">Diário</string>
+    <string name="span_weekly">Semanal</string>
+    <string name="span_monthly">Mensal</string>
+    <string name="span_yearly">Anual</string>
+    <string name="charts_bar_weekly">Uso semanal do aplicativo</string>
+    <string name="charts_bar_monthly">Uso mensal do aplicativo</string>
+    <string name="charts_bar_yearly">Uso anual do aplicativo</string>
+    <string name="error_no_data">Ocorreu um erro: o sistema não retornou nenhum dado. Por favor, tente reiniciar o aplicativo</string>
+</resources>
