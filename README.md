@@ -9,8 +9,13 @@ For more information, please refer to the F-Droid description and screenshots.
 
 ### [Help translate](https://weblate.bubu1.eu/projects/usagedirect/)
 
-This project can be translated through bubu's Weblate instance. It is recommended to use Weblate as it contains lots of
-screenshots and further information to aid you with creating a high-quality translation.
+This project can be translated through bubu's Weblate instance. Please see the following notes:
+
+* To translate the About screen, please see [the library librariesDirect](https://weblate.bubu1.eu/librariesDirect/librariesDirect).
+* If everything is in sync, **every string should have a screenshot** or at least a note attached to it by me. **Please pay attention to the screenshots and string context information** and make sure your translation fits into the context seen in the screenshot.
+* There are different modules for the app usageDirect, for System usage stats as well as for the code that is shared by both of these apps ("Common").
+
+Thank you a lot for your help.
 
 ---
 
