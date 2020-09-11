@@ -23,7 +23,7 @@ dependencies {
     implementation 'androidx.viewpager:viewpager:1.0.0'
     implementation "androidx.fragment:fragment:1.2.5"
 
-    implementation 'com.github.mfornos:humanize-slim:1.2.2'
+    implementation 'org.ocpsoft.prettytime:prettytime:4.0.5.Final'
     implementation 'org.codeberg.fynngodau:librariesDirect:2.1'
     implementation 'com.github.fynngodau:AndroidCharts:1.1.1'
     implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'

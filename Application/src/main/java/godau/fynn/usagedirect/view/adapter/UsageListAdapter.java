@@ -29,7 +29,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import godau.fynn.typedrecyclerview.SimpleRecyclerViewAdapter;
 import godau.fynn.usagedirect.*;
-import humanize.Humanize;
+import org.ocpsoft.prettytime.PrettyTime;
 
 import java.util.Date;
 import java.util.List;
@@ -41,6 +41,7 @@ import java.util.Map;
 public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat, UsageListAdapter.ViewHolder> {
 
     private Map<String, Long> lastUsedMap;
+    private PrettyTime prettyTime = new PrettyTime();
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView mPackageName;
@@ -136,7 +137,7 @@ public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat,
                 viewHolder.getLastTimeUsed().setText(R.string.last_used_now);
             else if (lastTimeUsed > 1)
                 viewHolder.getLastTimeUsed().setText(
-                        context.getString(R.string.last_used, Humanize.naturalTime(new Date(lastTimeUsed)))
+                        context.getString(R.string.last_used, prettyTime.format(new Date(lastTimeUsed)))
                 );
             else
                 viewHolder.getLastTimeUsed().setText(R.string.not_used);
