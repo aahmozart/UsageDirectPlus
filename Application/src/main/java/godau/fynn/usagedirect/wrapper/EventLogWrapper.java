@@ -87,29 +87,31 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
 
             switch (event.getEventType()) {
                 /*
-                 * An event type denoting that a component moved to the foreground.
+                 * An event type denoting that an android.app.Activity moved to the foreground.
+                 * (old definition: "An event type denoting that a component moved to the foreground.")
                  */
-                case UsageEvents.Event.MOVE_TO_FOREGROUND:
-                    /*
-                     * public static final int android.app.usage.UsageEvents.Event.CONTINUE_PREVIOUS_DAY = 4;
-                     * Copy of documentation:
-                     * "An event type denoting that a component was in the foreground the previous day.
-                     * This is effectively treated as a MOVE_TO_FOREGROUND."
-                     */
+                case UsageEvents.Event.ACTIVITY_RESUMED:
+                /*
+                 * public static final int android.app.usage.UsageEvents.Event.CONTINUE_PREVIOUS_DAY = 4;
+                 * Copy of documentation:
+                 * "An event type denoting that a component was in the foreground the previous day.
+                 * This is effectively treated as a MOVE_TO_FOREGROUND."
+                 */
                 case 4:
                     moveToForegroundMap.put(event.getPackageName(), event.getTimeStamp());
 
                     break;
                 /*
-                 * "An event type denoting that a component moved to the background."
+                 * An event type denoting that an android.app.Activity moved to the background.
+                 * (old definition: "An event type denoting that a component moved to the background.")
                  */
-                case UsageEvents.Event.MOVE_TO_BACKGROUND:
-                    /*
-                     * public static final int android.app.usage.UsageEvents.Event.END_OF_DAY = 3;
-                     * Copy of documentation:
-                     * "An event type denoting that a component was in the foreground when the stats
-                     * rolled-over. This is effectively treated as a {@link #MOVE_TO_BACKGROUND}."
-                     */
+                case UsageEvents.Event.ACTIVITY_PAUSED:
+                /*
+                 * public static final int android.app.usage.UsageEvents.Event.END_OF_DAY = 3;
+                 * Copy of documentation:
+                 * "An event type denoting that a component was in the foreground when the stats
+                 * rolled-over. This is effectively treated as a {@link #MOVE_TO_BACKGROUND}."
+                 */
                 case 3:
                     long eventBeginTime;
                     if (moveToForegroundMap.get(event.getPackageName()) != null) {
@@ -125,6 +127,50 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
                             event.getTimeStamp(),
                             event.getPackageName()
                     ));
+                    break;
+                /*
+                 * An event type denoting that the Android runtime underwent a shutdown process. A
+                 * DEVICE_SHUTDOWN event should be treated as if all started activities and
+                 * foreground services are now stopped and no explicit ACTIVITY_STOPPED and
+                 * FOREGROUND_SERVICE_STOP events will be generated for them.
+                 */
+                case UsageEvents.Event.DEVICE_SHUTDOWN:
+                    // Per docs: iterate over remaining start events and treat them as closed
+                    for (String packageName : moveToForegroundMap.keySet()) {
+
+                        if (moveToForegroundMap.get(packageName) == null) {
+                            // Not a remaining start event
+                            continue;
+                        }
+
+                        componentForegroundStats.add(new ComponentForegroundStat(
+                                moveToForegroundMap.get(packageName),
+                                event.getTimeStamp(),
+                                packageName
+                        ));
+
+                        moveToForegroundMap.put(packageName, null);
+                    }
+                    break;
+                /*
+                 * An event type denoting that the Android runtime started up. This could be after
+                 * a shutdown or a runtime restart. Any open events without matching close events
+                 * between DEVICE_SHUTDOWN and DEVICE_STARTUP should be ignored because the
+                 * closing time is unknown.
+                 */
+                case UsageEvents.Event.DEVICE_STARTUP:
+                    // Per docs: remove pending open events
+                    for (String packageName : moveToForegroundMap.keySet()) {
+                        // Overwrite all times with null
+                        moveToForegroundMap.put(packageName, null);
+                    }
+
+                    /* No package could be open longer than a reboot. Thus, we set the `start`
+                     * timestamp to the boot event's timestamp in case we later assume that a
+                     * package has been open "since the start of the period". It is not logical
+                     * that this would happen but we can never know with this API.
+                     */
+                    start = event.getTimeStamp();
                     break;
 
             }
