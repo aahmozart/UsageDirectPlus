@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="last_used">Zuletzt verwendet %s</string>
+    <string name="time_used">Nutzungszeit: %d:%02d:%02d</string>
+    <string name="launch_unavailable">App konnte nicht gestartet werden</string>
+    <string name="explanation_access_appusage_title">Zugriff auf Nutzungsdaten</string>
+    <string name="explanation_access_appusage_message">Bitte gewähre auf der nächsten Seite Zugriff auf die System-Nutzungsstatistik.</string>
+    <string name="go">Los</string>
+    <string name="leave_app">App verlassen</string>
+    <string name="not_used">Nicht benutzt</string>
+    <string name="menu_about">Über</string>
+    <string name="about_libraries_header">%s ist ein Fork des Android-Beispiels \"AppUsageStatistics\" und wurde seitdem von Fynn Godau weiterentwickelt.
+\n
+\nDie folgende Liste zeigt alle Kompontenten, die diese Applikation ausmachen.</string>
+    <string name="menu_charts">Diagramme</string>
+    <string name="last_used_now">Gerade verwendet</string>
+    <string name="charts_bar_daily">Nutzungszeit pro Tag</string>
+    <string name="charts_clock_pie">%s als Uhr-Kuchendiagramm</string>
+    <string name="charts_clock_pie_general">Aktuelle Uhr-Kuchendiagramme</string>
+    <string name="title_feature_preview">usageDirect Feature-Vorschau</string>
+    <string name="ts_today">Heute</string>
+    <string name="ts_yesterday">Gestern</string>
+    <string name="ts_this_week">Diese Woche</string>
+    <string name="ts_last_week">Letzte Woche</string>
+    <string name="ts_calendar_week">Woche %s</string>
+    <string name="menu_reload">Aktualisieren</string>
+    <string name="total">Gesamt</string>
+</resources>
