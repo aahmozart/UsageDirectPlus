@@ -1,2 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Statistik över systemanvändning</string>
+    <string name="help_unreliable">Denna applikation är bara ett verktyg för att visa användningsstatistik som den returneras av Android-systemet. Det finns eftersom det inte finns något annat sätt att få historisk data från mer än tio dagar innan appen installerades.
+\n
+\nTyvärr är implementeringen som tillhandahåller dessa uppgifter väldigt buggig. Till exempel kan följande buggar anses vara ofixibla:</string>
+    <string name="system_stats_warning">Uppgifter kan vara opålitliga.</string>
+    <string name="error_no_data">Ett fel inträffade: systemet har inte returnerat några data. Försök starta om applikationen</string>
+    <string name="help_bug_1">en applikation som förmodligen har varit i förgrunden flera dagar i rad</string>
+    <string name="help_bug_2">uppgifter för en pågående period är desamma som för en annan när det inte borde</string>
+    <string name="help_bug_3">\"idag\" börjar på till synes slumpmässiga tidpunkter</string>
+    <string name="help_bug_4">få mindre data vid ett försök men inte ett annat</string>
+    <string name="help_bug_5">plötsligt får inga data alls</string>
+    <string name="help_database_flavor_download">För tillförlitlig och beständig data, ladda ner usageDirect.</string>
+    <string name="help_database_flavor_installed">usageDirect tillhandahåller pålitlig och ihållande data.</string>
+    <string name="help_reliable">Klockcirkeldiagram kan betraktas som tillförlitliga. De använder samma datakälla som usageDirect.</string>
+    <string name="title_system_stats">Användningsstatistik</string>
+    <string name="title_help">Varning för datakälla</string>
+    <string name="span_daily">Daglig</string>
+    <string name="span_weekly">Veckovis</string>
+    <string name="span_monthly">Månatlig</string>
+    <string name="span_yearly">Årlig</string>
+    <string name="charts_bar_weekly">Appanvändning per vecka</string>
+    <string name="charts_bar_monthly">Appanvändning per månad</string>
+    <string name="charts_bar_yearly">Appanvändning per år</string>
+</resources>

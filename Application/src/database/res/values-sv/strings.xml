@@ -1,2 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">usageDirect</string>
+    <string name="db_status">För närvarande finns det %d dagar lagrade i databasen, som uppgår till totalt %dh.</string>
+    <string name="menu_database">Databas</string>
+    <string name="db_insert">Kopiera upp till tio dagar till databasen</string>
+    <string name="db_wait">Samla data…</string>
+    <string name="db_schedule">Automatiska insatser schemalagda</string>
+    <string name="db_job_schedule_failure">Varning: automatisk datainsamling kunde inte ställas in, kom tillbaka regelbundet</string>
+    <string name="chart_average">∅ Genomsnittlig appanvändning per veckodag</string>
+    <string name="help_system_flavor_download">Ladda ner statistik över systemanvändning för att komma åt det tidigare urvalet av diagram.</string>
+    <string name="help_system_flavor_installed">Systemanvändningsstatistik ger det tidigare valet av diagram.</string>
+    <string name="more_charts">Fler diagram…</string>
+    <string name="widget_today_name">Tid i dag</string>
+    <string name="help_future_charts">Framtida utgåvor av usageDirect kommer att noggrant lägga till igen tidigare tillgängliga funktioner med exakta data.</string>
+    <string name="help_less_charts">Tidigare versioner av usageDirect innehöll dessutom vecko-, månads- och årskartor med data från innan appen installerades.
+\n
+\nEftersom denna datakälla inte var tillförlitlig har den tagits bort från den här applikationen.</string>
+</resources>
