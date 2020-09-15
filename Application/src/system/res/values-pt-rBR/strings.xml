@@ -8,4 +8,19 @@
     <string name="charts_bar_monthly">Uso mensal do aplicativo</string>
     <string name="charts_bar_yearly">Uso anual do aplicativo</string>
     <string name="error_no_data">Ocorreu um erro: o sistema não retornou nenhum dado. Por favor, tente reiniciar o aplicativo</string>
+    <string name="help_bug_1">um aplicativo que supostamente esteve em primeiro plano durante vários dias seguidos</string>
+    <string name="help_bug_2">dados para um período contínuo sendo o mesmo que para o outro quando não deveria</string>
+    <string name="help_bug_3">\"hoje\" começando em momentos aparentemente aleatórios no tempo</string>
+    <string name="help_bug_4">obter menos dados numa tentativa mas não na outra</string>
+    <string name="help_bug_5">inesperadamente não obter nenhum dado</string>
+    <string name="help_database_flavor_download">Para obter dados fiáveis e persistentes, por favor baixe usageDirect.</string>
+    <string name="help_database_flavor_installed">usageDirect fornece dados fiáveis e persistentes.</string>
+    <string name="help_reliable">Os gráficos circulares de relógio podem ser considerados fiáveis. Utilizam a mesma fonte de dados que usageDirect.</string>
+    <string name="system_stats_warning">Os dados podem não ser fiáveis.</string>
+    <string name="title_system_stats">Estatísticas de uso</string>
+    <string name="title_help">Aviso sobre fonte de dados</string>
+    <string name="app_name">Estatísticas de utilização do sistema</string>
+    <string name="help_unreliable">Este aplicativo é meramente uma ferramenta para exibir as mesmas estatísticas de utilização que foram coletados pelo sistema Android. Existe porque não há outra forma de obter dados históricos de mais de 10 dias antes do aplicativo ter sido instalado. 
+\n
+\nInfelizmente, a implementação que fornece estes dados contém falhas. Por exemplo, os seguintes erros podem ser considerados como não consertáveis:</string>
 </resources>
