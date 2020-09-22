@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">usageDirect</string>
+    <string name="db_status">Oraingoz %d egun daude datu-basean gordeta, %dh guztira.</string>
+    <string name="menu_database">Datu-basea</string>
+    <string name="db_insert">Egin 10 egun arteko kopia datu-basean</string>
+    <string name="db_wait">Datuak biltzen…</string>
+    <string name="db_schedule">Txertaketa automatikoak programatuta</string>
+    <string name="chart_average">∅ Batez besteko aplikazioen erabilera asteko</string>
+    <string name="more_charts">Grafiko gehiago…</string>
+    <string name="widget_today_name">Gaurko erabilera</string>
+    <string name="help_future_charts">Hurrengo usageDirect-en argitalpenek lehen eskuragarri zeuden ezaugarriak gehituko dituzte, datu zehatzak erabiliz.</string>
+    <string name="help_system_flavor_download">Deskargatu System usage stats lehen zeuden grafikoak edukitzeko.</string>
+    <string name="help_system_flavor_installed">System usage stats-ek lehen zeuden grafikoak eskaintzen ditu.</string>
+    <string name="help_less_charts">usageDirect-en aurreko bertsioek asteko, hileko eta urteko grafikoak zituzten, aplikazioa instalatu aurreko datuekin osatuak.
+\n
+\nDatu-iturri hori fidagarria ez zenez, ezabatu egin dugu aplikazio honetatik.</string>
+    <string name="db_job_schedule_failure">Abisua: ezin izan da datuen bilketa automatikoa konfiguratu, mesedez, itzuli noizean behin</string>
+</resources>

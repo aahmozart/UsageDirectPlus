@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="help_bug_1">ustez hainbat egunez jarraian lehen planoan egon den aplikazioa</string>
+    <string name="help_bug_2">uneko aldi baterako datuak, beste aldi baterako bezala kontatuak, behar ez lukeenean</string>
+    <string name="help_bug_3">\"gaur\" itxuraz ausazkoak diren momentutan hastea</string>
+    <string name="help_bug_4">saiakera batean bestean baino datu gutxiago jasotzea</string>
+    <string name="help_bug_5">bat-batean daturik ez jasotzea</string>
+    <string name="help_database_flavor_download">Datu fidagarri eta iraunkorretarako, deskargatu usageDirect.</string>
+    <string name="help_database_flavor_installed">usageDirect-ek datu fidagarri eta iraunkorrak ematen ditu.</string>
+    <string name="help_reliable">Erloju-grafikoak fidagarritzat jo daitezke; usageDirect-en datu-iturri berbera erabiltzen dute.</string>
+    <string name="system_stats_warning">Datuak ez dira oso fidagarriak.</string>
+    <string name="title_system_stats">Erabilera estatistikak</string>
+    <string name="title_help">Datu-iturri abisua</string>
+    <string name="span_daily">Egunean</string>
+    <string name="span_weekly">Astean</string>
+    <string name="span_monthly">Hilean</string>
+    <string name="span_yearly">Urtean</string>
+    <string name="charts_bar_weekly">Aplikazioen erabilera asteko</string>
+    <string name="charts_bar_monthly">Aplikazioen erabilera hileko</string>
+    <string name="charts_bar_yearly">Aplikazioen erabilera urteko</string>
+    <string name="error_no_data">Errore bat gertatu da: sistemak ez du daturik eman. Probatu aplikazioa berrinstalatzen</string>
+    <string name="app_name">System usage stats</string>
+    <string name="help_unreliable">Aplikazio hau erabilera-estatistikak erakusteko tresna bat besterik ez da, Android sistemak eman bezala. Aplikazio honen arrazoia, aplikazio instalatu baino 10 egun lehenago datu historikoak lortzeko beste modurik ez dagoela da.
+\n
+\nZoritxarrez, datu horiek oso modu kaxkarrean ematen dira. Adibidez, akats hauek konponezinak izan daitezke:</string>
+</resources>

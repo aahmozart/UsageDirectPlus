@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="time_used">Använd tid: %d:%02d:%02d</string>
+    <string name="last_used">Senast använd %s</string>
+    <string name="explanation_access_appusage_title">App-användning tillstånd</string>
+    <string name="explanation_access_appusage_message">Vänligen ge tillgång till användarstatistik av systemet på nästa sida.</string>
+    <string name="go">Fortsätta</string>
+    <string name="leave_app">Lämna app</string>
+    <string name="not_used">Inte använd</string>
+    <string name="menu_about">Om</string>
+    <string name="about_libraries_header">%s är forked från Android exemplet AppUsageStatistics och har sedan dess utvecklats vidare av Fynn Godau.
+\n
+\nI följande lista visas alla komponenter som utgör denna applikation.</string>
+    <string name="launch_unavailable">Det gick inte att starta appen</string>
+    <string name="menu_charts">Diagram</string>
+    <string name="last_used_now">Används just nu</string>
+    <string name="charts_bar_daily">Appanvändning per dag</string>
+    <string name="charts_clock_pie">%s som ett klocka cirkeldiagram</string>
+    <string name="charts_clock_pie_general">Senaste klockans cirkeldiagram</string>
+    <string name="title_feature_preview">usageDirect funktion förhandsvisning</string>
+    <string name="ts_today">I dag</string>
+    <string name="ts_yesterday">I går</string>
+    <string name="ts_this_week">Denna vecka</string>
+    <string name="ts_last_week">Förra vecka</string>
+    <string name="ts_calendar_week">Vecka %s</string>
+    <string name="menu_reload">Ladda om</string>
+    <string name="total">Summa</string>
+</resources>
