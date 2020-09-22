@@ -2,6 +2,7 @@
 – Zeigt historische Daten in einem Graphen
 – Stellt tägliche Nutzungszeiten in einem Uhr-Kuchendiagramm dar
 – Zeigt durchschnittliche Nutzungszeit pro Wochentag
-– Mehr Darstellungen folgen in zukünftigen Versionen!
+– Widget mit der Nutzungszeit des Tages
+– Weitere tolle Ideen für zukünftige Versionen!
 
 Alle verfügbaren Statistiken werden für historische Daten in einer App-Datenbank gespeichert.

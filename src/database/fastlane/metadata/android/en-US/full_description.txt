@@ -2,6 +2,7 @@
 – Display historical data in chart
 – Show usage times on a clock pie chart per day
 – Display weekday average chart
-– More charts to come!
+– Daily usage time in widget
+– More awesome ideas for the future!
 
 All available statistics are stored in the app's database for historic data.
