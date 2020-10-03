@@ -29,8 +29,6 @@
     <string name="menu_charts">Charts</string>
     <string name="last_used_now">Currently in use</string>
     <string name="charts_bar_daily">App usage per day</string>
-    <string name="charts_clock_pie">%s as a clock pie chart</string>
-    <string name="charts_clock_pie_general">Recent clock pie charts</string>
     <string name="title_feature_preview">usageDirect feature preview</string>
     <string name="ts_today">Today</string>
     <string name="ts_yesterday">Yesterday</string>

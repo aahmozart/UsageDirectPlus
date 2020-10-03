@@ -13,8 +13,7 @@ public class ChartProviders {
                 new ChartSelectionAdapter.ChartProvider(R.string.charts_bar_daily, PeriodicBarChart.DailyBarChart.class),
                 new ChartSelectionAdapter.ChartProvider(R.string.charts_bar_weekly, PeriodicBarChart.WeeklyBarChart.class),
                 new ChartSelectionAdapter.ChartProvider(R.string.charts_bar_monthly, PeriodicBarChart.MonthlyBarChart.class),
-                new ChartSelectionAdapter.ChartProvider(R.string.charts_bar_yearly, PeriodicBarChart.YearlyBarChart.class),
-                new ChartSelectionAdapter.ChartProvider(R.string.charts_clock_pie_general, ClockPieCharts.class)
+                new ChartSelectionAdapter.ChartProvider(R.string.charts_bar_yearly, PeriodicBarChart.YearlyBarChart.class)
         );
     }
 }
