@@ -3,11 +3,12 @@ package godau.fynn.usagedirect.wrapper;
 import android.content.res.Resources;
 import godau.fynn.usagedirect.R;
 
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
-import java.util.Locale;
+import java.util.Calendar;
+import java.util.Date;
 
 public abstract class TextFormat {
     private TextFormat() {}
@@ -27,7 +28,9 @@ public abstract class TextFormat {
     }
 
     public static String formatWeekday(DayOfWeek weekday) {
-        return weekday.getDisplayName(TextStyle.SHORT_STANDALONE, Locale.getDefault());
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.DAY_OF_WEEK, weekday.getValue() + 1 % 7);
+        return new SimpleDateFormat("EEE").format(new Date(c.getTimeInMillis()));
     }
     
 }
