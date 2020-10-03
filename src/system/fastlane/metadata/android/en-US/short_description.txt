@@ -1,1 +1,1 @@
-View usage statistics from system
+Warns against using a system usage stats API

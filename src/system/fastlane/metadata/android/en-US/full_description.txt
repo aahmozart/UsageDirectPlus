@@ -1,13 +1,11 @@
-This tool displays usage statistics from the Android system.
+<b>Please install <a href="https://f-droid.org/packages/godau.fynn.usagedirect">usageDirect</a> instead of this app if you are interested in system usage statistics.</b>
 
-The Android system collects app usage statistics in the background even without this application. However, native Android contains no way to read out this data properly. That is why this tool exists.
+This museum showcases an utterly broken API from the Android system. It is the API that is supposed to return aggregated system usage statistics.
 
-It shows view aggregated usage statistics per day for usually the past ten days, per week for the past four weeks, per month for the past six months as well data aggregated by year.
+The Android system collects app usage statistics in the background; however, native Android contains no way to read out this data properly. That is why I wanted to create a tool to display it. Unfortunately, I had to learn that this data is very broken and highly unreliable.
 
-Additionally, it can display this data as charts.
+Thus, this application was converted into a museum. It exhibits aggregated usage statistics per day for usually the past ten days, per week for the past four weeks, per month for the past six months as well as data aggregated by year. As a special exhibition, it can display this data as charts.
 
-Besides this, it can also display when precisely the device has been used in the past ten days using a great chart format, the clock pie chart.
+Design-wise, the app comes in the style of the settings app to highlight that this API is a part of the Android system.
 
-The app comes in the style of the settings app to highlight it as a tool that only reads out already available data, but does not store it.
-
-Warning: the data returned by the Android system is oftentimes unreliable. For more information, please see the in-app information.
+An included Guide to the exhibition names some of the issues you can expect to find on your tour.
