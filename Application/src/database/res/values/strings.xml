@@ -8,14 +8,8 @@
     <string name="db_schedule">Automatic inserts scheduled</string>
     <string name="db_job_schedule_failure">Warning: automatic data collection could not be set up, please check back regularly</string>
     <string name="chart_average">∅ Average app usage per weekday</string>
-    <string name="help_less_charts">Previous versions of usageDirect additionally contained weekly, monthly and yearly charts with data from before the app was installed.
-    \n\nBecause this data source was not reliable, it has been removed from this application.</string>
-    <string name="help_system_flavor_download">Download System usage stats to access the previous selection of charts.</string>
-    <string name="help_system_flavor_installed">System usage stats provides the previous selection of charts.</string>
-    <string name="more_charts">More charts…</string>
     <string name="widget_today_hour_french" translatable="false">%sh</string>
     <string name="widget_today_minute" translatable="false">%d:%02d</string>
     <string name="widget_today_second" translatable="false">%d:%02d:%02d</string>
     <string name="widget_today_name">Time today</string>
-    <string name="help_future_charts">Future releases of usageDirect will carefully re-add previously available features using accurate data.</string>
 </resources>
