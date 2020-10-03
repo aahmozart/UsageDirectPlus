@@ -71,7 +71,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:background="#FDD835"
+        android:background="@color/notice_red"
         android:foreground="?android:attr/selectableItemBackground"
         android:focusable="true"
         android:clickable="true"
@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/system_stats_warning"
-            android:textColor="#7F5924"
+            android:textColor="@color/notice_red_text"
             android:layout_margin="8dp"
             android:layout_toStartOf="@id/arrow"
             android:layout_alignParentStart="true" />

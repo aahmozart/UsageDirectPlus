@@ -17,6 +17,6 @@
   -->
 
 <resources>
-    <string name="app_name">System usage stats debug</string>
-    <string name="explanation_access_appusage_message">Please grant access to your system\'s usage statistics on the next page.\n\nPlease make sure to grant access to the debug version of System usage stats.</string>
+    <string name="app_name">Museum of a broken API debug</string>
+    <string name="explanation_access_appusage_message">Please grant access to your system\'s usage statistics on the next page.\n\nPlease make sure to grant access to the debug version of Museum of a broken API.</string>
 </resources>

@@ -17,21 +17,25 @@
   -->
 
 <resources>
-    <string name="app_name">System usage stats</string>
-    <string name="help_unreliable">This application is merely a tool to display usage statistics as returned by the Android system. It exists because there is no other way to get historical data from more than 10 days before the app was installed.
-        \n\nUnfortunately, the implementation that provides this data is very buggy. For instance, the following bugs may be considered unfixable:
-    </string>
+    <string name="app_name">Museum of a broken API</string>
+    <string name="help_unreliable_1">This application uses this following method call to query its data.</string>
+    <string name="help_unreliable_code" translatable="false">UsageStatsManager.queryUsageStats(int, long, long)</string>
+    <string name="help_unreliable_2">Please explore this data for a bit. Sooner or later, you will encounter some of the following bugs.</string>
     <string name="help_bug_1">one application supposedly having been in the foreground for multiple days in a row</string>
     <string name="help_bug_2">data for one ongoing period being the same as for another when it shouldn\'t</string>
     <string name="help_bug_3">\"today\" starting at seemingly random points in time</string>
     <string name="help_bug_4">getting less data at one attempt but not another</string>
     <string name="help_bug_5">suddenly getting no data at all</string>
-    <string name="help_database_flavor_download">For reliable and persistent data, please download usageDirect.</string>
+    <string name="help_unreliable_3">Afterwards, please follow this advice:</string>
+    <string name="help_unreliable_4">Do not use this API call.</string>
+    <string name="help_unreliable_5">It is a waste of time.</string>
+    <string name="help_database_flavor_download">Are you looking for reliable and persistent usage data? usageDirect has it.</string>
     <string name="help_database_flavor_installed">usageDirect provides reliable and persistent data.</string>
-    <string name="help_reliable">Clock pie charts can be considered reliable. They use the same data source as usageDirect.</string>
-    <string name="system_stats_warning">Data may be unreliable.</string>
-    <string name="title_system_stats">Usage statistics</string>
-    <string name="title_help">Data source warning</string>
+    <string name="system_stats_warning">View exhibition guide</string>
+    <string name="title_system_stats">Exhibition</string>
+    <string name="title_help">Guide to the exhibition</string>
+    <string name="menu_charts">Special exhibition: Charts</string>
+    <string name="about_libraries_header">%s is forked from the Android sample AppUsageStatistics and has since been developed further by Fynn Godau.\n\nIt resembles the featureset of an older version of usageDirect and aims to demonstrate a nonfunctional system API.\n\nThe following list displays all components that make up this application.</string>
     <string name="span_daily">Daily</string>
     <string name="span_weekly">Weekly</string>
     <string name="span_monthly">Monthly</string>

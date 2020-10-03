@@ -25,4 +25,11 @@
     <color name="accent">#FC496D</color>
     <color name="page_switch_indicator">#33000000</color>
     <color name="tab_text_light">#ffe9ecee</color>
+
+    <color name="notice_green">#d7e7d8</color>
+    <color name="notice_green_text">#1d451f</color>
+    <color name="notice_gray">#f1f1f1</color>
+    <color name="notice_gray_text">#545454</color>
+    <color name="notice_red">#ea9a96</color>
+    <color name="notice_red_text">#631f1b</color>
 </resources>
