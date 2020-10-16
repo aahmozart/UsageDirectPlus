@@ -14,4 +14,9 @@
     <string name="widget_today_minute" translatable="false">%d:%02d</string>
     <string name="widget_today_second" translatable="false">%d:%02d:%02d</string>
     <string name="widget_today_name">Time today</string>
+    <string name="menu_feedback">Send an idea</string>
+    <string name="feedback_message">usageDirect keeps looking for more interesting ideas for insightful representations of your data.
+        \n\nI already have a number of things on my roadmap, but I want to hear it from you: what do you think about usageDirect?</string>
+    <string name="cancel">Cancel</string>
+    <string name="url_email" translatable="false">mailto:fynngodau@mailbox.org?subject=usageDirect</string>
 </resources>
