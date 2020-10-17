@@ -34,6 +34,7 @@ import godau.fynn.usagedirect.wrapper.TextFormat;
 import im.dacer.androidcharts.clockpie.ClockPieSegment;
 import im.dacer.androidcharts.clockpie.ClockPieView;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -70,6 +71,15 @@ public class ClockPieViewPagerAdapter extends PagerAdapter {
         ));
 
         final ClockPieView pieView = clockPieFrame.getClockPieView();
+
+        ClockPieSegment backgroundSegment;
+        if (position == getCount() - 1) {
+            LocalTime now = LocalTime.now();
+            backgroundSegment = new ClockPieSegment(0, 0, 0, now.getHour(), now.getMinute(), now.getSecond());
+        } else {
+            backgroundSegment = new ClockPieSegment(0, 0, 24, 0);
+        }
+        pieView.setBackgroundSegment(backgroundSegment);
 
         final ArrayList<ClockPieSegment> clockPieHelperList = new ArrayList<>();
 
