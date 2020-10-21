@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -28,13 +29,17 @@ public abstract class UsageStatBarChart extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.content_bar_view, container, false);
+        View view = inflater.inflate(getLayout(), container, false);
 
         textView = view.findViewById(R.id.bar_chart_label);
         barView = view.findViewById(R.id.bar_chart);
         scrollView = view.findViewById(R.id.bar_chart_scroll);
 
         return view;
+    }
+
+    protected @LayoutRes int getLayout() {
+        return R.layout.content_bar_view;
     }
 
     protected void setText(@StringRes int text) {
