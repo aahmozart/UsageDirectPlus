@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.widget.Toast;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.wrapper.EventLogWrapper;
+import godau.fynn.usagedirect.wrapper.LastUsedConsumer;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -33,9 +34,11 @@ public class EventLogRunnable implements Runnable {
 
         EventLogWrapper eventLogWrapper = new EventLogWrapper(context);
 
+        LastUsedConsumer consumer = new LastUsedConsumer();
+
         // Insert the remainder of the day that contains the timestamp "since" (in current timezone)
         usageStats.insertIncremental(
-                eventLogWrapper.getIncrementalSimpleUsageStats(since)
+                eventLogWrapper.getIncrementalSimpleUsageStats(since, consumer)
         );
 
         // Insert all days following the day that contains "since"
@@ -45,9 +48,12 @@ public class EventLogRunnable implements Runnable {
                                 .atZone(ZoneId.systemDefault())
                                 .toLocalDate()
                                 .plusDays(1)
-                                .toEpochDay()
+                                .toEpochDay(),
+                        consumer
                 )
         );
+
+        database.getLastUsedDao().insert(consumer.applicationLastUsedMap);
 
         database.close();
 

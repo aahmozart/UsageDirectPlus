@@ -96,7 +96,7 @@ public class TimeTodayWidgetProvider extends AppWidgetProvider {
 
         return EventLogWrapper.aggregateSimpleUsageStats(
                 eventLogWrapper.aggregateForegroundStats(
-                        eventLogWrapper.getForegroundStatsByRelativeDay(0)
+                        eventLogWrapper.getForegroundStatsByRelativeDay(0), null
                 )
         );
     }

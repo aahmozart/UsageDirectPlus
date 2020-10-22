@@ -6,10 +6,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.util.Log;
+import androidx.annotation.Nullable;
 import godau.fynn.usagedirect.SimpleUsageStat;
 
 import java.time.*;
 import java.util.*;
+import java.util.function.BiConsumer;
 
 /**
  * Wrapper class for <code>queryEvents(…)</code> calls to the UsageStatsManager class
@@ -280,6 +282,17 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
      * <p>Assumes all provided usage stats to be on the same day.</p>
      */
     public List<SimpleUsageStat> aggregateForegroundStats(List<ComponentForegroundStat> foregroundStats) {
+        return aggregateForegroundStats(foregroundStats, null);
+    }
+
+    /**
+     * Takes a list of foreground stats and aggregates them to usage stats.
+     * <p>Assumes all provided usage stats to be on the same day.</p>
+     *
+     * @param endConsumer Consumer that accepts ending times of component
+     *                    foreground stats with their package name
+     */
+    public List<SimpleUsageStat> aggregateForegroundStats(List<ComponentForegroundStat> foregroundStats, @Nullable BiConsumer<String, Long> endConsumer) {
 
         List<SimpleUsageStat> usageStats = new ArrayList<>();
 
@@ -303,6 +316,10 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
                         (foregroundStat.endTime - foregroundStat.beginTime)
                 );
 
+            }
+
+            if (endConsumer != null) {
+                endConsumer.accept(foregroundStat.packageName, foregroundStat.endTime);
             }
         }
 
@@ -344,9 +361,11 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
      * foreground time statistics and presents this information as {@link SimpleUsageStat}s.
      * <p><b>This method call causes lag</b> if called with a low since value.
      *
-     * @param daySince Return data from this day onwards
+     * @param daySince Return data from this day on
+     * @param endConsumer Consumer that accepts ending times of component
+     *                    foreground stats with their package name
      */
-    public List<SimpleUsageStat> getAllSimpleUsageStats(long daySince) {
+    public List<SimpleUsageStat> getAllSimpleUsageStats(long daySince, BiConsumer<String, Long> endConsumer) {
         List<SimpleUsageStat> usageStats = new ArrayList<>();
         List<ComponentForegroundStat> foregroundStats;
 
@@ -359,7 +378,7 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
             foregroundStats = getForegroundStatsByDay(daySince);
 
             usageStats.addAll(
-                    aggregateForegroundStats(foregroundStats)
+                    aggregateForegroundStats(foregroundStats, endConsumer)
             );
 
             daySince++;
@@ -371,10 +390,13 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
     /**
      * Returns only usage statistics that have not been counted yet for
      * only the day that contains <code>timestamp</code>
+     *
+     * @param endConsumer Consumer that accepts ending times of component
+     *                    foreground stats with their package name
      */
-    public List<SimpleUsageStat> getIncrementalSimpleUsageStats(long timestamp) {
+    public List<SimpleUsageStat> getIncrementalSimpleUsageStats(long timestamp, BiConsumer<String, Long> endConsumer) {
 
         List<ComponentForegroundStat> foregroundStats = getForegroundStatsByPartialDay(timestamp);
-        return aggregateForegroundStats(foregroundStats);
+        return aggregateForegroundStats(foregroundStats, endConsumer);
     }
 }
