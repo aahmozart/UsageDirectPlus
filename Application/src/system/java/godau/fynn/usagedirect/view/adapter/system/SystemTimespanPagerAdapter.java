@@ -44,7 +44,7 @@ public class SystemTimespanPagerAdapter extends TimespanPagerAdapter {
 
     @Override
     public UsageListViewPagerAdapter getUsageListViewPagerAdapter(int position) {
-        return new SystemUsageListViewPagerAdapter(Interval.values()[position], context, usageStatsWrapper);
+        return new SystemUsageListViewPagerAdapter(Interval.values()[position], context, usageStatsWrapper, position == 0);
     }
 
     @Override

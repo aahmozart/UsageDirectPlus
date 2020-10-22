@@ -15,19 +15,17 @@
  limitations under the License.
 -->
 <resources>
-    <string name="last_used">"Last used %s"</string>
-    <string name="time_used">Time used: %d:%02d:%02d</string>
     <string name="time_used_time_only" translatable="false">%d:%02d:%02d</string>
     <string name="explanation_access_appusage_title">App usage permission</string>
     <string name="explanation_access_appusage_message">Please grant access to your system\'s usage statistics on the next page.</string>
     <string name="go">Go</string>
     <string name="leave_app">Leave app</string>
-    <string name="not_used">Not used</string>
+    <string name="not_used">not used</string>
     <string name="menu_about">About</string>
     <string name="about_libraries_header">%s is forked from the Android sample AppUsageStatistics and has since been developed further by Fynn Godau.\n\nThe following list displays all components that make up this application.</string>
     <string name="launch_unavailable">Could not launch app</string>
     <string name="menu_charts">Charts</string>
-    <string name="last_used_now">Currently in use</string>
+    <string name="last_used_now">currently in use</string>
     <string name="charts_bar_daily">App usage per day</string>
     <string name="title_feature_preview">usageDirect feature preview</string>
     <string name="ts_today">Today</string>
@@ -38,4 +36,5 @@
     <string name="menu_reload">Reload</string>
     <string name="total">Total</string>
     <string name="charts_bar_daily_condensed">Long-term app usage</string>
+    <string name="last_used_this_day">last used on this day</string>
 </resources>

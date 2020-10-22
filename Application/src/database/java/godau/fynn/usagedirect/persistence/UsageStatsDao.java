@@ -40,13 +40,13 @@ public abstract class UsageStatsDao {
     public abstract long[] getDaysStored();
 
     @Query("SELECT * FROM usageStats")
-    public abstract List<SimpleUsageStat> getUsageStats();
+    public abstract SimpleUsageStat[] getUsageStats();
 
     @Query("SELECT sum(timeUsed) FROM usageStats WHERE day == :day")
     public abstract long getTotalTimeUsed(long day);
 
     @Query("SELECT * FROM usageStats WHERE day == :day")
-    public abstract List<SimpleUsageStat> getUsageStats(long day);
+    public abstract SimpleUsageStat[] getUsageStats(long day);
 
     @Query("SELECT day, sum(timeUsed) FROM usageStats GROUP BY day ORDER BY day")
     protected abstract Cursor getTotalTimePerDayCursor();
@@ -78,7 +78,7 @@ public abstract class UsageStatsDao {
 
         long day = entities.get(0).getDay();
 
-        List<SimpleUsageStat> oldUsageStats = getUsageStats(day);
+        SimpleUsageStat[] oldUsageStats = getUsageStats(day);
 
         Map<String, Long> applicationMillisMap = new HashMap<>();
 

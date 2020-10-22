@@ -51,11 +51,11 @@ public class SimpleUsageStat {
         this.applicationId = applicationId;
     }
 
-    public SimpleUsageStat(UsageStats systemUsageStat, TimeZone timezone) {
+    public SimpleUsageStat(UsageStats systemUsageStat) {
         timeUsed = systemUsageStat.getTotalTimeInForeground();
         applicationId = systemUsageStat.getPackageName();
         day = Instant.ofEpochMilli(systemUsageStat.getLastTimeUsed())
-                .atZone(ZoneId.of(timezone.getID()))
+                .atZone(ZoneId.systemDefault())
                 .toLocalDate()
                 .toEpochDay();
     }
@@ -81,10 +81,10 @@ public class SimpleUsageStat {
         return applicationId;
     }
 
-    public static List<SimpleUsageStat> asSimpleStats(List<UsageStats> usageStats, TimeZone timezone) {
+    public static List<SimpleUsageStat> asSimpleStats(List<UsageStats> usageStats) {
         List<SimpleUsageStat> result = new ArrayList<>();
         for (UsageStats usageStat : usageStats) {
-            result.add(new SimpleUsageStat(usageStat, timezone));
+            result.add(new SimpleUsageStat(usageStat));
         }
         return result;
     }

@@ -47,7 +47,7 @@
             android:id="@+id/textview_time_used"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/time_used" />
+            android:text="@string/time_used_time_only" />
 
         <TextView
             android:id="@+id/textview_last_time_used"

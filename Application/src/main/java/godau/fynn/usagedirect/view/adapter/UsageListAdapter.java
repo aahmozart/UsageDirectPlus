@@ -31,6 +31,9 @@ import godau.fynn.typedrecyclerview.SimpleRecyclerViewAdapter;
 import godau.fynn.usagedirect.*;
 import org.ocpsoft.prettytime.PrettyTime;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +44,7 @@ import java.util.Map;
 public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat, UsageListAdapter.ViewHolder> {
 
     private Map<String, Long> lastUsedMap;
-    private PrettyTime prettyTime = new PrettyTime();
+    private final PrettyTime prettyTime = new PrettyTime();
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView mPackageName;
@@ -127,28 +130,47 @@ public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat,
 
         viewHolder.getLastTimeUsed().setVisibility(View.GONE);
 
-        if (lastUsedMap != null && lastUsedMap.containsKey(usageStat.getApplicationId())) {
+        if (lastUsedMap.containsKey(usageStat.getApplicationId())) {
 
-            viewHolder.getLastTimeUsed().setVisibility(View.VISIBLE);
+            long lastUsed = lastUsedMap.get(usageStat.getApplicationId());
 
-            long lastTimeUsed = lastUsedMap.get(usageStat.getApplicationId());
+            Instant lastUsedInstant = Instant.ofEpochMilli(lastUsed);
+            LocalDate day = LocalDate.ofEpochDay(usageStat.getDay());
+            Instant startOfDay = day.atStartOfDay(ZoneId.systemDefault())
+                    .toInstant();
+            Instant endOfDay = day.plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant();
 
-            if (usageStat.getApplicationId().equals(BuildConfig.APPLICATION_ID))
-                viewHolder.getLastTimeUsed().setText(R.string.last_used_now);
-            else if (lastTimeUsed > 1)
-                viewHolder.getLastTimeUsed().setText(
-                        context.getString(R.string.last_used, prettyTime.format(new Date(lastTimeUsed)))
-                );
-            else
-                viewHolder.getLastTimeUsed().setText(R.string.not_used);
+            boolean lastUsedOnSameDay = lastUsedInstant.isAfter(startOfDay) && lastUsedInstant.isBefore(endOfDay);
 
+            if (lastUsedOnSameDay) {
+
+                viewHolder.getLastTimeUsed().setVisibility(View.VISIBLE);
+
+                if (day.isEqual(LocalDate.now())) {
+
+                    if (usageStat.getApplicationId().equals(BuildConfig.APPLICATION_ID))
+                        viewHolder.getLastTimeUsed().setText(R.string.last_used_now);
+                    else if (lastUsed > 1) {
+                        viewHolder.getLastTimeUsed().setText(
+                                prettyTime.format(new Date(lastUsed))
+                        );
+                    } else {
+                        viewHolder.getLastTimeUsed().setText(R.string.not_used);
+                    }
+
+                } else {
+                    viewHolder.getLastTimeUsed().setText(R.string.last_used_this_day);
+                }
+            } else {
+                viewHolder.getLastTimeUsed().setVisibility(View.GONE);
+            }
         } else {
             viewHolder.getLastTimeUsed().setVisibility(View.GONE);
         }
 
         long secondsUsed = usageStat.getTimeUsed() / 1000;
         viewHolder.getTimeUsed().setText(context.getString(
-                lastUsedMap == null || position == 0 ? R.string.time_used_time_only : R.string.time_used,
+                R.string.time_used_time_only,
                 secondsUsed / 3600, (secondsUsed / 60) % 60, secondsUsed % 60)
         );
 

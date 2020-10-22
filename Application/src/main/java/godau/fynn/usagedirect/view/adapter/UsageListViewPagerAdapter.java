@@ -77,12 +77,7 @@ public abstract class UsageListViewPagerAdapter extends PagerAdapter {
 
                 Collections.sort(usageStatsList, new Comparator.TimeInForegroundComparatorDesc());
 
-                final Map<String, Long> lastUsedMap;
-                if (position == getCount() - 1) {
-                     lastUsedMap = getLastUsedMap();
-                } else {
-                    lastUsedMap = null;
-                }
+                final Map<String, Long> lastUsedMap = getLastUsedMap();
 
                 context.runOnUiThread(new Runnable() {
                     @Override
@@ -134,7 +129,7 @@ public abstract class UsageListViewPagerAdapter extends PagerAdapter {
     /**
      * Called after {@link #getUsageStats(int)}
      *
-     * @return A mapping of package names to last used timestamp (may be null)
+     * @return A mapping of package names to last used timestamp
      */
-    protected abstract Map<String, Long> getLastUsedMap();
+    protected abstract @NonNull Map<String, Long> getLastUsedMap();
 }

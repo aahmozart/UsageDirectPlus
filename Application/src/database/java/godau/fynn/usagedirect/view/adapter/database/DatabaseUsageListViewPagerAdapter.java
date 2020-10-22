@@ -20,33 +20,34 @@ package godau.fynn.usagedirect.view.adapter.database;
 
 import android.app.Activity;
 import android.content.Context;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import godau.fynn.usagedirect.SimpleUsageStat;
+import godau.fynn.usagedirect.persistence.LastUsedStat;
 import godau.fynn.usagedirect.view.adapter.UsageListViewPagerAdapter;
 import godau.fynn.usagedirect.wrapper.TextFormat;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class DatabaseUsageListViewPagerAdapter extends UsageListViewPagerAdapter {
 
-    private List<SimpleUsageStat> usageStats;
+    private SimpleUsageStat[] usageStats;
     private long[] days;
-    private String zoneId;
+    private LastUsedStat[] lastUsedStats;
 
-    public DatabaseUsageListViewPagerAdapter(Activity context, List<SimpleUsageStat> usageStats, long[] days) {
+    public DatabaseUsageListViewPagerAdapter(Activity context, SimpleUsageStat[] usageStats, long[] days,
+                                             LastUsedStat[] lastUsedStats) {
         super(context);
-
-        zoneId = context.getSharedPreferences("timezone", Context.MODE_PRIVATE)
-                .getString("timezone",
-                        ZoneId.systemDefault().getId()
-                );
 
         this.usageStats = usageStats;
         this.days = days;
+        this.lastUsedStats = lastUsedStats;
     }
 
     @Override
@@ -69,9 +70,17 @@ public class DatabaseUsageListViewPagerAdapter extends UsageListViewPagerAdapter
         return result;
     }
 
+    @NonNull
     @Override
     protected Map<String, Long> getLastUsedMap() {
-        return null;
+
+        Map<String, Long> applicationLastUsedMap = new HashMap<>();
+
+        for (LastUsedStat lastUsedStat : lastUsedStats) {
+            applicationLastUsedMap.put(lastUsedStat.applicationId, lastUsedStat.lastUsed);
+        }
+
+        return applicationLastUsedMap;
     }
 
     @Nullable
@@ -79,9 +88,7 @@ public class DatabaseUsageListViewPagerAdapter extends UsageListViewPagerAdapter
     public CharSequence getPageTitle(int position) {
         long day = days[position];
 
-        long dayNow = Instant.now()
-                .atZone(ZoneId.of(zoneId))
-                .toLocalDate()
+        long dayNow = LocalDate.now()
                 .toEpochDay();
 
         int offset = (int) (dayNow - day);
@@ -89,8 +96,9 @@ public class DatabaseUsageListViewPagerAdapter extends UsageListViewPagerAdapter
         return TextFormat.formatDay(offset, context.getResources());
     }
 
-    public void setUsageStats(List<SimpleUsageStat> usageStatsList, long[] days) {
-        usageStats = usageStatsList;
+    public void setUsageStats(SimpleUsageStat[] usageStats, long[] days, LastUsedStat[] lastUsedStats) {
+        this.usageStats = usageStats;
         this.days = days;
+        this.lastUsedStats = lastUsedStats;
     }
 }

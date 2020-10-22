@@ -22,16 +22,17 @@ import android.app.Activity;
 import android.util.Log;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
 import godau.fynn.usagedirect.SimpleUsageStat;
+import godau.fynn.usagedirect.persistence.LastUsedStat;
 import godau.fynn.usagedirect.persistence.UsageStatsDao;
 import godau.fynn.usagedirect.view.adapter.TimespanPagerAdapter;
 import godau.fynn.usagedirect.view.adapter.UsageListViewPagerAdapter;
 
-import java.util.List;
-
 public class DatabaseTimespanPagerAdapter extends TimespanPagerAdapter {
 
-    private List<SimpleUsageStat> usageStatsList;
+    private SimpleUsageStat[] usageStats;
     private long[] days;
+    private LastUsedStat[] lastUsedStats;
+
     private DatabaseUsageListViewPagerAdapter adapter;
 
     public DatabaseTimespanPagerAdapter(Activity context) {
@@ -44,15 +45,17 @@ public class DatabaseTimespanPagerAdapter extends TimespanPagerAdapter {
         HistoryDatabase database = HistoryDatabase.get(context);
         UsageStatsDao usageStats = database.getUsageStatsDao();
 
-        usageStatsList = usageStats.getUsageStats();
+        this.usageStats = usageStats.getUsageStats();
         days = usageStats.getDaysStored();
+
+        this.lastUsedStats = database.getLastUsedDao().getLastUsedStats();
 
         database.close();
     }
 
     @Override
     public UsageListViewPagerAdapter getUsageListViewPagerAdapter(int position) {
-        return adapter = new DatabaseUsageListViewPagerAdapter(context, usageStatsList, days);
+        return adapter = new DatabaseUsageListViewPagerAdapter(context, usageStats, days, lastUsedStats);
     }
 
     @Override
@@ -62,7 +65,7 @@ public class DatabaseTimespanPagerAdapter extends TimespanPagerAdapter {
 
     @Override
     public void notifyDataSetChanged() {
-        adapter.setUsageStats(usageStatsList, days);
+        adapter.setUsageStats(usageStats, days, lastUsedStats);
         super.notifyDataSetChanged();
     }
 }

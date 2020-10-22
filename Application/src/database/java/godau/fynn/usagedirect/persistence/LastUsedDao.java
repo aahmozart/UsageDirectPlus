@@ -3,6 +3,7 @@ package godau.fynn.usagedirect.persistence;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
 
 import java.util.Map;
 
@@ -14,6 +15,9 @@ public abstract class LastUsedDao {
 
     private int i;
 
+    @Query("SELECT * FROM lastUsed")
+    public abstract LastUsedStat[] getLastUsedStats();
+
     public void insert(Map<String, Long> applicationLastUsedMap) {
         LastUsedStat[] lastUsedStats = new LastUsedStat[applicationLastUsedMap.size()];
 
@@ -24,6 +28,5 @@ public abstract class LastUsedDao {
 
         insert(lastUsedStats);
     }
-
 
 }
