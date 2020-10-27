@@ -89,13 +89,13 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
 
             switch (event.getEventType()) {
                 /*
-                 * An event type denoting that an android.app.Activity moved to the foreground.
+                 * "An event type denoting that an android.app.Activity moved to the foreground."
                  * (old definition: "An event type denoting that a component moved to the foreground.")
                  */
                 case UsageEvents.Event.ACTIVITY_RESUMED:
                 /*
                  * public static final int android.app.usage.UsageEvents.Event.CONTINUE_PREVIOUS_DAY = 4;
-                 * Copy of documentation:
+                 * (annotated as @hide)
                  * "An event type denoting that a component was in the foreground the previous day.
                  * This is effectively treated as a MOVE_TO_FOREGROUND."
                  */
@@ -104,13 +104,13 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
 
                     break;
                 /*
-                 * An event type denoting that an android.app.Activity moved to the background.
+                 * "An event type denoting that an android.app.Activity moved to the background."
                  * (old definition: "An event type denoting that a component moved to the background.")
                  */
                 case UsageEvents.Event.ACTIVITY_PAUSED:
                 /*
                  * public static final int android.app.usage.UsageEvents.Event.END_OF_DAY = 3;
-                 * Copy of documentation:
+                 * (annotated as @hide)
                  * "An event type denoting that a component was in the foreground when the stats
                  * rolled-over. This is effectively treated as a {@link #MOVE_TO_BACKGROUND}."
                  */
@@ -131,10 +131,12 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
                     ));
                     break;
                 /*
-                 * An event type denoting that the Android runtime underwent a shutdown process. A
+                 * "An event type denoting that the Android runtime underwent a shutdown process. A
                  * DEVICE_SHUTDOWN event should be treated as if all started activities and
                  * foreground services are now stopped and no explicit ACTIVITY_STOPPED and
                  * FOREGROUND_SERVICE_STOP events will be generated for them.
+                 * [… A]ny open events without matching close events between DEVICE_SHUTDOWN and
+                 * DEVICE_STARTUP should be ignored because the closing time is unknown."
                  */
                 case UsageEvents.Event.DEVICE_SHUTDOWN:
                     // Per docs: iterate over remaining start events and treat them as closed
@@ -155,10 +157,10 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
                     }
                     break;
                 /*
-                 * An event type denoting that the Android runtime started up. This could be after
+                 * "An event type denoting that the Android runtime started up. This could be after
                  * a shutdown or a runtime restart. Any open events without matching close events
                  * between DEVICE_SHUTDOWN and DEVICE_STARTUP should be ignored because the
-                 * closing time is unknown.
+                 * closing time is unknown."
                  */
                 case UsageEvents.Event.DEVICE_STARTUP:
                     // Per docs: remove pending open events
@@ -206,7 +208,7 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
 
         /* If nothing happened during the timespan but there is an app in the foreground,
          * then this app was used the whole period time and there were no events for it.
-         * Because the foreground applications api call is documented as not to be used
+         * Because the foreground applications API call is documented as not to be used
          * for purposes like this, we first query whether the process name is a valid
          * package name and if not, we drop it.
          */
