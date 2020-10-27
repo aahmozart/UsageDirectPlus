@@ -119,7 +119,19 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
                     if (moveToForegroundMap.get(event.getPackageName()) != null) {
                         eventBeginTime = moveToForegroundMap.get(event.getPackageName());
                         moveToForegroundMap.put(event.getPackageName(), null);
-                    } else if (!moveToForegroundMap.containsKey(event.getPackageName())) {
+                    } else if (
+                            // App has not been in this query yet
+                            !moveToForegroundMap.containsKey(event.getPackageName()) &&
+                            /*
+                             * At the beginning of the event log, we may expect unmatched close
+                             * events to appear. As such, we only allow the assumption that the
+                             * app had been open since the beginning of the queried period if
+                             * that beginning timestamp is less than 9 days ago.
+                             * This contains the assumption that the 10th-last day would be
+                             * incomplete, while the 9th-last day is still complete.
+                             */
+                            start > System.currentTimeMillis() - (1000 * 60 * 60 * 24 * 9)
+                    ) {
                         // App has been launched before start, take start as a starting timestamp
                         eventBeginTime = start;
                     } else break;
