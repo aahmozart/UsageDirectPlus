@@ -41,10 +41,11 @@ import java.time.LocalDate;
  * <ul><b>1</b>: initial version</ul>
  * <ul><b>2</b>: <code>Day</code> object replaced with date integer</ul>
  * <ul><b>3</b>: <code>LastUsedStat</code> added</ul>
+ * <ul><b>4</b>: <code>SimpleUsageStat</code> has <code>hidden</code> flag</ul>
  *
  * <p>See also: <code>/Application/schemas</code></p>
  */
-@Database(version = 3, entities = {SimpleUsageStat.class, LastUsedStat.class})
+@Database(version = 4, entities = {SimpleUsageStat.class, LastUsedStat.class})
 public abstract class HistoryDatabase extends RoomDatabase {
 
     public static final String DATABASE_NAME = "history";
@@ -55,7 +56,7 @@ public abstract class HistoryDatabase extends RoomDatabase {
 
     public static HistoryDatabase get(Context context) {
         return Room.databaseBuilder(context, HistoryDatabase.class, DATABASE_NAME)
-                .addMigrations(MIGRATION_DAY_TO_DATE, MIGRATION_ADD_LAST_USED)
+                .addMigrations(MIGRATION_DAY_TO_DATE, MIGRATION_ADD_LAST_USED, MIGRATION_ADD_HIDDEN_FLAG)
                 .build();
     }
 
@@ -108,6 +109,16 @@ public abstract class HistoryDatabase extends RoomDatabase {
             Log.d("HistoryDatabase", "Migration 2 → 3: creating last used table");
 
             database.execSQL("CREATE TABLE `lastUsed` (`applicationId` TEXT NOT NULL, `lastUsed` INTEGER NOT NULL, PRIMARY KEY(`applicationId`))");
+        }
+    };
+
+    private static final Migration MIGRATION_ADD_HIDDEN_FLAG = new Migration(3, 4) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+
+            Log.d("HistoryDatabase", "Migration 3 → 4: adding hidden flag to usage stats table");
+
+            database.execSQL("ALTER TABLE usageStats ADD COLUMN `hidden` INTEGER NOT NULL DEFAULT(0)");
         }
     };
 }

@@ -21,6 +21,7 @@ package godau.fynn.usagedirect;
 import android.app.usage.UsageStats;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -45,10 +46,21 @@ public class SimpleUsageStat {
     private final @NonNull
     String applicationId;
 
+    /**
+     * Hidden usage stats may be stored in database
+     */
+    private final boolean hidden;
+
+    @Ignore
     public SimpleUsageStat(long day, long timeUsed, @NonNull String applicationId) {
+        this(day, timeUsed, applicationId, false);
+    }
+
+    public SimpleUsageStat(long day, long timeUsed, @NonNull String applicationId, boolean hidden) {
         this.day = day;
         this.timeUsed = timeUsed;
         this.applicationId = applicationId;
+        this.hidden = hidden;
     }
 
     public SimpleUsageStat(UsageStats systemUsageStat) {
@@ -58,6 +70,7 @@ public class SimpleUsageStat {
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate()
                 .toEpochDay();
+        hidden = false;
     }
 
     /**
@@ -79,6 +92,10 @@ public class SimpleUsageStat {
      */
     public @NonNull String getApplicationId() {
         return applicationId;
+    }
+
+    public boolean isHidden() {
+        return hidden;
     }
 
     public static List<SimpleUsageStat> asSimpleStats(List<UsageStats> usageStats) {

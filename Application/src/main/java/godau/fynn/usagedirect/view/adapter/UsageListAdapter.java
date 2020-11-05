@@ -178,6 +178,8 @@ public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat,
         viewHolder.getAppIcon().setImageDrawable(IconThread.iconMap.get(usageStat.getApplicationId()));
 
         viewHolder.getAppIcon().setTag(usageStat.getApplicationId());
+
+        viewHolder.itemView.setTag(usageStat);
     }
 
     public void setUsageStatsList(List<SimpleUsageStat> usageStats) {

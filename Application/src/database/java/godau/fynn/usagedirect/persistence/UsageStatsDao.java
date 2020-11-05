@@ -28,27 +28,52 @@ import java.util.*;
 public abstract class UsageStatsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public abstract void insert(List<SimpleUsageStat> entities);
+    public abstract void insert(Collection<SimpleUsageStat> entities);
 
-    @Query("SELECT sum(timeUsed) FROM usageStats")
+    @Query("SELECT sum(timeUsed) FROM usageStats WHERE hidden = 0")
     public abstract long getTotalTimeUsed();
 
+    /**
+     * @return The total amount of stored days, including hidden ones
+     */
     @Query("SELECT count(*) FROM (SELECT DISTINCT day FROM usageStats)")
     public abstract int getDaysStoredAmount();
 
-    @Query("SELECT DISTINCT day FROM usageStats ORDER BY day")
+    /**
+     * @return All days that contain visible stats
+     */
+    @Query("SELECT DISTINCT day FROM usageStats WHERE hidden = 0 ORDER BY day")
     public abstract long[] getDaysStored();
 
-    @Query("SELECT * FROM usageStats")
+    /**
+     * @return All visible usage stats
+     */
+    @Query("SELECT * FROM usageStats WHERE hidden = 0")
     public abstract SimpleUsageStat[] getUsageStats();
 
-    @Query("SELECT sum(timeUsed) FROM usageStats WHERE day == :day")
+    /**
+     * @param day Day since epoch
+     * @return The total duration of all visible stats for this day
+     */
+    @Query("SELECT sum(timeUsed) FROM usageStats WHERE day == :day AND hidden = 0")
     public abstract long getTotalTimeUsed(long day);
 
+    /**
+     * Used only for {@link #insertIncremental(List)}
+     *
+     * @param day Day since epoch
+     * @return All stats for this day, including hidden ones
+     */
     @Query("SELECT * FROM usageStats WHERE day == :day")
-    public abstract SimpleUsageStat[] getUsageStats(long day);
+    protected abstract SimpleUsageStat[] getUsageStats(long day);
 
-    @Query("SELECT day, sum(timeUsed) FROM usageStats GROUP BY day ORDER BY day")
+    /**
+     * Used only for {@link #getTotalTimePerDay()}
+     *
+     * @return A cursor which reads a matching of day to total visible time on this
+     * day
+     */
+    @Query("SELECT day, sum(timeUsed) FROM usageStats WHERE hidden = 0 GROUP BY day ORDER BY day")
     protected abstract Cursor getTotalTimePerDayCursor();
 
     /**
@@ -80,28 +105,32 @@ public abstract class UsageStatsDao {
 
         SimpleUsageStat[] oldUsageStats = getUsageStats(day);
 
-        Map<String, Long> applicationMillisMap = new HashMap<>();
-
+        // Add old stats to map (application name is key)
+        Map<String, SimpleUsageStat> applicationStatMap = new HashMap<>();
         for (SimpleUsageStat stat : oldUsageStats) {
-            applicationMillisMap.put(stat.getApplicationId(), stat.getTimeUsed());
+            applicationStatMap.put(stat.getApplicationId(), stat);
         }
 
+        // Iterate over new stats and merge them into applicationStatMap
         for (SimpleUsageStat stat : entities) {
-            long millis = stat.getTimeUsed();
-            if (applicationMillisMap.containsKey(stat.getApplicationId())) {
-                millis += applicationMillisMap.get(stat.getApplicationId());
+            String application = stat.getApplicationId();
+
+            if (applicationStatMap.containsKey(application)) {
+                // Add old and new stat and insert result
+
+                SimpleUsageStat oldStat = applicationStatMap.get(application);
+
+                long timeUsed = stat.getTimeUsed() + oldStat.getTimeUsed();
+
+                applicationStatMap.put(application,
+                        new SimpleUsageStat(day, timeUsed, application, oldStat.isHidden())
+                );
+            } else {
+                // Insert new stat
+                applicationStatMap.put(application, stat);
             }
-
-            applicationMillisMap.put(stat.getApplicationId(), millis);
         }
 
-        List<SimpleUsageStat> newUsageStats = new ArrayList<>();
-        for (String application : applicationMillisMap.keySet()) {
-            long millis = applicationMillisMap.get(application);
-
-            newUsageStats.add(new SimpleUsageStat(day, millis, application));
-        }
-
-        insert(newUsageStats);
+        insert(applicationStatMap.values());
     }
 }

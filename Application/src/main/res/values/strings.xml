@@ -37,5 +37,5 @@
     <string name="charts_bar_daily_condensed">Long-term app usage</string>
     <string name="last_used_this_day">last used on this day</string>
     <string name="icon">Icon</string>
-    <string name="remove_usagestat">Delete this row</string>
+    <string name="usagestat_hide">Delete this row</string>
 </resources>

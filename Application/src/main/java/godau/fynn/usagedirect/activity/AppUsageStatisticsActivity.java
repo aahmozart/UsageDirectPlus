@@ -82,6 +82,10 @@ public abstract class AppUsageStatisticsActivity extends Activity {
 
     }
 
+    protected void reload() {
+        onReload(viewPager, progressBar);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -115,7 +119,7 @@ public abstract class AppUsageStatisticsActivity extends Activity {
                 break;
 
             case R.id.menu_reload:
-                onReload(viewPager, progressBar);
+                reload();
                 break;
 
             case R.id.menu_charts:

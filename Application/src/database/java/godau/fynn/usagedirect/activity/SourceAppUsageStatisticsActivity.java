@@ -19,7 +19,6 @@
 package godau.fynn.usagedirect.activity;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,13 +27,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
 import godau.fynn.usagedirect.BuildConfig;
 import godau.fynn.usagedirect.R;
+import godau.fynn.usagedirect.SimpleUsageStat;
 import godau.fynn.usagedirect.persistence.EventLogRunnable;
+import godau.fynn.usagedirect.persistence.HistoryDatabase;
 import godau.fynn.usagedirect.view.adapter.UsageListViewPagerAdapter;
 import godau.fynn.usagedirect.view.adapter.database.DatabaseTimespanPagerAdapter;
 import godau.fynn.usagedirect.view.dialog.DatabaseDebugDialog;
+
+import java.util.Collections;
 
 /**
  * Different implementation of AUSA for the two source flavors
@@ -42,6 +46,8 @@ import godau.fynn.usagedirect.view.dialog.DatabaseDebugDialog;
 public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity {
 
     private DatabaseTimespanPagerAdapter databaseTimespanPagerAdapter;
+
+    private Object lastContextMenuTag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,5 +123,32 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         getMenuInflater().inflate(R.menu.usagestat_context_menu, menu);
+        lastContextMenuTag = v.getTag();
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_context_hide:
+                SimpleUsageStat hideUsageStat = (SimpleUsageStat) lastContextMenuTag;
+                new Thread(() -> {
+                    HistoryDatabase database = HistoryDatabase.get(this);
+                    database.getUsageStatsDao().insert(
+                            Collections.singleton(
+                                    new SimpleUsageStat(
+                                            hideUsageStat.getDay(), hideUsageStat.getTimeUsed(),
+                                            hideUsageStat.getApplicationId(),
+                                            true
+                                    )
+                            )
+                    );
+                    database.close();
+
+                    runOnUiThread(this::reload);
+                }).start();
+
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 }
