@@ -22,7 +22,6 @@
     <string name="leave_app">Leave app</string>
     <string name="not_used">not used</string>
     <string name="menu_about">About</string>
-    <string name="about_libraries_header">%s is forked from the Android sample AppUsageStatistics and has since been developed further by Fynn Godau.\n\nThe following list displays all components that make up this application.</string>
     <string name="launch_unavailable">Could not launch app</string>
     <string name="menu_charts">Charts</string>
     <string name="last_used_now">currently in use</string>
@@ -37,4 +36,5 @@
     <string name="total">Total</string>
     <string name="charts_bar_daily_condensed">Long-term app usage</string>
     <string name="last_used_this_day">last used on this day</string>
+    <string name="icon">Icon</string>
 </resources>

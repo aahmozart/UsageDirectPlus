@@ -24,7 +24,7 @@ dependencies {
     implementation "androidx.fragment:fragment:1.2.5"
 
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.5.Final'
-    implementation 'org.codeberg.fynngodau:librariesDirect:2.1'
+    implementation 'org.codeberg.fynngodau:librariesDirect:3.0'
     implementation 'com.github.fynngodau:AndroidCharts:1577cf77d738af1eee2ae7ba09d76420ed059ce2'
     implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
     implementation 'org.codeberg.fynngodau:TypedRecyclerView:1.1'
@@ -57,7 +57,6 @@ android {
 
     buildTypes {
         debug {
-            versionNameSuffix " debug"
             applicationIdSuffix ".debug"
         }
     }

@@ -29,13 +29,14 @@ import android.widget.ProgressBar;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
-import godau.fynn.librariesdirect.AboutLibrariesActivity;
-import godau.fynn.librariesdirect.Library;
-import godau.fynn.librariesdirect.License;
+import godau.fynn.librariesdirect.AboutDirectActivity;
+import godau.fynn.librariesdirect.model.*;
 import godau.fynn.usagedirect.BuildConfig;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.view.dialog.GrantPermissionDialog;
 import godau.fynn.usagedirect.wrapper.UsageStatsManagerWrapper;
+
+import java.util.Locale;
 
 /**
  * Shared code for both source flavors
@@ -87,18 +88,27 @@ public abstract class AppUsageStatisticsActivity extends Activity {
         switch (item.getItemId()) {
             case R.id.menu_about:
 
-                Intent intent = new AboutLibrariesActivity.IntentBuilder(this)
-                        .setLibraries(new Library[]{
-                                new Library(getString(R.string.app_name) + ' ' + BuildConfig.VERSION_NAME, License.GNU_GPL_V3_OR_LATER_LICENSE, null, "Fynn Godau", "https://codeberg.org/fynngodau/usageDirect"),
-                            new Library("AppUsageStatistics", License.APACHE_20_LICENSE, null, "The Android Open Source Project, Inc", "https://github.com/googlesamples/android-AppUsageStatistics"),
-                            new Library("AndroidCharts", License.MIT_LICENSE, "The MIT License (MIT)\n" +
-                                    "\n" +
-                                    "Copyright (c) 2013 Ding Wenhao", "Ding Wenhao", "https://github.com/HackPlan/AndroidCharts"),
-                            new Library("PrettyTime", License.APACHE_20_LICENSE, null, "ocpsoft", "https://www.ocpsoft.org/prettytime/"),
-                            new Library("SmartTabLayout", License.APACHE_20_LICENSE, null, "ogaclejapan", "https://github.com/ogaclejapan/SmartTabLayout"),
-                            new Library("librariesDirect", License.CC0_LICENSE, null, "Fynn Godau", "https://codeberg.org/fynngodau/librariesDirect"),
+                Intent intent = new AboutDirectActivity.IntentBuilder(this, R.string.app_name, BuildConfig.VERSION_NAME)
+                        .setIcon(R.mipmap.ic_launcher)
+                        .setAppDeveloperName("Fynn Godau")
+                        .setAppDeveloperMastodon("https://fosstodon.org/@fynnDirect")
+                        .setContent(new Object[]{
+                                new Artwork(getString(R.string.icon), new License("CC BY-SA", null), null, "m4TZ", "https://social.anoxinon.de/@m4TZ"),
+                                new Translator("Porrumentzio", null, new Locale("eu")),
+                                new Translator("aevw", null, new Locale("pt", "br")),
+                                new Translator("mondstern", null, new Locale("pt", "br")),
+                                new Translator("dc7ia", null, new Locale("sv")),
+                                new Translator("dc7ia", null, new Locale("da")),
+                                new Translator("dc7ia", null, new Locale("nb")),
+                                new Library("AndroidCharts", License.MIT_LICENSE, "The MIT License (MIT)\n" +
+                                        "\n" +
+                                        "Copyright (c) 2013 Ding Wenhao", "Ding Wenhao", "https://github.com/HackPlan/AndroidCharts"),
+                                new Library("PrettyTime", License.APACHE_20_LICENSE, null, "ocpsoft", "https://www.ocpsoft.org/prettytime/"),
+                                new Library("SmartTabLayout", License.APACHE_20_LICENSE, null, "ogaclejapan", "https://github.com/ogaclejapan/SmartTabLayout"),
+                                new Library("librariesDirect", License.CC0_LICENSE, null, "Fynn Godau", "https://codeberg.org/fynngodau/librariesDirect"),
+                                new Fork("AppUsageStatistics", License.APACHE_20_LICENSE, null, "AOSP", "https://github.com/googlesamples/android-AppUsageStatistics"),
+                                new OwnLicense(License.GNU_GPL_V3_OR_LATER_LICENSE, null, "https://codeberg.org/fynngodau/usageDirect"),
                         })
-                        .setHeaderText(getString(R.string.about_libraries_header, getString(R.string.app_name)))
                         .build();
 
                 startActivity(intent);
