@@ -23,6 +23,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -111,5 +112,10 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
         }
         super.onCreateOptionsMenu(menu);
         return true;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        getMenuInflater().inflate(R.menu.usagestat_context_menu, menu);
     }
 }

@@ -18,6 +18,7 @@
 
 package godau.fynn.usagedirect.view.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
@@ -100,20 +101,20 @@ public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat,
             final ViewHolder viewHolder = new ViewHolder(v);
 
             // For performance, only set OnClickListener once
-            viewHolder.getAppIcon().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Launch app that this icon is associated with
-                    try {
-                        String packageName = (String) viewHolder.getAppIcon().getTag();
-                        Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
-                        context.startActivity(intent);
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
-                        Toast.makeText(context, R.string.launch_unavailable, Toast.LENGTH_SHORT).show();
-                    }
+            viewHolder.getAppIcon().setOnClickListener(v1 -> {
+                // Launch app that this icon is associated with
+                try {
+                    String packageName = (String) viewHolder.getAppIcon().getTag();
+                    Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+                    context.startActivity(intent);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                    Toast.makeText(context, R.string.launch_unavailable, Toast.LENGTH_SHORT).show();
                 }
             });
+
+            // Register for context menu
+            ((Activity) context).registerForContextMenu(v);
 
             return viewHolder;
         }
