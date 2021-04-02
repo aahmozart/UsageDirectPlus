@@ -35,7 +35,6 @@
     <string name="title_system_stats">Exhibition</string>
     <string name="title_help">Guide to the exhibition</string>
     <string name="menu_charts">Special exhibition: Charts</string>
-    <string name="about_libraries_header">%s is forked from the Android sample AppUsageStatistics and has since been developed further by Fynn Godau.\n\nIt resembles the featureset of an older version of usageDirect and aims to demonstrate a nonfunctional system API.\n\nThe following list displays all components that make up this application.</string>
     <string name="span_daily">Daily</string>
     <string name="span_weekly">Weekly</string>
     <string name="span_monthly">Monthly</string>
