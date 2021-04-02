@@ -37,6 +37,8 @@ import godau.fynn.usagedirect.view.dialog.GrantPermissionDialog;
 import godau.fynn.usagedirect.wrapper.UsageStatsManagerWrapper;
 
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Shared code for both source flavors
@@ -45,6 +47,9 @@ public abstract class AppUsageStatisticsActivity extends Activity {
 
     private ViewPager viewPager;
     private ProgressBar progressBar;
+
+    private Timer reloadTimer;
+    private static final long RELOAD_INTERVAL = 5 * 60 * 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +82,15 @@ public abstract class AppUsageStatisticsActivity extends Activity {
                 tabs.setViewPager(viewPager);
                 progressBar.setVisibility(View.GONE);
             });
+
+            // Schedule reload
+            reloadTimer = new Timer();
+            reloadTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(AppUsageStatisticsActivity.this::reload);
+                }
+            }, RELOAD_INTERVAL, RELOAD_INTERVAL);
         }).start();
 
 
