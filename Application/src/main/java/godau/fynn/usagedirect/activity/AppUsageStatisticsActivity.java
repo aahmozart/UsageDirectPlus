@@ -84,6 +84,7 @@ public abstract class AppUsageStatisticsActivity extends Activity {
 
     protected void reload() {
         onReload(viewPager, progressBar);
+        invalidateOptionsMenu();
     }
 
     @Override

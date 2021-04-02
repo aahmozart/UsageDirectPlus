@@ -26,6 +26,9 @@
         android:title="@string/menu_reload"
         android:icon="@drawable/ic_reload"
         android:showAsAction="ifRoom" />
+    <item android:id="@+id/menu_restore_hidden"
+        android:showAsAction="never"
+        android:title="@string/menu_restore_hidden" />
     <item android:id="@+id/menu_feedback"
         android:showAsAction="never"
         android:title="@string/menu_feedback" />

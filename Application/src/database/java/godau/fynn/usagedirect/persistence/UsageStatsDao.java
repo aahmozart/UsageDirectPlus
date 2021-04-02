@@ -59,6 +59,18 @@ public abstract class UsageStatsDao {
     public abstract long getTotalTimeUsed(long day);
 
     /**
+     * @return Number of deleted entries
+     */
+    @Query("SELECT count(*) FROM usageStats WHERE hidden = 1")
+    public abstract int getHiddenAmount();
+
+    /**
+     * Mark every row as "not hidden"
+     */
+    @Query("UPDATE usageStats SET hidden = 0")
+    public abstract void markUnhiddenAll();
+
+    /**
      * Used only for {@link #insertIncremental(List)}
      *
      * @param day Day since epoch
@@ -137,6 +149,7 @@ public abstract class UsageStatsDao {
     /**
      * Marks the given usage stat as deleted in the database.
      */
+    @Transaction
     public void markHidden(SimpleUsageStat usageStat) {
         insert(Collections.singleton(
                 new SimpleUsageStat(

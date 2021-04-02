@@ -96,14 +96,40 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
         if (item.getTitle().equals(getString(R.string.menu_database))) {
             new DatabaseDebugDialog(this).show();
             return true;
-        } else if (item.getItemId() == R.id.menu_feedback) {
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.menu_feedback)
-                    .setMessage(R.string.feedback_message)
-                    .setPositiveButton(R.string.menu_feedback, (dialog, which) ->
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_email)))))
-                    .setNegativeButton(R.string.cancel, null)
-                    .show();
+        } else switch (item.getItemId()) {
+            case R.id.menu_feedback:
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.menu_feedback)
+                        .setMessage(R.string.feedback_message)
+                        .setPositiveButton(R.string.menu_feedback, (dialog, which) ->
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_email)))))
+                        .setNegativeButton(R.string.cancel, null)
+                        .show();
+                break;
+            case R.id.menu_restore_hidden:
+                new Thread(() -> {
+
+                    HistoryDatabase database = HistoryDatabase.get(this);
+                    int hiddenAmount = database.getUsageStatsDao().getHiddenAmount();
+
+                    runOnUiThread(() -> new AlertDialog.Builder(this)
+                            .setTitle(R.string.menu_restore_hidden)
+                            .setMessage(
+                                    getResources().getQuantityString(R.plurals.menu_restore_hidden_details,
+                                            hiddenAmount, hiddenAmount)
+                            )
+                            .setPositiveButton(R.string.menu_restore_hidden_positive,
+                                    (dialogInterface, i) -> new Thread(() -> {
+                                        database.getUsageStatsDao().markUnhiddenAll();
+                                        database.close();
+                                        runOnUiThread(this::reload);
+                                    }).start())
+                            .setNegativeButton(R.string.cancel, (dialogInterface, i) -> database.close())
+                            .show()
+                    );
+
+                }).start();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -114,6 +140,13 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
         if (BuildConfig.DEBUG) {
             menu.add(R.string.menu_database);
         }
+
+        new Thread(() -> {
+            HistoryDatabase database = HistoryDatabase.get(this);
+            boolean hasHidden = database.getUsageStatsDao().getHiddenAmount() > 0;
+            runOnUiThread(() -> menu.findItem(R.id.menu_restore_hidden).setVisible(hasHidden));
+        }).start();
+
         super.onCreateOptionsMenu(menu);
         return true;
     }
@@ -137,6 +170,7 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
                     runOnUiThread(this::reload);
                 }).start();
 
+                return true;
             default:
                 return super.onContextItemSelected(item);
         }

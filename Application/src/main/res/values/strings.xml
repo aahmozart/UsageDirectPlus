@@ -38,4 +38,11 @@
     <string name="last_used_this_day">last used on this day</string>
     <string name="icon">Icon</string>
     <string name="usagestat_hide">Delete this row</string>
+    <string name="menu_restore_hidden">Restore deleted rows</string>
+    <string name="menu_restore_hidden_positive">Restore</string>
+
+    <plurals name="menu_restore_hidden_details">
+        <item quantity="one">Would you like to restore one deleted row?</item>
+        <item quantity="other">You have, in total, deleted %1$d rows. Would you like to restore them?</item>
+    </plurals>
 </resources>
