@@ -133,4 +133,17 @@ public abstract class UsageStatsDao {
 
         insert(applicationStatMap.values());
     }
+
+    /**
+     * Marks the given usage stat as deleted in the database.
+     */
+    public void markHidden(SimpleUsageStat usageStat) {
+        insert(Collections.singleton(
+                new SimpleUsageStat(
+                        usageStat.getDay(), usageStat.getTimeUsed(),
+                        usageStat.getApplicationId(),
+                        true
+                )
+        ));
+    }
 }

@@ -38,8 +38,6 @@ import godau.fynn.usagedirect.view.adapter.UsageListViewPagerAdapter;
 import godau.fynn.usagedirect.view.adapter.database.DatabaseTimespanPagerAdapter;
 import godau.fynn.usagedirect.view.dialog.DatabaseDebugDialog;
 
-import java.util.Collections;
-
 /**
  * Different implementation of AUSA for the two source flavors
  */
@@ -133,15 +131,7 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
                 SimpleUsageStat hideUsageStat = (SimpleUsageStat) lastContextMenuTag;
                 new Thread(() -> {
                     HistoryDatabase database = HistoryDatabase.get(this);
-                    database.getUsageStatsDao().insert(
-                            Collections.singleton(
-                                    new SimpleUsageStat(
-                                            hideUsageStat.getDay(), hideUsageStat.getTimeUsed(),
-                                            hideUsageStat.getApplicationId(),
-                                            true
-                                    )
-                            )
-                    );
+                    database.getUsageStatsDao().markHidden(hideUsageStat);
                     database.close();
 
                     runOnUiThread(this::reload);
