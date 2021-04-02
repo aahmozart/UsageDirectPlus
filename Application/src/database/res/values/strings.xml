@@ -18,5 +18,15 @@
     <string name="feedback_message">usageDirect keeps looking for more interesting ideas for insightful representations of your data.
         \n\nI already have a number of things on my roadmap, but I want to hear it from you: what do you think about usageDirect?</string>
     <string name="cancel">Cancel</string>
+    <string name="charts_bar_daily_condensed">Long-term app usage</string>
+    <string name="usagestat_hide">Delete this row</string>
+    <string name="menu_restore_hidden">Restore deleted rows</string>
+    <string name="menu_restore_hidden_positive">Restore</string>
+
     <string name="url_email" translatable="false">mailto:fynngodau@mailbox.org?subject=usageDirect</string>
+
+    <plurals name="menu_restore_hidden_details">
+        <item quantity="one">Would you like to restore one deleted row?</item>
+        <item quantity="other">You have, in total, deleted %1$d rows. Would you like to restore them?</item>
+    </plurals>
 </resources>
