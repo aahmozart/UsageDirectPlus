@@ -9,4 +9,19 @@
     <string name="chart_average">∅ Durchschnittliche Nutzungszeit pro Wochentag</string>
     <string name="widget_today_name">Nutzungszeit heute</string>
     <string name="db_job_schedule_failure">Warnung: automatische Datensammlung konnte nicht eingerichtet werden, bitte schaue regelmäßig vorbei</string>
+    <string name="menu_feedback">Vorschlag einreichen</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="charts_clock_pie">%s als Uhr-Kuchendiagramm</string>
+    <string name="charts_clock_pie_general">Aktuelle Uhr-Kuchendiagramme</string>
+    <string name="usagestat_hide">Diese Reihe löschen</string>
+    <string name="menu_restore_hidden">Gelöschte Reihen wiederherstellen</string>
+    <string name="menu_restore_hidden_positive">Wiederherstellen</string>
+    <string name="feedback_message">usageDirect isst immer auf der Suche nach interessanten, neuen Ideen für einsichtreiche Darstellungen von Daten.
+\n
+\nIch habe selbst schon ein paar Dinge geplant, aber ich will auch von dir hören: was denkst du über usageDirect\?</string>
+    <string name="charts_bar_daily_condensed">Nutzungszeit über langen Zeitraum</string>
+    <plurals name="menu_restore_hidden_details">
+        <item quantity="one">Möchtest du eine gelöschte Reihe wiederherstellen\?</item>
+        <item quantity="other">Insgesamt hast du %1$d Reihen gelöscht. Möchtest du sie wiederherstellen\?</item>
+    </plurals>
 </resources>
