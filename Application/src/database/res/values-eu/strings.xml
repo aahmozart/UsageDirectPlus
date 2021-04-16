@@ -11,4 +11,9 @@
     <string name="db_job_schedule_failure">Abisua: ezin izan da datuen bilketa automatikoa konfiguratu, mesedez, itzuli noizean behin</string>
     <string name="charts_clock_pie">%s erloju-grafiko gisa</string>
     <string name="charts_clock_pie_general">Duela gutxiko erloju-grafikoak</string>
+    <string name="menu_feedback">Bidali ideia bat</string>
+    <string name="feedback_message">usageDirect mantentzen gehiago bila ideia interesgarria insightful irudikapen zure datuak.
+\n
+\nDut dagoeneko gauzak zenbaki bat nire baitan, baina ez dut nahi entzun duzu: zer pentsatzen duzu usageDirect\?</string>
+    <string name="cancel">Utzi</string>
 </resources>

@@ -9,4 +9,11 @@
     <string name="db_job_schedule_failure">Aviso: a recolha automática de dados não pode ser configurada, por favor verifique periodicamente</string>
     <string name="chart_average">∅ Utilização média do aplicativo por dia da semana</string>
     <string name="widget_today_name">Tempo total hoje</string>
+    <string name="charts_clock_pie">%s como um gráfico de torta de relógio</string>
+    <string name="charts_clock_pie_general">Gráficos recentes de tartes de relógio</string>
+    <string name="menu_feedback">Envie uma idéia</string>
+    <string name="feedback_message">useDirect continua procurando por idéias mais interessantes para representações mais perspicazes de seus dados.
+\n
+\nJá tenho uma série de coisas em meu roteiro, mas quero ouvi-lo de você: o que você acha do useDirect\?</string>
+    <string name="cancel">Cancele</string>
 </resources>
