@@ -20,14 +20,14 @@
     <string name="explanation_access_appusage_title">Permissão de uso do aplicativo</string>
     <string name="explanation_access_appusage_message">Favor conceder acesso às estatísticas de uso de seu sistema na próxima tela.</string>
     <string name="go">Avançar</string>
-    <string name="leave_app">Sair do app</string>
+    <string name="leave_app">Sair do aplicativo</string>
     <string name="not_used">não utilizados</string>
     <string name="menu_about">Sobre</string>
     <string name="launch_unavailable">Não foi possível iniciar o aplicativo</string>
     <string name="menu_charts">Gráficos</string>
     <string name="last_used_now">atualmente em uso</string>
     <string name="charts_bar_daily">Uso diário do aplicativo</string>
-    <string name="title_feature_preview">usageDirect recurso de pré-visualização</string>
+    <string name="title_feature_preview">Prévia dos recursos do usageDirect</string>
     <string name="ts_today">Hoje</string>
     <string name="ts_yesterday">Ontem</string>
     <string name="ts_this_week">Esta semana</string>

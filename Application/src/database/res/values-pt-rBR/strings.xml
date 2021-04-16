@@ -6,14 +6,22 @@
     <string name="db_insert">Copiar até 10 dias para a base de dados</string>
     <string name="db_wait">Coletando dados…</string>
     <string name="db_schedule">Inserções automáticas programadas</string>
-    <string name="db_job_schedule_failure">Aviso: a recolha automática de dados não pode ser configurada, por favor verifique periodicamente</string>
+    <string name="db_job_schedule_failure">Aviso: a coleta automática de dados não pode ser configurada, verifique periodicamente</string>
     <string name="chart_average">∅ Utilização média do aplicativo por dia da semana</string>
     <string name="widget_today_name">Tempo total hoje</string>
-    <string name="charts_clock_pie">%s como um gráfico de torta de relógio</string>
-    <string name="charts_clock_pie_general">Gráficos recentes de tartes de relógio</string>
-    <string name="menu_feedback">Envie uma idéia</string>
-    <string name="feedback_message">useDirect continua procurando por idéias mais interessantes para representações mais perspicazes de seus dados.
+    <string name="charts_clock_pie">%s como um gráfico circular de relógio</string>
+    <string name="charts_clock_pie_general">Gráficos circulares de relógio recentes</string>
+    <string name="menu_feedback">Envie uma ideia</string>
+    <string name="feedback_message">useDirect continua procurando por mais ideias interessantes para representações mais perspicazes de seus dados.
 \n
-\nJá tenho uma série de coisas em meu roteiro, mas quero ouvi-lo de você: o que você acha do useDirect\?</string>
-    <string name="cancel">Cancele</string>
+\nJá tenho uma série de coisas em meu roteiro, mas quero ouvir de você: o que você acha do useDirect\?</string>
+    <string name="cancel">Cancelar</string>
+    <string name="charts_bar_daily_condensed">Uso de aplicativos de longo prazo</string>
+    <string name="usagestat_hide">Excluir esta linha</string>
+    <string name="menu_restore_hidden">Restaurar linhas excluídas</string>
+    <string name="menu_restore_hidden_positive">Restaurar</string>
+    <plurals name="menu_restore_hidden_details">
+        <item quantity="one">Gostaria de restaurar uma linha excluída\?</item>
+        <item quantity="other">Você tem %1$d linhas excluídas. Gostaria de restaurá-las\?</item>
+    </plurals>
 </resources>
