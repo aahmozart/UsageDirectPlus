@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="time_used">Erabilera-denbora: %d:%02d:%02d</string>
     <string name="explanation_access_appusage_title">Aplikazioen erabilera baimena</string>
     <string name="explanation_access_appusage_message">Eman baimena zure sistemako erabilera datuak atzitzeko hurrengo orrian.</string>
     <string name="go">Ados</string>
@@ -14,8 +13,6 @@
     <string name="menu_charts">Grafikoak</string>
     <string name="last_used_now">Unean erabiltzen</string>
     <string name="charts_bar_daily">Aplikazioen erabilera eguneko</string>
-    <string name="charts_clock_pie_general">Duela gutxiko erloju-grafikoak</string>
-    <string name="charts_clock_pie">%s erloju-grafiko gisa</string>
     <string name="title_feature_preview">usageDirect-en ezaugarrien laburpena</string>
     <string name="ts_today">Gaur</string>
     <string name="ts_yesterday">Atzo</string>
@@ -24,5 +21,4 @@
     <string name="ts_calendar_week">%s astea</string>
     <string name="menu_reload">Freskatu</string>
     <string name="total">Guztira</string>
-    <string name="last_used">Azkenengoz %s erabilita</string>
 </resources>

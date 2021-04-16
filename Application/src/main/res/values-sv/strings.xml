@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="time_used">Använd tid: %d:%02d:%02d</string>
-    <string name="last_used">Senast använd %s</string>
     <string name="explanation_access_appusage_title">App-användning tillstånd</string>
     <string name="explanation_access_appusage_message">Vänligen ge tillgång till användarstatistik av systemet på nästa sida.</string>
     <string name="go">Fortsätta</string>
@@ -15,8 +13,6 @@
     <string name="menu_charts">Diagram</string>
     <string name="last_used_now">Används just nu</string>
     <string name="charts_bar_daily">Appanvändning per dag</string>
-    <string name="charts_clock_pie">%s som ett klocka cirkeldiagram</string>
-    <string name="charts_clock_pie_general">Senaste klockans cirkeldiagram</string>
     <string name="title_feature_preview">usageDirect funktion förhandsvisning</string>
     <string name="ts_today">I dag</string>
     <string name="ts_yesterday">I går</string>

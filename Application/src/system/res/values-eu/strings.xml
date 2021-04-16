@@ -7,7 +7,6 @@
     <string name="help_bug_5">bat-batean daturik ez jasotzea</string>
     <string name="help_database_flavor_download">Datu fidagarri eta iraunkorretarako, deskargatu usageDirect.</string>
     <string name="help_database_flavor_installed">usageDirect-ek datu fidagarri eta iraunkorrak ematen ditu.</string>
-    <string name="help_reliable">Erloju-grafikoak fidagarritzat jo daitezke; usageDirect-en datu-iturri berbera erabiltzen dute.</string>
     <string name="system_stats_warning">Datuak ez dira oso fidagarriak.</string>
     <string name="title_system_stats">Erabilera estatistikak</string>
     <string name="title_help">Datu-iturri abisua</string>
@@ -20,7 +19,4 @@
     <string name="charts_bar_yearly">Aplikazioen erabilera urteko</string>
     <string name="error_no_data">Errore bat gertatu da: sistemak ez du daturik eman. Probatu aplikazioa berrinstalatzen</string>
     <string name="app_name">System usage stats</string>
-    <string name="help_unreliable">Aplikazio hau erabilera-estatistikak erakusteko tresna bat besterik ez da, Android sistemak eman bezala. Aplikazio honen arrazoia, aplikazio instalatu baino 10 egun lehenago datu historikoak lortzeko beste modurik ez dagoela da.
-\n
-\nZoritxarrez, datu horiek oso modu kaxkarrean ematen dira. Adibidez, akats hauek konponezinak izan daitezke:</string>
 </resources>

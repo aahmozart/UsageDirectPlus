@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 
    Direitos autorais 2014 The Android Open Source Project
@@ -15,10 +15,7 @@
    Veja a Licença para a linguagem específica que rege as permissões e
    limitações sob a Licença.
 
--->
-<resources>
-    <string name="last_used">"Utilizado por último %s"</string>
-    <string name="time_used">Tempo utilizado: %d:%02d:%02d</string>
+--><resources>
     <string name="time_used_time_only">%d:%02d:%02d</string>
     <string name="explanation_access_appusage_title">Permissão de uso do aplicativo</string>
     <string name="explanation_access_appusage_message">Favor conceder acesso às estatísticas de uso de seu sistema na próxima tela.</string>
@@ -31,8 +28,6 @@
     <string name="menu_charts">Gráficos</string>
     <string name="last_used_now">Atualmente em uso</string>
     <string name="charts_bar_daily">Uso diário do aplicativo</string>
-    <string name="charts_clock_pie">%s como um gráfico circular de relógio</string>
-    <string name="charts_clock_pie_general">Gráficos recentes</string>
     <string name="title_feature_preview">usageDirect recurso de pré-visualização</string>
     <string name="ts_today">Hoje</string>
     <string name="ts_yesterday">Ontem</string>

@@ -6,7 +6,6 @@
     <string name="help_bug_5">Daten, die plötzlich gar nicht mehr angezeigt werden</string>
     <string name="help_database_flavor_download">Wenn du zuverlässige und persistente Daten wünschst, lade bitte usageDirect herunter.</string>
     <string name="help_database_flavor_installed">usageDirect stellt verlässliche und persistente Daten zur Verfügung.</string>
-    <string name="help_reliable">Uhr-Kuchendiagramme können als zuverlässig angesehen werden. Sie verwenden die selben Daten wie usageDirect.</string>
     <string name="title_system_stats">Nutzungsstatistiken</string>
     <string name="system_stats_warning">Daten können unzuverlässig sein.</string>
     <string name="title_help">Datenquellen-Warnung</string>
@@ -17,9 +16,6 @@
     <string name="charts_bar_monthly">Nutzungszeit pro Monat</string>
     <string name="charts_bar_yearly">Nutzungszeit pro Jahr</string>
     <string name="app_name">System-Nutzungsstatistiken</string>
-    <string name="help_unreliable">Diese Applikation ist lediglich ein Werkzeug, um Nutzungszeiten anzuzeigen, wie sie das Android-System ausgibt. Es existiert, weil es keinen anderen Weg gibt, historische Daten älter als 10 Tage vor Installation der App zu erlangen.
-\n
-\nLeider ist die Implementierung des Android-Systems, welche diese Daten zur Verfügung stellt, sehr fehlerhaft. Beispielsweise folgende Fehler können als unbehebbar angesehen werden:</string>
     <string name="help_bug_1">Applikationen, die angeblich mehrere Tage hintereinander im Vordergrund gewesen sind</string>
     <string name="charts_bar_weekly">Nutzungszeit pro Woche</string>
     <string name="error_no_data">Ein Fehler ist aufgetreten: das System hat keine Daten zurückgegeben. Bitte starte die App neu.</string>

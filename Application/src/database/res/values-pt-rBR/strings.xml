@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">usageDirect</string>
-    <string name="help_future_charts">Lançamentos futuros de usageDirect acrescentará cuidadosamente os recursos disponíveis anteriormente, usando dados precisos.</string>
     <string name="db_status">Neste momento, há %d dias armazenados na base de dados, o que corresponde a um total de %dh.</string>
     <string name="menu_database">Base de dados</string>
     <string name="db_insert">Copiar até 10 dias para a base de dados</string>
@@ -9,11 +8,5 @@
     <string name="db_schedule">Inserções automáticas programadas</string>
     <string name="db_job_schedule_failure">Aviso: a recolha automática de dados não pode ser configurada, por favor verifique periodicamente</string>
     <string name="chart_average">∅ Utilização média do aplicativo por dia da semana</string>
-    <string name="help_less_charts">As versões anteriores do usageDirect também incluíam gráficos semanais, mensais e anuais com dados coletados de sistema antes da instalação do aplicativo. 
-\n
-\nPorque esta fonte de dados não era muito fiável, este recurso foi removido do aplicativo.</string>
-    <string name="help_system_flavor_download">Baixar as estatísticas de utilização do sistema para aceder à selecção anterior de gráficos.</string>
-    <string name="help_system_flavor_installed">As estatísticas de utilização do sistema fornecem a selecção anterior de gráficos.</string>
-    <string name="more_charts">Mais gráficos…</string>
     <string name="widget_today_name">Tempo total hoje</string>
 </resources>
