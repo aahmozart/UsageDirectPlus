@@ -1,2 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Museum for en ødelagt API</string>
+    <string name="help_unreliable_1">Dette programmet bruker denne metoden for å spørre om dataene.</string>
+    <string name="help_bug_1">en applikasjon angivelig ha vært i forgrunnen flere dager på rad</string>
+    <string name="help_bug_2">data for en pågående periode er de samme som for en annen når det ikke burde</string>
+    <string name="help_bug_3">\"i dag\" starter på tilsynelatende tilfeldige tidspunkter</string>
+    <string name="help_bug_5">får plutselig ingen data i det hele tatt</string>
+    <string name="help_unreliable_3">Etterpå, følg dette rådet:</string>
+    <string name="help_unreliable_4">Ikke bruk denne API call.</string>
+    <string name="help_unreliable_5">Det er bortkastet tid.</string>
+    <string name="help_database_flavor_download">Leter du etter pålitelige og vedvarende bruksdata\? usageDirect har det.</string>
+    <string name="system_stats_warning">Se utstillingsguide</string>
+    <string name="title_system_stats">Utstilling</string>
+    <string name="title_help">Veiledning til utstillingen</string>
+    <string name="menu_charts">Spesiell utstilling: Kart</string>
+    <string name="span_daily">Daglig</string>
+    <string name="span_weekly">Ukentlig</string>
+    <string name="span_monthly">Månedlig</string>
+    <string name="span_yearly">Årlig</string>
+    <string name="charts_bar_weekly">Appbruk per uke</string>
+    <string name="charts_bar_monthly">Appbruk per måned</string>
+    <string name="charts_bar_yearly">Appbruk per år</string>
+    <string name="error_no_data">Det oppsto en feil: systemet har ikke returnert data. Prøv å starte programmet på nytt</string>
+    <string name="help_unreliable_2">Vennligst utforsk disse dataene litt. Før eller siden vil du støte på noen av følgende feil.</string>
+    <string name="help_bug_4">få mindre data ved ett forsøk, men ikke et annet</string>
+    <string name="help_database_flavor_installed">usageDirect gir pålitelige og vedvarende data.</string>
+    <string name="about_libraries_header">%s er forked fra Android-prøven AppUsageStatistics og har siden blitt videreutviklet av Fynn Godau.
+\n
+\nDet ligner funksjonssettet til en eldre versjon av usageDirect og tar sikte på å demonstrere et ikke-funksjonelt system-API.
+\n
+\nFølgende liste viser alle komponentene som utgjør dette programmet.</string>
+</resources>

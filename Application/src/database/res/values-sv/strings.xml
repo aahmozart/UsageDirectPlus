@@ -9,4 +9,19 @@
     <string name="db_job_schedule_failure">Varning: automatisk datainsamling kunde inte ställas in, kom tillbaka regelbundet</string>
     <string name="chart_average">∅ Genomsnittlig appanvändning per veckodag</string>
     <string name="widget_today_name">Tid i dag</string>
+    <string name="charts_clock_pie_general">Senaste klockans cirkeldiagram</string>
+    <string name="charts_clock_pie">%s som en klocka cirkeldiagram</string>
+    <string name="menu_feedback">Skicka en idé</string>
+    <string name="cancel">Annullera</string>
+    <string name="feedback_message">usageDirect fortsätter att leta efter mer intressanta idéer för insiktsfulla representationer av dina data.
+\n
+\nJag har redan ett antal saker på min färdplan, men jag vill höra det från dig: vad tycker du om usageDirect\?</string>
+    <string name="usagestat_hide">Ta bort den här raden</string>
+    <string name="menu_restore_hidden">Återställa borttagna rader</string>
+    <string name="menu_restore_hidden_positive">Återställ</string>
+    <plurals name="menu_restore_hidden_details">
+        <item quantity="one">Vill du återställa en borttagen rad\?</item>
+        <item quantity="other">Du har totalt raderat %1$d rader. Vill du återställa dem\?</item>
+    </plurals>
+    <string name="charts_bar_daily_condensed">Långsiktig appanvändning</string>
 </resources>

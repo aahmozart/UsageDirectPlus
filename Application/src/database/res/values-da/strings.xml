@@ -1,2 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">usageDirect</string>
+    <string name="db_status">I øjeblikket er der %d dage gemt i databasen, der svarer til i alt %dh.</string>
+    <string name="menu_database">Database</string>
+    <string name="db_insert">Kopier op til 10 dage til databasen</string>
+    <string name="db_wait">Indsamler data…</string>
+    <string name="db_schedule">Automatiske indsatser planlagt</string>
+    <string name="db_job_schedule_failure">Advarsel: automatisk dataindsamling kunne ikke oprettes. Kontroller regelmæssigt igen</string>
+    <string name="chart_average">∅ Gennemsnitlig appbrug pr. Hverdag</string>
+    <string name="charts_clock_pie">%s som et cirkeldiagram</string>
+    <string name="charts_clock_pie_general">Seneste ur cirkeldiagrammer</string>
+    <string name="widget_today_name">Tid i dag</string>
+    <string name="menu_feedback">Send en idé</string>
+    <string name="cancel">Afbestille</string>
+    <string name="feedback_message">usageDirect holder konstant på udkig efter mere interessante ideer til indsigtsfulde repræsentationer af dine data.
+\n
+\nJeg har allerede en række ting på min køreplan, men jeg vil gerne høre det fra dig: hvad synes du om useDirect\?</string>
+    <string name="menu_restore_hidden_positive">Restaurere</string>
+    <string name="menu_restore_hidden">Restaurer slettede rækker</string>
+    <string name="charts_bar_daily_condensed">Langsigtet app-brug</string>
+    <string name="usagestat_hide">Slet denne række</string>
+    <plurals name="menu_restore_hidden_details">
+        <item quantity="one">Vil du restaurere en slettet række\?</item>
+        <item quantity="other">Du har i alt slettet %1$d rækker. Vil du gendanne dem\?</item>
+    </plurals>
+</resources>
