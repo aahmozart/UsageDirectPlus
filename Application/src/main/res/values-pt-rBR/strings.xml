@@ -23,7 +23,6 @@
     <string name="leave_app">Sair do app</string>
     <string name="not_used">não utilizados</string>
     <string name="menu_about">Sobre</string>
-    <string name="about_libraries_header">%s é um Fork da amostra do Android app \'AppUsageStatistics\' e, a partir daí, tem sido desenvolvido por Fynn Godau.\n\nA lista a seguir exibe todos os componentes que estão incluídos neste aplicativo.</string>
     <string name="launch_unavailable">Não foi possível iniciar o aplicativo</string>
     <string name="menu_charts">Gráficos</string>
     <string name="last_used_now">atualmente em uso</string>

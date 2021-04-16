@@ -6,9 +6,6 @@
     <string name="leave_app">Lämna app</string>
     <string name="not_used">inte använd</string>
     <string name="menu_about">Om</string>
-    <string name="about_libraries_header">%s är forked från Android exemplet AppUsageStatistics och har sedan dess utvecklats vidare av Fynn Godau.
-\n
-\nI följande lista visas alla komponenter som utgör denna applikation.</string>
     <string name="launch_unavailable">Det gick inte att starta appen</string>
     <string name="menu_charts">Diagrammen</string>
     <string name="last_used_now">används just nu</string>

@@ -4,9 +4,6 @@
     <string name="menu_about">Om</string>
     <string name="launch_unavailable">Kunne ikke starte appen</string>
     <string name="menu_charts">Diagrammer</string>
-    <string name="about_libraries_header">%s er forked fra Android-prøven AppUsageStatistics og er siden blevet videreudviklet af Fynn Godau.
-\n
-\nDen følgende liste viser alle komponenter, der udgør denne applikation.</string>
     <string name="explanation_access_appusage_title">Tilladelse til appbrug</string>
     <string name="explanation_access_appusage_message">Giv adgang til dit systems brugsstatistikker på næste side.</string>
     <string name="leave_app">Forlad appen</string>

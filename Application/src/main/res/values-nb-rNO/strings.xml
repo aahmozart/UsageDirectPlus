@@ -20,7 +20,4 @@
     <string name="total">Total</string>
     <string name="charts_bar_daily_condensed">Langsiktig appbruk</string>
     <string name="last_used_this_day">sist brukt denne dagen</string>
-    <string name="about_libraries_header">%s er forked fra Android-prøven AppUsageStatistics og har siden blitt videreutviklet av Fynn Godau.
-\n
-\nFølgende liste viser alle komponentene som utgjør dette programmet.</string>
 </resources>

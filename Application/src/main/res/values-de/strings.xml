@@ -7,9 +7,6 @@
     <string name="leave_app">App verlassen</string>
     <string name="not_used">Nicht benutzt</string>
     <string name="menu_about">Über</string>
-    <string name="about_libraries_header">%s ist ein Fork des Android-Beispiels \"AppUsageStatistics\" und wurde seitdem von Fynn Godau weiterentwickelt.
-\n
-\nDie folgende Liste zeigt alle Kompontenten, die diese Applikation ausmachen.</string>
     <string name="menu_charts">Diagramme</string>
     <string name="last_used_now">Gerade verwendet</string>
     <string name="charts_bar_daily">Nutzungszeit pro Tag</string>
