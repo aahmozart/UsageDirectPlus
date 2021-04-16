@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="db_wait">获取数据…</string>
+    <string name="db_schedule">已计划自动导入</string>
+    <string name="chart_average">平均每日使用时长（一周七天）</string>
+    <string name="db_insert">导入数据（最多十天）</string>
+    <string name="charts_clock_pie_general">最近每日饼状图</string>
+    <string name="menu_feedback">提交建议</string>
+    <string name="cancel">取消</string>
+    <string name="app_name">App用时统计</string>
+    <string name="db_status">截至目前，数据库中有%d天记录，合计%d小时。</string>
+    <string name="menu_database">数据库</string>
+    <string name="db_job_schedule_failure">警告：无法设置后台自动数据收集，请时常打开应用喵～</string>
+    <string name="charts_clock_pie">%s饼状图</string>
+    <string name="widget_today_name">今日使用总时长</string>
+    <string name="feedback_message">为了更好地展示你的数据，usageDirect随时欢迎奇思妙想。
+\n
+\n我已经有几个点子在本本上了，但我想听听你的意见。你怎么想？</string>
+</resources>
