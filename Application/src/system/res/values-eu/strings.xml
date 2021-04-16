@@ -5,11 +5,11 @@
     <string name="help_bug_3">\"gaur\" itxuraz ausazkoak diren momentutan hastea</string>
     <string name="help_bug_4">saiakera batean bestean baino datu gutxiago jasotzea</string>
     <string name="help_bug_5">bat-batean daturik ez jasotzea</string>
-    <string name="help_database_flavor_download">Datu fidagarri eta iraunkorretarako, deskargatu usageDirect.</string>
+    <string name="help_database_flavor_download">Erabilera-datu fidagarri eta iraunkorren bila zabiltza\? Erabili usageDirect bere hortan.</string>
     <string name="help_database_flavor_installed">usageDirect-ek datu fidagarri eta iraunkorrak ematen ditu.</string>
-    <string name="system_stats_warning">Datuak ez dira oso fidagarriak.</string>
-    <string name="title_system_stats">Erabilera estatistikak</string>
-    <string name="title_help">Datu-iturri abisua</string>
+    <string name="system_stats_warning">Ikusi agerraldi-gida</string>
+    <string name="title_system_stats">Agerraldia</string>
+    <string name="title_help">Agerraldiaren gida</string>
     <string name="span_daily">Egunean</string>
     <string name="span_weekly">Astean</string>
     <string name="span_monthly">Hilean</string>
@@ -18,5 +18,16 @@
     <string name="charts_bar_monthly">Aplikazioen erabilera hileko</string>
     <string name="charts_bar_yearly">Aplikazioen erabilera urteko</string>
     <string name="error_no_data">Errore bat gertatu da: sistemak ez du daturik eman. Probatu aplikazioa berrinstalatzen</string>
-    <string name="app_name">System usage stats</string>
+    <string name="app_name">API hautsiaren museoa</string>
+    <string name="help_unreliable_3">Ondoren, jarraitu aholku honi:</string>
+    <string name="help_unreliable_4">Ez erabili API-dei hau.</string>
+    <string name="help_unreliable_5">Denbora galtzea da.</string>
+    <string name="menu_charts">Agerraldi berezia: Grafikoak</string>
+    <string name="help_unreliable_1">Aplikazio honek hurrengo metodo hau erabiltzen du datuak lortzeko.</string>
+    <string name="help_unreliable_2">Jarri arreta pixka bat datu hauetan. Goiz edo beranduago, honako akats hauek aurkituko dituzu.</string>
+    <string name="about_libraries_header">%s Androideko AppUsageStatistics erabilgarritasunaren adarkatze bat da eta ordutik Fynn Godau-k garatu du.
+\n
+\nAurreko usageDirect bertsioaren antzekoa da, eta sistema-API ez-funtzional bat frogatzea du helburu.
+\n
+\nHurrengo zerrendan aplikazio hau osatzen duten osagai guztiak agertzen dira.</string>
 </resources>

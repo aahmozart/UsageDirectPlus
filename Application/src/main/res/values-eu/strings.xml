@@ -6,7 +6,7 @@
     <string name="leave_app">Irten</string>
     <string name="not_used">Ez da erabili</string>
     <string name="menu_about">Honi buruz</string>
-    <string name="about_libraries_header">&amp;s Androideko AppUsageStatistics erabilgarritasunaren adarkatze bat da eta ordutik Fynn Godau-k garatu du.
+    <string name="about_libraries_header">%s Androideko AppUsageStatistics erabilgarritasunaren adarkatze bat da eta ordutik Fynn Godau-k garatu du.
 \n
 \nHurrengo zerrendan aplikazio hau osatzen duten osagai guztiak agertzen dira.</string>
     <string name="launch_unavailable">Ezin izan da abiarazi aplikazioa</string>

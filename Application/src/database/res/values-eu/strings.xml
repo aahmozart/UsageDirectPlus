@@ -9,4 +9,6 @@
     <string name="chart_average">∅ Batez besteko aplikazioen erabilera asteko</string>
     <string name="widget_today_name">Gaurko erabilera</string>
     <string name="db_job_schedule_failure">Abisua: ezin izan da datuen bilketa automatikoa konfiguratu, mesedez, itzuli noizean behin</string>
+    <string name="charts_clock_pie">%s erloju-grafiko gisa</string>
+    <string name="charts_clock_pie_general">Duela gutxiko erloju-grafikoak</string>
 </resources>
