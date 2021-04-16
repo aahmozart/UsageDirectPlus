@@ -1,2 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="explanation_access_appusage_title">Разрешение на использование приложения</string>
+    <string name="explanation_access_appusage_message">Пожалуйста, предоставьте доступ к статистике использования вашей системы на следующей странице.</string>
+    <string name="go">Перейти</string>
+    <string name="leave_app">Покинуть приложение</string>
+    <string name="not_used">не использовалось</string>
+    <string name="menu_about">О программе</string>
+    <string name="menu_charts">Диаграммы</string>
+    <string name="last_used_now">Используется в настоящее время</string>
+    <string name="launch_unavailable">Не удалось запустить приложение</string>
+</resources>
