@@ -25,9 +25,4 @@
     <string name="error_no_data">Der opstod en fejl: systemet har ikke returneret data. Prøv at genstarte applikationen</string>
     <string name="help_bug_2">data for en løbende periode er de samme som for en anden, når de ikke burde</string>
     <string name="help_database_flavor_download">Leder du efter pålidelige og vedvarende brugsdata\? usageDirect har det.</string>
-    <string name="about_libraries_header">%s er forked fra Android-prøven AppUsageStatistics og er siden blevet videreudviklet af Fynn Godau.
-\n
-\nDet ligner funktionssættet i en ældre version af usageDirect og sigter mod at demonstrere et ikke-funktionelt system-API.
-\n
-\nDen følgende liste viser alle komponenter, der udgør denne applikation.</string>
 </resources>

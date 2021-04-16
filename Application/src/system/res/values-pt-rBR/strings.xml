@@ -21,11 +21,6 @@
     <string name="app_name">Museu de um API quebrado</string>
     <string name="help_unreliable_1">Este aplicativo usa esta chamada de método para consultar seus dados.</string>
     <string name="help_unreliable_2">Por favor, explore estes dados por um pouco. Mais cedo ou mais tarde, você encontrará alguns dos seguintes bugs.</string>
-    <string name="about_libraries_header">%s é derivado da amostra do Android AppUsageStatistics e desde então tem sido desenvolvido por Fynn Godau.
-\n
-\nEle se assemelha ao conjunto de características de uma versão antiga do usageDirect e tem como objetivo demonstrar um sistema API não funcional.
-\n
-\nA lista a seguir exibe todos os componentes que constituem este aplicativo.</string>
     <string name="help_unreliable_3">Em seguida, por favor, siga este conselho:</string>
     <string name="help_unreliable_4">Não utilize esta chamada API.</string>
     <string name="help_unreliable_5">É uma perda de tempo.</string>

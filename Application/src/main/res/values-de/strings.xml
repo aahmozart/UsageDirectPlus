@@ -19,7 +19,5 @@
     <string name="menu_reload">Aktualisieren</string>
     <string name="total">Gesamt</string>
     <string name="last_used_this_day">an diesem Tag zuletzt verwendet</string>
-    <string name="charts_bar_daily_condensed">Langfristige App-Nutzung</string>
     <string name="icon">Symbol</string>
-    <string name="usagestat_hide">Diese Zeile löschen</string>
 </resources>

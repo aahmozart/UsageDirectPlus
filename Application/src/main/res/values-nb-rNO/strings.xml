@@ -18,8 +18,6 @@
     <string name="ts_calendar_week">Uke %s</string>
     <string name="menu_reload">Laste</string>
     <string name="total">Total</string>
-    <string name="charts_bar_daily_condensed">Langsiktig appbruk</string>
     <string name="last_used_this_day">sist brukt denne dagen</string>
     <string name="icon">Ikon</string>
-    <string name="usagestat_hide">Slette denne raden</string>
 </resources>

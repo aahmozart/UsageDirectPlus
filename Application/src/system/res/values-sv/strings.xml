@@ -19,11 +19,6 @@
     <string name="charts_bar_weekly">Appanvändning per vecka</string>
     <string name="charts_bar_monthly">Appanvändning per månad</string>
     <string name="charts_bar_yearly">Appanvändning per år</string>
-    <string name="about_libraries_header">%s är forkad från Android-provet AppUsageStatistics och har sedan dess utvecklats vidare av Fynn Godau.
-\n
-\nDet liknar funktionsuppsättningen i en äldre version av usageDirect och syftar till att visa ett icke-funktionellt system-API.
-\n
-\nI följande lista visas alla komponenter som utgör denna applikation.</string>
     <string name="help_unreliable_1">Den här applikationen använder följande metodanrop för att fråga sina data.</string>
     <string name="help_unreliable_2">Vänligen utforska dessa data lite. Förr eller senare kommer du att stöta på några av följande buggar.</string>
     <string name="help_unreliable_3">Efteråt, följ detta råd:</string>

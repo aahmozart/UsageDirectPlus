@@ -25,9 +25,4 @@
     <string name="help_unreliable_2">Vennligst utforsk disse dataene litt. Før eller siden vil du støte på noen av følgende feil.</string>
     <string name="help_bug_4">få mindre data ved ett forsøk, men ikke et annet</string>
     <string name="help_database_flavor_installed">usageDirect gir pålitelige og vedvarende data.</string>
-    <string name="about_libraries_header">%s er forked fra Android-prøven AppUsageStatistics og har siden blitt videreutviklet av Fynn Godau.
-\n
-\nDet ligner funksjonssettet til en eldre versjon av usageDirect og tar sikte på å demonstrere et ikke-funksjonelt system-API.
-\n
-\nFølgende liste viser alle komponentene som utgjør dette programmet.</string>
 </resources>

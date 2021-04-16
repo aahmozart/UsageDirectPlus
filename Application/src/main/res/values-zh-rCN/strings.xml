@@ -16,10 +16,8 @@
     <string name="ts_calendar_week">日历周%s</string>
     <string name="menu_reload">刷新（重加载）</string>
     <string name="total">总时长</string>
-    <string name="charts_bar_daily_condensed">长期使用情况</string>
     <string name="last_used_this_day">今天最后使用时间</string>
     <string name="icon">图标</string>
-    <string name="usagestat_hide">删除本行</string>
     <string name="explanation_access_appusage_title">应用权限请求</string>
     <string name="explanation_access_appusage_message">请在即将显示的页面上开启usageDirect对系统使用情况统计的访问权限。</string>
 </resources>

@@ -25,9 +25,4 @@
     <string name="menu_charts">Agerraldi berezia: Grafikoak</string>
     <string name="help_unreliable_1">Aplikazio honek hurrengo metodo hau erabiltzen du datuak lortzeko.</string>
     <string name="help_unreliable_2">Jarri arreta pixka bat datu hauetan. Goiz edo beranduago, honako akats hauek aurkituko dituzu.</string>
-    <string name="about_libraries_header">%s Androideko AppUsageStatistics erabilgarritasunaren adarkatze bat da eta ordutik Fynn Godau-k garatu du.
-\n
-\nAurreko usageDirect bertsioaren antzekoa da, eta sistema-API ez-funtzional bat frogatzea du helburu.
-\n
-\nHurrengo zerrendan aplikazio hau osatzen duten osagai guztiak agertzen dira.</string>
 </resources>

@@ -9,12 +9,10 @@
     <string name="menu_charts">Диаграммы</string>
     <string name="last_used_now">Используется в настоящее время</string>
     <string name="launch_unavailable">Не удалось запустить приложение</string>
-    <string name="usagestat_hide">Удалить эту строку</string>
     <string name="last_used_this_day">последний раз использовался в этот день</string>
     <string name="ts_yesterday">Вчера</string>
     <string name="charts_bar_daily">Использование приложения в день</string>
     <string name="icon">Икона</string>
-    <string name="charts_bar_daily_condensed">Долгосрочное использование приложения</string>
     <string name="total">Весь</string>
     <string name="menu_reload">Перезагрузить</string>
     <string name="ts_calendar_week">Неделю %s</string>

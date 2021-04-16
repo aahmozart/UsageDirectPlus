@@ -18,8 +18,6 @@
     <string name="ts_calendar_week">Vecka %s</string>
     <string name="menu_reload">Ladda om</string>
     <string name="total">Summa</string>
-    <string name="charts_bar_daily_condensed">Långsiktig appanvändning</string>
     <string name="last_used_this_day">senast använt denna dag</string>
     <string name="icon">Ikon</string>
-    <string name="usagestat_hide">Ta bort den här raden</string>
 </resources>

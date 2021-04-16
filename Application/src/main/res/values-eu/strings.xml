@@ -18,8 +18,6 @@
     <string name="ts_calendar_week">%s astea</string>
     <string name="menu_reload">Freskatu</string>
     <string name="total">Guztira</string>
-    <string name="charts_bar_daily_condensed">Epe luzeko app erabilera</string>
     <string name="last_used_this_day">azken honetan erabilitako eguna</string>
     <string name="icon">Ikonoa</string>
-    <string name="usagestat_hide">Hau ezabatu errenkada</string>
 </resources>

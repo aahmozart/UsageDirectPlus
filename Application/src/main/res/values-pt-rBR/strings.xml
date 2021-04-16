@@ -35,8 +35,6 @@
     <string name="ts_calendar_week">Semana %s</string>
     <string name="menu_reload">Recarregar</string>
     <string name="total">Total</string>
-    <string name="charts_bar_daily_condensed">Uso de aplicativos de longo prazo</string>
     <string name="last_used_this_day">usado pela última vez neste dia</string>
     <string name="icon">Ícone</string>
-    <string name="usagestat_hide">Eliminar esta linha</string>
 </resources>
