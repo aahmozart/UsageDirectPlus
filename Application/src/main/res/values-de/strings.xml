@@ -5,10 +5,10 @@
     <string name="explanation_access_appusage_message">Bitte gewähre auf der nächsten Seite Zugriff auf die System-Nutzungsstatistik.</string>
     <string name="go">Los</string>
     <string name="leave_app">App verlassen</string>
-    <string name="not_used">Nicht benutzt</string>
+    <string name="not_used">nicht verwendet</string>
     <string name="menu_about">Über</string>
     <string name="menu_charts">Diagramme</string>
-    <string name="last_used_now">Gerade verwendet</string>
+    <string name="last_used_now">derzeit im Einsatz</string>
     <string name="charts_bar_daily">Nutzungszeit pro Tag</string>
     <string name="title_feature_preview">usageDirect Feature-Vorschau</string>
     <string name="ts_today">Heute</string>
@@ -18,4 +18,8 @@
     <string name="ts_calendar_week">Woche %s</string>
     <string name="menu_reload">Aktualisieren</string>
     <string name="total">Gesamt</string>
+    <string name="last_used_this_day">an diesem Tag zuletzt verwendet</string>
+    <string name="charts_bar_daily_condensed">Langfristige App-Nutzung</string>
+    <string name="icon">Symbol</string>
+    <string name="usagestat_hide">Diese Zeile löschen</string>
 </resources>

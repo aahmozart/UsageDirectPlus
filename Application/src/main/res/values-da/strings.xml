@@ -20,4 +20,6 @@
     <string name="total">I alt</string>
     <string name="charts_bar_daily_condensed">Langsigtet app-brug</string>
     <string name="last_used_this_day">sidst brugt på denne dag</string>
+    <string name="icon">Ikon</string>
+    <string name="usagestat_hide">Slet denne række</string>
 </resources>
