@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">usageDirect</string>
+    <string name="menu_database">Base de datos</string>
+    <string name="db_insert">Copiar ata 10 días na base de datos</string>
+    <string name="db_wait">Obtendo os datos…</string>
+    <string name="db_schedule">Insercións automáticas programadas</string>
+    <string name="db_job_schedule_failure">Aviso: a recoleción automática de datos non se puido establecer, volve a comprobalos con regularidade</string>
+    <string name="chart_average">∅ Uso promedio da app por día</string>
+    <string name="charts_clock_pie_general">Gráficos de uso recentes</string>
+    <string name="widget_today_name">Tempo hoxe</string>
+    <string name="menu_feedback">Enviar unha idea</string>
+    <string name="db_status">Ata agora, hai %d días rexistrados na base de datos, que fan un total de %dh.</string>
+    <string name="charts_clock_pie">%s como un gráfico circular</string>
+    <string name="feedback_message">usageDirect busca mellores xeitos e ideas interesantes para representar os teus datos.
+\n
+\nXa temos varias ideas no forno, pero queremos coñecer as túas: que opinas acerca de usageDirect\?</string>
+    <string name="cancel">Cancelar</string>
+    <string name="charts_bar_daily_condensed">Uso histórico da app</string>
+    <string name="usagestat_hide">Eliminar esta fila</string>
+    <string name="menu_restore_hidden">Restablecer filas eliminadas</string>
+    <string name="menu_restore_hidden_positive">Restablecer</string>
+    <plurals name="menu_restore_hidden_details">
+        <item quantity="one">Tes, en total, %1$d fila eliminada. Queres restablecela\?</item>
+        <item quantity="other">Tes, en total, %1$d filas eliminadas. Queres restablecelas\?</item>
+    </plurals>
+</resources>
