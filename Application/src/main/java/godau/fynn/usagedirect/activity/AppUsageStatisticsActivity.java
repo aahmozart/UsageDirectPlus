@@ -113,12 +113,23 @@ public abstract class AppUsageStatisticsActivity extends Activity {
                         .setAppDeveloperMastodon("https://fosstodon.org/@fynnDirect")
                         .setContent(new Object[]{
                                 new Artwork(getString(R.string.icon), new License("CC BY-SA", null), null, "m4TZ", "https://social.anoxinon.de/@m4TZ"),
+                                new Translator("dc7ia", null, new Locale("da")),
+                                new Translator("mondstern", null, new Locale("da")),
+                                new Translator("mondstern", null, new Locale("de")),
                                 new Translator("Porrumentzio", null, new Locale("eu")),
+                                new Translator("mondstern", null, new Locale("eu")),
+                                new Translator("Xosé M", null, new Locale("gl")),
+                                new Translator("dc7ia", null, new Locale("nb")),
+                                new Translator("mondstern", null, new Locale("nb")),
+                                new Translator("André Marcelo Alvarenga", null, new Locale("pt", "br")),
                                 new Translator("aevw", null, new Locale("pt", "br")),
                                 new Translator("mondstern", null, new Locale("pt", "br")),
+                                new Translator("Rikishi", null, new Locale("ru")),
+                                new Translator("mondstern", null, new Locale("ru")),
+                                new Translator("Hatsune Miku", null, new Locale("si")),
                                 new Translator("dc7ia", null, new Locale("sv")),
-                                new Translator("dc7ia", null, new Locale("da")),
-                                new Translator("dc7ia", null, new Locale("nb")),
+                                new Translator("mondstern", null, new Locale("sv")),
+                                new Translator("yeyuan98", null, new Locale("rCN")),
                                 new Library("AndroidCharts", License.MIT_LICENSE, "The MIT License (MIT)\n" +
                                         "\n" +
                                         "Copyright (c) 2013 Ding Wenhao", "Ding Wenhao", "https://github.com/HackPlan/AndroidCharts"),
