@@ -16,7 +16,7 @@
     <string name="widget_today_name">Time today</string>
     <string name="menu_feedback">Send an idea</string>
     <string name="feedback_message">usageDirect keeps looking for more interesting ideas for insightful representations of your data.
-        \n\nI already have a number of things on my roadmap, but I want to hear it from you: what do you think about usageDirect?</string>
+        \n\nI already have a number of things on my roadmap, but I would like to hear from you: what do you think about usageDirect?</string>
     <string name="cancel">Cancel</string>
     <string name="charts_bar_daily_condensed">Long-term app usage</string>
     <string name="usagestat_hide">Delete this row</string>
