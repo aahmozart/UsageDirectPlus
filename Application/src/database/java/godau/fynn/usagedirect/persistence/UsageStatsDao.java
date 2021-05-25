@@ -34,7 +34,8 @@ public abstract class UsageStatsDao {
     public abstract long getTotalTimeUsed();
 
     /**
-     * @return The total amount of stored days, including hidden ones
+     * @return The total amount of stored days, including ones where all entries
+     * are hidden
      */
     @Query("SELECT count(*) FROM (SELECT DISTINCT day FROM usageStats)")
     public abstract int getDaysStoredAmount();
@@ -90,14 +91,30 @@ public abstract class UsageStatsDao {
 
     /**
      * @return A mapping of days to the accumulated time used on that day ordered
-     * by day
+     * by day, including days without stats in between minimum and maximum day
      */
     public Map<Long, Long> getTotalTimePerDay() {
         Cursor cursor = getTotalTimePerDayCursor();
         Map<Long, Long> map = new LinkedHashMap<>();
+
+        long last = Long.MAX_VALUE - 1;
+
+        // Cursor starts before first row
         while (cursor.moveToNext()) {
-            map.put(cursor.getLong(0), cursor.getLong(1));
+
+            long day = cursor.getLong(0);
+
+            // Insert 0 for skipped days
+            for (long skipped = last + 1; skipped < day; skipped++) {
+                map.put(skipped, 0L);
+            }
+
+            map.put(day, cursor.getLong(1));
+
+            last = day;
         }
+
+        cursor.close();
         return map;
     }
 
