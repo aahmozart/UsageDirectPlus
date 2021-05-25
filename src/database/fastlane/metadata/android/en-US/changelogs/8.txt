@@ -1,0 +1,11 @@
+– Long-term history chart
+– "Last used" is back!
+– New icon thanks to m4TZ
+– Long-press to remove rows
+– Clock pie chart shows progression of day
+– Changed format of date tab bar
+– Fix incorrect weekday display
+– Auto refresh main screen
+– Send ideas via email (menu option)
+– Revamped credits screen
+– New translations (see credits screen)
