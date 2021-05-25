@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Museum for en brudt API</string>
+    <string name="help_unreliable_1">Denne applikation bruger følgende metodeopkald til at forespørge på sine data.</string>
+    <string name="help_unreliable_2">Udforsk disse data lidt. Før eller senere vil du støde på nogle af følgende fejl.</string>
+    <string name="help_bug_1">en ansøgning angiveligt har været i forgrunden i flere dage i træk</string>
+    <string name="help_bug_3">\"i dag\" startende på tilsyneladende tilfældige tidspunkter</string>
+    <string name="help_bug_4">få færre data ved et forsøg, men ikke et andet</string>
+    <string name="help_bug_5">pludselig ikke får nogen data overhovedet</string>
+    <string name="help_unreliable_3">Bagefter skal du følge dette råd:</string>
+    <string name="help_unreliable_4">Brug ikke dette API call.</string>
+    <string name="help_unreliable_5">Det er spild af tid.</string>
+    <string name="help_database_flavor_installed">usageDirect leverer pålidelige og vedvarende data.</string>
+    <string name="system_stats_warning">Se udstillingsguide</string>
+    <string name="title_system_stats">Udstilling</string>
+    <string name="title_help">Vejledning til udstillingen</string>
+    <string name="menu_charts">Særudstilling: Diagrammer</string>
+    <string name="span_daily">Daglige</string>
+    <string name="span_weekly">Ugentlig</string>
+    <string name="span_monthly">Månedlige</string>
+    <string name="span_yearly">Årligt</string>
+    <string name="charts_bar_weekly">Appbrug pr. Uge</string>
+    <string name="charts_bar_monthly">Appbrug pr. Måned</string>
+    <string name="charts_bar_yearly">Appbrug pr. År</string>
+    <string name="error_no_data">Der opstod en fejl: systemet har ikke returneret data. Prøv at genstarte applikationen</string>
+    <string name="help_bug_2">data for en løbende periode er de samme som for en anden, når de ikke burde</string>
+    <string name="help_database_flavor_download">Leder du efter pålidelige og vedvarende brugsdata\? usageDirect har det.</string>
+</resources>

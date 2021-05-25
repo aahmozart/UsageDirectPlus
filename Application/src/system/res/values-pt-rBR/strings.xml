@@ -13,14 +13,16 @@
     <string name="help_bug_3">\"hoje\" começando em momentos aparentemente aleatórios no tempo</string>
     <string name="help_bug_4">obter menos dados numa tentativa mas não na outra</string>
     <string name="help_bug_5">inesperadamente não obter nenhum dado</string>
-    <string name="help_database_flavor_download">Para obter dados fiáveis e persistentes, por favor baixe usageDirect.</string>
-    <string name="help_database_flavor_installed">usageDirect fornece dados fiáveis e persistentes.</string>
-    <string name="help_reliable">Os gráficos circulares de relógio podem ser considerados fiáveis. Utilizam a mesma fonte de dados que usageDirect.</string>
-    <string name="system_stats_warning">Os dados podem não ser fiáveis.</string>
-    <string name="title_system_stats">Estatísticas de uso</string>
-    <string name="title_help">Aviso sobre fonte de dados</string>
-    <string name="app_name">Estatísticas de utilização do sistema</string>
-    <string name="help_unreliable">Este aplicativo é meramente uma ferramenta para exibir as mesmas estatísticas de utilização que foram coletados pelo sistema Android. Existe porque não há outra forma de obter dados históricos de mais de 10 dias antes do aplicativo ter sido instalado. 
-\n
-\nInfelizmente, a implementação que fornece estes dados contém falhas. Por exemplo, os seguintes erros podem ser considerados como não consertáveis:</string>
+    <string name="help_database_flavor_download">Você está procurando por dados de uso confiáveis e persistentes\? useDirect os tem.</string>
+    <string name="help_database_flavor_installed">usageDirect fornece dados confiáveis e persistentes.</string>
+    <string name="system_stats_warning">Ver guia da exposição</string>
+    <string name="title_system_stats">Exposição</string>
+    <string name="title_help">Guia para a exposição</string>
+    <string name="app_name">Museu de um API quebrado</string>
+    <string name="help_unreliable_1">Este aplicativo usa esta chamada de método para consultar seus dados.</string>
+    <string name="help_unreliable_2">Por favor, explore estes dados por um pouco. Mais cedo ou mais tarde, você encontrará alguns dos seguintes bugs.</string>
+    <string name="help_unreliable_3">Em seguida, por favor, siga este conselho:</string>
+    <string name="help_unreliable_4">Não utilize esta chamada API.</string>
+    <string name="help_unreliable_5">É uma perda de tempo.</string>
+    <string name="menu_charts">Exposição especial: Gráficos</string>
 </resources>

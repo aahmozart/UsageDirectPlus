@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="go">Gå</string>
+    <string name="menu_about">Om</string>
+    <string name="launch_unavailable">Kunne ikke starte appen</string>
+    <string name="menu_charts">Diagrammer</string>
+    <string name="explanation_access_appusage_title">Tilladelse til appbrug</string>
+    <string name="explanation_access_appusage_message">Giv adgang til dit systems brugsstatistikker på næste side.</string>
+    <string name="leave_app">Forlad appen</string>
+    <string name="not_used">anvendes ikke</string>
+    <string name="last_used_now">i øjeblikket i brug</string>
+    <string name="charts_bar_daily">Appbrug pr. Dag</string>
+    <string name="title_feature_preview">preview af usageDirect funktioner</string>
+    <string name="ts_today">I dag</string>
+    <string name="ts_yesterday">I går</string>
+    <string name="ts_this_week">Denne uge</string>
+    <string name="ts_last_week">Sidste uge</string>
+    <string name="ts_calendar_week">Uge %s</string>
+    <string name="menu_reload">Genindlæs</string>
+    <string name="total">I alt</string>
+    <string name="last_used_this_day">sidst brugt på denne dag</string>
+    <string name="icon">Ikon</string>
+</resources>

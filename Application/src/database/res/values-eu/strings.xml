@@ -7,13 +7,13 @@
     <string name="db_wait">Datuak biltzen…</string>
     <string name="db_schedule">Txertaketa automatikoak programatuta</string>
     <string name="chart_average">∅ Batez besteko aplikazioen erabilera asteko</string>
-    <string name="more_charts">Grafiko gehiago…</string>
     <string name="widget_today_name">Gaurko erabilera</string>
-    <string name="help_future_charts">Hurrengo usageDirect-en argitalpenek lehen eskuragarri zeuden ezaugarriak gehituko dituzte, datu zehatzak erabiliz.</string>
-    <string name="help_system_flavor_download">Deskargatu System usage stats lehen zeuden grafikoak edukitzeko.</string>
-    <string name="help_system_flavor_installed">System usage stats-ek lehen zeuden grafikoak eskaintzen ditu.</string>
-    <string name="help_less_charts">usageDirect-en aurreko bertsioek asteko, hileko eta urteko grafikoak zituzten, aplikazioa instalatu aurreko datuekin osatuak.
-\n
-\nDatu-iturri hori fidagarria ez zenez, ezabatu egin dugu aplikazio honetatik.</string>
     <string name="db_job_schedule_failure">Abisua: ezin izan da datuen bilketa automatikoa konfiguratu, mesedez, itzuli noizean behin</string>
+    <string name="charts_clock_pie">%s erloju-grafiko gisa</string>
+    <string name="charts_clock_pie_general">Duela gutxiko erloju-grafikoak</string>
+    <string name="menu_feedback">Bidali ideia bat</string>
+    <string name="feedback_message">usageDirect mantentzen gehiago bila ideia interesgarria insightful irudikapen zure datuak.
+\n
+\nDut dagoeneko gauzak zenbaki bat nire baitan, baina ez dut nahi entzun duzu: zer pentsatzen duzu usageDirect\?</string>
+    <string name="cancel">Utzi</string>
 </resources>

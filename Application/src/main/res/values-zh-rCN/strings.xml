@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="go">好的</string>
+    <string name="leave_app">推出app</string>
+    <string name="not_used">没有使用数据</string>
+    <string name="menu_about">关于</string>
+    <string name="launch_unavailable">无法启动应用</string>
+    <string name="menu_charts">图表</string>
+    <string name="last_used_now">正在使用中</string>
+    <string name="charts_bar_daily">每日使用情况</string>
+    <string name="title_feature_preview">usageDirect功能预览</string>
+    <string name="ts_today">今天</string>
+    <string name="ts_yesterday">昨天</string>
+    <string name="ts_this_week">本周</string>
+    <string name="ts_last_week">上周</string>
+    <string name="ts_calendar_week">日历周%s</string>
+    <string name="menu_reload">刷新（重加载）</string>
+    <string name="total">总时长</string>
+    <string name="last_used_this_day">今天最后使用时间</string>
+    <string name="icon">图标</string>
+    <string name="explanation_access_appusage_title">应用权限请求</string>
+    <string name="explanation_access_appusage_message">请在即将显示的页面上开启usageDirect对系统使用情况统计的访问权限。</string>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="last_used_this_day">útima utilizada hoxe</string>
+    <string name="icon">Icona</string>
+    <string name="explanation_access_appusage_message">Na seguinte pantalla concede permiso de acceso ás estatísticas do sistema sobre o uso das apps.</string>
+    <string name="title_feature_preview">vista previa de usageDirect</string>
+    <string name="ts_this_week">Esta semana</string>
+    <string name="ts_last_week">Última semana</string>
+    <string name="ts_calendar_week">Semana %s</string>
+    <string name="menu_reload">Recargar</string>
+    <string name="total">Total</string>
+    <string name="explanation_access_appusage_title">Permiso para Uso das apps</string>
+    <string name="go">Ir</string>
+    <string name="leave_app">Saír da app</string>
+    <string name="not_used">non utilizada</string>
+    <string name="menu_about">Acerca de</string>
+    <string name="launch_unavailable">Non se puido iniciar a app</string>
+    <string name="menu_charts">Datos</string>
+    <string name="last_used_now">actualmente en uso</string>
+    <string name="charts_bar_daily">Uso da app por día</string>
+    <string name="ts_today">Hoxe</string>
+    <string name="ts_yesterday">Onte</string>
+</resources>

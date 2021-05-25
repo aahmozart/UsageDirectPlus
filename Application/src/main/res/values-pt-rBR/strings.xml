@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 
    Direitos autorais 2014 The Android Open Source Project
@@ -15,25 +15,19 @@
    Veja a Licença para a linguagem específica que rege as permissões e
    limitações sob a Licença.
 
--->
-<resources>
-    <string name="last_used">"Utilizado por último %s"</string>
-    <string name="time_used">Tempo utilizado: %d:%02d:%02d</string>
+--><resources>
     <string name="time_used_time_only">%d:%02d:%02d</string>
     <string name="explanation_access_appusage_title">Permissão de uso do aplicativo</string>
     <string name="explanation_access_appusage_message">Favor conceder acesso às estatísticas de uso de seu sistema na próxima tela.</string>
     <string name="go">Avançar</string>
-    <string name="leave_app">Sair do app</string>
-    <string name="not_used">Não utilizado</string>
+    <string name="leave_app">Sair do aplicativo</string>
+    <string name="not_used">não utilizados</string>
     <string name="menu_about">Sobre</string>
-    <string name="about_libraries_header">%s é um Fork da amostra do Android app \'AppUsageStatistics\' e, a partir daí, tem sido desenvolvido por Fynn Godau.\n\nA lista a seguir exibe todos os componentes que estão incluídos neste aplicativo.</string>
     <string name="launch_unavailable">Não foi possível iniciar o aplicativo</string>
     <string name="menu_charts">Gráficos</string>
-    <string name="last_used_now">Atualmente em uso</string>
+    <string name="last_used_now">atualmente em uso</string>
     <string name="charts_bar_daily">Uso diário do aplicativo</string>
-    <string name="charts_clock_pie">%s como um gráfico circular de relógio</string>
-    <string name="charts_clock_pie_general">Gráficos recentes</string>
-    <string name="title_feature_preview">usageDirect recurso de pré-visualização</string>
+    <string name="title_feature_preview">Prévia dos recursos do usageDirect</string>
     <string name="ts_today">Hoje</string>
     <string name="ts_yesterday">Ontem</string>
     <string name="ts_this_week">Esta semana</string>
@@ -41,4 +35,6 @@
     <string name="ts_calendar_week">Semana %s</string>
     <string name="menu_reload">Recarregar</string>
     <string name="total">Total</string>
+    <string name="last_used_this_day">usado pela última vez neste dia</string>
+    <string name="icon">Ícone</string>
 </resources>
