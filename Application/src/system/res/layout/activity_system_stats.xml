@@ -65,7 +65,7 @@
     </RelativeLayout>
 
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/system_stats_warning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -76,27 +76,27 @@
         android:focusable="true"
         android:clickable="true"
         android:padding="8dp"
-        android:elevation="8dp">
+        android:elevation="8dp"
+        android:gravity="center_vertical">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/system_stats_warning"
             android:textColor="@color/notice_red_text"
             android:layout_margin="8dp"
-            android:layout_toStartOf="@id/arrow"
-            android:layout_alignParentStart="true" />
-        
-        <ImageView
-                android:id="@+id/arrow"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_margin="8dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_right"
-                android:tint="#7F5924" />
+            android:layout_weight="1" />
 
-    </RelativeLayout>
+        <ImageView
+            android:id="@+id/arrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_right"
+            android:tint="#7F5924"
+            android:importantForAccessibility="no"
+            />
+
+    </LinearLayout>
 
 </RelativeLayout>
