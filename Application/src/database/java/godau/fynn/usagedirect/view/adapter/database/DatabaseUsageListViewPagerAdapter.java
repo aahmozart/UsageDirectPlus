@@ -93,7 +93,7 @@ public class DatabaseUsageListViewPagerAdapter extends UsageListViewPagerAdapter
 
         int offset = (int) (dayNow - day);
 
-        return TextFormat.formatDay(offset, context.getResources());
+        return TextFormat.formatDay(offset, context.getResources()).replace(' ', '\n');
     }
 
     public void setUsageStats(SimpleUsageStat[] usageStats, long[] days, LastUsedStat[] lastUsedStats) {

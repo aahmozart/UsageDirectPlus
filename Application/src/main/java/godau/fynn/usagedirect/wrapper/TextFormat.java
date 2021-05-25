@@ -22,7 +22,7 @@ public abstract class TextFormat {
             return LocalDate.now().minusDays(offset).format(DateTimeFormatter.ofPattern(
                     offset < 7?
                             "EEEE" : // Weekday ("Saturday")
-                            "MMM d"  // Abbr. month and day ("Jul 11")
+                            "MMM dd"  // Abbr. month and two-digit day ("Jul 11")
             ));
         }
     }
