@@ -22,7 +22,7 @@
     <godau.fynn.usagedirect.view.LateInitSmartTabLayout
         android:id="@+id/viewpagertab"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="56dp"
         android:clipToPadding="false"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
