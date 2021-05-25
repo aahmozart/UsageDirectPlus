@@ -50,9 +50,11 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_app_usage_statistics);
-        super.onCreate(savedInstanceState);
 
         databaseTimespanPagerAdapter = new DatabaseTimespanPagerAdapter(SourceAppUsageStatisticsActivity.this);
+
+        super.onCreate(savedInstanceState);
+
     }
 
     @Override
