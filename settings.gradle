@@ -1,1 +1,17 @@
 include 'Application'
+
+/* Uncomment if you want to use a local copy of SmartTabLayout (requires many adjustments in library)
+includeBuild('../SmartTabLayout') {
+    dependencySubstitution {
+        substitute module('com.ogaclejapan.smarttablayout:library') with project(':library')
+    }
+}
+ */
+
+/* Uncomment if you want to use a local copy of my AndroidCharts fork
+includeBuild('../AndroidCharts') {
+    dependencySubstitution {
+        substitute module('com.github.fynngodau:AndroidCharts:1577cf77d738af1eee2ae7ba09d76420ed059ce2') with project(':AndroidCharts')
+    }
+}
+ */
