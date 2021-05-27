@@ -11,7 +11,7 @@ includeBuild('../SmartTabLayout') {
 /* Uncomment if you want to use a local copy of my AndroidCharts fork
 includeBuild('../AndroidCharts') {
     dependencySubstitution {
-        substitute module('com.github.fynngodau:AndroidCharts:1577cf77d738af1eee2ae7ba09d76420ed059ce2') with project(':AndroidCharts')
+        substitute module('com.github.fynngodau:AndroidCharts:1.2') with project(':AndroidCharts')
     }
 }
  */
