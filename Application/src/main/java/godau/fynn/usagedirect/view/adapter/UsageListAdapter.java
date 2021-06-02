@@ -131,7 +131,7 @@ public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat,
 
         viewHolder.getLastTimeUsed().setVisibility(View.GONE);
 
-        if (lastUsedMap.containsKey(usageStat.getApplicationId())) {
+        if (lastUsedMap != null && lastUsedMap.containsKey(usageStat.getApplicationId())) {
 
             long lastUsed = lastUsedMap.get(usageStat.getApplicationId());
 
