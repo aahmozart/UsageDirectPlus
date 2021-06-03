@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="menu_database">База данных</string>
     <string name="db_insert">Скопировать до 10 дней в базу данных</string>
-    <string name="db_wait">Сбор данных…</string>
     <string name="db_schedule">Запланировать автоматические вставки</string>
     <string name="chart_average">∅ Будничное использование приложения в среднем</string>
     <string name="charts_clock_pie">%s как круговая диаграмма часов</string>
     <string name="cancel">Отмена</string>
     <string name="app_name">Статистика</string>
-    <string name="db_status">На данный момент в базе данных хранится %d дней, что в сумме составляет %dч.</string>
     <string name="db_job_schedule_failure">Предупреждение: не удалось настроить автоматический сбор данных, пожалуйста, проверяйте данные регулярно</string>
     <string name="charts_clock_pie_general">Последние круговые диаграммы часов</string>
     <string name="widget_today_name">Время сегодня</string>

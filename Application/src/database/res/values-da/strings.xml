@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">usageDirect</string>
-    <string name="db_status">I øjeblikket er der %d dage gemt i databasen, der svarer til i alt %dh.</string>
     <string name="menu_database">Database</string>
-    <string name="db_insert">Kopier op til 10 dage til databasen</string>
     <string name="db_wait">Indsamler data…</string>
-    <string name="db_schedule">Automatiske indsatser planlagt</string>
     <string name="db_job_schedule_failure">Advarsel: automatisk dataindsamling kunne ikke oprettes. Kontroller regelmæssigt igen</string>
     <string name="chart_average">∅ Gennemsnitlig appbrug pr. Hverdag</string>
     <string name="charts_clock_pie">%s som et cirkeldiagram</string>

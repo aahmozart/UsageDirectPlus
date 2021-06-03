@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">usageDirect</string>
-    <string name="db_status">För närvarande finns det %d dagar lagrade i databasen, som uppgår till totalt %dh.</string>
     <string name="menu_database">Databas</string>
-    <string name="db_insert">Kopiera upp till tio dagar till databasen</string>
     <string name="db_wait">Samla data…</string>
-    <string name="db_schedule">Automatiska insatser schemalagda</string>
     <string name="db_job_schedule_failure">Varning: automatisk datainsamling kunde inte ställas in, kom tillbaka regelbundet</string>
     <string name="chart_average">∅ Genomsnittlig appanvändning per veckodag</string>
     <string name="widget_today_name">Tid i dag</string>

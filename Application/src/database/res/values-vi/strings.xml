@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="menu_database">Cơ sở dữ liệu</string>
     <string name="db_insert">Sao chép tối đa 10 ngày vào cơ sở dữ liệu</string>
-    <string name="db_wait">Đang thu thập dữ liệu…</string>
     <string name="db_schedule">Đã lên lịch chèn tự động</string>
     <string name="chart_average">∅ Dữ liệu sử dụng ứng dụng trung bình cho mỗi ngày trong tuần</string>
     <string name="charts_clock_pie_general">Biểu đồ đồng hồ tròn gần đây</string>
@@ -21,6 +19,5 @@
         <item quantity="other">Bạn đã xoá tổng cộng là %1$d dòng. Bạn có muốn khôi phục chúng không\?</item>
     </plurals>
     <string name="app_name">usageDirect</string>
-    <string name="db_status">Vào lúc này, có %d ngày được lưu trữ trong cơ sở dữ liệu, tổng thời gian là %d tiếng.</string>
     <string name="db_job_schedule_failure">Cảnh báo: Không thể thiết lập thu thập dữ liệu tự động, vui lòng xem lại thường xuyên</string>
 </resources>
