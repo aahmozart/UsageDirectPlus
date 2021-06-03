@@ -1,2 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="menu_database">Cơ sở dữ liệu</string>
+    <string name="db_insert">Sao chép tối đa 10 ngày vào cơ sở dữ liệu</string>
+    <string name="db_wait">Đang thu thập dữ liệu…</string>
+    <string name="db_schedule">Đã lên lịch chèn tự động</string>
+    <string name="chart_average">∅ Dữ liệu sử dụng ứng dụng trung bình cho mỗi ngày trong tuần</string>
+    <string name="charts_clock_pie_general">Biểu đồ đồng hồ tròn gần đây</string>
+    <string name="charts_clock_pie">%s dưới dạng biểu đồ đồng hồ tròn</string>
+    <string name="widget_today_name">Thời gian hôm nay</string>
+    <string name="menu_feedback">Gửi một ý tưởng</string>
+    <string name="feedback_message">usageDirect tiếp tục tìm kiếm các ý tưởng thú vị cho việc diễn tả sâu sắc dữ liệu của bạn.
+\n
+\nTôi đã có một số thứ trên kế hoạch của tôi, nhưng tôi muốn lắng nghe bạn: bạn nghĩ gì về usageDirect\?</string>
+    <string name="cancel">Huỷ</string>
+    <string name="charts_bar_daily_condensed">Dữ liệu sử dụng ứng dụng dài hạn</string>
+    <string name="usagestat_hide">Xoá dòng này</string>
+    <string name="menu_restore_hidden">Khôi phục các dòng đã xoá</string>
+    <string name="menu_restore_hidden_positive">Khôi phục</string>
+    <plurals name="menu_restore_hidden_details">
+        <item quantity="other">Bạn đã xoá tổng cộng là %1$d dòng. Bạn có muốn khôi phục chúng không\?</item>
+    </plurals>
+    <string name="app_name">usageDirect</string>
+    <string name="db_status">Vào lúc này, có %d ngày được lưu trữ trong cơ sở dữ liệu, tổng thời gian là %d tiếng.</string>
+    <string name="db_job_schedule_failure">Cảnh báo: Không thể thiết lập thu thập dữ liệu tự động, vui lòng xem lại thường xuyên</string>
+</resources>

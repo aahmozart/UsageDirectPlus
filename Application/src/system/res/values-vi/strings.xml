@@ -1,2 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Bảo tàng một API bị hỏng</string>
+    <string name="help_unreliable_2">Vui lòng dành một lúc để khám phá dữ liệu. Sớm hay muộn thì bạn sẽ gặp một số các lỗi sau.</string>
+    <string name="help_bug_1">một ứng dụng được cho là đã ở trước nền nhiều ngày liên tục</string>
+    <string name="help_bug_3">\"hôm nay\" bắt đầu tại những điểm có vẻ ngẫu nhiên trong thời gian</string>
+    <string name="help_bug_4">nhận được ít dữ liệu hơn tại một lần thử nhưng lại không phải tại một lần khác</string>
+    <string name="help_bug_5">đột nhiên không nhận được dữ liệu nào</string>
+    <string name="help_unreliable_4">Đừng sử dụng lệnh gọi API này.</string>
+    <string name="help_unreliable_5">Nó rất lãng phí thời gian.</string>
+    <string name="help_database_flavor_installed">usageDirect cung cấp dữ liệu đáng tin cậy và liên tục.</string>
+    <string name="system_stats_warning">Xem hướng dẫn buổi triển lãm</string>
+    <string name="title_system_stats">Buổi triển lãm</string>
+    <string name="title_help">Hướng dẫn buổi triển lãm</string>
+    <string name="menu_charts">Buổi triển lãm đặc biệt: Đồ thị</string>
+    <string name="span_daily">Hàng ngày</string>
+    <string name="span_weekly">Hàng tuần</string>
+    <string name="span_monthly">Hàng tháng</string>
+    <string name="span_yearly">Hàng năm</string>
+    <string name="charts_bar_monthly">Dữ liệu sử dụng ứng dụng mỗi tháng</string>
+    <string name="charts_bar_yearly">Dữ liệu sử dụng ứng dụng mỗi năm</string>
+    <string name="help_unreliable_1">Ứng dụng này sử dụng lệnh gọi hàm sau đây để truy vấn dữ liệu của nó.</string>
+    <string name="help_database_flavor_download">Bạn có đang tìm dữ liệu sử dụng đáng tin cậy và liên tục không\? usageDirect có nó.</string>
+    <string name="help_bug_2">dữ liệu của một khoảng thời gian giống hệt của một khoảng thời gian khác khi nó không nên giống</string>
+    <string name="charts_bar_weekly">Dữ liệu sử dụng ứng dụng mỗi tuần</string>
+    <string name="help_unreliable_3">Sau đó, hãy làm theo lời khuyên này:</string>
+    <string name="error_no_data">Đã xảy ra lỗi: hệ thống không trả về dữ liệu nào. Vui lòng thử khởi động lại ứng dụng</string>
+</resources>
