@@ -22,10 +22,15 @@
     <string name="explanation_access_appusage_message">Please grant access to your system\'s usage statistics on the next page.\n\nPlease make sure to grant access to the debug version of usageDirect.</string>
     <string name="menu_debug">Debug options</string>
     <string name="menu_debug_database">Database inspector</string>
+    <string name="menu_debug_custom_query">Custom event log query</string>
 
     <string name="db_status">At the moment, there are %d days stored in the database, amounting to a total of %dh.</string>
     <string name="db_insert">Copy up to 10 days into database</string>
     <string name="db_wait">Gathering data…</string>
     <string name="db_schedule">Automatic inserts scheduled</string>
+
+    <string name="custom_query_go">Query now</string>
+    <string name="custom_query_headline">Select query timespan</string>
+    <string name="custom_query_middle_text">until</string>
 
 </resources>

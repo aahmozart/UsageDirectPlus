@@ -32,4 +32,6 @@
     <color name="notice_gray_text">#545454</color>
     <color name="notice_red">#ea9a96</color>
     <color name="notice_red_text">#631f1b</color>
+    <color name="notice_blue">#e1f5fe</color>
+    <color name="notice_blue_text">#01579b</color>
 </resources>
