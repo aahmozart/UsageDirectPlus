@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="db_insert">Скопировать до 10 дней в базу данных</string>
     <string name="db_schedule">Запланировать автоматические вставки</string>
     <string name="chart_average">∅ Будничное использование приложения в среднем</string>
     <string name="charts_clock_pie">%s как круговая диаграмма часов</string>

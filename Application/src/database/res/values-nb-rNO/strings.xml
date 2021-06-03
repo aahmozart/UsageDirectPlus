@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">usageDirect</string>
-    <string name="menu_database">Databas</string>
     <string name="db_wait">Samler data…</string>
     <string name="db_job_schedule_failure">Advarsel: automatisk datainnsamling kunne ikke settes opp. Vennligst sjekk regelmessig</string>
     <string name="chart_average">∅ Gjennomsnittlig appbruk per ukedag</string>

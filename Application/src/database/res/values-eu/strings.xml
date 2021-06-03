@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">usageDirect</string>
-    <string name="menu_database">Datu-basea</string>
     <string name="db_wait">Datuak biltzen…</string>
     <string name="chart_average">∅ Batez besteko aplikazioen erabilera asteko</string>
     <string name="widget_today_name">Gaurko erabilera</string>
