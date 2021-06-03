@@ -12,9 +12,9 @@
     <string name="charts_clock_pie_general">Nylige klokkekart</string>
     <string name="widget_today_name">Tid i dag</string>
     <string name="menu_feedback">Send en idé</string>
-    <string name="feedback_message">usageDirect fortsetter å lete etter mer interessante ideer for innsiktsfulle representasjoner av dataene dine.
+    <string name="feedback_message">usageDirect fortsetter å lete etter mer interessante idéer for innsiktsfull representasjon av dataene dine.
 \n
-\nJeg har allerede en rekke ting på veikartet mitt, men jeg vil høre det fra deg: hva synes du om useDirect\?</string>
+\nJeg har allerede en rekke ting på kjøreplanen, men jeg vil høre fra deg. Hva synes du om useDirect\?</string>
     <string name="cancel">Avbryt</string>
     <string name="usagestat_hide">Slett denne raden</string>
     <string name="menu_restore_hidden">Gjenopprett slettede rader</string>
