@@ -29,14 +29,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
-import godau.fynn.usagedirect.BuildConfig;
+import godau.fynn.usagedirect.DebugMenu;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.SimpleUsageStat;
 import godau.fynn.usagedirect.persistence.EventLogRunnable;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
 import godau.fynn.usagedirect.view.adapter.UsageListViewPagerAdapter;
 import godau.fynn.usagedirect.view.adapter.database.DatabaseTimespanPagerAdapter;
-import godau.fynn.usagedirect.view.dialog.DatabaseDebugDialog;
 
 /**
  * Different implementation of AUSA for the two source flavors
@@ -95,8 +94,7 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getTitle().equals(getString(R.string.menu_database))) {
-            new DatabaseDebugDialog(this).show();
+        if (DebugMenu.onOptionsItemSelected(item, this)) {
             return true;
         } else switch (item.getItemId()) {
             case R.id.menu_feedback:
@@ -139,9 +137,7 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (BuildConfig.DEBUG) {
-            menu.add(R.string.menu_database);
-        }
+        DebugMenu.addTo(menu);
 
         new Thread(() -> {
             HistoryDatabase database = HistoryDatabase.get(this);
