@@ -18,6 +18,9 @@ do
 		"rNO")
 			LANG='"nb"'
 			;;
+		"rCN")
+			LANG='"zh", "CN"'
+			;;
 		*)
 			LANG="\"$LANG\""
 			;;
