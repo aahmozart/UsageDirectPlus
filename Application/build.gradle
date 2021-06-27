@@ -25,7 +25,7 @@ dependencies {
 
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.5.Final'
     implementation 'org.codeberg.fynngodau:librariesDirect:3.0'
-    implementation 'com.github.fynngodau:AndroidCharts:1.2'
+    implementation 'com.github.fynngodau:AndroidCharts:1.2.2'
     implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
     implementation 'org.codeberg.fynngodau:TypedRecyclerView:1.1'
 

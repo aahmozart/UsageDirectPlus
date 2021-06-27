@@ -31,7 +31,10 @@
     <HorizontalScrollView
         android:id="@+id/bar_chart_scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="4dp"
+        android:clipToPadding="false"
+        android:scrollbarStyle="outsideInset">
 
         <im.dacer.androidcharts.bar.CondensedBarView
             android:id="@+id/bar_chart"

@@ -57,5 +57,7 @@ public class DailyCondensedBarChart extends DailyBarChart {
         ((CondensedBarView) barView).setLabelIndicatorMode(CondensedBarView.LabelIndicatorMode.IN_CHART);
         barView.setData(values, chartMax);
 
+        barView.setZeroLineEnabled(true);
+
     }
 }
