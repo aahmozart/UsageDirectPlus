@@ -37,6 +37,10 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
      * Collects event information from system to calculate and aggregate precise
      * foreground time statistics for the specified period.
      *
+     * Comments refer to the cases from
+     * <a href="https://codeberg.org/fynngodau/usageDirect/wiki/Event-log-wrapper-scenarios">
+     *     the documentation.</a>
+     *
      * @param start First point in time to include in results
      * @param end   Last point in time to include in results
      * @return A list of foreground stats for the specified period
@@ -46,7 +50,8 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
         /*
          * Because sometimes, open events do not have close events when they should, as a hack / workaround,
          * we query the apps currently in the foreground and match them against the apps that are currently
-         * in the foreground if the query start date is very recent or in the future.
+         * in the foreground if the query start date is very recent or in the future. Thus, we are using this
+         * to tell apart True from Faulty unmatched open events.
          *
          * We query processes in the beginning of this method call in case querying the event log takes a
          * little longer.
@@ -70,9 +75,10 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
 
         /* …except that sometimes, the events that are close to each other are swapped in a way that
          * breaks the assumption that all end times which do not have a matching start time have
-         * started before start. Therefore, we keep null entries in our moveToForegroundMap instead
-         * of removing the entries to prevent apps that had been opened previously in a period from
-         * being counted as "opened before start".
+         * started before start. We handle those as Duplicate close event and Duplicate open event.
+         * Therefore, we keep null entries in our moveToForegroundMap instead of removing the entries
+         * to prevent apps that had been opened previously in a period from being counted as "opened
+         * before start" (as they are not a True unmatched close event).
         */
 
         // Map package names to the last moveToForeground event
@@ -100,6 +106,7 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
                  * This is effectively treated as a MOVE_TO_FOREGROUND."
                  */
                 case 4:
+                    // Store open timestamp in map, overwriting earlier timestamps in case of Duplicate open event
                     moveToForegroundMap.put(event.getPackageName(), event.getTimeStamp());
 
                     break;
@@ -117,14 +124,15 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
                 case 3:
                     long eventBeginTime;
                     if (moveToForegroundMap.get(event.getPackageName()) != null) {
+                        // Open and close events in order
                         eventBeginTime = moveToForegroundMap.get(event.getPackageName());
                         moveToForegroundMap.put(event.getPackageName(), null);
                     } else if (
-                            // App has not been in this query yet
+                            // App has not been in this query yet (test for Duplicate close event)
                             !moveToForegroundMap.containsKey(event.getPackageName()) &&
                             /*
-                             * At the beginning of the event log, we may expect unmatched close
-                             * events to appear. As such, we only allow the assumption that the
+                             * We must expect True unmatched close events to appear at the beginning
+                             * of the event log. As such, we only allow the assumption that the
                              * app had been open since the beginning of the queried period if
                              * that beginning timestamp is less than 9 days ago.
                              * This contains the assumption that the 10th-last day would be
@@ -132,7 +140,8 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
                              */
                             start > System.currentTimeMillis() - (1000 * 60 * 60 * 24 * 9)
                     ) {
-                        // App has been launched before start, take start as a starting timestamp
+                        // Assume True unmatched close event (app has been launched before start)
+                        // Take start as a starting timestamp
                         eventBeginTime = start;
                     } else break;
 
@@ -204,7 +213,7 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
             for (String foregroundProcess : foregroundProcesses) {
                 if (foregroundProcess.contains(packageName)) {
 
-                    // Is a foreground app
+                    // Is a foreground app (True unmatched open event)
                     componentForegroundStats.add(new ComponentForegroundStat(
                             moveToForegroundMap.get(packageName),
                             Math.min(System.currentTimeMillis(), end),
@@ -216,10 +225,11 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
             }
 
             // If app is not in foreground, drop event
+            // Assume Faulty unmatched open event
         }
 
         /* If nothing happened during the timespan but there is an app in the foreground,
-         * then this app was used the whole period time and there were no events for it.
+         * then this app was used the whole period time and there was No event for it.
          * Because the foreground applications API call is documented as not to be used
          * for purposes like this, we first query whether the process name is a valid
          * package name and if not, we drop it.
