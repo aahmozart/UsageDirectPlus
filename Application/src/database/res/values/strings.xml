@@ -10,6 +10,7 @@
     <string name="widget_today_second" translatable="false">%d:%02d:%02d</string>
     <string name="widget_today_name">Time today</string>
     <string name="menu_feedback">Send an idea</string>
+    <string name="menu_export">Export database</string>
     <string name="feedback_message">usageDirect keeps looking for more interesting ideas for insightful representations of your data.
         \n\nI already have a number of things on my roadmap, but I would like to hear from you: what do you think about usageDirect?</string>
     <string name="cancel">Cancel</string>
@@ -17,6 +18,12 @@
     <string name="usagestat_hide">Delete this row</string>
     <string name="menu_restore_hidden">Restore deleted rows</string>
     <string name="menu_restore_hidden_positive">Restore</string>
+
+    <string name="export_title">Feature preview: export database</string>
+    <string name="export_message">The SQLite database can be exported for external analysis.
+        \n\nYou will only be able to import it in future app versions.</string>
+    <string name="export_io_error">An error occurred while saving the file</string>
+    <string name="export_okay">The export was successful</string>
 
     <string name="url_email" translatable="false">mailto:fynngodau@mailbox.org?subject=usageDirect</string>
 

@@ -18,6 +18,7 @@
 
 package godau.fynn.usagedirect.activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -27,15 +28,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 import godau.fynn.usagedirect.DebugMenu;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.SimpleUsageStat;
 import godau.fynn.usagedirect.persistence.EventLogRunnable;
+import godau.fynn.usagedirect.persistence.Export;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
 import godau.fynn.usagedirect.view.adapter.UsageListViewPagerAdapter;
 import godau.fynn.usagedirect.view.adapter.database.DatabaseTimespanPagerAdapter;
+
+import java.io.IOException;
 
 /**
  * Different implementation of AUSA for the two source flavors
@@ -45,6 +51,8 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
     private DatabaseTimespanPagerAdapter databaseTimespanPagerAdapter;
 
     private Object lastContextMenuTag;
+
+    private static final int REQUEST_EXPORT_PICK_FILE = 397078; // EXP0RT
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +134,19 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
 
                 }).start();
                 break;
+            case R.id.menu_export_database:
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.export_title)
+                        .setMessage(R.string.export_message)
+                        .setPositiveButton(R.string.go, (dialog, which) -> {
+                            Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+                            intent.addCategory(Intent.CATEGORY_OPENABLE);
+                            intent.setType("application/vnd.sqlite3");
+                            intent.putExtra(Intent.EXTRA_TITLE, "usageDirect-history.sqlite3");
+                            startActivityForResult(intent, REQUEST_EXPORT_PICK_FILE);
+                        })
+                        .setNegativeButton(R.string.cancel, null)
+                        .show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -168,5 +189,23 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if (requestCode == REQUEST_EXPORT_PICK_FILE
+                && resultCode == Activity.RESULT_OK
+                && data != null
+        ) {
+            try {
+                Export.exportHistoryDatabase(data, this);
+            } catch (IOException e) {
+                Toast.makeText(this, R.string.export_io_error, Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
