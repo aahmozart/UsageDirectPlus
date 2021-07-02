@@ -18,6 +18,8 @@ import java.util.function.BiConsumer;
  */
 public class EventLogWrapper extends UsageStatsManagerWrapper {
 
+    private UnmatchedCloseEventGuardian guardian = new UnmatchedCloseEventGuardian(usageStatsManager);
+
     public EventLogWrapper(Context context) {
         super(context);
 
@@ -131,19 +133,15 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
                             // App has not been in this query yet (test for Duplicate close event)
                             !moveToForegroundMap.containsKey(event.getPackageName()) &&
                             /*
-                             * We must expect True unmatched close events to appear at the beginning
-                             * of the event log. As such, we only allow the assumption that the
-                             * app had been open since the beginning of the queried period if
-                             * that beginning timestamp is less than 9 days ago.
-                             * This contains the assumption that the 10th-last day would be
-                             * incomplete, while the 9th-last day is still complete.
+                             * Test if this unmatched close event is True by asking the Guardian
+                             * to scan for it
                              */
-                            start > System.currentTimeMillis() - (1000 * 60 * 60 * 24 * 9)
+                            guardian.test(event, start)
                     ) {
-                        // Assume True unmatched close event (app has been launched before start)
+                        // Identified as True unmatched close event
                         // Take start as a starting timestamp
                         eventBeginTime = start;
-                    } else break;
+                    } else break; // Ignore Faulty unmatched close event
 
                     componentForegroundStats.add(new ComponentForegroundStat(
                             eventBeginTime,
