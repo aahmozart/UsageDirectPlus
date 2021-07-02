@@ -47,6 +47,7 @@ public abstract class AppUsageStatisticsActivity extends Activity {
 
     private ViewPager viewPager;
     private ProgressBar progressBar;
+    private SmartTabLayout tabs;
 
     private Timer reloadTimer;
     private static final long RELOAD_INTERVAL = 5 * 60 * 1000;
@@ -55,7 +56,7 @@ public abstract class AppUsageStatisticsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final SmartTabLayout tabs = findViewById(R.id.viewpagertab);
+        tabs = findViewById(R.id.viewpagertab);
 
         tabs.setElevation(getActionBar().getElevation());
 
@@ -97,7 +98,7 @@ public abstract class AppUsageStatisticsActivity extends Activity {
     }
 
     protected void reload() {
-        onReload(viewPager, progressBar);
+        onReload(viewPager, progressBar, () -> tabs.setViewPager(viewPager));
         invalidateOptionsMenu();
     }
 
@@ -182,5 +183,8 @@ public abstract class AppUsageStatisticsActivity extends Activity {
      */
     protected abstract void setAdapter(ViewPager viewPager);
 
-    protected abstract void onReload(ViewPager viewPager, ProgressBar progressBar);
+    /**
+     * @param then To be executed on the UI thread after reload is complete
+     */
+    protected abstract void onReload(ViewPager viewPager, ProgressBar progressBar, Runnable then);
 }

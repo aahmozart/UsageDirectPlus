@@ -90,9 +90,10 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
     }
 
     @Override
-    protected void onReload(ViewPager viewPager, ProgressBar progressBar) {
+    protected void onReload(ViewPager viewPager, ProgressBar progressBar, Runnable then) {
         UsageStatsWrapper.flushCache();
         viewPager.getAdapter().notifyDataSetChanged();
+        then.run();
     }
 
     @Override

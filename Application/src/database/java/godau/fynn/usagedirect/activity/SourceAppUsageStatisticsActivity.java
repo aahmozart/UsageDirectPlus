@@ -71,23 +71,19 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
     }
 
     @Override
-    protected void onReload(final ViewPager viewPager, final ProgressBar progressBar) {
+    protected void onReload(final ViewPager viewPager, final ProgressBar progressBar, final Runnable then) {
         progressBar.setVisibility(View.VISIBLE);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                prepare();
+        new Thread(() -> {
+            prepare();
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        databaseTimespanPagerAdapter.notifyDataSetChanged();
-                        viewPager.getAdapter().notifyDataSetChanged();
+            runOnUiThread(() -> {
+                databaseTimespanPagerAdapter.notifyDataSetChanged();
+                viewPager.getAdapter().notifyDataSetChanged();
 
-                        progressBar.setVisibility(View.GONE);
-                    }
-                });
-            }
+                progressBar.setVisibility(View.GONE);
+
+                then.run();
+            });
         }).start();
     }
 
