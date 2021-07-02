@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="charts"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_chart"
+        android:shortcutShortLabel="@string/menu_charts">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="godau.fynn.usagedirect.debug"
+            android:targetClass="godau.fynn.usagedirect.activity.SourceAppUsageStatisticsActivity" />
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="godau.fynn.usagedirect.debug"
+            android:targetClass="godau.fynn.usagedirect.activity.ChartsActivity" />
+    </shortcut>
+</shortcuts>
