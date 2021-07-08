@@ -49,46 +49,9 @@ public abstract class UsageStatBarChart extends Fragment {
 
     /**
      * Set the bar view's data for each of the days in the <code>days</code>
-     * array, in its order. The day in month is used as a label. Adds scale
-     * to bar view.
+     * array, in its order.
      */
-    protected void setData(long[] days, ColoredSimpleUsageStat[] coloredUsageStats) {
-        // Collect data and labels
-
-        Value[] values = new Value[days.length];
-
-        int i = 0, max = 0;
-        for (Long d : days) {
-
-            ArrayList<Integer> seconds = new ArrayList<>();
-            ArrayList<Integer> colors = new ArrayList<>();
-
-            // Gather usage stats for this day
-            for (ColoredSimpleUsageStat coloredSimpleUsageStat : coloredUsageStats) {
-                if (coloredSimpleUsageStat.getDay() != d) continue;
-
-                seconds.add((int) (coloredSimpleUsageStat.getTimeUsed() / 1000));
-                colors.add(coloredSimpleUsageStat.getColor());
-            }
-
-            values[i++] = new MultiValue(
-                    seconds.stream().mapToInt(Integer::intValue).toArray(),
-                    colors.toArray(new Integer[0]),
-                    String.valueOf(LocalDate.ofEpochDay(d).getDayOfMonth())
-            );
-
-            int dayTotal = seconds.stream().mapToInt(Integer::intValue).sum();
-            if (dayTotal > max) max = dayTotal;
-        }
-
-        // Use maximum of timespan plus 30 minutes so no bar hits the top
-        int chartMax = max + (60 * 30);
-
-        barView.setData(values, chartMax);
-
-        addScale(chartMax);
-
-    }
+    protected abstract void setData(long[] days, ColoredSimpleUsageStat[] coloredUsageStats);
 
     /**
      * Calculate positions of vertical lines and their texts for scale
