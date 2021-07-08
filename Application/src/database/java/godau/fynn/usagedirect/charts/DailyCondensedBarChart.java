@@ -5,12 +5,9 @@ import godau.fynn.usagedirect.R;
 import im.dacer.androidcharts.bar.CondensedBarView;
 import im.dacer.androidcharts.bar.Value;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.ChronoField;
 import java.time.temporal.WeekFields;
 import java.util.Collections;
-import java.util.Locale;
 import java.util.Map;
 
 public class DailyCondensedBarChart extends DailyBarChart {
@@ -33,14 +30,16 @@ public class DailyCondensedBarChart extends DailyBarChart {
 
         Value[] values = new Value[map.size()];
 
+        WeekFields week = WeekFields.ISO;
+
         int i = 0;
         for (Long d : map.keySet()) {
             int seconds = (int) (map.get(d) / 1000);
 
             LocalDate date = LocalDate.ofEpochDay(d);
-            if (date.getDayOfWeek() == DayOfWeek.MONDAY) {
+            if (date.getDayOfWeek() == week.getFirstDayOfWeek()) {
                 // Add label at the beginning of each week
-                values[i++] = new Value(seconds, String.valueOf(date.get(WeekFields.of(Locale.getDefault()).weekOfYear())));
+                values[i++] = new Value(seconds, String.valueOf(date.get(week.weekOfYear())));
             } else {
                 values[i++] = new Value(seconds);
             }
