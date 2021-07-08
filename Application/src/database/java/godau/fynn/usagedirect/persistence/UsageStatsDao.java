@@ -90,6 +90,14 @@ public abstract class UsageStatsDao {
     protected abstract Cursor getTotalTimePerDayCursor();
 
     /**
+     * Used only for {@link #getTotalTimePerApp()}
+     *
+     * @return A cursor which reads a matching of application ID to its total visible time
+     */
+    @Query("SELECT applicationId, sum(timeUsed) FROM usageStats WHERE hidden = 0 GROUP BY applicationId ORDER BY sum(timeUsed)")
+    protected abstract Cursor getTotalTimePerAppCursor();
+
+    /**
      * @return A mapping of days to the accumulated time used on that day ordered
      * by day, including days without stats in between minimum and maximum day
      */
@@ -112,6 +120,22 @@ public abstract class UsageStatsDao {
             map.put(day, cursor.getLong(1));
 
             last = day;
+        }
+
+        cursor.close();
+        return map;
+    }
+
+    /**
+     * @return A mapping of apps to the accumulated time they were used individually
+     */
+    public Map<String, Long> getTotalTimePerApp() {
+        Cursor cursor = getTotalTimePerAppCursor();
+        Map<String, Long> map = new LinkedHashMap<>();
+
+        // Cursor starts before first row
+        while (cursor.moveToNext()) {
+            map.put(cursor.getString(0), cursor.getLong(1));
         }
 
         cursor.close();
