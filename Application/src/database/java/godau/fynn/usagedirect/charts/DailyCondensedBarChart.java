@@ -2,13 +2,14 @@ package godau.fynn.usagedirect.charts;
 
 import androidx.annotation.StringRes;
 import godau.fynn.usagedirect.R;
+import godau.fynn.usagedirect.persistence.ColoredSimpleUsageStat;
 import im.dacer.androidcharts.bar.CondensedBarView;
+import im.dacer.androidcharts.bar.MultiValue;
 import im.dacer.androidcharts.bar.Value;
 
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
-import java.util.Collections;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class DailyCondensedBarChart extends DailyBarChart {
 
@@ -24,30 +25,39 @@ public class DailyCondensedBarChart extends DailyBarChart {
     }
 
     @Override
-    protected void setData(Map<Long, Long> map) {
+    protected void setData(long[] days, ColoredSimpleUsageStat[] coloredUsageStats) {
 
         // Collect data and labels
-
-        Value[] values = new Value[map.size()];
+        Value[] values = new Value[days.length];
 
         WeekFields week = WeekFields.ISO;
 
-        int i = 0;
-        for (Long d : map.keySet()) {
-            int seconds = (int) (map.get(d) / 1000);
+        int max = 0, i = 0;
+        for (Long d : days) {
+            ArrayList<Integer> seconds = new ArrayList<>();
+            ArrayList<Integer> colors = new ArrayList<>();
 
-            LocalDate date = LocalDate.ofEpochDay(d);
-            if (date.getDayOfWeek() == week.getFirstDayOfWeek()) {
-                // Add label at the beginning of each week
-                values[i++] = new Value(seconds, String.valueOf(date.get(week.weekOfYear())));
-            } else {
-                values[i++] = new Value(seconds);
+            // Gather usage stats for this day
+            for (ColoredSimpleUsageStat coloredSimpleUsageStat : coloredUsageStats) {
+                if (coloredSimpleUsageStat.getDay() != d) continue;
+
+                seconds.add((int) (coloredSimpleUsageStat.getTimeUsed() / 1000));
+                colors.add(coloredSimpleUsageStat.getColor());
             }
 
+            LocalDate date = LocalDate.ofEpochDay(d);
 
+            values[i++] = new MultiValue(
+                    seconds.stream().mapToInt(Integer::intValue).toArray(),
+                    colors.toArray(new Integer[0]),
+                    // Add label at the beginning of each week
+                    date.getDayOfWeek() == week.getFirstDayOfWeek()?
+                    String.valueOf(date.get(week.weekOfYear())) : null
+            );
+
+            int dayTotal = seconds.stream().mapToInt(Integer::intValue).sum();
+            if (dayTotal > max) max = dayTotal;
         }
-
-        int max = (int) (Collections.max(map.values()) / 1000);
 
         // Use maximum of timespan plus 30 minutes so no bar hits the top
         int chartMax = max + (60 * 30);
@@ -57,6 +67,5 @@ public class DailyCondensedBarChart extends DailyBarChart {
         barView.setData(values, chartMax);
 
         barView.setZeroLineEnabled(true);
-
     }
 }

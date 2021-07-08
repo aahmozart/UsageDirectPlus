@@ -1,6 +1,7 @@
 package godau.fynn.usagedirect.charts;
 
 import godau.fynn.usagedirect.R;
+import godau.fynn.usagedirect.persistence.ColoredSimpleUsageStat;
 import godau.fynn.usagedirect.wrapper.TextFormat;
 import im.dacer.androidcharts.bar.Value;
 
@@ -17,7 +18,7 @@ public class WeeklyAverageBarChart extends DailyBarChart {
         return R.string.chart_average;
     }
 
-    @Override
+    // TODO @Override
     protected void onDataLoaded(Map<Long, Long> usagePerDayMap) {
         Map<DayOfWeek, Average> weekdayMap = new HashMap<>();
 

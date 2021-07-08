@@ -12,13 +12,14 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import godau.fynn.usagedirect.R;
+import godau.fynn.usagedirect.persistence.ColoredSimpleUsageStat;
 import im.dacer.androidcharts.bar.BarView;
 import im.dacer.androidcharts.bar.Line;
+import im.dacer.androidcharts.bar.MultiValue;
 import im.dacer.androidcharts.bar.Value;
 
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.Map;
+import java.util.ArrayList;
 
 public abstract class UsageStatBarChart extends Fragment {
 
@@ -47,22 +48,38 @@ public abstract class UsageStatBarChart extends Fragment {
     }
 
     /**
-     * Set the bar view's data to the provided map of days to longs. Data
-     * is displayed in the order of the map's key set. The day in month is
-     * used as a label. Adds scale to bar view.
+     * Set the bar view's data for each of the days in the <code>days</code>
+     * array, in its order. The day in month is used as a label. Adds scale
+     * to bar view.
      */
-    protected void setData(Map<Long, Long> map) {
+    protected void setData(long[] days, ColoredSimpleUsageStat[] coloredUsageStats) {
         // Collect data and labels
 
-        Value[] values = new Value[map.size()];
+        Value[] values = new Value[days.length];
 
-        int i = 0;
-        for (Long d : map.keySet()) {
-            int seconds = (int) (map.get(d) / 1000);
-            values[i++] = new Value(seconds, String.valueOf(LocalDate.ofEpochDay(d).getDayOfMonth()));
+        int i = 0, max = 0;
+        for (Long d : days) {
+
+            ArrayList<Integer> seconds = new ArrayList<>();
+            ArrayList<Integer> colors = new ArrayList<>();
+
+            // Gather usage stats for this day
+            for (ColoredSimpleUsageStat coloredSimpleUsageStat : coloredUsageStats) {
+                if (coloredSimpleUsageStat.getDay() != d) continue;
+
+                seconds.add((int) (coloredSimpleUsageStat.getTimeUsed() / 1000));
+                colors.add(coloredSimpleUsageStat.getColor());
+            }
+
+            values[i++] = new MultiValue(
+                    seconds.stream().mapToInt(Integer::intValue).toArray(),
+                    colors.toArray(new Integer[0]),
+                    String.valueOf(LocalDate.ofEpochDay(d).getDayOfMonth())
+            );
+
+            int dayTotal = seconds.stream().mapToInt(Integer::intValue).sum();
+            if (dayTotal > max) max = dayTotal;
         }
-
-        int max = (int) (Collections.max(map.values()) / 1000);
 
         // Use maximum of timespan plus 30 minutes so no bar hits the top
         int chartMax = max + (60 * 30);

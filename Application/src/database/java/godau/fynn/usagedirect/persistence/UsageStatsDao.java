@@ -46,6 +46,12 @@ public abstract class UsageStatsDao {
     @Query("SELECT DISTINCT day FROM usageStats WHERE hidden = 0 ORDER BY day")
     public abstract long[] getDaysStored();
 
+    @Query("SELECT min(day) FROM usageStats WHERE hidden = 0")
+    public abstract long getMinimumDay();
+
+    @Query("SELECT max(day) FROM usageStats WHERE hidden = 0")
+    public abstract long getMaximumDay();
+
     /**
      * @return All visible usage stats
      */

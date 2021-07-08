@@ -1,14 +1,15 @@
 package godau.fynn.usagedirect.persistence;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 /**
- * Represents the point in time that a specific package was last used.
+ * Stores a color that has been chosen by the user for an application.
  */
-@Entity(tableName = "lastUsed")
-public class LastUsedStat {
+@Entity(tableName = "colors")
+public class AppColor {
 
     /**
      * Application ID, i.e. package name of the concerned package
@@ -19,10 +20,13 @@ public class LastUsedStat {
     /**
      * Timestamp in milliseconds that the package was last used
      */
-    public final long lastUsed;
+    public final @ColorInt int color;
 
-    public LastUsedStat(@NonNull String applicationId, long lastUsed) {
+    public final int priority;
+
+    public AppColor(@NonNull String applicationId, int color, int priority) {
         this.applicationId = applicationId;
-        this.lastUsed = lastUsed;
+        this.color = color;
+        this.priority = priority;
     }
 }

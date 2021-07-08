@@ -7,9 +7,9 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import godau.fynn.usagedirect.R;
+import godau.fynn.usagedirect.persistence.ColoredSimpleUsageStat;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
-
-import java.util.Map;
+import godau.fynn.usagedirect.persistence.UsageStatsDao;
 
 public class DailyBarChart extends UsageStatBarChart {
 
@@ -22,12 +22,23 @@ public class DailyBarChart extends UsageStatBarChart {
 
             HistoryDatabase database = HistoryDatabase.get(getContext());
 
-            final Map<Long, Long> usagePerDayMap = database.getUsageStatsDao().getTotalTimePerDay();
+            UsageStatsDao usageStatsDao = database.getUsageStatsDao();
+
+            long minDay = usageStatsDao.getMinimumDay();
+            long maxDay = usageStatsDao.getMaximumDay();
+
+            final long[] displayDays = new long[(int) (maxDay - minDay) + 1];
+            int i = 0;
+            for (long day = minDay; day <= maxDay; i++, day++) {
+                displayDays[i] = day;
+            }
+
+            final ColoredSimpleUsageStat[] coloredUsageStats = database.getAppColorDao().getColoredUsageStats();
 
             database.close();
 
             new Handler(Looper.getMainLooper()).post(() ->
-                    onDataLoaded(usagePerDayMap)
+                    onDataLoaded(displayDays, coloredUsageStats)
             );
         }).start();
     }
@@ -41,8 +52,9 @@ public class DailyBarChart extends UsageStatBarChart {
      * Responsible for displaying the data loaded from database in view.
      * Run on UI thread.
      */
-    protected void onDataLoaded(Map<Long, Long> usagePerDayMap) {
-        setData(usagePerDayMap);
+    protected void onDataLoaded(long[] displayDays,
+                                ColoredSimpleUsageStat[] coloredUsageStats) {
+        setData(displayDays, coloredUsageStats);
         scrollToEnd();
     }
 }
