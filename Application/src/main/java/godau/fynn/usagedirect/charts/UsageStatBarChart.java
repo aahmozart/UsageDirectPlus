@@ -1,18 +1,19 @@
 package godau.fynn.usagedirect.charts;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
-import androidx.annotation.LayoutRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
+import androidx.annotation.*;
 import androidx.fragment.app.Fragment;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.persistence.ColoredSimpleUsageStat;
+import godau.fynn.usagedirect.persistence.HistoryDatabase;
+import godau.fynn.usagedirect.persistence.UsageStatsDao;
 import im.dacer.androidcharts.bar.BarView;
 import im.dacer.androidcharts.bar.Line;
 import im.dacer.androidcharts.bar.MultiValue;
@@ -39,6 +40,23 @@ public abstract class UsageStatBarChart extends Fragment {
         return view;
     }
 
+    @Override
+    @CallSuper
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        setText(getText());
+
+        new Thread(() -> {
+            HistoryDatabase database = HistoryDatabase.get(getContext());
+
+            getData(database);
+
+            database.close();
+
+            new Handler(Looper.getMainLooper()).post(this::onDataLoaded);
+        }).start();
+
+    }
+
     protected @LayoutRes int getLayout() {
         return R.layout.content_bar_view;
     }
@@ -48,10 +66,19 @@ public abstract class UsageStatBarChart extends Fragment {
     }
 
     /**
-     * Set the bar view's data for each of the days in the <code>days</code>
-     * array, in its order.
+     * Run outside of the main thread before {@link #onDataLoaded()} is run.
+     * This is the time for the subclass to gather the data it needs from the
+     * database. The database need not be closed here.
      */
-    protected abstract void setData(long[] days, ColoredSimpleUsageStat[] coloredUsageStats);
+    protected abstract void getData(HistoryDatabase database);
+
+    protected abstract @StringRes int getText();
+
+    /**
+     * Responsible for displaying the data loaded from database in view.
+     * Run on UI thread.
+     */
+    protected abstract void onDataLoaded();
 
     /**
      * Calculate positions of vertical lines and their texts for scale
@@ -90,11 +117,6 @@ public abstract class UsageStatBarChart extends Fragment {
     }
 
     protected void scrollToEnd() {
-        scrollView.post(new Runnable() {
-            @Override
-            public void run() {
-                scrollView.scrollTo(Integer.MAX_VALUE / 2 /* Integer.MAX_VALUE broke things… */, 0);
-            }
-        });
+        scrollView.post(() -> scrollView.scrollTo(Integer.MAX_VALUE / 2 /* Integer.MAX_VALUE broke things… */, 0));
     }
 }
