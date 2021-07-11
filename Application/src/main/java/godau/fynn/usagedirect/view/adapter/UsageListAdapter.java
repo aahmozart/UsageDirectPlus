@@ -91,12 +91,12 @@ public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat,
         View v;
         if (viewType == 0) {
 
-            v = inflater.inflate(R.layout.usage_row_total, viewGroup, false);
+            v = inflater.inflate(R.layout.row_usage_total, viewGroup, false);
 
             return new ViewHolder(v);
         } else {
 
-            v = inflater.inflate(R.layout.usage_row, viewGroup, false);
+            v = inflater.inflate(R.layout.row_usage, viewGroup, false);
 
             final ViewHolder viewHolder = new ViewHolder(v);
 
