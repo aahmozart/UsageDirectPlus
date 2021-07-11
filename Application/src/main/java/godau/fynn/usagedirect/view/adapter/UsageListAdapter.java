@@ -19,7 +19,6 @@
 package godau.fynn.usagedirect.view.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -30,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import godau.fynn.typedrecyclerview.SimpleRecyclerViewAdapter;
 import godau.fynn.usagedirect.*;
+import godau.fynn.usagedirect.thread.icon.IconThread;
 import org.ocpsoft.prettytime.PrettyTime;
 
 import java.time.Instant;

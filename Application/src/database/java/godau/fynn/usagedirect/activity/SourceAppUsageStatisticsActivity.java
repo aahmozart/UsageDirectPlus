@@ -101,6 +101,9 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
         if (DebugMenu.onOptionsItemSelected(item, this)) {
             return true;
         } else switch (item.getItemId()) {
+            case R.id.menu_color:
+                startActivity(new Intent(this, ColorActivity.class));
+                break;
             case R.id.menu_feedback:
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.menu_feedback)

@@ -26,7 +26,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 import godau.fynn.usagedirect.Comparator;
-import godau.fynn.usagedirect.IconThread;
+import godau.fynn.usagedirect.thread.icon.AppUsageStatisticsIconThread;
+import godau.fynn.usagedirect.thread.icon.IconThread;
 import godau.fynn.usagedirect.SimpleUsageStat;
 import godau.fynn.usagedirect.view.UsageListView;
 
@@ -62,37 +63,33 @@ public abstract class UsageListViewPagerAdapter extends PagerAdapter {
 
         // Get data
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+        new Thread(() -> {
 
-                final List<SimpleUsageStat> usageStatsList = getUsageStats(position);
+            final List<SimpleUsageStat> usageStatsList = getUsageStats(position);
 
-                // Filter unused apps
-                for (int i = usageStatsList.size() - 1; i >= 0; i--) {
-                    SimpleUsageStat usageStat = usageStatsList.get(i);
-                    if (usageStat.getTimeUsed() <= 0)
-                        usageStatsList.remove(i);
-                }
-
-                Collections.sort(usageStatsList, new Comparator.TimeInForegroundComparatorDesc());
-
-                final Map<String, Long> lastUsedMap = getLastUsedMap();
-
-                context.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        usageListView.setLastUsedMap(lastUsedMap);
-                        usageListView.setUsageStatsList(usageStatsList);
-
-                        // Get missing icons from system
-                        new IconThread(usageStatsList, usageListView.getLayoutManager(), context).start();
-                    }
-                });
-
-
-
+            // Filter unused apps
+            for (int i = usageStatsList.size() - 1; i >= 0; i--) {
+                SimpleUsageStat usageStat = usageStatsList.get(i);
+                if (usageStat.getTimeUsed() <= 0)
+                    usageStatsList.remove(i);
             }
+
+            Collections.sort(usageStatsList, new Comparator.TimeInForegroundComparatorDesc());
+
+            final Map<String, Long> lastUsedMap = getLastUsedMap();
+
+            context.runOnUiThread(() -> {
+                usageListView.setLastUsedMap(lastUsedMap);
+                usageListView.setUsageStatsList(usageStatsList);
+
+                // Get missing icons from system
+                new AppUsageStatisticsIconThread(
+                        usageStatsList, usageListView.getLayoutManager(), context
+                ).start();
+            });
+
+
+
         }).start();
 
         return usageListView;

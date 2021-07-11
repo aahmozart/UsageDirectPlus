@@ -100,7 +100,7 @@ public abstract class UsageStatsDao {
      *
      * @return A cursor which reads a matching of application ID to its total visible time
      */
-    @Query("SELECT applicationId, sum(timeUsed) FROM usageStats WHERE hidden = 0 GROUP BY applicationId ORDER BY sum(timeUsed)")
+    @Query("SELECT applicationId, sum(timeUsed) FROM usageStats WHERE hidden = 0 GROUP BY applicationId ORDER BY sum(timeUsed) DESC")
     protected abstract Cursor getTotalTimePerAppCursor();
 
     /**
@@ -134,6 +134,7 @@ public abstract class UsageStatsDao {
 
     /**
      * @return A mapping of apps to the accumulated time they were used individually
+     * in milliseconds ordered by total usage time (descending)
      */
     public Map<String, Long> getTotalTimePerApp() {
         Cursor cursor = getTotalTimePerAppCursor();
