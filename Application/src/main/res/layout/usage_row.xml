@@ -18,6 +18,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_centerVertical="true"
     android:gravity="center_vertical"
@@ -28,7 +29,8 @@
         android:id="@+id/app_icon"
         android:layout_width="38dp"
         android:layout_height="38dp"
-        android:layout_marginStart="16dp" />
+        android:layout_marginStart="16dp"
+        tools:src="@mipmap/ic_launcher" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,17 +43,20 @@
             android:id="@+id/textview_package_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/PackageNameFont" />
+            style="@style/PackageNameFont"
+            tools:text="@string/app_name" />
 
         <TextView
             android:id="@+id/textview_time_used"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/time_used_time_only" />
+            android:text="@string/time_used_time_only"
+            tools:text="0:20:21"/>
 
         <TextView
             android:id="@+id/textview_last_time_used"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:text="@string/last_used_now" />
     </LinearLayout>
 </LinearLayout>
