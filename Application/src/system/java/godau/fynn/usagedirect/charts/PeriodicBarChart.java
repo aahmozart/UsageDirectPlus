@@ -1,11 +1,9 @@
 package godau.fynn.usagedirect.charts;
 
-import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import godau.fynn.usagedirect.R;
+import godau.fynn.usagedirect.persistence.HistoryDatabase;
 import godau.fynn.usagedirect.wrapper.Interval;
 import godau.fynn.usagedirect.wrapper.IntervalTextFormat;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
@@ -16,22 +14,28 @@ import java.util.List;
 
 public abstract class PeriodicBarChart extends UsageStatBarChart {
 
+    private List<Integer> accumulatedTimes;
+
     @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+    protected void getData(HistoryDatabase database) {
         UsageStatsWrapper usageStatsWrapper = new UsageStatsWrapper(getContext());
 
         Interval interval = getInterval();
         int datasetAmount = usageStatsWrapper.getDatasetAmount(interval) - 1;
 
-        List<Integer> accumulatedTimes = usageStatsWrapper.getAccumulatedTimes(
-                interval, datasetAmount);
+        accumulatedTimes = usageStatsWrapper
+                .getAccumulatedTimes(interval, datasetAmount);
 
+
+    }
+
+    @Override
+    protected void onDataLoaded() {
         if (accumulatedTimes.size() == 0) {
             Toast.makeText(getContext(), R.string.error_no_data, Toast.LENGTH_LONG).show();
         }
 
-        setText(getTitle());
-        setSystemData(accumulatedTimes, interval);
+        setSystemData(accumulatedTimes, getInterval());
 
         scrollToEnd();
     }
@@ -65,13 +69,11 @@ public abstract class PeriodicBarChart extends UsageStatBarChart {
         addScale(chartMax);
     }
 
-    protected abstract @StringRes int getTitle();
-
     protected abstract Interval getInterval();
 
     public static class DailyBarChart extends PeriodicBarChart {
-        @Override
-        protected int getTitle() {
+        @Override @StringRes
+        protected int getText() {
             return R.string.charts_bar_daily;
         }
 
@@ -82,8 +84,8 @@ public abstract class PeriodicBarChart extends UsageStatBarChart {
     }
 
     public static class WeeklyBarChart extends PeriodicBarChart {
-        @Override
-        protected int getTitle() {
+        @Override @StringRes
+        protected int getText() {
             return R.string.charts_bar_weekly;
         }
 
@@ -94,8 +96,8 @@ public abstract class PeriodicBarChart extends UsageStatBarChart {
     }
 
     public static class MonthlyBarChart extends PeriodicBarChart {
-        @Override
-        protected int getTitle() {
+        @Override @StringRes
+        protected int getText() {
             return R.string.charts_bar_monthly;
         }
 
@@ -106,8 +108,8 @@ public abstract class PeriodicBarChart extends UsageStatBarChart {
     }
 
     public static class YearlyBarChart extends PeriodicBarChart {
-        @Override
-        protected int getTitle() {
+        @Override @StringRes
+        protected int getText() {
             return R.string.charts_bar_yearly;
         }
 

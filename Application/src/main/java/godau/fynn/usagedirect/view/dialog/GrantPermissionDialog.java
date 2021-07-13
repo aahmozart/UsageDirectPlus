@@ -33,18 +33,10 @@ public class GrantPermissionDialog extends AlertDialog.Builder {
         super(context);
         setTitle(R.string.explanation_access_appusage_title);
         setMessage(R.string.explanation_access_appusage_message);
-        setPositiveButton(R.string.go, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                context.startActivityForResult(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS), REQUEST_CODE);
-            }
-        });
-        setNegativeButton(R.string.leave_app, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                context.finish();
-            }
-        });
+        setPositiveButton(R.string.go, (dialog, which) ->
+                context.startActivityForResult(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS), REQUEST_CODE));
+        setNegativeButton(R.string.leave_app, (dialog, which) ->
+                context.finish());
         setCancelable(false);
     }
 }

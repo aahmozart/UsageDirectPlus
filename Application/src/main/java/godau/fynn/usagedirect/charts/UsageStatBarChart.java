@@ -11,16 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.*;
 import androidx.fragment.app.Fragment;
 import godau.fynn.usagedirect.R;
-import godau.fynn.usagedirect.persistence.ColoredSimpleUsageStat;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
-import godau.fynn.usagedirect.persistence.UsageStatsDao;
 import im.dacer.androidcharts.bar.BarView;
 import im.dacer.androidcharts.bar.Line;
-import im.dacer.androidcharts.bar.MultiValue;
-import im.dacer.androidcharts.bar.Value;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
 
 public abstract class UsageStatBarChart extends Fragment {
 
