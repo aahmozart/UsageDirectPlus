@@ -13,14 +13,21 @@ import java.util.ArrayList;
 
 public class DailyBarChart extends UsageStatBarChart {
 
-    protected ColoredSimpleUsageStat[] coloredUsageStats;
-    protected long[] displayDays;
+    private Value[] values;
+    private int chartMax;
 
     protected @StringRes
     int getText() {
         return R.string.charts_bar_daily;
     }
 
+    /**
+     * Queries data that is then used for the chart. Furthermore calculates
+     * data for the bar view for each of the days in the <code>days</code>
+     * array, in its order.
+     * <p>
+     * The label is gathered from {@link #getLabel(LocalDate)}.
+     */
     @Override
     protected void getData(HistoryDatabase database) {
         UsageStatsDao usageStatsDao = database.getUsageStatsDao();
@@ -28,30 +35,20 @@ public class DailyBarChart extends UsageStatBarChart {
         long minDay = usageStatsDao.getMinimumDay();
         long maxDay = usageStatsDao.getMaximumDay();
 
-        displayDays = new long[(int) (maxDay - minDay) + 1];
+        long[] displayDays = new long[(int) (maxDay - minDay) + 1];
         int i = 0;
         for (long day = minDay; day <= maxDay; i++, day++) {
             displayDays[i] = day;
         }
 
-        coloredUsageStats = database.getAppColorDao().getColoredUsageStats();
-
-        database.close();
-    }
-
-    /**
-     * Set the bar view's data for each of the days in the <code>days</code>
-     * array, in its order.
-     * <p>
-     * The label is gathered from {@link #getLabel(LocalDate)}.
-     */
-    protected void onDataLoaded() {
+        ColoredSimpleUsageStat[] coloredUsageStats = database.getAppColorDao().getColoredUsageStats();
 
         // Collect data and labels
 
-        Value[] values = new Value[displayDays.length];
+        values = new Value[displayDays.length];
 
-        int i = 0, max = 0;
+        i = 0;
+        int max = 0;
         for (Long d : displayDays) {
 
             ArrayList<Integer> seconds = new ArrayList<>();
@@ -88,7 +85,15 @@ public class DailyBarChart extends UsageStatBarChart {
         }
 
         // Use maximum of timespan plus 30 minutes so no bar hits the top
-        int chartMax = max + (60 * 30);
+        chartMax = max + (60 * 30);
+
+    }
+
+    /**
+     * Displays the data that is calculated in {@link #getData(HistoryDatabase)}
+     * in the chart view.
+     */
+    protected void onDataLoaded() {
 
         barView.setData(values, chartMax);
 
