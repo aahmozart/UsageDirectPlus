@@ -37,7 +37,7 @@ public abstract class PeriodicBarChart extends UsageStatBarChart {
 
         setSystemData(accumulatedTimes, getInterval());
 
-        scrollToEnd();
+        barView.scrollToEnd();
     }
 
     /**

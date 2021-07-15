@@ -3,10 +3,10 @@ package godau.fynn.usagedirect.charts;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 import androidx.annotation.*;
 import androidx.fragment.app.Fragment;
@@ -19,7 +19,6 @@ public abstract class UsageStatBarChart extends Fragment {
 
     private TextView textView;
     protected BarView barView;
-    private HorizontalScrollView scrollView;
 
     @Nullable
     @Override
@@ -28,7 +27,6 @@ public abstract class UsageStatBarChart extends Fragment {
 
         textView = view.findViewById(R.id.bar_chart_label);
         barView = view.findViewById(R.id.bar_chart);
-        scrollView = view.findViewById(R.id.bar_chart_scroll);
 
         return view;
     }
@@ -105,11 +103,17 @@ public abstract class UsageStatBarChart extends Fragment {
             lines[i] = new Line(counter * 60 * 60, String.valueOf(counter));
         }
 
-        barView.setVerticalLines(lines, chartMax);
+        barView.setHorizontalLines(lines, chartMax);
 
-    }
+        // Get window background
+        TypedValue a = new TypedValue();
+        getContext().getTheme().resolveAttribute(android.R.attr.windowBackground, a, true);
 
-    protected void scrollToEnd() {
-        scrollView.post(() -> scrollView.scrollTo(Integer.MAX_VALUE / 2 /* Integer.MAX_VALUE broke things… */, 0));
+        barView.setScrollHorizontalLines(
+                // Is a color if this condition is true – don't scroll background otherwise
+                a.type >= TypedValue.TYPE_FIRST_COLOR_INT && a.type <= TypedValue.TYPE_LAST_COLOR_INT,
+                a.data
+        );
+
     }
 }

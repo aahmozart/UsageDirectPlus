@@ -5,6 +5,7 @@ import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.persistence.ColoredSimpleUsageStat;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
 import godau.fynn.usagedirect.persistence.UsageStatsDao;
+import im.dacer.androidcharts.bar.BarView;
 import im.dacer.androidcharts.bar.MultiValue;
 import im.dacer.androidcharts.bar.Value;
 
@@ -97,7 +98,7 @@ public class DailyBarChart extends UsageStatBarChart {
 
         barView.setData(values, chartMax);
 
-        scrollToEnd();
+        barView.scrollToEnd();
 
         // Kinda hacky – we want to avoid an additional method call
         // Don't add scale for subclasses

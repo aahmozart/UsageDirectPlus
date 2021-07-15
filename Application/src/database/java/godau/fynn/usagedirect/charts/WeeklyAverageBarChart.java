@@ -1,7 +1,6 @@
 package godau.fynn.usagedirect.charts;
 
 import godau.fynn.usagedirect.R;
-import godau.fynn.usagedirect.persistence.ColoredSimpleUsageStat;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
 import godau.fynn.usagedirect.wrapper.TextFormat;
 import im.dacer.androidcharts.bar.Value;
