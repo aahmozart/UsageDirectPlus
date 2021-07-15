@@ -24,6 +24,9 @@ import androidx.annotation.StringRes;
 import godau.fynn.usagedirect.R;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.temporal.IsoFields;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -40,7 +43,11 @@ public abstract class IntervalTextFormat {
                 } else if (offset == 1) {
                     return resources.getString(R.string.ts_last_week);
                 } else {
-                    return resources.getString(R.string.ts_calendar_week, formatToPattern("w", interval, offset));
+                    return resources.getString(R.string.ts_calendar_week,
+                            String.valueOf(
+                                    LocalDateTime.now().minusWeeks(offset).get(IsoFields.WEEK_OF_WEEK_BASED_YEAR)
+                            )
+                    );
                 }
             case MONTHLY:
                 return formatToPattern("MMMM", interval, offset);
@@ -57,7 +64,9 @@ public abstract class IntervalTextFormat {
             case DAILY:
                 return formatToPattern("E", interval, offset).substring(0, 1);
             case WEEKLY:
-                return formatToPattern("w", interval, offset);
+                return String.valueOf(
+                        LocalDateTime.now().minusWeeks(offset).get(IsoFields.WEEK_OF_WEEK_BASED_YEAR)
+                );
             case MONTHLY:
                 return formatToPattern("MMM", interval, offset);
             case YEARLY:
