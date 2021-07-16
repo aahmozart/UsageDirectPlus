@@ -28,16 +28,9 @@
         android:layout_margin="8dp"
         android:textColor="?android:attr/textColorPrimary" />
 
-    <HorizontalScrollView
-        android:id="@+id/bar_chart_scroll"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <im.dacer.androidcharts.bar.BarView
-            android:id="@+id/bar_chart"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
-
-    </HorizontalScrollView>
+    <im.dacer.androidcharts.bar.BarView
+        android:id="@+id/bar_chart"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

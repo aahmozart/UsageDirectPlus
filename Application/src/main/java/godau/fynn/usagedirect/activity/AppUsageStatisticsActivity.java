@@ -131,11 +131,15 @@ public abstract class AppUsageStatisticsActivity extends Activity {
                                 new Translator("dc7ia", null, new Locale("sv")),
                                 new Translator("mondstern", null, new Locale("sv")),
                                 new Translator("yeyuan98", null, new Locale("rCN")),
-                                new Library("AndroidCharts", License.MIT_LICENSE, "The MIT License (MIT)\n" +
-                                        "\n" +
-                                        "Copyright (c) 2013 Ding Wenhao", "Ding Wenhao", "https://github.com/HackPlan/AndroidCharts"),
                                 new Library("PrettyTime", License.APACHE_20_LICENSE, null, "ocpsoft", "https://www.ocpsoft.org/prettytime/"),
                                 new Library("SmartTabLayout", License.APACHE_20_LICENSE, null, "ogaclejapan", "https://github.com/ogaclejapan/SmartTabLayout"),
+                                new Library("chartDirect", License.MIT_LICENSE, "The MIT License (MIT)\n" +
+                                        "\n" +
+                                        "Copyright (c) 2020 Fynn Godau\n" +
+                                        "\n" +
+                                        "Copyright (c) 2013 Ding Wenhao", "Fynn Godau and AndroidChart contributors", true, "https://codeberg.org/fynngodau/chartDirect"
+                                ),
+                                new Library("TypedRecyclerView", License.CC0_LICENSE, null, "Fynn Godau", "https://codeberg.org/fynngodau/TypedRecyclerView"),
                                 new Library("librariesDirect", License.CC0_LICENSE, null, "Fynn Godau", "https://codeberg.org/fynngodau/librariesDirect"),
                                 new Fork("AppUsageStatistics", License.APACHE_20_LICENSE, null, "AOSP", "https://github.com/googlesamples/android-AppUsageStatistics"),
                                 new OwnLicense(License.GNU_GPL_V3_OR_LATER_LICENSE, null, "https://codeberg.org/fynngodau/usageDirect"),

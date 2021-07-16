@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ usageDirect
   ~ Copyright (C) 2020 Fynn Godau
   ~
@@ -17,8 +16,10 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/bar_chart_label"
@@ -28,19 +29,10 @@
         android:layout_margin="8dp"
         android:textColor="?android:attr/textColorPrimary" />
 
-    <HorizontalScrollView
-        android:id="@+id/bar_chart_scroll"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="4dp"
-        android:clipToPadding="false"
-        android:scrollbarStyle="outsideInset">
+    <im.dacer.androidcharts.bar.CondensedBarView
+        android:id="@+id/bar_chart"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
 
-        <im.dacer.androidcharts.bar.CondensedBarView
-            android:id="@+id/bar_chart"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
-
-    </HorizontalScrollView>
 
 </LinearLayout>
