@@ -1,5 +1,6 @@
 package godau.fynn.usagedirect.persistence.combined;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.Embedded;
@@ -14,7 +15,7 @@ public class TimeAppColor {
     private final int totalTimeUsed;
 
     @Embedded(prefix = "color_")
-    private final AppColor appColor;
+    private AppColor appColor;
 
     private final String applicationId;
 
@@ -34,5 +35,9 @@ public class TimeAppColor {
 
     public String getApplicationId() {
         return applicationId;
+    }
+
+    public void setAppColor(AppColor appColor) {
+        this.appColor = appColor;
     }
 }
