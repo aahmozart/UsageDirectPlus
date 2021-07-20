@@ -22,13 +22,8 @@ import godau.fynn.usagedirect.thread.icon.IconThread;
 
 public abstract class ColorPickerDialog extends AlertDialog.Builder {
 
-    private final ColorPicker colorPicker;
-
-    private final TimeAppColor timeAppColor;
-
     public ColorPickerDialog(Context context, TimeAppColor timeAppColor) {
         super(context);
-        this.timeAppColor = timeAppColor;
 
         AppColor appColor;
         if (timeAppColor.getAppColor() == null) {
@@ -47,7 +42,7 @@ public abstract class ColorPickerDialog extends AlertDialog.Builder {
         ((ImageView) view.findViewById(R.id.app_icon))
                 .setImageDrawable(IconThread.iconMap.get(appColor.getApplicationId()));
 
-        colorPicker = view.findViewById(R.id.color_picker);
+        ColorPicker colorPicker = view.findViewById(R.id.color_picker);
         colorPicker.setColor(appColor.getColor());
 
         colorPicker.setColorSelectionListener(new SimpleColorSelectionListener() {

@@ -31,6 +31,7 @@
     <string name="confirm">Confirm</string>
     <string name="undo">Undo</string>
     <string name="uncolor">Remove color</string>
+    <string name="drag_handle">Drag handle</string>
 
     <plurals name="time_used_total_hours">
         <item quantity="one">%1$d hour used total</item>
