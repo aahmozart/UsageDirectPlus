@@ -18,19 +18,19 @@
 
 package godau.fynn.usagedirect.thread.icon;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import godau.fynn.usagedirect.R;
-import godau.fynn.usagedirect.SimpleUsageStat;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -41,9 +41,9 @@ public class IconThread extends Thread {
 
     private final String[] applicationIds;
     private final RecyclerView.LayoutManager layout;
-    private final Activity context;
+    private final Context context;
 
-    public IconThread(String[] applicationIds, RecyclerView.LayoutManager layout, Activity context) {
+    public IconThread(String[] applicationIds, RecyclerView.LayoutManager layout, Context context) {
         this.applicationIds = applicationIds;
         this.layout = layout;
         this.context = context;
@@ -70,7 +70,7 @@ public class IconThread extends Thread {
                 }
 
                 int finalI = i;
-                context.runOnUiThread(() -> onIconLoaded(finalI, applicationId));
+                new Handler(Looper.getMainLooper()).post(() -> onIconLoaded(finalI, applicationId));
 
             } catch (PackageManager.NameNotFoundException e) {
                 Log.i("ICONTHREAD", String.format("App Icon not found for %s", applicationId));

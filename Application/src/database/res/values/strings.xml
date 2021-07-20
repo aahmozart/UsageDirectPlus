@@ -28,6 +28,9 @@
     <string name="url_email" translatable="false">mailto:fynngodau@mailbox.org?subject=usageDirect</string>
     <string name="color_explanation">Colored apps are highlighted all throughout the application to allow you to track them specifically.</string>
     <string name="menu_color">Color apps</string>
+    <string name="confirm">Confirm</string>
+    <string name="undo">Undo</string>
+    <string name="uncolor">Remove color</string>
 
     <plurals name="time_used_total_hours">
         <item quantity="one">%1$d hour used total</item>
