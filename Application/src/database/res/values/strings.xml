@@ -31,7 +31,6 @@
 
     <string name="menu_color">Color apps</string>
     <string name="confirm">Confirm</string>
-    <string name="undo">Undo</string>
     <string name="uncolor">Remove color</string>
 
     <string name="drag_handle">Drag handle</string>
