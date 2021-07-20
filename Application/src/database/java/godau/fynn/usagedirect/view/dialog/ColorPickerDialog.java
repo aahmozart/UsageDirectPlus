@@ -58,12 +58,6 @@ public abstract class ColorPickerDialog extends AlertDialog.Builder {
         setPositiveButton(R.string.confirm, (dialog, which) -> {
             timeAppColor.setAppColor(appColor);
             onColorSet(timeAppColor);
-
-            new Thread(() -> {
-                HistoryDatabase database = HistoryDatabase.get(ColorPickerDialog.this.getContext());
-                database.getAppColorDao().insert(appColor);
-                database.close();
-            }).start();
         });
 
         setNeutralButton(R.string.cancel, null);
@@ -71,12 +65,6 @@ public abstract class ColorPickerDialog extends AlertDialog.Builder {
         setNegativeButton(R.string.uncolor, (dialog, which) -> {
             timeAppColor.setAppColor(null);
             onColorRemoved();
-
-            new Thread(() -> {
-                HistoryDatabase database = HistoryDatabase.get(getContext());
-                database.getAppColorDao().delete(appColor);
-                database.close();
-            }).start();
         });
     }
 

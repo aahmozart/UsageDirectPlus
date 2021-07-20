@@ -8,11 +8,11 @@ import godau.fynn.usagedirect.persistence.combined.TimeAppColor;
 @Dao
 public abstract class AppColorDao {
 
+    /**
+     * @see #updateExclusive(AppColor[])
+     */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public abstract void insert(AppColor[] appColors);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public abstract void insert(AppColor appColors);
+    protected abstract void insert(AppColor[] appColors);
 
     @Delete
     public abstract void delete(AppColor appColor);
@@ -20,6 +20,9 @@ public abstract class AppColorDao {
     @Query("SELECT * FROM colors WHERE applicationId = :applicationId")
     public abstract @Nullable
     AppColor getAppColor(String applicationId);
+
+    @Query("DELETE FROM colors")
+    protected abstract void delete();
 
     @Query(
             "SELECT usageStats.applicationId, colors.applicationId as color_applicationId, sum(timeUsed) AS totalTimeUsed, color AS color_color, priority AS color_priority FROM usageStats " +
@@ -41,4 +44,13 @@ public abstract class AppColorDao {
                     "ORDER BY day, priority"
     )
     public abstract ColoredSimpleUsageStat[] getColoredUsageStats();
+
+    /**
+     * Delete all colors, then insert the provided ones
+     */
+    @Transaction
+    public void updateExclusive(AppColor[] appColors) {
+        delete();
+        insert(appColors);
+    }
 }

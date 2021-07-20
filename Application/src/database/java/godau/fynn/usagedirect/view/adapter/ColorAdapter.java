@@ -11,20 +11,32 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import godau.fynn.typedrecyclerview.SimpleRecyclerViewAdapter;
 import godau.fynn.usagedirect.R;
+import godau.fynn.usagedirect.persistence.AppColor;
+import godau.fynn.usagedirect.persistence.HistoryDatabase;
 import godau.fynn.usagedirect.persistence.combined.TimeAppColor;
 import godau.fynn.usagedirect.thread.icon.IconThread;
 import godau.fynn.usagedirect.view.dialog.ColorPickerDialog;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class ColorAdapter extends SimpleRecyclerViewAdapter<TimeAppColor, ColorAdapter.ViewHolder> {
 
     private final ItemTouchHelper touchHelper;
+    private HistoryDatabase historyDatabase;
 
     public ColorAdapter(TimeAppColor[] timePerApp, ItemTouchHelper touchHelper) {
         content.addAll(Arrays.asList(timePerApp));
         this.touchHelper = touchHelper;
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+
+        historyDatabase = HistoryDatabase.get(context);
     }
 
     @NonNull
@@ -67,6 +79,67 @@ public class ColorAdapter extends SimpleRecyclerViewAdapter<TimeAppColor, ColorA
         holder.item = item;
     }
 
+    /**
+     * @param from Position from which the item was moved
+     * @param to   Position to which the item was moved
+     * @return Whether the move should succeed
+     */
+    public boolean onMove(int from, int to) {
+        if (to > 1) {
+            if (content.get(to).getAppColor() == null) {
+                // Moved out of range
+                return false;
+            }
+        }
+
+        // Move
+        if (to > from) {
+            Collections.rotate(content.subList(from, to + 1), -1);
+        } else {
+            Collections.rotate(content.subList(to, from + 1), 1);
+        }
+        notifyItemMoved(from, to);
+
+        new Thread(() -> {
+
+            AppColor[] appColors = setPriorities();
+
+            historyDatabase.getAppColorDao().updateExclusive(appColors);
+
+        }).start();
+
+        return true;
+
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        historyDatabase.close();
+
+        super.onDetachedFromRecyclerView(recyclerView);
+    }
+
+    /**
+     * Set priorities according to the current order of items in content list
+     *
+     * @return Array of all {@link AppColor}s
+     */
+    private AppColor[] setPriorities() {
+        AppColor[] appColors = content
+                .stream()
+                .map(TimeAppColor::getAppColor)
+                .filter(Objects::nonNull)
+                .toArray(AppColor[]::new);
+
+        int priority = appColors.length;
+
+        for (AppColor appColor : appColors) {
+            appColor.setPriority(priority--);
+        }
+
+        return appColors;
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final LinearLayout mContentLayout;
         public final TextView mPackageName;
@@ -104,15 +177,6 @@ public class ColorAdapter extends SimpleRecyclerViewAdapter<TimeAppColor, ColorA
 
                     // Move upwards in content
                     int position = moveToFirstUncolored(item);
-
-                    // Written to database by parent class
-                    if (position > 0) {
-                        color.getAppColor().setPriority(
-                                content.get(position - 1)
-                                        .getAppColor()
-                                        .getPriority()
-                        );
-                    }
                 }
 
                 @Override
@@ -122,6 +186,12 @@ public class ColorAdapter extends SimpleRecyclerViewAdapter<TimeAppColor, ColorA
 
                     // Move downwards
                     moveToFirstUncolored(item);
+
+                    if (item.getAppColor() != null)
+                    new Thread(() ->
+                            ((ColorAdapter) getBindingAdapter()).historyDatabase
+                                    .getAppColorDao().delete(item.getAppColor())
+                    ).start();
                 }
 
                 /**
@@ -138,6 +208,13 @@ public class ColorAdapter extends SimpleRecyclerViewAdapter<TimeAppColor, ColorA
 
                     content.add(firstUncoloredApp, item);
                     getBindingAdapter().notifyItemMoved(oldPosition, firstUncoloredApp);
+
+                    // Set priorities and update database
+                    new Thread(() -> ((ColorAdapter) getBindingAdapter()).historyDatabase
+                            .getAppColorDao().updateExclusive(
+                                    ((ColorAdapter) getBindingAdapter()).setPriorities()
+                            )
+                    ).start();
 
                     return firstUncoloredApp;
                 }

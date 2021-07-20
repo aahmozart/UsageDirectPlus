@@ -12,12 +12,15 @@ public class ColorAdapterTouchCallback extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-        return false;
+
+        return ((ColorAdapter) recyclerView.getAdapter()).onMove(
+                viewHolder.getBindingAdapterPosition(),
+                target.getBindingAdapterPosition()
+        );
     }
 
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
     }
 
     @Override

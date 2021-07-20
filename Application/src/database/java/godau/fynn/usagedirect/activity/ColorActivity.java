@@ -17,6 +17,8 @@ import java.util.Arrays;
 
 public class ColorActivity extends Activity {
 
+    private RecyclerView recyclerView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +34,7 @@ public class ColorActivity extends Activity {
 
             runOnUiThread(() -> {
 
-                RecyclerView recyclerView = findViewById(R.id.recyclerview);
+                recyclerView = findViewById(R.id.recyclerview);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
                 ItemTouchHelper touchHelper = new ItemTouchHelper(new ColorAdapterTouchCallback());
@@ -50,5 +52,15 @@ public class ColorActivity extends Activity {
 
             });
         }).start();
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        if (recyclerView != null) {
+            recyclerView.setAdapter(null);
+        }
+
+        super.onDestroy();
     }
 }
