@@ -15,6 +15,7 @@
         \n\nI already have a number of things on my roadmap, but I would like to hear from you: what do you think about usageDirect?</string>
     <string name="cancel">Cancel</string>
     <string name="charts_bar_daily_condensed">Long-term app usage</string>
+
     <string name="usagestat_hide">Delete this row</string>
     <string name="menu_restore_hidden">Restore deleted rows</string>
     <string name="menu_restore_hidden_positive">Restore</string>
@@ -25,14 +26,17 @@
     <string name="export_io_error">An error occurred while saving the file</string>
     <string name="export_okay">The export was successful</string>
 
-    <string name="url_email" translatable="false">mailto:fynngodau@mailbox.org?subject=usageDirect</string>
-    <string name="color_explanation">Colored apps are highlighted all throughout the application to allow you to track them specifically.</string>
+    <string name="color_explanation">Colored apps are highlighted all throughout the application, allowing you to focus on their usage.
+        Set an order using drag-and-drop to determine their sorting in graphs and on the main screen.</string>
+
     <string name="menu_color">Color apps</string>
     <string name="confirm">Confirm</string>
     <string name="undo">Undo</string>
     <string name="uncolor">Remove color</string>
+
     <string name="drag_handle">Drag handle</string>
 
+    <string name="url_email" translatable="false">mailto:fynngodau@mailbox.org?subject=usageDirect</string>
     <plurals name="time_used_total_hours">
         <item quantity="one">%1$d hour used total</item>
         <item quantity="other">%1$d hours used total</item>
