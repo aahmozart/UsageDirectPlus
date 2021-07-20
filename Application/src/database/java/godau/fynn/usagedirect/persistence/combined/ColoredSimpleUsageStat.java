@@ -1,4 +1,4 @@
-package godau.fynn.usagedirect.persistence;
+package godau.fynn.usagedirect.persistence.combined;
 
 import androidx.annotation.NonNull;
 import godau.fynn.usagedirect.SimpleUsageStat;

@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,19 +17,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import godau.fynn.typedrecyclerview.SimpleRecyclerViewAdapter;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.persistence.AppColor;
-import godau.fynn.usagedirect.persistence.HistoryDatabase;
+import godau.fynn.usagedirect.persistence.combined.TimeAppColor;
 import godau.fynn.usagedirect.thread.icon.IconThread;
 import godau.fynn.usagedirect.view.dialog.ColorPickerDialog;
 
-import java.util.Map;
+import java.util.Arrays;
 
-public class ColorAdapter extends SimpleRecyclerViewAdapter<String, ColorAdapter.ViewHolder> {
+public class ColorAdapter extends SimpleRecyclerViewAdapter<TimeAppColor, ColorAdapter.ViewHolder> {
 
-    private final Map<String, Long> timePerApp;
-
-    public ColorAdapter(Map<String, Long> timePerApp) {
-        this.timePerApp = timePerApp;
-        content.addAll(timePerApp.keySet());
+    public ColorAdapter(TimeAppColor[] timePerApp) {
+        content.addAll(Arrays.asList(timePerApp));
     }
 
     @NonNull
@@ -41,17 +36,16 @@ public class ColorAdapter extends SimpleRecyclerViewAdapter<String, ColorAdapter
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, String item, int position) {
-        holder.mPackageName.setText(item);
+    public void onBindViewHolder(@NonNull ViewHolder holder, TimeAppColor item, int position) {
 
-        String name = IconThread.nameMap.get(item);
+        String name = IconThread.nameMap.get(item.getApplicationId());
         holder.mPackageName.setText(
                 name == null?
-                        item : name
+                        item.getApplicationId() : name
         );
-        holder.mAppIcon.setImageDrawable(IconThread.iconMap.get(item));
+        holder.mAppIcon.setImageDrawable(IconThread.iconMap.get(item.getApplicationId()));
 
-        int hours = (int) (timePerApp.get(item) / 1000 / 60 / 60);
+        int hours = item.getTotalTimeUsed() / 1000 / 60 / 60;
         holder.mTimeUsed.setText(context.getResources().getQuantityString(
                 R.plurals.time_used_total_hours,
                 hours, hours
@@ -61,27 +55,13 @@ public class ColorAdapter extends SimpleRecyclerViewAdapter<String, ColorAdapter
                         View.VISIBLE : View.GONE
         );
 
-        holder.mColorDisplay.setTag(item);
+        if (item.getAppColor() == null) {
+            holder.mColorDisplay.setBackground(context.getDrawable(R.drawable.custom_light_square));
+        } else {
+            holder.mColorDisplay.setBackgroundColor(item.getAppColor().getColor());
+        }
 
-        holder.mColorDisplay.setBackground(context.getDrawable(R.drawable.custom_light_square));
-        holder.currentColor = null;
-
-        new Thread(() -> {
-            HistoryDatabase database = HistoryDatabase.get(context);
-
-            AppColor color = database.getAppColorDao().getAppColor(item);
-
-            database.close();
-
-            new Handler(Looper.getMainLooper()).post(() -> {
-                if (holder.mColorDisplay.getTag() == item) {
-                    if (color != null) {
-                        holder.mColorDisplay.setBackgroundColor(color.getColor());
-                        holder.currentColor = color;
-                    }
-                } // else we are too late
-            });
-        }).start();
+        holder.currentColor = item;
 
     }
 
@@ -90,7 +70,7 @@ public class ColorAdapter extends SimpleRecyclerViewAdapter<String, ColorAdapter
         public final TextView mTimeUsed;
         public final ImageView mAppIcon;
         public final View mColorDisplay;
-        public AppColor currentColor;
+        public TimeAppColor currentColor;
 
         public ViewHolder(View v) {
             super(v);
@@ -99,19 +79,14 @@ public class ColorAdapter extends SimpleRecyclerViewAdapter<String, ColorAdapter
             mAppIcon = v.findViewById(R.id.app_icon);
             mColorDisplay = v.findViewById(R.id.color_display);
 
-            mColorDisplay.setOnClickListener(view -> {
-
-                new ColorPickerDialog(
-                        view.getContext(),
-                        currentColor == null ?
-                                new AppColor(
-                                        (String) mColorDisplay.getTag(),
-                                        extractDefaultColor(drawableToBitmap(mAppIcon.getDrawable()), view.getContext()),
-                                        0
-                                ) : currentColor
-                ).show();
-
-            });
+            mColorDisplay.setOnClickListener(view -> new ColorPickerDialog(
+                    view.getContext(),
+                    currentColor.getAppColor() != null ? currentColor.getAppColor() : new AppColor(
+                            currentColor.getApplicationId(),
+                            extractDefaultColor(drawableToBitmap(mAppIcon.getDrawable()), view.getContext()),
+                            0
+                    )
+            ).show());
         }
     }
 

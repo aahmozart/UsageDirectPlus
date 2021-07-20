@@ -2,10 +2,9 @@ package godau.fynn.usagedirect.charts;
 
 import androidx.annotation.StringRes;
 import godau.fynn.usagedirect.R;
-import godau.fynn.usagedirect.persistence.ColoredSimpleUsageStat;
+import godau.fynn.usagedirect.persistence.combined.ColoredSimpleUsageStat;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
 import godau.fynn.usagedirect.persistence.UsageStatsDao;
-import im.dacer.androidcharts.bar.BarView;
 import im.dacer.androidcharts.bar.MultiValue;
 import im.dacer.androidcharts.bar.Value;
 

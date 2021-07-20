@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
+import godau.fynn.usagedirect.persistence.combined.TimeAppColor;
 import godau.fynn.usagedirect.thread.icon.IconThread;
 import godau.fynn.usagedirect.view.adapter.ColorAdapter;
 
-import java.util.Map;
+import java.util.Arrays;
 
 public class ColorActivity extends Activity {
 
@@ -24,17 +25,20 @@ public class ColorActivity extends Activity {
 
             HistoryDatabase database = HistoryDatabase.get(this);
 
-            Map<String, Long> timePerApp = database.getUsageStatsDao().getTotalTimePerApp();
+            TimeAppColor[] timeAppColors = database.getAppColorDao().getTimeAppColors();
             database.close();
 
             runOnUiThread(() -> {
 
                 RecyclerView recyclerView = findViewById(R.id.recyclerview);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                recyclerView.setAdapter(new ColorAdapter(timePerApp));
+                recyclerView.setAdapter(new ColorAdapter(timeAppColors));
 
                 new IconThread(
-                        timePerApp.keySet().toArray(new String[0]), recyclerView.getLayoutManager(), this
+                        Arrays.stream(timeAppColors)
+                                .map(TimeAppColor::getApplicationId)
+                                .toArray(String[]::new),
+                        recyclerView.getLayoutManager(), this
                 ).start();
 
             });
