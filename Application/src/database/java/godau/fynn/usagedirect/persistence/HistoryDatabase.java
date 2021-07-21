@@ -30,6 +30,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import godau.fynn.usagedirect.SimpleUsageStat;
+import godau.fynn.usagedirect.charts.WeeklyAverageBarChart;
 
 import java.time.LocalDate;
 
@@ -56,6 +57,8 @@ public abstract class HistoryDatabase extends RoomDatabase {
     public abstract LastUsedDao getLastUsedDao();
 
     public abstract AppColorDao getAppColorDao();
+
+    public abstract WeeklyAverageBarChart.WeeklyAverageDao getWeeklyDao();
 
     public static HistoryDatabase get(Context context) {
         return Room.databaseBuilder(context, HistoryDatabase.class, DATABASE_NAME)
