@@ -45,7 +45,7 @@ public abstract class AppColorDao {
             "SELECT usageStats.applicationId, timeUsed, color, day, hidden FROM usageStats " +
                     "LEFT JOIN colors ON usageStats.applicationId == colors.applicationId " +
                     "WHERE hidden == 0 " +
-                    "ORDER BY day, priority"
+                    "ORDER BY day, priority DESC"
     )
     public abstract ColoredSimpleUsageStat[] getColoredUsageStats();
 
