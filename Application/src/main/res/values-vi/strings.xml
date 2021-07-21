@@ -1,2 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="total">Tổng</string>
+    <string name="explanation_access_appusage_title">Quyền dữ liệu sử dụng ứng dụng</string>
+    <string name="explanation_access_appusage_message">Vui lòng cấp quyền truy cập thống kê sử dụng của hệ thống ở trang tiếp theo.</string>
+    <string name="go">Đi</string>
+    <string name="leave_app">Rời khỏi ứng dụng</string>
+    <string name="not_used">không được sử dụng</string>
+    <string name="menu_about">Giới thiệu</string>
+    <string name="launch_unavailable">Không thể chạy ứng dụng</string>
+    <string name="menu_charts">Đồ thị</string>
+    <string name="last_used_now">hiện đang được sử dụng</string>
+    <string name="charts_bar_daily">Sử dụng ứng dụng mỗi ngày</string>
+    <string name="title_feature_preview">Xem trước tính năng usageDirect</string>
+    <string name="ts_today">Hôm nay</string>
+    <string name="ts_yesterday">Hôm qua</string>
+    <string name="ts_this_week">Tuần này</string>
+    <string name="ts_last_week">Tuần trước</string>
+    <string name="ts_calendar_week">Tuần %s</string>
+    <string name="menu_reload">Tải lại</string>
+    <string name="last_used_this_day">sử dụng lần cuối hôm nay</string>
+    <string name="icon">Biểu tượng</string>
+</resources>
