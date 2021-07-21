@@ -37,6 +37,7 @@ import im.dacer.androidcharts.clockpie.ClockPieView;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -44,12 +45,14 @@ public class ClockPieViewPagerAdapter extends PagerAdapter {
 
     private final Context context;
     private final EventLogWrapper eventLogWrapper;
+    private final Map<String, Integer> colorMap;
     private static final Queue<FramedClockPieView> recycleViewList = new LinkedBlockingQueue<>();
 
 
-    public ClockPieViewPagerAdapter(Context context, EventLogWrapper wrapper) {
+    public ClockPieViewPagerAdapter(Context context, EventLogWrapper wrapper, Map<String, Integer> colorMap) {
         this.context = context;
         eventLogWrapper = wrapper;
+        this.colorMap = colorMap;
     }
 
     @NonNull
@@ -89,7 +92,13 @@ public class ClockPieViewPagerAdapter extends PagerAdapter {
 
             new Handler(Looper.getMainLooper()).post(() -> {
                 for (ComponentForegroundStat stat : foregroundStats) {
-                    clockPieHelperList.add(stat.asClockPieSegment());
+                    ClockPieSegment segment = stat.asClockPieSegment();
+
+                    if (colorMap.containsKey(stat.packageName)) {
+                        segment.setColor(colorMap.get(stat.packageName));
+                    }
+
+                    clockPieHelperList.add(segment);
                 }
 
                 pieView.setData(clockPieHelperList);

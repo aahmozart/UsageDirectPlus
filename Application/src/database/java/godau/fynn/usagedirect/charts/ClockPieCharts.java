@@ -1,6 +1,8 @@
 package godau.fynn.usagedirect.charts;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +12,11 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import godau.fynn.usagedirect.R;
+import godau.fynn.usagedirect.persistence.HistoryDatabase;
 import godau.fynn.usagedirect.view.adapter.ClockPieViewPagerAdapter;
 import godau.fynn.usagedirect.wrapper.EventLogWrapper;
+
+import java.util.Map;
 
 public class ClockPieCharts extends Fragment {
 
@@ -25,12 +30,24 @@ public class ClockPieCharts extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         final ViewPager clockPager = view.findViewById(R.id.clock_pie_view_pager);
 
-        clockPager.setAdapter(new ClockPieViewPagerAdapter(getContext(), new EventLogWrapper(getContext())));
-        clockPager.setCurrentItem(9);
+        new Thread(() -> {
+            HistoryDatabase database = HistoryDatabase.get(getContext());
+            Map<String, Integer> colorMap = database.getAppColorDao().getAppColorMap();
+            database.close();
 
-        clockPager.setOffscreenPageLimit(3);
+            new Handler(Looper.getMainLooper()).post(() -> {
+                clockPager.setAdapter(new ClockPieViewPagerAdapter(
+                        getContext(), new EventLogWrapper(getContext()),
+                        colorMap
+                ));
+                clockPager.setCurrentItem(9);
 
-        SmartTabLayout chartTabLayout = view.findViewById(R.id.clock_pie_view_pager_tab);
-        chartTabLayout.setViewPager(clockPager);
+                clockPager.setOffscreenPageLimit(3);
+
+                SmartTabLayout chartTabLayout = view.findViewById(R.id.clock_pie_view_pager_tab);
+                chartTabLayout.setViewPager(clockPager);
+            });
+        }).start();
+
     }
 }

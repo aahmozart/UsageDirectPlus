@@ -1,9 +1,13 @@
 package godau.fynn.usagedirect.persistence;
 
+import android.database.Cursor;
 import androidx.annotation.Nullable;
 import androidx.room.*;
 import godau.fynn.usagedirect.persistence.combined.ColoredSimpleUsageStat;
 import godau.fynn.usagedirect.persistence.combined.TimeAppColor;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Dao
 public abstract class AppColorDao {
@@ -46,11 +50,36 @@ public abstract class AppColorDao {
     public abstract ColoredSimpleUsageStat[] getColoredUsageStats();
 
     /**
+     * Used only for {@link #getAppColorMap()}
+     *
+     * @return A cursor which reads a matching of application ID to its color
+     */
+    @Query("SELECT applicationId, color FROM colors")
+    protected abstract Cursor getAppColorCursor();
+
+
+    /**
      * Delete all colors, then insert the provided ones
      */
     @Transaction
     public void updateExclusive(AppColor[] appColors) {
         delete();
         insert(appColors);
+    }
+
+    /**
+     * @return Mapping of package names to their color
+     */
+    public Map<String, Integer> getAppColorMap() {
+        Cursor cursor = getAppColorCursor();
+        Map<String, Integer> map = new LinkedHashMap<>();
+
+        // Cursor starts before first row
+        while (cursor.moveToNext()) {
+            map.put(cursor.getString(0), cursor.getInt(1));
+        }
+
+        cursor.close();
+        return map;
     }
 }
