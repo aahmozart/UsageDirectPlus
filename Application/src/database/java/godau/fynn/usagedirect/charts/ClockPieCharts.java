@@ -15,6 +15,7 @@ import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
 import godau.fynn.usagedirect.view.adapter.ClockPieViewPagerAdapter;
 import godau.fynn.usagedirect.wrapper.EventLogWrapper;
+import godau.fynn.usagedirect.wrapper.HarmonizedEventLogWrapper;
 
 import java.util.Map;
 
@@ -37,7 +38,7 @@ public class ClockPieCharts extends Fragment {
 
             new Handler(Looper.getMainLooper()).post(() -> {
                 clockPager.setAdapter(new ClockPieViewPagerAdapter(
-                        getContext(), new EventLogWrapper(getContext()),
+                        getContext(), new HarmonizedEventLogWrapper(getContext()),
                         colorMap
                 ));
                 clockPager.setCurrentItem(9);

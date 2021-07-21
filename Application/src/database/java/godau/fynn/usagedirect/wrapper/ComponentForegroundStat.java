@@ -38,7 +38,8 @@ public class ComponentForegroundStat {
     }
 
     /**
-     * @return A clock pie segment displaying this foreground stat
+     * @return A clock pie segment displaying this foreground stat. Over- and underdraws
+     * 10 seconds.
      */
     public ClockPieSegment asClockPieSegment() {
         LocalTime beginTime = Instant
@@ -51,8 +52,8 @@ public class ComponentForegroundStat {
                 .toLocalTime();
 
         return new ClockPieSegment(
-                beginTime.getHour(), beginTime.getMinute(), beginTime.getSecond(),
-                endTime.getHour(), endTime.getMinute(), endTime.getSecond()
+                beginTime.getHour(), beginTime.getMinute(), beginTime.getSecond() - 10,
+                endTime.getHour(), endTime.getMinute(), endTime.getSecond() + 10
         );
     }
 }

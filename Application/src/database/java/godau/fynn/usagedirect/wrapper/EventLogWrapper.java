@@ -18,7 +18,7 @@ import java.util.function.BiConsumer;
  */
 public class EventLogWrapper extends UsageStatsManagerWrapper {
 
-    private UnmatchedCloseEventGuardian guardian = new UnmatchedCloseEventGuardian(usageStatsManager);
+    private final UnmatchedCloseEventGuardian guardian = new UnmatchedCloseEventGuardian(usageStatsManager);
 
     public EventLogWrapper(Context context) {
         super(context);
