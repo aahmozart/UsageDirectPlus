@@ -19,4 +19,20 @@
         <item quantity="other">Du har totalt raderat %1$d rader. Vill du återställa dem\?</item>
     </plurals>
     <string name="charts_bar_daily_condensed">Långsiktig appanvändning</string>
+    <string name="menu_export">Exportera databas</string>
+    <string name="export_title">Feature preview: Exportera databas</string>
+    <string name="export_message">SQLite-databasen kan exporteras för extern analys.
+\n
+\nDu kommer bara att kunna importera den i framtida appversioner.</string>
+    <string name="export_io_error">Ett fel uppstod när filen sparades</string>
+    <string name="export_okay">Exporten lyckades</string>
+    <string name="drag_handle">Drag handtag</string>
+    <string name="color_explanation">Färgade appar är markerade i hela applikationen, så att du kan fokusera på deras användning. Ställ in en ordning med dra och släpp för att bestämma deras sortering i grafer och på huvudskärmen.</string>
+    <string name="menu_color">Färg apps</string>
+    <string name="confirm">Bekräfta</string>
+    <string name="uncolor">Ta bort färg</string>
+    <plurals name="time_used_total_hours">
+        <item quantity="one">%1$d timme totalt</item>
+        <item quantity="other">%1$d totalt antal timmar</item>
+    </plurals>
 </resources>
