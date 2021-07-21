@@ -1,2 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="explanation_access_appusage_title">Izin penggunaan aplikasi</string>
+    <string name="explanation_access_appusage_message">Harap berikan akses ke statistik penggunaan sistem Anda pada halaman berikutnya.</string>
+    <string name="go">Lanjut</string>
+    <string name="leave_app">Tinggalkan aplikasi</string>
+    <string name="not_used">tidak digunakan</string>
+    <string name="menu_about">Tentang</string>
+    <string name="launch_unavailable">Tidak dapat meluncurkan aplikasi</string>
+    <string name="last_used_now">sekarang digunakan</string>
+    <string name="charts_bar_daily">Penggunaan aplikasi per hari</string>
+    <string name="ts_today">Hari ini</string>
+    <string name="ts_yesterday">Kemarin</string>
+    <string name="ts_this_week">Pekan ini</string>
+    <string name="ts_last_week">Pekan yang lalu</string>
+    <string name="ts_calendar_week">Pekan %s</string>
+    <string name="menu_reload">Muat ulang</string>
+    <string name="total">Jumlah</string>
+    <string name="icon">Ikon</string>
+    <string name="last_used_this_day">terakhir digunakan pada hari tersebut</string>
+</resources>

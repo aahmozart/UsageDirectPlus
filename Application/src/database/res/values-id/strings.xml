@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">usageDirect</string>
+    <string name="db_job_schedule_failure">Peringatan: pengumpulan data otomatis tidak dapat disiapkan, harap periksa aplikasi secara berkala</string>
+    <string name="widget_today_name">Waktu hari ini</string>
+    <string name="menu_feedback">Kirim ide</string>
+    <string name="cancel">Batal</string>
+    <string name="usagestat_hide">Hapus baris ini</string>
+    <string name="menu_restore_hidden">Pulihkan baris yang terhapus</string>
+    <string name="menu_restore_hidden_positive">Pulihkan</string>
+    <string name="chart_average">∅ Rata-rata penggunaan aplikasi per hari kerja</string>
+    <string name="charts_clock_pie">%s sebagai diagram lingkaran jam</string>
+    <string name="menu_export">Ekspor database</string>
+    <string name="export_message">Database SQLite dapat diekspor untuk analisis eksternal.
+\n
+\nAnda hanya dapat mengimpornya di versi aplikasi yang akan datang.</string>
+    <string name="export_io_error">Sebuah kesalahan terjadi ketika menyimpan berkas</string>
+    <string name="export_okay">Pengeksporan berhasil</string>
+    <string name="confirm">Konfirmasi</string>
+    <string name="uncolor">Hapus warna</string>
+    <plurals name="menu_restore_hidden_details">
+        <item quantity="other">Anda memiliki, secara keseluruhan, %1$d baris yang dihapus. Apakah Anda ingin memulihkannya\?</item>
+    </plurals>
+    <plurals name="time_used_total_hours">
+        <item quantity="other">%1$d jam digunakan secara keseluruhan</item>
+    </plurals>
+</resources>
