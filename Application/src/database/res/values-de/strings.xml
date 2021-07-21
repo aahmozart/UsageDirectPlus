@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">usageDirect</string>
-    <string name="db_wait">Daten werden gesammelt…</string>
     <string name="chart_average">∅ Durchschnittliche Nutzungszeit pro Wochentag</string>
     <string name="widget_today_name">Nutzungszeit heute</string>
     <string name="db_job_schedule_failure">Warnung: automatische Datensammlung konnte nicht eingerichtet werden, bitte schaue regelmäßig vorbei</string>

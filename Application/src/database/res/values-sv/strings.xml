@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">usageDirect</string>
-    <string name="db_wait">Samla data…</string>
     <string name="db_job_schedule_failure">Varning: automatisk datainsamling kunde inte ställas in, kom tillbaka regelbundet</string>
     <string name="chart_average">∅ Genomsnittlig appanvändning per veckodag</string>
     <string name="widget_today_name">Tid i dag</string>

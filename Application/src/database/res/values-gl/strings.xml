@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">usageDirect</string>
-    <string name="db_schedule">Insercións automáticas programadas</string>
     <string name="db_job_schedule_failure">Aviso: a recoleción automática de datos non se puido establecer, volve a comprobalos con regularidade</string>
     <string name="chart_average">∅ Uso promedio da app por día</string>
     <string name="charts_clock_pie_general">Gráficos de uso recentes</string>
