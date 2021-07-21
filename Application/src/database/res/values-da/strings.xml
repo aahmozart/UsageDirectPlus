@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">usageDirect</string>
-    <string name="db_wait">Indsamler data…</string>
     <string name="db_job_schedule_failure">Advarsel: automatisk dataindsamling kunne ikke oprettes. Kontroller regelmæssigt igen</string>
     <string name="chart_average">∅ Gennemsnitlig appbrug pr. Hverdag</string>
     <string name="charts_clock_pie">%s som et cirkeldiagram</string>
@@ -19,5 +18,21 @@
     <plurals name="menu_restore_hidden_details">
         <item quantity="one">Vil du restaurere en slettet række\?</item>
         <item quantity="other">Du har i alt slettet %1$d rækker. Vil du gendanne dem\?</item>
+    </plurals>
+    <string name="menu_export">Eksporter database</string>
+    <string name="export_title">Feature preview: Eksporter database</string>
+    <string name="export_message">SQLite-databasen kan eksporteres til ekstern analyse.
+\n
+\nDu kan kun importere den i fremtidige appversioner.</string>
+    <string name="export_io_error">Der opstod en fejl under lagring af filen</string>
+    <string name="export_okay">Eksporten var vellykket</string>
+    <string name="color_explanation">Farvede apps er fremhævet i hele applikationen, så du kan fokusere på deres brug. Angiv en rækkefølge ved hjælp af træk og slip for at bestemme deres sortering i grafer og på hovedskærmen.</string>
+    <string name="menu_color">Farve apps</string>
+    <string name="confirm">Bekræfte</string>
+    <string name="uncolor">Fjern farve</string>
+    <string name="drag_handle">Træk håndtag</string>
+    <plurals name="time_used_total_hours">
+        <item quantity="one">%1$d time i alt brugt</item>
+        <item quantity="other">%1$d timer brugt i alt</item>
     </plurals>
 </resources>

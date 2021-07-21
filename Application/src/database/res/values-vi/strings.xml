@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="db_schedule">Đã lên lịch chèn tự động</string>
     <string name="chart_average">∅ Dữ liệu sử dụng ứng dụng trung bình cho mỗi ngày trong tuần</string>
     <string name="charts_clock_pie_general">Biểu đồ đồng hồ tròn gần đây</string>
     <string name="charts_clock_pie">%s dưới dạng biểu đồ đồng hồ tròn</string>
@@ -19,4 +18,11 @@
     </plurals>
     <string name="app_name">usageDirect</string>
     <string name="db_job_schedule_failure">Cảnh báo: Không thể thiết lập thu thập dữ liệu tự động, vui lòng xem lại thường xuyên</string>
+    <string name="menu_export">Xuất cơ sở dữ liệu</string>
+    <string name="export_title">Xem trước tính năng: xuất cơ sở dữ liệu</string>
+    <string name="export_io_error">Đã xảy ra lỗi trong khi lưu tệp</string>
+    <string name="export_okay">Xuất thành công</string>
+    <string name="export_message">Cơ sở dữ liệu SQLite có thể được xuất để phân tích bên ngoài.
+\n
+\nBạn sẽ chỉ có thể nhập nó trong các phiên bản tương lai của ứng dụng.</string>
 </resources>

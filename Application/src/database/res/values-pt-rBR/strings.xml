@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">usageDirect</string>
-    <string name="db_wait">Coletando dados…</string>
     <string name="db_job_schedule_failure">Aviso: a coleta automática de dados não pode ser configurada, verifique periodicamente</string>
     <string name="chart_average">∅ Utilização média do aplicativo por dia da semana</string>
     <string name="widget_today_name">Tempo total hoje</string>
     <string name="charts_clock_pie">%s como um gráfico circular de relógio</string>
     <string name="charts_clock_pie_general">Gráficos circulares de relógio recentes</string>
     <string name="menu_feedback">Envie uma ideia</string>
-    <string name="feedback_message">useDirect continua procurando por mais ideias interessantes para representações mais perspicazes de seus dados.
+    <string name="feedback_message">usageDirect continua procurando por mais ideias interessantes para representações mais perspicazes de seus dados.
 \n
-\nJá tenho uma série de coisas em meu roteiro, mas quero ouvir de você: o que você acha do useDirect\?</string>
+\nJá tenho uma série de coisas em meu roteiro, mas quero ouvir de você: o que você acha do usageDirect\?</string>
     <string name="cancel">Cancelar</string>
     <string name="charts_bar_daily_condensed">Uso de aplicativos de longo prazo</string>
     <string name="usagestat_hide">Excluir esta linha</string>
@@ -19,5 +18,21 @@
     <plurals name="menu_restore_hidden_details">
         <item quantity="one">Gostaria de restaurar uma linha excluída\?</item>
         <item quantity="other">Você tem %1$d linhas excluídas. Gostaria de restaurá-las\?</item>
+    </plurals>
+    <string name="menu_export">Exportar banco de dados</string>
+    <string name="export_title">Prévia de funcionalidade: exportar banco de dados</string>
+    <string name="export_message">O banco de dados SQLite pode ser exportado para análise externa.
+\n
+\nVocê só poderá importá-la em versões futuras do aplicativo.</string>
+    <string name="export_io_error">Ocorreu um erro ao salvar o arquivo</string>
+    <string name="export_okay">Exportação concluída com sucesso</string>
+    <string name="color_explanation">Os aplicativos coloridos são destacados em toda o aplicativo, permitindo que você se concentre em seu uso. Defina uma ordem usando o arrastar e soltar para determinar sua ordenação em gráficos e na tela principal.</string>
+    <string name="menu_color">Aplicativos em cores</string>
+    <string name="confirm">Confirmar</string>
+    <string name="uncolor">Remover cores</string>
+    <string name="drag_handle">Alça de arrasto</string>
+    <plurals name="time_used_total_hours">
+        <item quantity="one">%1$d hora de uso total</item>
+        <item quantity="other">%1$d horas de uso total</item>
     </plurals>
 </resources>

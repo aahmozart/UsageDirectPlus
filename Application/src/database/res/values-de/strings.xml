@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">usageDirect</string>
-    <string name="db_wait">Daten werden gesammelt…</string>
     <string name="chart_average">∅ Durchschnittliche Nutzungszeit pro Wochentag</string>
     <string name="widget_today_name">Nutzungszeit heute</string>
     <string name="db_job_schedule_failure">Warnung: automatische Datensammlung konnte nicht eingerichtet werden, bitte schaue regelmäßig vorbei</string>
@@ -12,7 +11,7 @@
     <string name="usagestat_hide">Diese Reihe löschen</string>
     <string name="menu_restore_hidden">Gelöschte Reihen wiederherstellen</string>
     <string name="menu_restore_hidden_positive">Wiederherstellen</string>
-    <string name="feedback_message">usageDirect isst immer auf der Suche nach interessanten, neuen Ideen für einsichtreiche Darstellungen von Daten.
+    <string name="feedback_message">usageDirect ist immer auf der Suche nach interessanten, neuen Ideen für einsichtreiche Darstellungen von Daten.
 \n
 \nIch habe selbst schon ein paar Dinge geplant, aber ich will auch von dir hören: was denkst du über usageDirect\?</string>
     <string name="charts_bar_daily_condensed">Nutzungszeit über langen Zeitraum</string>
@@ -20,4 +19,20 @@
         <item quantity="one">Möchtest du eine gelöschte Reihe wiederherstellen\?</item>
         <item quantity="other">Insgesamt hast du %1$d Reihen gelöscht. Möchtest du sie wiederherstellen\?</item>
     </plurals>
+    <string name="menu_export">Datenbank exportieren</string>
+    <string name="export_title">Feature-Vorschau: Datenbank exportieren</string>
+    <string name="export_io_error">Ein Fehler beim Speichern der Datei ist aufgetreten</string>
+    <string name="export_okay">Export erfolgreich</string>
+    <string name="menu_color">Apps färben</string>
+    <string name="confirm">Bestätigen</string>
+    <string name="uncolor">Farbe entfernen</string>
+    <string name="drag_handle">Verschiebe-Griff</string>
+    <plurals name="time_used_total_hours">
+        <item quantity="one">%1$d Stunde insgesamt genutzt</item>
+        <item quantity="other">%1$d Stunden insgesamt genutzt</item>
+    </plurals>
+    <string name="export_message">Die SQLite-Datenbank kann für externe, weitergehende Analysen exportiert werden.
+\n
+\nSie kann erst in zukünftigen Versionen der App importiert werden.</string>
+    <string name="color_explanation">Gefärbte Apps werden in der Anwendung speziell hervorgehoben, sodass du deren Nutzung besonders beobachten kannst. Wähle mittels Drag-and-Drop eine Reihenfolge, um die Sortierung in Graphen und auf dem Hauptbildschirm zu bestimmen.</string>
 </resources>

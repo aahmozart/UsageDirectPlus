@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">usageDirect</string>
-    <string name="db_schedule">Insercións automáticas programadas</string>
     <string name="db_job_schedule_failure">Aviso: a recoleción automática de datos non se puido establecer, volve a comprobalos con regularidade</string>
     <string name="chart_average">∅ Uso promedio da app por día</string>
     <string name="charts_clock_pie_general">Gráficos de uso recentes</string>
@@ -10,7 +9,7 @@
     <string name="charts_clock_pie">%s como un gráfico circular</string>
     <string name="feedback_message">usageDirect busca mellores xeitos e ideas interesantes para representar os teus datos.
 \n
-\nXa temos varias ideas no forno, pero queremos coñecer as túas: que opinas acerca de usageDirect\?</string>
+\nXa temos varias ideas no forno, pero encantaríanos coñecer as túas: que opinas acerca de usageDirect\?</string>
     <string name="cancel">Cancelar</string>
     <string name="charts_bar_daily_condensed">Uso histórico da app</string>
     <string name="usagestat_hide">Eliminar esta fila</string>
@@ -19,5 +18,21 @@
     <plurals name="menu_restore_hidden_details">
         <item quantity="one">Tes, en total, %1$d fila eliminada. Queres restablecela\?</item>
         <item quantity="other">Tes, en total, %1$d filas eliminadas. Queres restablecelas\?</item>
+    </plurals>
+    <string name="menu_export">Exportar base de datos</string>
+    <string name="export_title">Vista previa: exportar base de datos</string>
+    <string name="export_message">A base de datos SQLite pódese exportar para análise externa.
+\n
+\nSó poderás importala en versións futuras da app.</string>
+    <string name="export_io_error">Algo fallou ao gardar o ficheiro</string>
+    <string name="export_okay">A exportación foi correcta</string>
+    <string name="color_explanation">As apps coloreadas están resaltadas en toda a aplicación, permitíndoche centrarte no seu uso. Establece a orde usando arrastrar-e-soltar para determinar a súa orde nos gráficos e pantalla principal.</string>
+    <string name="menu_color">Cores das apps</string>
+    <string name="confirm">Confirmar</string>
+    <string name="uncolor">Eliminar cor</string>
+    <string name="drag_handle">Xestión de arrastre</string>
+    <plurals name="time_used_total_hours">
+        <item quantity="one">%1$d hora de uso total</item>
+        <item quantity="other">%1$d horas de uso total</item>
     </plurals>
 </resources>

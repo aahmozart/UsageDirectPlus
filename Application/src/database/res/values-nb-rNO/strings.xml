@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">usageDirect</string>
-    <string name="db_wait">Samler data…</string>
     <string name="db_job_schedule_failure">Advarsel: automatisk datainnsamling kunne ikke settes opp. Vennligst sjekk regelmessig</string>
     <string name="chart_average">∅ Gjennomsnittlig appbruk per ukedag</string>
     <string name="charts_clock_pie">%s som et sektordiagram</string>
@@ -20,4 +19,20 @@
     </plurals>
     <string name="charts_bar_daily_condensed">Langsiktig appbruk</string>
     <string name="menu_restore_hidden_positive">Gjenopprett</string>
+    <string name="menu_export">Eksporter database</string>
+    <string name="export_title">Feature preview: Eksporter database</string>
+    <string name="export_message">SQLite-databasen kan eksporteres for ekstern analyse.
+\n
+\nDu vil bare kunne importere den i fremtidige appversjoner.</string>
+    <string name="export_io_error">Det oppstod en feil under lagring av filen</string>
+    <string name="export_okay">Eksporten var vellykket</string>
+    <string name="color_explanation">Fargede apper er uthevet i hele applikasjonen, slik at du kan fokusere på bruken av dem. Angi en rekkefølge ved å dra og slippe for å bestemme sorteringen i grafer og på hovedskjermen.</string>
+    <string name="menu_color">Farge apps</string>
+    <string name="confirm">Bekrefte</string>
+    <string name="drag_handle">Dra håndtaket</string>
+    <string name="uncolor">Fjern farge</string>
+    <plurals name="time_used_total_hours">
+        <item quantity="one">%1$d time brukt totalt</item>
+        <item quantity="other">%1$d timer totalt brukt</item>
+    </plurals>
 </resources>
