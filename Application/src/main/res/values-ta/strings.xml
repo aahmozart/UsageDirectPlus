@@ -1,2 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="explanation_access_appusage_title">பயன்பாட்டுப் பயன்பாடு அனுமதி</string>
+    <string name="explanation_access_appusage_message">அடுத்த பக்கத்தில் உங்கள் கணினியின் பயன்பாட்டு புள்ளிவிவரங்களுக்கு அணுகலை வழங்கவும்.</string>
+    <string name="leave_app">பயன்பாட்டை விட்டு வெளியேறு</string>
+    <string name="not_used">பயன்படுத்தப்படவில்லை</string>
+    <string name="menu_about">பற்றி</string>
+    <string name="launch_unavailable">பயன்பாட்டை தொடங்க முடியவில்லை</string>
+    <string name="menu_charts">விளக்கப்படங்கள்</string>
+    <string name="last_used_now">தற்போது பயன்பாட்டில் உள்ளது</string>
+    <string name="charts_bar_daily">ஒரு நாளைக்கு பயன்பாட்டுப் பயன்பாடு</string>
+    <string name="ts_today">இன்று</string>
+    <string name="ts_yesterday">நேற்று</string>
+    <string name="ts_this_week">இந்த வாரம்</string>
+    <string name="ts_last_week">கடந்த வாரம்</string>
+    <string name="ts_calendar_week">வாரம் %s</string>
+    <string name="menu_reload">மறுஏற்றவும்</string>
+    <string name="total">மொத்தம்</string>
+    <string name="last_used_this_day">கடைசியாக இந்த நாளில் பயன்படுத்தப்பட்டது</string>
+    <string name="icon">உருவம்</string>
+    <string name="title_feature_preview">usageDirect அம்ச முன்னோட்டம்</string>
+</resources>

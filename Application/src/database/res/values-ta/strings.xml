@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chart_average">∅ வாரத்திற்கு சராசரி பயன்பாட்டு பயன்பாடு</string>
+    <string name="charts_clock_pie">%s கடிகார பை விளக்கப்படம்</string>
+    <string name="widget_today_name">இன்றைய நேரம்</string>
+    <string name="cancel">ரத்துசெய்</string>
+    <string name="charts_bar_daily_condensed">நீண்ட கால பயன்பாட்டு பயன்பாடு</string>
+    <string name="usagestat_hide">இந்த வரிசையை நீக்கு</string>
+    <string name="menu_restore_hidden">நீக்கப்பட்ட வரிசைகளை மீட்டெடு</string>
+    <string name="menu_restore_hidden_positive">மீட்டெடு</string>
+    <plurals name="menu_restore_hidden_details">
+        <item quantity="one">நீக்கப்பட்ட ஒரு வரிசையை மீட்டெடுக்க விரும்புகிறீர்களா\?</item>
+        <item quantity="other">நீங்கள் மொத்தம் %1$d வரிசைகளை நீக்கியுள்ளீர்கள். நீங்கள் அவற்றை மீட்டெடுக்க விரும்புகிறீர்களா\?</item>
+    </plurals>
+    <string name="app_name">usageDirect</string>
+    <string name="db_job_schedule_failure">எச்சரிக்கை: தானியங்கி தரவு சேகரிப்பை அமைக்க முடியவில்லை, தயவுசெய்து தவறாமல் சரிபார்க்கவும்</string>
+    <string name="charts_clock_pie_general">சமீபத்திய கடிகாரம் பை விளக்கப்படங்கள்</string>
+    <string name="menu_feedback">ஒரு யோசனையை அனுப்பவும்</string>
+    <string name="feedback_message">பயன்பாடு உங்கள் தரவின் உள்ளார்ந்த பிரதிநிதித்துவங்களுக்கு இன்னும் சுவாரஸ்யமான யோசனைகளை தேடுகிறது.
+\n
+\nநான் ஏற்கனவே என் வரைபடத்தில் பல விஷயங்களை வைத்திருக்கிறேன், ஆனால் நான் உங்களிடம் இருந்து கேட்க விரும்புகிறேன்: பயன்பாடு பற்றி நீங்கள் என்ன நினைக்கிறீர்கள்\?</string>
+</resources>
