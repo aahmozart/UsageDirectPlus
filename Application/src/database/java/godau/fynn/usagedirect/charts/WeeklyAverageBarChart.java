@@ -6,9 +6,12 @@ import godau.fynn.usagedirect.R;
 import godau.fynn.usagedirect.SimpleUsageStat;
 import godau.fynn.usagedirect.persistence.AppColor;
 import godau.fynn.usagedirect.persistence.HistoryDatabase;
+import godau.fynn.usagedirect.wrapper.TextFormat;
 import im.dacer.androidcharts.bar.MultiValue;
 import im.dacer.androidcharts.bar.Value;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -81,51 +84,71 @@ public class WeeklyAverageBarChart extends UsageStatBarChart {
         @Transaction
         public Value[] getData() {
 
-            // First step: average over ALL days
+            Value[] values = new Value[DayOfWeek.values().length];
 
-            Map<String, Long> applicationSum = new HashMap<>();
-
-            for (String applicationId : getAllApplicationIds()) {
-                applicationSum.put(applicationId, 0L);
-            }
-
+            // Query usage data for all days (grouped by day in UsageDay object)
             UsageDay[] usageDays = getUsageDays();
+            String[] allApplicationIds = getAllApplicationIds();
 
-            for (UsageDay usageDay : usageDays) {
-                for (SimpleUsageStat stat : usageDay.usageStats) {
+            for (int day = 0; day < DayOfWeek.values().length; day++) {
+                DayOfWeek weekday = DayOfWeek.values()[day];
 
-                    applicationSum.put(stat.getApplicationId(),
-                        applicationSum.get(stat.getApplicationId())
-                            + stat.getTimeUsed()
-                    );
+                // Prepare sum map by setting each existing package name to zero
+                Map<String, Long> applicationSum = new HashMap<>();
+                for (String applicationId : allApplicationIds) {
+                    applicationSum.put(applicationId, 0L);
                 }
+
+                // Count days for average calculation
+                int daysConsidered = 0;
+                for (UsageDay usageDay : usageDays) {
+
+                    // Skip days that are not of the correct weekday
+                    if (LocalDate.ofEpochDay(usageDay.day).getDayOfWeek() != weekday) continue;
+                    else daysConsidered++;
+
+                    for (SimpleUsageStat stat : usageDay.usageStats) {
+
+                        applicationSum.put(stat.getApplicationId(),
+                                applicationSum.get(stat.getApplicationId())
+                                        + stat.getTimeUsed()
+                        );
+                    }
+                }
+
+                // Pull values for colored apps
+                AppColor[] colors = getColors();
+
+                @ColorInt Integer[] colorInts = new Integer[colors.length + 1];
+                int[] averageTimes = new int[colors.length + 1];
+
+                for (int i = 0; i < colors.length; i++) {
+                    AppColor color = colors[i];
+
+                    colorInts[i] = color.getColor();
+                    averageTimes[i] = (int) (applicationSum.get(color.getApplicationId()) / 1000 / daysConsidered);
+
+                    // Remove from map
+                    applicationSum.remove(color.getApplicationId());
+                }
+
+                // Add values for uncolored apps (all remaining values in map)
+                colorInts[colors.length] = null;
+                int finalDaysConsidered = daysConsidered;
+                averageTimes[colors.length] = applicationSum.values()
+                        .stream()
+                        .mapToInt(l -> (int) (l / 1000 / finalDaysConsidered))
+                        .sum();
+
+                // Construct MultiValue for weekday
+                values[day] =
+                        new MultiValue(
+                                averageTimes, colorInts, TextFormat.formatWeekday(weekday)
+                        );
             }
 
-            AppColor[] colors = getColors();
+            return values;
 
-            @ColorInt Integer[] colorInts = new Integer[colors.length + 1];
-            int[] averageTimes = new int[colors.length + 1];
-
-            for (int i = 0; i < colors.length; i++) {
-                AppColor color = colors[i];
-
-                colorInts[i] = color.getColor();
-                averageTimes[i] = (int) (applicationSum.get(color.getApplicationId()) / 1000 / usageDays.length);
-                applicationSum.remove(color.getApplicationId());
-            }
-
-            colorInts[colors.length] = null;
-            averageTimes[colors.length] = applicationSum.values()
-                    .stream()
-                    .mapToInt(l -> (int) (l / 1000 / usageDays.length))
-                    .sum();
-
-            return new Value[]{
-                    new MultiValue(
-                            averageTimes, colorInts, "Overall average"
-                    )
-            };
         }
-
     }
 }
