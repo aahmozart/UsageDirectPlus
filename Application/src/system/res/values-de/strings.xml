@@ -15,13 +15,13 @@
     <string name="span_yearly">Jährlich</string>
     <string name="charts_bar_monthly">Nutzungszeit pro Monat</string>
     <string name="charts_bar_yearly">Nutzungszeit pro Jahr</string>
-    <string name="app_name">"Museum einer  kaputten API"</string>
+    <string name="app_name">Museum einer kaputten API</string>
     <string name="help_bug_1">Applikationen, die angeblich mehrere Tage hintereinander im Vordergrund gewesen sind</string>
     <string name="charts_bar_weekly">Nutzungszeit pro Woche</string>
     <string name="error_no_data">Ein Fehler ist aufgetreten: das System hat keine Daten zurückgegeben. Bitte starte die App neu.</string>
-    <string name="help_unreliable_3">Befolge daraufhin bitte diesen Ratschlag:</string>
+    <string name="help_unreliable_3">Befolge deshalb bitte diesen Ratschlag:</string>
     <string name="help_unreliable_4">Nutze nicht diesen API Aufruf.</string>
-    <string name="help_unreliable_5">Es ist eine Zeitverschwendung.</string>
+    <string name="help_unreliable_5">Es ist Zeitverschwendung.</string>
     <string name="menu_charts">Sonderausstellung: Diagramme</string>
     <string name="help_unreliable_1">Diese Anwendung nutzt folgenden Methodenaufruf um seine Daten anzufordern.</string>
     <string name="help_unreliable_2">Bitte erkunde die Daten ein wenig. Früher oder später wirst du auf einige der folgenden Fehler treffen.</string>
