@@ -135,10 +135,14 @@ public class WeeklyAverageBarChart extends UsageStatBarChart {
                 // Add values for uncolored apps (all remaining values in map)
                 colorInts[colors.length] = null;
                 int finalDaysConsidered = daysConsidered;
-                averageTimes[colors.length] = applicationSum.values()
-                        .stream()
-                        .mapToInt(l -> (int) (l / 1000 / finalDaysConsidered))
-                        .sum();
+                if (finalDaysConsidered > 0) {
+                    averageTimes[colors.length] = applicationSum.values()
+                            .stream()
+                            .mapToInt(l -> (int) (l / 1000 / finalDaysConsidered))
+                            .sum();
+                } else {
+                    averageTimes[colors.length] = 0;
+                }
 
                 // Construct MultiValue for weekday
                 values[day] =
