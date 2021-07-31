@@ -33,7 +33,8 @@ public abstract class ColorPickerDialog extends AlertDialog.Builder {
                     0
             );
         } else {
-            appColor = timeAppColor.getAppColor();
+            // Don't edit existing object which is also used for rendering to support canceling
+            appColor = new AppColor(timeAppColor.getAppColor());
         }
 
         View view = LayoutInflater.from(getContext())

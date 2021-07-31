@@ -30,6 +30,12 @@ public class AppColor {
         this.priority = priority;
     }
 
+    public AppColor(AppColor appColor) {
+        this.applicationId = appColor.applicationId;
+        this.color = appColor.color;
+        this.priority = appColor.priority;
+    }
+
     public int getColor() {
         return color;
     }
