@@ -25,4 +25,12 @@
     <string name="export_message">Cơ sở dữ liệu SQLite có thể được xuất để phân tích bên ngoài.
 \n
 \nBạn sẽ chỉ có thể nhập nó trong các phiên bản tương lai của ứng dụng.</string>
+    <string name="color_explanation">Các ứng dụng được tô màu được đánh dấu xuyên suốt ứng dụng, điều này cho phép bạn tập trung vào dữ liệu sử dụng của chúng. Đặt thứ tự bằng cách kéo thả để xác định sự sắp xếp của chúng trong các biểu đồ và trên màn hình chính.</string>
+    <string name="menu_color">Tô màu ứng dụng</string>
+    <string name="confirm">Xác nhận</string>
+    <string name="uncolor">Xóa màu</string>
+    <string name="drag_handle">Tay kéo</string>
+    <plurals name="time_used_total_hours">
+        <item quantity="other">Tổng sử dụng %1$d tiếng</item>
+    </plurals>
 </resources>
