@@ -18,17 +18,25 @@
 
 package godau.fynn.usagedirect.view.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.widget.Toast;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
+import androidx.recyclerview.widget.RecyclerView;
 import godau.fynn.typedrecyclerview.SimpleRecyclerViewAdapter;
-import godau.fynn.usagedirect.*;
+import godau.fynn.usagedirect.BuildConfig;
+import godau.fynn.usagedirect.Color;
+import godau.fynn.usagedirect.R;
+import godau.fynn.usagedirect.SimpleUsageStat;
 import godau.fynn.usagedirect.thread.icon.IconThread;
 import org.ocpsoft.prettytime.PrettyTime;
 
@@ -105,6 +113,7 @@ public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat,
         }
     }
 
+    @SuppressLint("ResourceType") // apparently incorrect annotation of TypedArray.getColor causes lint to complain
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, SimpleUsageStat usageStat, final int position) {
 
@@ -116,11 +125,52 @@ public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat,
 
         viewHolder.lastTimeUsed.setVisibility(View.GONE);
 
-        if (colorMap != null && colorMap.containsKey(usageStat.getApplicationId())) {
-            viewHolder.itemView.setBackgroundColor(colorMap.get(usageStat.getApplicationId()));
+        // Set colors (background and text)
+        TypedArray array;
+        if (position > 0 && colorMap != null && colorMap.containsKey(usageStat.getApplicationId())) {
+
+            @ColorInt int backgroundColor = colorMap.get(usageStat.getApplicationId());
+
+            viewHolder.itemView.setBackgroundColor(backgroundColor);
+
+            @StyleRes int style;
+            if (
+                    Color.luminance(backgroundColor) < 0.4f
+            ) {
+                // System dark theme
+                style = android.R.style.Theme_DeviceDefault;
+            } else {
+                // System light theme
+                style = android.R.style.Theme_DeviceDefault_Light;
+            }
+
+            Resources.Theme theme = context.getResources().newTheme();
+            theme.applyStyle(style, true);
+
+            array = theme.obtainStyledAttributes(new int[]{
+                    android.R.attr.textColorPrimary, android.R.attr.textColorSecondary
+            });
         } else {
             viewHolder.itemView.setBackground(null);
+
+            // Current theme (DayNight from API 29 onwards)
+            array = context.getTheme().obtainStyledAttributes(new int[] {
+                    android.R.attr.textColorPrimary, android.R.attr.textColorSecondary
+            });
         }
+
+        viewHolder.packageName.setTextColor(
+                array.getColor(0, Color.RED)
+        );
+
+        viewHolder.timeUsed.setTextColor(
+                array.getColor(1, Color.RED)
+        );
+        viewHolder.lastTimeUsed.setTextColor(
+                array.getColor(1, Color.RED)
+        );
+
+        array.recycle();
 
         if (lastUsedMap != null && lastUsedMap.containsKey(usageStat.getApplicationId())) {
 
