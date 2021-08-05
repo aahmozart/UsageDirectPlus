@@ -40,14 +40,16 @@ public class DatabaseUsageListViewPagerAdapter extends UsageListViewPagerAdapter
     private SimpleUsageStat[] usageStats;
     private long[] days;
     private LastUsedStat[] lastUsedStats;
+    private Map<String, Integer> colorMap;
 
     public DatabaseUsageListViewPagerAdapter(Activity context, SimpleUsageStat[] usageStats, long[] days,
-                                             LastUsedStat[] lastUsedStats) {
+                                             LastUsedStat[] lastUsedStats, Map<String, Integer> colorMap) {
         super(context);
 
         this.usageStats = usageStats;
         this.days = days;
         this.lastUsedStats = lastUsedStats;
+        this.colorMap = colorMap;
     }
 
     @Override
@@ -81,6 +83,12 @@ public class DatabaseUsageListViewPagerAdapter extends UsageListViewPagerAdapter
         }
 
         return applicationLastUsedMap;
+    }
+
+    @NonNull
+    @Override
+    protected Map<String, Integer> getColorMap() {
+        return colorMap;
     }
 
     @Nullable

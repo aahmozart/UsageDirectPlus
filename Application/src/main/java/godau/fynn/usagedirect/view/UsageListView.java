@@ -54,4 +54,8 @@ public class UsageListView extends RecyclerView {
     public void setLastUsedMap(Map<String, Long> map) {
         adapter.setLastUsedMap(map);
     }
+
+    public void setColorMap(Map<String, Integer> colorMap) {
+        adapter.setColorMap(colorMap);
+    }
 }

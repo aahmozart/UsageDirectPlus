@@ -77,10 +77,12 @@ public abstract class UsageListViewPagerAdapter extends PagerAdapter {
             Collections.sort(usageStatsList, new Comparator.TimeInForegroundComparatorDesc());
 
             final Map<String, Long> lastUsedMap = getLastUsedMap();
+            final Map<String, Integer> colorMap = getColorMap();
 
             context.runOnUiThread(() -> {
                 usageListView.setLastUsedMap(lastUsedMap);
                 usageListView.setUsageStatsList(usageStatsList);
+                usageListView.setColorMap(colorMap);
 
                 // Get missing icons from system
                 new AppUsageStatisticsIconThread(
@@ -129,4 +131,8 @@ public abstract class UsageListViewPagerAdapter extends PagerAdapter {
      * @return A mapping of package names to last used timestamp
      */
     protected abstract @NonNull Map<String, Long> getLastUsedMap();
+
+    protected @NonNull Map<String, Integer> getColorMap() {
+        return new HashMap<>();
+    }
 }

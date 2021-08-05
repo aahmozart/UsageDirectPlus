@@ -45,6 +45,7 @@ import java.util.Map;
 public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat, UsageListAdapter.ViewHolder> {
 
     private Map<String, Long> lastUsedMap;
+    private Map<String, Integer> colorMap;
     private final PrettyTime prettyTime = new PrettyTime();
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -115,6 +116,12 @@ public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat,
 
         viewHolder.lastTimeUsed.setVisibility(View.GONE);
 
+        if (colorMap != null && colorMap.containsKey(usageStat.getApplicationId())) {
+            viewHolder.itemView.setBackgroundColor(colorMap.get(usageStat.getApplicationId()));
+        } else {
+            viewHolder.itemView.setBackground(null);
+        }
+
         if (lastUsedMap != null && lastUsedMap.containsKey(usageStat.getApplicationId())) {
 
             long lastUsed = lastUsedMap.get(usageStat.getApplicationId());
@@ -184,5 +191,9 @@ public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat,
 
     public void setLastUsedMap(Map<String, Long> map) {
         lastUsedMap = map;
+    }
+
+    public void setColorMap(Map<String, Integer> map) {
+        colorMap = map;
     }
 }

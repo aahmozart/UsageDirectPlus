@@ -27,11 +27,14 @@ import godau.fynn.usagedirect.persistence.UsageStatsDao;
 import godau.fynn.usagedirect.view.adapter.TimespanPagerAdapter;
 import godau.fynn.usagedirect.view.adapter.UsageListViewPagerAdapter;
 
+import java.util.Map;
+
 public class DatabaseTimespanPagerAdapter extends TimespanPagerAdapter {
 
     private SimpleUsageStat[] usageStats;
     private long[] days;
     private LastUsedStat[] lastUsedStats;
+    private Map<String, Integer> colorMap;
 
     private DatabaseUsageListViewPagerAdapter adapter;
 
@@ -50,12 +53,14 @@ public class DatabaseTimespanPagerAdapter extends TimespanPagerAdapter {
 
         this.lastUsedStats = database.getLastUsedDao().getLastUsedStats();
 
+        colorMap = database.getAppColorDao().getAppColorMap();
+
         database.close();
     }
 
     @Override
     public UsageListViewPagerAdapter getUsageListViewPagerAdapter(int position) {
-        return adapter = new DatabaseUsageListViewPagerAdapter(context, usageStats, days, lastUsedStats);
+        return adapter = new DatabaseUsageListViewPagerAdapter(context, usageStats, days, lastUsedStats, colorMap);
     }
 
     @Override
