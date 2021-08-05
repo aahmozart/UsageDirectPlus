@@ -48,33 +48,17 @@ public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat,
     private final PrettyTime prettyTime = new PrettyTime();
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView mPackageName;
-        private final TextView mLastTimeUsed;
-        private final TextView mTimeUsed;
-        private final ImageView mAppIcon;
+        private final TextView packageName;
+        private final TextView lastTimeUsed;
+        private final TextView timeUsed;
+        private final ImageView appIcon;
 
         public ViewHolder(View v) {
             super(v);
-            mPackageName = v.findViewById(R.id.textview_package_name);
-            mLastTimeUsed = v.findViewById(R.id.textview_last_time_used);
-            mTimeUsed = v.findViewById(R.id.textview_time_used);
-            mAppIcon = v.findViewById(R.id.app_icon);
-        }
-
-        public TextView getLastTimeUsed() {
-            return mLastTimeUsed;
-        }
-
-        public TextView getTimeUsed() {
-            return mTimeUsed;
-        }
-
-        public TextView getPackageName() {
-            return mPackageName;
-        }
-
-        public ImageView getAppIcon() {
-            return mAppIcon;
+            packageName = v.findViewById(R.id.textview_package_name);
+            lastTimeUsed = v.findViewById(R.id.textview_last_time_used);
+            timeUsed = v.findViewById(R.id.textview_time_used);
+            appIcon = v.findViewById(R.id.app_icon);
         }
     }
 
@@ -101,10 +85,10 @@ public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat,
             final ViewHolder viewHolder = new ViewHolder(v);
 
             // For performance, only set OnClickListener once
-            viewHolder.getAppIcon().setOnClickListener(v1 -> {
+            viewHolder.appIcon.setOnClickListener(v1 -> {
                 // Launch app that this icon is associated with
                 try {
-                    String packageName = (String) viewHolder.getAppIcon().getTag();
+                    String packageName = (String) viewHolder.appIcon.getTag();
                     Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
                     context.startActivity(intent);
                 } catch (NullPointerException e) {
@@ -124,12 +108,12 @@ public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat,
     public void onBindViewHolder(ViewHolder viewHolder, SimpleUsageStat usageStat, final int position) {
 
         String name = IconThread.nameMap.get(usageStat.getApplicationId());
-        viewHolder.getPackageName().setText(
+        viewHolder.packageName.setText(
                 name == null?
                 usageStat.getApplicationId() : name
         );
 
-        viewHolder.getLastTimeUsed().setVisibility(View.GONE);
+        viewHolder.lastTimeUsed.setVisibility(View.GONE);
 
         if (lastUsedMap != null && lastUsedMap.containsKey(usageStat.getApplicationId())) {
 
@@ -145,39 +129,39 @@ public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat,
 
             if (lastUsedOnSameDay) {
 
-                viewHolder.getLastTimeUsed().setVisibility(View.VISIBLE);
+                viewHolder.lastTimeUsed.setVisibility(View.VISIBLE);
 
                 if (day.isEqual(LocalDate.now())) {
 
                     if (usageStat.getApplicationId().equals(BuildConfig.APPLICATION_ID))
-                        viewHolder.getLastTimeUsed().setText(R.string.last_used_now);
+                        viewHolder.lastTimeUsed.setText(R.string.last_used_now);
                     else if (lastUsed > 1) {
-                        viewHolder.getLastTimeUsed().setText(
+                        viewHolder.lastTimeUsed.setText(
                                 prettyTime.format(new Date(lastUsed))
                         );
                     } else {
-                        viewHolder.getLastTimeUsed().setText(R.string.not_used);
+                        viewHolder.lastTimeUsed.setText(R.string.not_used);
                     }
 
                 } else {
-                    viewHolder.getLastTimeUsed().setText(R.string.last_used_this_day);
+                    viewHolder.lastTimeUsed.setText(R.string.last_used_this_day);
                 }
             } else {
-                viewHolder.getLastTimeUsed().setVisibility(View.GONE);
+                viewHolder.lastTimeUsed.setVisibility(View.GONE);
             }
         } else {
-            viewHolder.getLastTimeUsed().setVisibility(View.GONE);
+            viewHolder.lastTimeUsed.setVisibility(View.GONE);
         }
 
         long secondsUsed = usageStat.getTimeUsed() / 1000;
-        viewHolder.getTimeUsed().setText(context.getString(
+        viewHolder.timeUsed.setText(context.getString(
                 R.string.time_used_time_only,
                 secondsUsed / 3600, (secondsUsed / 60) % 60, secondsUsed % 60)
         );
 
-        viewHolder.getAppIcon().setImageDrawable(IconThread.iconMap.get(usageStat.getApplicationId()));
+        viewHolder.appIcon.setImageDrawable(IconThread.iconMap.get(usageStat.getApplicationId()));
 
-        viewHolder.getAppIcon().setTag(usageStat.getApplicationId());
+        viewHolder.appIcon.setTag(usageStat.getApplicationId());
 
         viewHolder.itemView.setTag(usageStat);
     }
