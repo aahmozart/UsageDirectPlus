@@ -74,8 +74,6 @@ public abstract class UsageListViewPagerAdapter extends PagerAdapter {
                     usageStatsList.remove(i);
             }
 
-            Collections.sort(usageStatsList, new Comparator.TimeInForegroundComparatorDesc());
-
             final Map<String, Long> lastUsedMap = getLastUsedMap();
             final Map<String, Integer> colorMap = getColorMap();
 
@@ -123,6 +121,11 @@ public abstract class UsageListViewPagerAdapter extends PagerAdapter {
          */
     }
 
+    /**
+     * Usage stats must be pre-sorted globally by usage time (and priority, if applicable)
+     *
+     * TODO Sorting globally is not needed and takes additional time.
+     */
     protected abstract List<SimpleUsageStat> getUsageStats(int position);
 
     /**

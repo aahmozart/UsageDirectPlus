@@ -22,16 +22,14 @@ import android.app.Activity;
 import android.app.usage.UsageStats;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import godau.fynn.usagedirect.Comparator;
 import godau.fynn.usagedirect.SimpleUsageStat;
 import godau.fynn.usagedirect.view.adapter.UsageListViewPagerAdapter;
 import godau.fynn.usagedirect.wrapper.Interval;
 import godau.fynn.usagedirect.wrapper.IntervalTextFormat;
 import godau.fynn.usagedirect.wrapper.UsageStatsWrapper;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
 
 public class SystemUsageListViewPagerAdapter extends UsageListViewPagerAdapter {
 
@@ -66,7 +64,9 @@ public class SystemUsageListViewPagerAdapter extends UsageListViewPagerAdapter {
             }
         }
 
-        return SimpleUsageStat.asSimpleStats(usageStats);
+        List<SimpleUsageStat> simpleUsageStats = SimpleUsageStat.asSimpleStats(usageStats);
+        Collections.sort(simpleUsageStats, new Comparator.TimeInForegroundComparatorDesc());
+        return simpleUsageStats;
     }
 
     @NonNull

@@ -55,7 +55,13 @@ public abstract class UsageStatsDao {
     /**
      * @return All visible usage stats
      */
-    @Query("SELECT * FROM usageStats WHERE hidden = 0")
+    @Query(
+            "SELECT timeUsed, usageStats.applicationId, day, hidden " +
+                    "FROM usageStats " +
+                    "LEFT JOIN colors ON colors.applicationId = usageStats.applicationId " +
+                    "WHERE hidden = 0 " +
+                    "ORDER BY priority DESC, timeUsed DESC"
+    )
     public abstract SimpleUsageStat[] getUsageStats();
 
     /**
