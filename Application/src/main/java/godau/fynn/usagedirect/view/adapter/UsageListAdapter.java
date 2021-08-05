@@ -125,52 +125,54 @@ public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat,
 
         viewHolder.lastTimeUsed.setVisibility(View.GONE);
 
-        // Set colors (background and text)
-        TypedArray array;
-        if (position > 0 && colorMap != null && colorMap.containsKey(usageStat.getApplicationId())) {
+        if (position > 0) {
+            // Set colors (background and text)
+            TypedArray array;
+            if (colorMap != null && colorMap.containsKey(usageStat.getApplicationId())) {
 
-            @ColorInt int backgroundColor = colorMap.get(usageStat.getApplicationId());
+                @ColorInt int backgroundColor = colorMap.get(usageStat.getApplicationId());
 
-            viewHolder.itemView.setBackgroundColor(backgroundColor);
+                viewHolder.itemView.setBackgroundColor(backgroundColor);
 
-            @StyleRes int style;
-            if (
-                    Color.luminance(backgroundColor) < 0.4f
-            ) {
-                // System dark theme
-                style = android.R.style.Theme_DeviceDefault;
+                @StyleRes int style;
+                if (
+                        Color.luminance(backgroundColor) < 0.4f
+                ) {
+                    // System dark theme
+                    style = android.R.style.Theme_DeviceDefault;
+                } else {
+                    // System light theme
+                    style = android.R.style.Theme_DeviceDefault_Light;
+                }
+
+                Resources.Theme theme = context.getResources().newTheme();
+                theme.applyStyle(style, true);
+
+                array = theme.obtainStyledAttributes(new int[]{
+                        android.R.attr.textColorPrimary, android.R.attr.textColorSecondary
+                });
             } else {
-                // System light theme
-                style = android.R.style.Theme_DeviceDefault_Light;
+                viewHolder.itemView.setBackground(null);
+
+                // Current theme (DayNight from API 29 onwards)
+                array = context.getTheme().obtainStyledAttributes(new int[]{
+                        android.R.attr.textColorPrimary, android.R.attr.textColorSecondary
+                });
             }
 
-            Resources.Theme theme = context.getResources().newTheme();
-            theme.applyStyle(style, true);
+            viewHolder.packageName.setTextColor(
+                    array.getColor(0, Color.RED)
+            );
 
-            array = theme.obtainStyledAttributes(new int[]{
-                    android.R.attr.textColorPrimary, android.R.attr.textColorSecondary
-            });
-        } else {
-            viewHolder.itemView.setBackground(null);
+            viewHolder.timeUsed.setTextColor(
+                    array.getColor(1, Color.RED)
+            );
+            viewHolder.lastTimeUsed.setTextColor(
+                    array.getColor(1, Color.RED)
+            );
 
-            // Current theme (DayNight from API 29 onwards)
-            array = context.getTheme().obtainStyledAttributes(new int[] {
-                    android.R.attr.textColorPrimary, android.R.attr.textColorSecondary
-            });
+            array.recycle();
         }
-
-        viewHolder.packageName.setTextColor(
-                array.getColor(0, Color.RED)
-        );
-
-        viewHolder.timeUsed.setTextColor(
-                array.getColor(1, Color.RED)
-        );
-        viewHolder.lastTimeUsed.setTextColor(
-                array.getColor(1, Color.RED)
-        );
-
-        array.recycle();
 
         if (lastUsedMap != null && lastUsedMap.containsKey(usageStat.getApplicationId())) {
 
