@@ -54,8 +54,9 @@ public abstract class UsageListViewPagerAdapter extends PagerAdapter {
         final UsageListView usageListView;
         if (recycleViewList.peek() == null) {
             usageListView = new UsageListView(context);
+            Log.d("ULVPA", "Creating usage list view for position " + position);
         } else {
-            Log.d("ULVPA", "Recycling usage list view from recycle bin");
+            Log.d("ULVPA", "Recycling usage list view from recycle bin for position " + position);
             usageListView = recycleViewList.poll();
             usageListView.setUsageStatsList(null);
         }

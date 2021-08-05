@@ -62,8 +62,9 @@ public class ClockPieViewPagerAdapter extends PagerAdapter {
         final FramedClockPieView clockPieFrame;
         if (recycleViewList.peek() == null) {
             clockPieFrame = new FramedClockPieView(context);
+            Log.d("CPVPA", "Creating clock pie frame view for position " + position);
         } else {
-            Log.d("CPVPA", "Recycling clock pie frame view from recycle bin");
+            Log.d("CPVPA", "Recycling clock pie frame view from recycle bin for position " + position);
             clockPieFrame = recycleViewList.poll();
             clockPieFrame.getClockPieView().setData(new ClockPieSegment[0]);
         }
