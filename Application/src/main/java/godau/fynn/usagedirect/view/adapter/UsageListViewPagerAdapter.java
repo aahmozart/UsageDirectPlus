@@ -41,6 +41,14 @@ public abstract class UsageListViewPagerAdapter extends PagerAdapter {
     private static final Queue<UsageListView> recycleViewList = new LinkedBlockingQueue<>();
     protected final Activity context;
 
+    /**
+     * For performance, don't instantiate the first two pages if they are not actually displayed.
+     *
+     * @see <a href="https://codeberg.org/fynngodau/usageDirect/issues/55">related issue</a>
+     */
+    private boolean fakeInstantiateFirstPages = true;
+
+
     public UsageListViewPagerAdapter(Activity context) {
         this.context = context;
     }
@@ -48,6 +56,14 @@ public abstract class UsageListViewPagerAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
+
+        // "This does not need to be a View[…]"
+        if (fakeInstantiateFirstPages && position < 2 && getCount() > 7) {
+            Log.d("CPVPA", "Faking item at position " + position);
+            return new Object();
+        }
+
+        if (position > 5) fakeInstantiateFirstPages = false;
 
         // Setup view
 
@@ -103,9 +119,11 @@ public abstract class UsageListViewPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        Log.d("ULVPA", "Moving item " + position + " to recycle bin");
-        container.removeView((View) object);
-        recycleViewList.add((UsageListView) object);
+        if (object instanceof View) {
+            Log.d("ULVPA", "Moving item " + position + " to recycle bin");
+            container.removeView((View) object);
+            recycleViewList.add((UsageListView) object);
+        } // Discard placeholder fake items
     }
 
     @Nullable

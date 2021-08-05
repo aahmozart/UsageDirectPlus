@@ -48,6 +48,13 @@ public class ClockPieViewPagerAdapter extends PagerAdapter {
     private final Map<String, Integer> colorMap;
     private static final Queue<FramedClockPieView> recycleViewList = new LinkedBlockingQueue<>();
 
+    /**
+     * For performance, don't instantiate the first two pages that are not actually displayed.
+     *
+     * @see <a href="https://codeberg.org/fynngodau/usageDirect/issues/55">related issue</a>
+     */
+    private boolean fakeInstantiateFirstPages = true;
+
 
     public ClockPieViewPagerAdapter(Context context, EventLogWrapper wrapper, Map<String, Integer> colorMap) {
         this.context = context;
@@ -58,6 +65,14 @@ public class ClockPieViewPagerAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
+
+        // "This does not need to be a View[…]"
+        if (fakeInstantiateFirstPages && position < 2) {
+            Log.d("CPVPA", "Faking item at position " + position);
+            return new Object();
+        }
+
+        if (position > 5) fakeInstantiateFirstPages = false;
 
         final FramedClockPieView clockPieFrame;
         if (recycleViewList.peek() == null) {
@@ -112,8 +127,10 @@ public class ClockPieViewPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((View) object);
-        recycleViewList.add((FramedClockPieView) object);
+        if (object instanceof View) {
+            container.removeView((View) object);
+            recycleViewList.add((FramedClockPieView) object);
+        } // Discard non-View placeholder Objects
     }
 
     @Override
