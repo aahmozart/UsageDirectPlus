@@ -70,7 +70,7 @@ public class DatabaseTimespanPagerAdapter extends TimespanPagerAdapter {
 
     @Override
     public void notifyDataSetChanged() {
-        adapter.setUsageStats(usageStats, days, lastUsedStats);
+        adapter.setUsageStats(usageStats, days, lastUsedStats, colorMap);
         super.notifyDataSetChanged();
     }
 }

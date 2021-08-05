@@ -104,9 +104,10 @@ public class DatabaseUsageListViewPagerAdapter extends UsageListViewPagerAdapter
         return TextFormat.formatDay(offset, context.getResources()).replace(' ', '\n');
     }
 
-    public void setUsageStats(SimpleUsageStat[] usageStats, long[] days, LastUsedStat[] lastUsedStats) {
+    public void setUsageStats(SimpleUsageStat[] usageStats, long[] days, LastUsedStat[] lastUsedStats, Map<String, Integer> colorMap) {
         this.usageStats = usageStats;
         this.days = days;
         this.lastUsedStats = lastUsedStats;
+        this.colorMap = colorMap;
     }
 }

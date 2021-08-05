@@ -50,6 +50,9 @@ public class ColorActivity extends Activity {
                         recyclerView.getLayoutManager(), this
                 ).start();
 
+                // Refresh calling activity after database call
+                setResult(RESULT_OK);
+
             });
         }).start();
     }

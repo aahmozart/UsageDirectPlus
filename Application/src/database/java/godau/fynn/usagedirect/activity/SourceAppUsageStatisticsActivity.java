@@ -53,6 +53,7 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
     private Object lastContextMenuTag;
 
     private static final int REQUEST_EXPORT_PICK_FILE = 397078; // EXP0RT
+    private static final int REQUEST_COLOR_ACTIVITY = 20507; // C0L0R
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +103,7 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
             return true;
         } else switch (item.getItemId()) {
             case R.id.menu_color:
-                startActivity(new Intent(this, ColorActivity.class));
+                startActivityForResult(new Intent(this, ColorActivity.class), REQUEST_COLOR_ACTIVITY);
                 break;
             case R.id.menu_feedback:
                 new AlertDialog.Builder(this)
@@ -207,6 +208,12 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
                 Toast.makeText(this, R.string.export_io_error, Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
+        }
+
+        if (requestCode == REQUEST_COLOR_ACTIVITY
+                && resultCode == RESULT_OK
+        ) {
+            reload();
         }
 
         super.onActivityResult(requestCode, resultCode, data);
