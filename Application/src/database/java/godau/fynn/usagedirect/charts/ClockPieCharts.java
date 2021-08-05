@@ -43,8 +43,6 @@ public class ClockPieCharts extends Fragment {
                 ));
                 clockPager.setCurrentItem(9);
 
-                clockPager.setOffscreenPageLimit(3);
-
                 SmartTabLayout chartTabLayout = view.findViewById(R.id.clock_pie_view_pager_tab);
                 chartTabLayout.setViewPager(clockPager);
             });
