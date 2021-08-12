@@ -126,7 +126,12 @@ public class WeeklyAverageBarChart extends UsageStatBarChart {
                     AppColor color = colors[i];
 
                     colorInts[i] = color.getColor();
-                    averageTimes[i] = (int) (applicationSum.get(color.getApplicationId()) / 1000 / daysConsidered);
+
+                    if (daysConsidered > 0) {
+                        averageTimes[i] = (int) (applicationSum.get(color.getApplicationId()) / 1000 / daysConsidered);
+                    } else {
+                        averageTimes[i] = 0;
+                    }
 
                     // Remove from map
                     applicationSum.remove(color.getApplicationId());
