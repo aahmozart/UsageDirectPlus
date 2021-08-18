@@ -48,8 +48,8 @@ android {
         applicationId "godau.fynn.usagedirect"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 8
-        versionName "0.7"
+        versionCode 9
+        versionName "0.8"
 
         javaCompileOptions {
             annotationProcessorOptions {
