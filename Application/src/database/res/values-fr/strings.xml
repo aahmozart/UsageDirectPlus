@@ -1,4 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="charts_clock_pie">%s en diagramme circulaire</string>
+    <string name="app_name">usageDirect</string>
+    <string name="chart_average">∅ utilisation moyenne de l\'appli / jour de la semaine</string>
+    <string name="charts_clock_pie_general">Diagrammes en horloge récents</string>
+    <string name="widget_today_name">Temps aujourd\'hui</string>
+    <string name="charts_bar_daily_condensed">Utilisation des applis sur le long terme</string>
+    <string name="usagestat_hide">Supprimer cette rangée</string>
+    <string name="menu_restore_hidden">Restaurer les rangées supprimées</string>
+    <string name="cancel">Annuler</string>
+    <string name="menu_export">Exporter la base de données</string>
+    <string name="export_title">Aperçu de fonctionnalité : exporter la base de données</string>
+    <string name="export_message">La base de données SQLite peut être exportée pour être analysée ailleurs.
+\n
+\nVous pourrez l\'importer seulement dans les futures versions de l\'appli.</string>
+    <string name="export_io_error">Une erreur s\'est produite lors de l\'enregistrement du fichier</string>
+    <string name="export_okay">L\'exportation a réussi</string>
+    <string name="color_explanation">Les applis colorées sont surlignées dans toute l\'apolication, ce qui vous permet de vous concentrer sur leur utilisation. Configurer l\'ordre en faisant un glisser-déposer pour déterminer leur tri dans les graphiques et sur l\'écran principal.</string>
+    <string name="menu_color">Colorer les applis</string>
+    <string name="confirm">Confirmer</string>
+    <string name="uncolor">Enlever la couleur</string>
+    <plurals name="time_used_total_hours">
+        <item quantity="one">%1$d heure d\'utilisation au total</item>
+        <item quantity="other">%1$d heures d\'utilisation au total</item>
+    </plurals>
+    <plurals name="menu_restore_hidden_details">
+        <item quantity="one">Voulez-vous restaurer une rangée supprimée \?</item>
+        <item quantity="other">Vous avez, au total, supprimé %1$d rangées. Voulez-vous les restaurer \?</item>
+    </plurals>
+    <string name="db_job_schedule_failure">Avertissement : la collecte automatique des données pourrait ne pas être configuée, veuillez vérifier régulièrement</string>
+    <string name="menu_feedback">Faire une suggestion</string>
+    <string name="feedback_message">usageDirect continue de chercher des idées plus intéressantes pour des représentations parlantes de vos données.
+\n
+\nJ\'ai déjà un certain nombre de choses à ajouter, mais j\'aimerais entendre vos idées : que pensez-vous d\'usageDirect \?</string>
 </resources>

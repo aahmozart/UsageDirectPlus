@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="help_unreliable_2">Veuillez explorer un ces données. Tôt ou tard, vous rencontrerez certaines des erreurs suivantes.</string>
+    <string name="app_name">Musée des API cassées</string>
+    <string name="help_unreliable_1">Cette application utilise la méthode suivante pour la demande de ses données.</string>
+    <string name="help_bug_1">une application ayant été en arrière-plan pendant plusieurs jours d\'affilée</string>
+</resources>
