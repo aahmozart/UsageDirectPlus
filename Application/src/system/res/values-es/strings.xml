@@ -1,2 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Museo de una API fallida</string>
+    <string name="help_unreliable_1">En esta aplicación se usa la siguiente llamada de método para consultar los datos.</string>
+    <string name="help_unreliable_2">Por favor, explora estos datos un tanto. Tarde o temprano te vas a topar con uno de los siguientes errores.</string>
+    <string name="help_bug_1">Que una aplicación supuestamente haya estado activa en segundo plano durante varios días consecutivos</string>
+    <string name="help_bug_3">que el día de \"hoy\" aparentemente empiece en momentos aleatorios</string>
+    <string name="help_bug_4">Que en un intento recibas menos datos que en otro</string>
+    <string name="help_bug_5">Que de repente no recibas ningún dato</string>
+    <string name="help_unreliable_3">Después de eso, por favor sigue este consejo:</string>
+    <string name="help_unreliable_4">No uses esta llamada de API.</string>
+    <string name="help_unreliable_5">Es una pérdida de tiempo.</string>
+    <string name="help_database_flavor_installed">usageDirect te da datos que son confiables y persistentes.</string>
+    <string name="system_stats_warning">Ver la guía de presentación</string>
+    <string name="title_system_stats">Presentación</string>
+    <string name="title_help">Guía de presentación</string>
+    <string name="menu_charts">Presentación especial: gráficas</string>
+    <string name="span_daily">Por día</string>
+    <string name="span_weekly">Por semana</string>
+    <string name="span_monthly">Por mes</string>
+    <string name="span_yearly">Por año</string>
+    <string name="charts_bar_monthly">Uso de aplicaciones por mes</string>
+    <string name="charts_bar_yearly">Uso de aplicaciones por año</string>
+    <string name="help_bug_2">Que los datos de un período continuo sean los mismos que para otro período, no debiendo serlo</string>
+    <string name="help_database_flavor_download">¿Quieres datos de uso que sean confiables y persistentes\? usageDirect los da.</string>
+    <string name="charts_bar_weekly">Uso de aplicaciones por semana</string>
+    <string name="error_no_data">Se produjo un error: el sistema no presentó ningún dato. Por favor, trata de reiniciar esta aplicación</string>
+</resources>

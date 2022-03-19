@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="charts_clock_pie">%s como gráfica de pastel en forma de reloj</string>
+    <string name="charts_clock_pie_general">Últimas gráficas de pastel en forma de reloj</string>
+    <string name="widget_today_name">Tiempo total para hoy</string>
+    <string name="menu_feedback">Envíanos una sugerencia</string>
+    <string name="menu_export">Exportar base de datos</string>
+    <string name="feedback_message">usageDirect sigue buscando ideas interesantes que le permitan hacer representaciones más perspicaces de tus datos.
+\n
+\nYa tengo un cierto número de cosas en mi hoja de ruta, pero me gustaría que me dieras tu opinión: ¿qué te parece usageDirect\?</string>
+    <string name="cancel">Cancelar</string>
+    <string name="app_name">usageDirect</string>
+    <string name="db_job_schedule_failure">Advertencia: no fue posible configurar la recopilación automática de datos. Por favor, verifíquelos periódicamente</string>
+    <string name="chart_average">∅ Promedio de uso de aplicaciones por día de la semana</string>
+    <string name="charts_bar_daily_condensed">Uso de aplicaciones a largo plazo</string>
+    <string name="usagestat_hide">Borrar esta fila</string>
+    <string name="menu_restore_hidden">Restaurar las filas borradas</string>
+    <string name="menu_restore_hidden_positive">Restaurar</string>
+    <string name="export_title">Vista previa de una función nueva: exportar bases de datos</string>
+    <string name="export_message">La base de datos SQLite se puede exportar para análisis externos.
+\n
+\nSólo en versiones futuras de la aplicación podrás importar bases de datos.</string>
+    <string name="export_io_error">Se produjo un error al guardar el archivo</string>
+    <string name="export_okay">La exportación se concluyó con éxito</string>
+    <string name="color_explanation">Las aplicaciones que se marcan con colores destacan siempre en esta aplicación, con lo cual puedes concentrar tu atención en el uso que les das. Arrástralas y pégalas como quieras para determinar en qué orden van a aparecer en las gráficas y en la pantalla principal.</string>
+    <string name="menu_color">Aplicaciones marcadas a colores</string>
+    <string name="confirm">Confirmar</string>
+    <string name="uncolor">Quitar color</string>
+    <string name="drag_handle">Asa para arrastrar</string>
+    <plurals name="time_used_total_hours">
+        <item quantity="one">%1$d hora de uso en total</item>
+        <item quantity="other">%1$d horas de uso en total</item>
+    </plurals>
+    <plurals name="menu_restore_hidden_details">
+        <item quantity="one">¿Quieres restaurar una fila borrada\?</item>
+        <item quantity="other">En total, borraste %1$d filas. ¿Quieres restaurarlas\?</item>
+    </plurals>
+</resources>
