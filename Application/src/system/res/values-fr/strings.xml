@@ -4,4 +4,25 @@
     <string name="app_name">Musée des API cassées</string>
     <string name="help_unreliable_1">Cette application utilise la méthode suivante pour la demande de ses données.</string>
     <string name="help_bug_1">une application ayant été en arrière-plan pendant plusieurs jours d\'affilée</string>
+    <string name="help_bug_2">les données d\'une période en cours sont les mêmes que celles d\'une autre période, alors qu\'elles ne devraient pas l\'être</string>
+    <string name="help_bug_3">\"aujourd\'hui\" à des moments apparemment aléatoires dans le temps</string>
+    <string name="help_bug_4">obtenir moins de données à une tentative mais pas à une autre</string>
+    <string name="help_bug_5">soudainement, je ne reçois plus de données du tout</string>
+    <string name="help_unreliable_3">Ensuite, veuillez suivre ce conseil :</string>
+    <string name="help_unreliable_4">N\'utilisez pas cet appel API.</string>
+    <string name="help_unreliable_5">C\'est une perte de temps.</string>
+    <string name="help_database_flavor_download">Vous recherchez des données d\'utilisation fiables et persistantes \? usageDirect les a.</string>
+    <string name="help_database_flavor_installed">usageDirect fournit des données fiables et persistantes.</string>
+    <string name="system_stats_warning">Voir le guide de l\'exposition</string>
+    <string name="title_system_stats">Exposition</string>
+    <string name="title_help">Guide de l\'exposition</string>
+    <string name="menu_charts">Exposition spéciale : Charts</string>
+    <string name="span_daily">Quotidien</string>
+    <string name="span_weekly">Hebdomadaire</string>
+    <string name="span_monthly">Mensuel</string>
+    <string name="span_yearly">Annuel</string>
+    <string name="charts_bar_weekly">Utilisation des applis par semaine</string>
+    <string name="charts_bar_monthly">Utilisation des applis par mois</string>
+    <string name="charts_bar_yearly">Utilisation des applis par an</string>
+    <string name="error_no_data">Une erreur s\'est produite : le système n\'a renvoyé aucune donnée. Veuillez essayer de redémarrer l\'application</string>
 </resources>
