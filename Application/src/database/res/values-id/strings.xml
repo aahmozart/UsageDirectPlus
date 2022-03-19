@@ -24,4 +24,13 @@
     <plurals name="time_used_total_hours">
         <item quantity="other">%1$d jam digunakan secara keseluruhan</item>
     </plurals>
+    <string name="charts_bar_daily_condensed">Penggunaan aplikasi jangka-panjang</string>
+    <string name="export_title">Pratilik fitur: basis data ekspor</string>
+    <string name="color_explanation">App warna-warni menyoroti semua aplikasi, yang memungkinkan Anda untuk fokus pada penggunaan mereka. Atur perintah memakai seret-dan-drop untuk menentukan penyortiran mereka dalam grafik dan pada layar utama.</string>
+    <string name="menu_color">App warna</string>
+    <string name="drag_handle">Handel seret</string>
+    <string name="charts_clock_pie_general">Grafik pai jam terkiniweather condition</string>
+    <string name="feedback_message">usageDirect terus mencari ide-ide yang lebih menarik untuk representasi wawasan dari data anda.
+\n
+\nAku sudah punya beberapa peta di peta jalanku tapi aku ingin mendengarnya darimu: apa pendapatmu tentang langsung dari usageDirect\?</string>
 </resources>

@@ -9,6 +9,30 @@
     <string name="menu_feedback">Bidali ideia bat</string>
     <string name="feedback_message">usageDirect mantentzen gehiago bila ideia interesgarria insightful irudikapen zure datuak.
 \n
-\nDut dagoeneko gauzak zenbaki bat nire baitan, baina ez dut nahi entzun duzu: zer pentsatzen duzu usageDirect\?</string>
+\nDut dagoeneko gauzak zenbaki bat nire ibilbide-orria, baina nahi nuke entzun duzu: zer pentsatzen duzu usageDirect\?</string>
     <string name="cancel">Utzi</string>
+    <string name="charts_bar_daily_condensed">Epe luzeko app erabilera</string>
+    <string name="usagestat_hide">Hau ezabatu errenkada</string>
+    <string name="export_title">Ezaugarri aurreikuspen: esportatu datu-basea</string>
+    <string name="menu_restore_hidden_positive">Berreskuratu</string>
+    <string name="menu_restore_hidden">Berreskuratu ezabatutako errenkadak</string>
+    <string name="menu_export">Esportatu datu-basea</string>
+    <string name="export_okay">Esportazio arrakastatsua izan zen</string>
+    <string name="export_io_error">Errore bat gertatu da gordetzean fitxategia</string>
+    <plurals name="time_used_total_hours">
+        <item quantity="one">%1$d orduko erabiltzen guztira</item>
+        <item quantity="other">%1$d ordu erabiltzen guztira</item>
+    </plurals>
+    <string name="confirm">Berretsi</string>
+    <string name="uncolor">Kolorea kendu</string>
+    <string name="drag_handle">Arrastatu helduleku</string>
+    <string name="menu_color">Kolore apps</string>
+    <string name="color_explanation">Koloretako apps dira nabarmendu osoan zehar aplikazio bat, aukera ematen du ardatz bere erabilera. Ezarri eskaera bat erabiliz, arrastatu eta jaregin zehazteko beren ordenatzeko in grafikoak eta pantaila nagusian.</string>
+    <plurals name="menu_restore_hidden_details">
+        <item quantity="one">Nahi duzu berreskuratu bat ezabatu errenkada\?</item>
+        <item quantity="other">Duzu, guztira, ezabatu %1$d errenkadak. Nahi duzu berreskuratu horiek\?</item>
+    </plurals>
+    <string name="export_message">Eta SQLite datu-base esporta daitezke, kanpoko analisia.
+\n
+\nBakarrik izango duzu inportatu ahal da etorkizunean app bertsioak.</string>
 </resources>
