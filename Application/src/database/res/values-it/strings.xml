@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">usageDirect</string>
-    <string name="chart_average">Utilizzo app medio per giorno della settimana</string>
+    <string name="app_name">Utilizzo</string>
+    <string name="chart_average">Utilizzo medio app settimanale</string>
     <string name="charts_clock_pie">%s come grafico a torta</string>
     <string name="charts_clock_pie_general">Grafici a torta recenti</string>
     <string name="menu_feedback">Invia un\'idea</string>
@@ -11,7 +11,7 @@
     <string name="usagestat_hide">Cancella questa riga</string>
     <string name="menu_restore_hidden">Ripristina righe cancellate</string>
     <string name="menu_restore_hidden_positive">Ripristina</string>
-    <string name="export_title">Anteprima feature: esporta database</string>
+    <string name="export_title">Anteprima funzione: esporta database</string>
     <string name="export_message">Il database SQLite può essere esportato per analisi esterne.
 \n
 \nSarà possibile importarlo solamente in versioni future dell\'app.</string>
@@ -19,20 +19,20 @@
     <string name="export_okay">Esportazione completata con successo</string>
     <string name="confirm">Conferma</string>
     <string name="uncolor">Rimuovi colore</string>
-    <string name="drag_handle">Icona drag</string>
+    <string name="drag_handle">Icona spostamento</string>
     <string name="menu_color">Colora app</string>
     <plurals name="time_used_total_hours">
-        <item quantity="one">%1$d ora usata totale</item>
-        <item quantity="other">%1$d ore usate totali</item>
+        <item quantity="one">%1$d ora usato in totale</item>
+        <item quantity="other">%1$d ore usate in totale</item>
     </plurals>
     <plurals name="menu_restore_hidden_details">
         <item quantity="one">Vuoi ripristinare una riga cancellata\?</item>
         <item quantity="other">In totale hai cancellato %1$d righe. Vuoi ripristinarle\?</item>
     </plurals>
-    <string name="db_job_schedule_failure">Attenzione: non è stato possibile impostare la collezione automatica dei dati, si prega di ricontrollare regolarmente</string>
+    <string name="db_job_schedule_failure">Attenzione: non è stato possibile impostare la raccolta automatica dei dati, si prega di ricontrollare regolarmente</string>
     <string name="widget_today_name">Tempo oggi</string>
-    <string name="feedback_message">usageDirect è alla continua ricerca di idee interessanti per rappresentazioni dei tuoi dati utili.
+    <string name="feedback_message">usageDirect è alla continua ricerca di idee interessanti per rappresentare dei tuoi dati di utilizzo.
 \n
-\nHo già un paio di cose sulla mia tabella di marcia, ma mi piacerebbe sentirne da te: cosa ne pensi di usageDirect\?</string>
+\nHo già un paio di idee sulla mia lavagna, ma mi piacerebbe riceverne qualcuna da te: cosa ne pensi di usageDirect\?</string>
     <string name="color_explanation">Le app colorate sono evidenziate in tutta l\'applicazione, permettendoti di focalizzarti sul loro utilizzo. Imposta un ordine usando il drag-and-drop per determinare l\'ordinamento nei grafici e sulla schermata principale.</string>
 </resources>
