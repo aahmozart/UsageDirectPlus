@@ -1,2 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Museum of a broken API</string>
+    <string name="help_unreliable_1">Aplikasi ini menggunakan metode panggilan ini untuk mencari datanya.</string>
+    <string name="help_unreliable_2">Silahkan jelajahi data ini sebentar. Cepat atau lambat, Anda akan menghadapi beberapa bug berikut.</string>
+    <string name="help_bug_1">satu aplikasi yang diduga sedang berada di latar depan selama beberapa hari berturut - turut</string>
+    <string name="help_bug_3">\"hari ini\" dimulai pada titik yang tampak acak dalam waktu</string>
+    <string name="help_bug_4">mendapatkan kurang data pada satu percobaan tetapi tidak lain</string>
+    <string name="help_bug_5">tiba-tiba tidak mendapatkan data sama sekali</string>
+    <string name="help_unreliable_3">Setelah itu, silahkan ikuti saran ini:</string>
+    <string name="help_unreliable_4">Jangan gunakan panggilan API ini.</string>
+    <string name="help_unreliable_5">Ini buang-buang waktu.</string>
+    <string name="help_database_flavor_download">Apakah anda mencari yang dapat diandalkan dan persisten penggunaan data\? usageddirect memiliki itu.</string>
+    <string name="help_database_flavor_installed">usageDirect menyediakan terpercaya dan persisten data.</string>
+    <string name="system_stats_warning">Tilik panduan pameran</string>
+    <string name="title_system_stats">Pameran</string>
+    <string name="title_help">Panduan ke pameran</string>
+    <string name="menu_charts">Pameran khusus: grafik</string>
+    <string name="span_daily">Harian</string>
+    <string name="span_weekly">Mingguan</string>
+    <string name="span_monthly">Bulanan</string>
+    <string name="span_yearly">Tahunan</string>
+    <string name="charts_bar_weekly">Penggunaan aplikasi per minggu</string>
+    <string name="charts_bar_monthly">Penggunaan aplikasi per bulan</string>
+    <string name="charts_bar_yearly">Penggunaan App per tahun</string>
+    <string name="help_bug_2">data untuk satu periode yang sedang berlangsung menjadi sama untuk yang lain ketika seharusnya tidak</string>
+    <string name="error_no_data">Terjadi galat: sistem tak mengembalikan data. Silakan coba memulai ulang aplikasi</string>
+</resources>

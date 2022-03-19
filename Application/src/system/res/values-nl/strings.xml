@@ -1,2 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="help_unreliable_2">Verken deze gegevens een beetje. Vroeg of laat zult u een aantal van de volgende bugs tegenkomen.</string>
+    <string name="help_bug_2">gegevens voor één lopende periode dezelfde zijn als voor een andere, terwijl dat niet zo zou moeten zijn</string>
+    <string name="help_bug_3">\"vandaag\" begint op schijnbaar willekeurige punten in de tijd</string>
+    <string name="help_bug_4">minder gegevens krijgen bij de ene poging maar niet bij de andere</string>
+    <string name="help_bug_5">plotseling helemaal geen gegevens meer krijgt</string>
+    <string name="help_unreliable_4">Gebruik deze API-oproep niet.</string>
+    <string name="help_unreliable_5">Het is tijdverlies.</string>
+    <string name="help_database_flavor_download">Bent u op zoek naar betrouwbare en persistente gebruiksgegevens\? usageDirect heeft ze.</string>
+    <string name="system_stats_warning">Bekijk tentoonstellingsgids</string>
+    <string name="title_system_stats">Expositie</string>
+    <string name="title_help">Gids van de tentoonstelling</string>
+    <string name="menu_charts">Speciale tentoonstelling: Kaarten</string>
+    <string name="span_daily">Dagelijks</string>
+    <string name="span_weekly">Wekelijks</string>
+    <string name="span_monthly">Maandelijks</string>
+    <string name="span_yearly">Jaarlijks</string>
+    <string name="charts_bar_weekly">App gebruik per week</string>
+    <string name="charts_bar_monthly">App gebruik per maand</string>
+    <string name="charts_bar_yearly">App gebruik per jaar</string>
+    <string name="app_name">Museum of a broken API</string>
+    <string name="help_unreliable_1">Deze toepassing gebruikt de volgende methode-aanroep om haar gegevens op te vragen.</string>
+    <string name="help_bug_1">een applicatie die meerdere dagen achter elkaar op de voorgrond zou hebben gestaan</string>
+    <string name="help_unreliable_3">Volg daarna dit advies op:</string>
+    <string name="help_database_flavor_installed">usageDirect levert betrouwbare en persistente gegevens.</string>
+    <string name="error_no_data">Er is een fout opgetreden: het systeem heeft geen gegevens teruggestuurd. Probeer de toepassing opnieuw te starten</string>
+</resources>

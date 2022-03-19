@@ -11,4 +11,32 @@
     <string name="feedback_message">usageDirect постоянно ищет более интересные идеи для информативного представления ваших данных.
 \n
 \nУ меня уже есть ряд вещей в моей дорожной карте, но я хочу услышать это от вас: что вы думаете об usageDirect\?</string>
+    <string name="menu_export">Экспорт базы данных</string>
+    <string name="export_title">Предварительный просмотр функции: экспорт базы данных</string>
+    <string name="export_message">База данных SQLite может быть экспортирована для внешнего анализа.
+\n
+\nИмпортировать ее можно будет только в будущих версиях приложения.</string>
+    <string name="export_io_error">Произошла ошибка при сохранении файла</string>
+    <string name="export_okay">Экспорт прошел успешно</string>
+    <string name="charts_bar_daily_condensed">Долгосрочное использование приложений</string>
+    <string name="usagestat_hide">Удалить эту строку</string>
+    <string name="menu_restore_hidden">Восстановление удаленных строк</string>
+    <string name="menu_restore_hidden_positive">Восстановить</string>
+    <string name="color_explanation">Цветные приложения выделены по всему приложению, что позволяет сосредоточиться на их использовании. Установите порядок с помощью перетаскивания, чтобы определить их сортировку в графиках и на главном экране.</string>
+    <string name="menu_color">Цветные приложения</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="uncolor">Удалить цвет</string>
+    <string name="drag_handle">Ручка для перетаскивания</string>
+    <plurals name="time_used_total_hours">
+        <item quantity="one">%1$d час использовано всего</item>
+        <item quantity="few">%1$d часов использовано всего</item>
+        <item quantity="many">%1$d часов использовано всего</item>
+        <item quantity="other">%1$d часов использовано всего</item>
+    </plurals>
+    <plurals name="menu_restore_hidden_details">
+        <item quantity="one">Вы хотите восстановить один удаленный ряд\?</item>
+        <item quantity="few"></item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plurals>
 </resources>
