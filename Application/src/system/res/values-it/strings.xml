@@ -1,2 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Museo delle API rotte</string>
+    <string name="help_unreliable_1">Quest\'applicazione usa le seguenti chiamate per interrogare i suoi dati.</string>
+    <string name="help_unreliable_2">Si prega di esplorare questi dati per un po\'. Prima o poi, incontrerai alcuni dei seguenti bug.</string>
+    <string name="help_bug_1">un applicazione che si suppone sia stata in foreground per diversi giorni di fila</string>
+    <string name="help_bug_2">dati per un periodo in corso sono gli stessi per un altro quando non dovrebbero</string>
+    <string name="help_bug_3">\"oggi\" inizia a qualche punto casuale nel tempo</string>
+    <string name="help_bug_4">ottenere meno dati in un tentativo ma non in un altro</string>
+    <string name="help_bug_5">ottenere nessun dato improvvisamente</string>
+    <string name="help_unreliable_3">In futuro, si prega di seguire questo consiglio:</string>
+    <string name="help_unreliable_5">È uno spreco di tempo.</string>
+    <string name="help_database_flavor_installed">usageDirect fornisce dati persistenti e affidabili.</string>
+    <string name="system_stats_warning">Mostra guida demo</string>
+    <string name="title_system_stats">Demo</string>
+    <string name="title_help">Guida alla demo</string>
+    <string name="menu_charts">Demo speciale: Grafici</string>
+    <string name="span_daily">Giornaliero</string>
+    <string name="span_weekly">Settimanale</string>
+    <string name="span_monthly">Mensile</string>
+    <string name="span_yearly">Annuale</string>
+    <string name="charts_bar_weekly">Utilizzo app per settimana</string>
+    <string name="charts_bar_monthly">Utilizzo app per mese</string>
+    <string name="charts_bar_yearly">Utilizzo app per anno</string>
+    <string name="help_unreliable_4">Non usare questa chiamata API.</string>
+    <string name="help_database_flavor_download">Stai cercando dati di utilizzo persistenti e affidabili\? usageDirect ce li ha.</string>
+    <string name="error_no_data">Errore: il sistema non ha restituito dati. Si prega di reinstallare l\'applicazione</string>
+</resources>

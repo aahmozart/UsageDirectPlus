@@ -1,2 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="go">Avanti</string>
+    <string name="leave_app">Esci dall\'app</string>
+    <string name="not_used">non usata</string>
+    <string name="menu_about">A proposito</string>
+    <string name="launch_unavailable">Non è stato possibile avviare l\'app</string>
+    <string name="menu_charts">Grafici</string>
+    <string name="last_used_now">correntemente in uso</string>
+    <string name="charts_bar_daily">Utilizzo app giornaliero</string>
+    <string name="title_feature_preview">usageDirect anteprima feature</string>
+    <string name="ts_today">Oggi</string>
+    <string name="ts_yesterday">Ieri</string>
+    <string name="ts_this_week">Questa settimana</string>
+    <string name="ts_calendar_week">Settimana %s</string>
+    <string name="menu_reload">Ricarica</string>
+    <string name="total">Totale</string>
+    <string name="last_used_this_day">usata l\'ultima volta questo giorno</string>
+    <string name="icon">Icona</string>
+    <string name="explanation_access_appusage_title">Permesso statistiche utilizzo app</string>
+    <string name="explanation_access_appusage_message">Si prega di fornire l\'accesso alle statistiche d\'utilizzo di sistema nella prossima pagina.</string>
+    <string name="ts_last_week">Settimana scorsa</string>
+</resources>
