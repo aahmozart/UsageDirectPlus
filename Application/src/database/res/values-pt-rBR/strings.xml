@@ -23,10 +23,10 @@
     <string name="export_title">Prévia de funcionalidade: exportar banco de dados</string>
     <string name="export_message">O banco de dados SQLite pode ser exportado para análise externa.
 \n
-\nVocê só poderá importá-la em versões futuras do aplicativo.</string>
+\nVocê só poderá importá-lo em versões futuras do aplicativo.</string>
     <string name="export_io_error">Ocorreu um erro ao salvar o arquivo</string>
     <string name="export_okay">Exportação concluída com sucesso</string>
-    <string name="color_explanation">Os aplicativos coloridos são destacados em toda o aplicativo, permitindo que você se concentre em seu uso. Defina uma ordem usando o arrastar e soltar para determinar sua ordenação em gráficos e na tela principal.</string>
+    <string name="color_explanation">Os aplicativos coloridos são destacados em todo o aplicativo, permitindo que você se concentre em seu uso. Defina uma ordem usando o arrastar e soltar para determinar sua ordenação em gráficos e na tela principal.</string>
     <string name="menu_color">Aplicativos em cores</string>
     <string name="confirm">Confirmar</string>
     <string name="uncolor">Remover cores</string>
