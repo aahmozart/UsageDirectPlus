@@ -33,4 +33,5 @@
     <string name="feedback_message">usageDirect continue de chercher des idées plus intéressantes pour des représentations parlantes de vos données.
 \n
 \nJ\'ai déjà un certain nombre de choses à ajouter, mais j\'aimerais entendre vos idées : que pensez-vous d\'usageDirect \?</string>
+    <string name="menu_restore_hidden_positive">Restaurer</string>
 </resources>
