@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="help_bug_1">ஒரு பயன்பாடு தொடர்ச்சியாக பல நாட்களாக முன்னணியில் இருந்ததாகக் கூறப்படுகிறது</string>
+    <string name="app_name">உடைந்த API இன் அருங்காட்சியகம்</string>
+    <string name="help_unreliable_1">உடைந்த அருங்காட்சியகம் இந்த பயன்பாடு அதன் தரவை வினவ பின்வரும் முறை அழைப்பைப் பயன்படுத்துகிறது.</string>
+    <string name="help_unreliable_2">தயவு செய்து இந்தத் தரவை சிறிது ஆராயவும். விரைவில் அல்லது பின்னர், பின்வரும் பிழைகளில் சிலவற்றை நீங்கள் சந்திப்பீர்கள்.</string>
+    <string name="help_bug_2">ஒரு நடப்பு காலத்திற்கான தரவு மற்றொன்றுக்கு சமமாக இருக்கக்கூடாது</string>
+</resources>
