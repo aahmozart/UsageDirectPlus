@@ -1,11 +1,5 @@
 #!/usr/bin/bash
 
-translatorLine() {
-	echo $1
-}
-
-export -f translatorLine
-
 for dir in Application/src/main/res/values-*
 do
 	LANG=$(echo $dir | sed "s/.*-//")
