@@ -1,2 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="help_unreliable_1">Ta aplikacja używa następującego wywołania metody do wykonywania zapytań dotyczących jej danych.</string>
+    <string name="help_unreliable_2">Zapoznaj się z tymi danymi przez chwilę. Prędzej czy później napotkasz niektóre z następujących błędów.</string>
+    <string name="help_unreliable_3">Następnie postępuj zgodnie z tą radą:</string>
+    <string name="help_bug_3">\"dzisiaj\" zaczyna się od pozornie przypadkowych punktów w czasie</string>
+    <string name="help_database_flavor_download">Szukasz wiarygodnych i ciągłych danych dotyczących użytkowania\? usageDirect to ma.</string>
+    <string name="help_bug_1">jedna aplikacja rzekomo znajdowała się na pierwszym planie przez wiele dni z rzędu</string>
+    <string name="title_system_stats">Wystawa</string>
+    <string name="span_daily">Dziennie</string>
+    <string name="span_weekly">Tygodniowo</string>
+    <string name="span_monthly">Miesięcznie</string>
+    <string name="span_yearly">Rocznie</string>
+    <string name="system_stats_warning">Zobacz przewodnik po wystawie</string>
+    <string name="menu_charts">Specjalna wystawa: Wykresy</string>
+    <string name="title_help">Przewodnik po wystawie</string>
+    <string name="charts_bar_weekly">Użycie aplikacji w ciągu tygodnia</string>
+    <string name="charts_bar_monthly">Użycie aplikacji w ciągu miesiąca</string>
+    <string name="charts_bar_yearly">Użycie aplikacji w ciągu roku</string>
+    <string name="help_bug_5">nagle nie otrzymuje żadnych danych</string>
+    <string name="help_unreliable_4">Nie używaj tego wywołania API.</string>
+    <string name="help_unreliable_5">To strata czasu.</string>
+    <string name="help_database_flavor_installed">usageDirect zapewnia wiarygodne i ciągłe dane.</string>
+    <string name="help_bug_4">Uzyskiwanie mniejszej ilości danych przy jednej próbie ale nie przy innej próbie</string>
+    <string name="help_bug_2">dane dla jednego bieżącego okresu są takie same jak dla innego, gdy nie powinny</string>
+    <string name="error_no_data">Wystąpił błąd: system nie zwrócił żadnych danych. Spróbuj ponownie uruchomić aplikację</string>
+    <string name="app_name">Muzeum zepsutych API</string>
+</resources>

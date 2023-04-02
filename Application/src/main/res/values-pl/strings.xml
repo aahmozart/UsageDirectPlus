@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="explanation_access_appusage_title">Pozwolenie na użycie aplikacji</string>
+    <string name="leave_app">Zostaw aplikację</string>
+    <string name="not_used">nie używane</string>
+    <string name="menu_about">O programie</string>
+    <string name="launch_unavailable">Nie można uruchomić aplikacji</string>
+    <string name="menu_charts">Wykresy</string>
+    <string name="last_used_now">obecnie używane</string>
+    <string name="charts_bar_daily">Użycie aplikacji w ciągu dnia</string>
+    <string name="title_feature_preview">Przegląd funkcji usageDirect</string>
+    <string name="ts_today">Dzisiaj</string>
+    <string name="ts_yesterday">Wczoraj</string>
+    <string name="ts_this_week">W tym tygodniu</string>
+    <string name="ts_last_week">W ostatnim tygodniu</string>
+    <string name="ts_calendar_week">%s tydzień</string>
+    <string name="menu_reload">Przeładuj</string>
+    <string name="total">Ogółem</string>
+    <string name="last_used_this_day">ostatnio użyto tego dnia</string>
+    <string name="icon">Ikona</string>
+    <string name="go">Dalej</string>
+    <string name="explanation_access_appusage_message">Proszę przyznać pozwolenie do statystyk twojego systemu na następnym ekranie.</string>
+</resources>

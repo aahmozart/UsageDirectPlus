@@ -1,2 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">usageDirect</string>
+    <string name="chart_average">∅ Średnie użycie aplikacji na dni tygodnia</string>
+    <string name="widget_today_name">Dzisiejszy czas</string>
+    <string name="menu_feedback">Wyślij pomysł</string>
+    <string name="menu_export">Eksportuj bazę danych</string>
+    <string name="cancel">Anuluj</string>
+    <string name="charts_bar_daily_condensed">Długoterminowe użycie aplikacji</string>
+    <string name="usagestat_hide">Usuń ten rząd</string>
+    <string name="menu_restore_hidden">Przywróć usunięte szeregi</string>
+    <string name="menu_restore_hidden_positive">Przywróć</string>
+    <string name="export_title">Przegląd funkcji: eksportowanie bazy danych</string>
+    <string name="export_message">Baza danych SQLite może być eksportowana do zewnętrznej analizy.
+\n
+\nW następnych wersjach aplikacji możliwy będzie ich import.</string>
+    <string name="export_io_error">Wystąpił błąd podczas zapisywania pliku</string>
+    <string name="export_okay">Eksportowanie zakończyło się pomyślnie</string>
+    <string name="menu_color">Kolor aplikacji</string>
+    <string name="confirm">Potwierdź</string>
+    <string name="uncolor">Usuń kolor</string>
+    <plurals name="time_used_total_hours">
+        <item quantity="one">Używano łącznie przez %1$d godzinę</item>
+        <item quantity="few">Używano łącznie przez %1$d godziny</item>
+        <item quantity="many">Używano łącznie przez %1$d godzin</item>
+        <item quantity="other">Używano łącznie przez %1$d godzin</item>
+    </plurals>
+    <string name="db_job_schedule_failure">Ostrzeżenie: nie można skonfigurować automatycznego zbierania danych, należy regularnie sprawdzać</string>
+    <string name="feedback_message">usageDirect szuka ciekawszych pomysłów na wnikliwą reprezentację danych.
+\n
+\nMam już wiele rzeczy do zrobienia na mojej ścieżce rozwoju, ale chciałbym usłyszeć od ciebie: co sądzisz o usageDirect\?</string>
+    <string name="color_explanation">Kolorowe aplikacje są wyróżnione w całej aplikacji, co pozwala skupić się na ich użyciu. Ustaw kolejność za pomocą przeciągania i upuszczania, aby określić ich sortowanie na wykresach i na ekranie głównym.</string>
+    <string name="charts_clock_pie">%s jako wykres kołowy zegara</string>
+    <string name="charts_clock_pie_general">Ostatnie wykresy kołowe zegara</string>
+    <string name="drag_handle">Przeciągnij uchwyt</string>
+    <plurals name="menu_restore_hidden_details">
+        <item quantity="one">Czy chcesz przywrócić jeden usunięty wiersz\?</item>
+        <item quantity="few">Posiadasz %1$d usunięte wiersze. Czy chcesz je teraz przywrócić\?</item>
+        <item quantity="many">Posiadasz %1$d usuniętych wierszy. Czy chcesz je teraz przywrócić\?</item>
+        <item quantity="other">Posiadasz %1$d usuniętych wierszy. Czy chcesz je teraz przywrócić\?</item>
+    </plurals>
+</resources>
