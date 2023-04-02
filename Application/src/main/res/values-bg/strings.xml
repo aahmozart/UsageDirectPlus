@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="explanation_access_appusage_title">Разрешение за достъп до данни за ползването</string>
+    <string name="go">Напред</string>
+    <string name="leave_app">Оставяне на приложението</string>
+    <string name="not_used">не е използвано</string>
+    <string name="menu_about">Относно</string>
+    <string name="launch_unavailable">Приложението не може да стартира</string>
+    <string name="menu_charts">Диаграми</string>
+    <string name="last_used_now">изшолзва се в момента</string>
+    <string name="charts_bar_daily">Използвани приложения дневно</string>
+    <string name="ts_today">Днес</string>
+    <string name="ts_yesterday">Вчера</string>
+    <string name="ts_this_week">Тази седмица</string>
+    <string name="ts_last_week">Миналата седмица</string>
+    <string name="ts_calendar_week">Седмица №%s</string>
+    <string name="menu_reload">Презарежда</string>
+    <string name="total">Всичко</string>
+    <string name="last_used_this_day">последно използвано на този ден</string>
+    <string name="icon">Пиктограма</string>
+    <string name="title_feature_preview">Предварителен преглед на възможност на usageDirect</string>
+    <string name="explanation_access_appusage_message">Разрешете достъпа до данните за ползването в следващия екран.</string>
+</resources>
