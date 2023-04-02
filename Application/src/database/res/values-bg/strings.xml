@@ -1,2 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="chart_average">∅ Средно използвани на приложения на ден</string>
+    <string name="charts_clock_pie">%s като кръгова диаграма</string>
+    <string name="charts_clock_pie_general">Последни кръгови диаграми</string>
+    <string name="menu_feedback">Изпращане на идея</string>
+    <string name="cancel">Отказ</string>
+    <string name="charts_bar_daily_condensed">Дългосрочно използване на приложения</string>
+    <string name="usagestat_hide">Премахване на реда</string>
+    <string name="menu_restore_hidden">Възстанов. премахнати редове</string>
+    <string name="menu_restore_hidden_positive">Възстановяване</string>
+    <string name="confirm">Потвърждаване</string>
+    <string name="uncolor">Премахване на цвят</string>
+    <string name="widget_today_name">Часът в момемта</string>
+    <string name="menu_export">Изнсяне на данните</string>
+    <string name="export_title">Предварителен преглед на: изнасяне на данни</string>
+    <string name="export_io_error">Възникна грешка при запазване на файла</string>
+    <string name="export_okay">Експортът е завършен</string>
+    <string name="menu_color">Оцветяване на приложения</string>
+    <string name="drag_handle">Манипулатор</string>
+    <plurals name="time_used_total_hours">
+        <item quantity="one">общо използвано %1$d час</item>
+        <item quantity="other">общо използвано %1$d часа</item>
+    </plurals>
+    <plurals name="menu_restore_hidden_details">
+        <item quantity="one">Желаете ли един премахнат ред да бъде възстановен\?</item>
+        <item quantity="other">Има общо %1$d премахнати реда. Желаете ли да бъдат възстановени\?</item>
+    </plurals>
+    <string name="export_message">Данните във формат на SQLite могат да бъдат изнесени за външен анализ.
+\n
+\nВнасяне на данни ще бъде възможно в бъдещо издание.</string>
+    <string name="feedback_message">usageDirect търси нови интересни начини за задълбочено представяне на вашата информация.
+\n
+\nВече имам планирани няколко неща, но бих искал да чуя и вас: какво мислите за usageDirect\?</string>
+    <string name="app_name">usageDirect</string>
+    <string name="db_job_schedule_failure">Внимание: автоматичното събиране на данни не може да бъде настроено, проверявайте данните често</string>
+    <string name="color_explanation">Избрани от вас приложения се подчертават навсякъде в приложението, което ви дава възможност да ги отличите от останалите. Сиртирайте ги, като използвате плъзгане и пускане, за да определите подредбата им в графиките и на основния екран.</string>
+</resources>
