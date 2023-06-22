@@ -124,6 +124,11 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
                  * rolled-over. This is effectively treated as a {@link #MOVE_TO_BACKGROUND}."
                  */
                 case 3:
+                /*
+                 * "An activity becomes invisible on the UI, corresponding to Activity.onStop()
+                 * of the activity's lifecycle."
+                 */
+                case UsageEvents.Event.ACTIVITY_STOPPED:
                     long eventBeginTime;
                     if (moveToForegroundMap.get(event.getPackageName()) != null) {
                         // Open and close events in order
