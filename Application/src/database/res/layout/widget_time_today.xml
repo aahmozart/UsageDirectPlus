@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="?android:attr/windowBackground"
     android:gravity="center"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:theme="@android:style/Theme.DeviceDefault.DayNight">
 
     <TextView
         android:layout_width="wrap_content"
