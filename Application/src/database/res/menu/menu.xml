@@ -38,6 +38,7 @@
         android:title="@string/menu_export" />
     <item android:id="@+id/menu_feedback"
         android:showAsAction="never"
+        android:visible="false"
         android:title="@string/menu_feedback" />
     <item android:id="@+id/menu_about"
         android:title="@string/menu_about" />
