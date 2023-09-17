@@ -113,7 +113,7 @@ public abstract class AppUsageStatisticsActivity extends Activity {
                         .setAppDeveloperName("Fynn Godau")
                         .setAppDeveloperMastodon("https://fosstodon.org/@fynnDirect")
                         .setContent(new Object[]{
-                                new Artwork(getString(R.string.icon), new License("CC BY-SA", null), null, "m4TZ", "https://social.anoxinon.de/@m4TZ"),
+                                new Artwork(getString(R.string.icon), new License("CC BY-SA", null), null, "m4TZ", false,"https://social.anoxinon.de/@m4TZ"),
                                 new Translator("Стоян", null, new Locale("bg")),
                                 new Translator("dc7ia", null, new Locale("da")),
                                 new Translator("mondstern", null, new Locale("da")),
@@ -148,18 +148,18 @@ public abstract class AppUsageStatisticsActivity extends Activity {
                                 new Translator("mondstern", null, new Locale("ta")),
                                 new Translator("Quang Trung", null, new Locale("vi")),
                                 new Translator("yeyuan98", null, new Locale("zh", "CN")),
-                                new Library("PrettyTime", License.APACHE_20_LICENSE, null, "ocpsoft", "https://www.ocpsoft.org/prettytime/"),
-                                new Library("SmartTabLayout", License.APACHE_20_LICENSE, null, "ogaclejapan", "https://github.com/ogaclejapan/SmartTabLayout"),
-                                new Library("Pikolo", License.APACHE_20_LICENSE, null, "Madrapps", "https://github.com/Madrapps/Pikolo/"),
+                                new Library("PrettyTime", License.APACHE_20_LICENSE, null, "ocpsoft", false, "https://www.ocpsoft.org/prettytime/"),
+                                new Library("SmartTabLayout", License.APACHE_20_LICENSE, null, "ogaclejapan", false, "https://github.com/ogaclejapan/SmartTabLayout"),
+                                new Library("Pikolo", License.APACHE_20_LICENSE, null, "Madrapps", false, "https://github.com/Madrapps/Pikolo/"),
                                 new Library("chartDirect", License.MIT_LICENSE, "The MIT License (MIT)\n" +
                                         "\n" +
                                         "Copyright (c) 2020 Fynn Godau\n" +
                                         "\n" +
                                         "Copyright (c) 2013 Ding Wenhao", "Fynn Godau and AndroidChart contributors", true, "https://codeberg.org/fynngodau/chartDirect"
                                 ),
-                                new Library("TypedRecyclerView", License.CC0_LICENSE, null, "Fynn Godau", "https://codeberg.org/fynngodau/TypedRecyclerView"),
-                                new Library("librariesDirect", License.CC0_LICENSE, null, "Fynn Godau", "https://codeberg.org/fynngodau/librariesDirect"),
-                                new Fork("AppUsageStatistics", License.APACHE_20_LICENSE, null, "AOSP", "https://github.com/googlesamples/android-AppUsageStatistics"),
+                                new Library("TypedRecyclerView", License.CC0_LICENSE, null, "Fynn Godau", false, "https://codeberg.org/fynngodau/TypedRecyclerView"),
+                                new Library("librariesDirect", License.CC0_LICENSE, null, "Fynn Godau", false, "https://codeberg.org/fynngodau/librariesDirect"),
+                                new Fork("AppUsageStatistics", License.APACHE_20_LICENSE, null, "AOSP", false, "https://github.com/googlesamples/android-AppUsageStatistics"),
                                 new OwnLicense(License.GNU_GPL_V3_OR_LATER_LICENSE, null, "https://codeberg.org/fynngodau/usageDirect"),
                         })
                         .build();
