@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="go">Gaan</string>
-    <string name="leave_app">Verlaat app</string>
+    <string name="go">Openen</string>
+    <string name="leave_app">Afsluiten</string>
     <string name="not_used">niet gebruikt</string>
     <string name="menu_about">Over</string>
-    <string name="launch_unavailable">Kon app niet starten</string>
-    <string name="menu_charts">Kaarten</string>
+    <string name="launch_unavailable">De app kan niet worden gestart</string>
+    <string name="menu_charts">Grafieken</string>
     <string name="last_used_now">momenteel in gebruik</string>
-    <string name="title_feature_preview">App gebruik per dag</string>
+    <string name="title_feature_preview">Nieuwe, experimentele functies</string>
     <string name="ts_today">Vandaag</string>
     <string name="ts_yesterday">Gisteren</string>
     <string name="ts_this_week">Deze week</string>
     <string name="ts_last_week">Vorige week</string>
     <string name="total">Totaal</string>
-    <string name="icon">Icoon</string>
-    <string name="last_used_this_day">laatst gebruikt op deze dag</string>
-    <string name="explanation_access_appusage_message">Verleen toegang tot de gebruiksstatistieken van uw systeem op de volgende pagina.</string>
+    <string name="icon">Pictogram</string>
+    <string name="last_used_this_day">deze dag voor het laatst gebruikt</string>
+    <string name="explanation_access_appusage_message">Verleen op het volgende scherm toegang tot de gebruiksstatistieken van je systeem.</string>
     <string name="menu_reload">Herladen</string>
+    <string name="charts_bar_daily">Appgebruik per dag</string>
+    <string name="explanation_access_appusage_title">Toestemming verlenen</string>
+    <string name="ts_calendar_week">Week %s</string>
 </resources>

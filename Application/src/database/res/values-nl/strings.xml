@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">usageDirect</string>
-    <string name="chart_average">∅ Gemiddeld app-gebruik per weekdag</string>
-    <string name="charts_clock_pie">%s als klok taartdiagram</string>
-    <string name="charts_clock_pie_general">Recente kloktijddiagrammen</string>
-    <string name="widget_today_name">Tijd vandaag</string>
-    <string name="menu_feedback">Zend een idee</string>
+    <string name="chart_average">∅ Gemiddeld appgebruik per werkdag</string>
+    <string name="charts_clock_pie">%s als cirkeldiagram</string>
+    <string name="charts_clock_pie_general">Recente cirkeldiagrammen</string>
+    <string name="widget_today_name">Gebruik van vandaag</string>
+    <string name="menu_feedback">Idee delen</string>
     <string name="menu_export">Databank exporteren</string>
     <string name="cancel">Annuleren</string>
-    <string name="charts_bar_daily_condensed">Langdurig app-gebruik</string>
-    <string name="usagestat_hide">Deze rij verwijderen</string>
-    <string name="menu_restore_hidden">Gewiste rijen herstellen</string>
-    <string name="export_title">Feature preview: database exporteren</string>
+    <string name="charts_bar_daily_condensed">Langdurig appgebruik</string>
+    <string name="usagestat_hide">Rij verwijderen</string>
+    <string name="menu_restore_hidden">Verwijderde rijen terugzetten</string>
+    <string name="export_title">Nieuwe, experimentele functie: databank exporteren</string>
     <string name="menu_restore_hidden_positive">Terugzetten</string>
     <plurals name="time_used_total_hours">
-        <item quantity="one">%1$d uur gebruikt totaal</item>
-        <item quantity="other">%1$d uren gebruikt totaal</item>
+        <item quantity="one">%1$d uur gebruikt</item>
+        <item quantity="other">%1$d uur gebruikt</item>
     </plurals>
     <string name="drag_handle">Sleepgreep</string>
-    <string name="uncolor">Kleur verwijderen</string>
-    <string name="confirm">Bevestigen</string>
-    <string name="menu_color">Kleuren apps</string>
-    <string name="export_message">De SQLite database kan worden geëxporteerd voor externe analyse.
+    <string name="uncolor">Kleur wissen</string>
+    <string name="confirm">Oké</string>
+    <string name="menu_color">Apps voorzien van kleur</string>
+    <string name="export_message">De SQLite-databank kan worden geëxporteerd voor externe analyse.
 \n
 \nImporteren zal pas mogelijk zijn in toekomstige versies van de app.</string>
     <string name="export_io_error">Er is een fout opgetreden tijdens het opslaan van het bestand</string>
-    <string name="export_okay">De export is geslaagd</string>
+    <string name="export_okay">Het exporteren is voltooid</string>
     <plurals name="menu_restore_hidden_details">
-        <item quantity="one">Wilt u een verwijderde rij terugzetten\?</item>
-        <item quantity="other">U heeft, in totaal, %1$d rijen verwijderd. Wilt u ze herstellen\?</item>
+        <item quantity="one">Wil je één verwijderde rij terugzetten?</item>
+        <item quantity="other">Je hebt %1$d rijen verwijderd. Wil je ze allemaal terugzetten?</item>
     </plurals>
-    <string name="color_explanation">Gekleurde apps worden in de hele toepassing gemarkeerd, zodat u zich kunt concentreren op hun gebruik. Stel een volgorde in met behulp van drag-and-drop om hun sortering in grafieken en op het hoofdscherm te bepalen.</string>
-    <string name="db_job_schedule_failure">Waarschuwing: automatische gegevensverzameling kon niet worden ingesteld, gelieve regelmatig terug te komen</string>
-    <string name="feedback_message">usageDirect blijft op zoek naar meer interessante ideeën voor inzichtelijke representaties van je data.
+    <string name="color_explanation">Gekleurde apps worden in de hele app gemarkeerd, zodat je je kunt concentreren op het gebruik ervan. Bepaal de volgorde met behulp van slepen-en-neerzetten om de sortering in grafieken en op het hoofdscherm te wĳzigen.</string>
+    <string name="db_job_schedule_failure">Waarschuwing: automatische gegevensverzameling kan niet worden ingesteld - kijk later nog eens</string>
+    <string name="feedback_message">usageDirect is altijd op zoek naar interessante ideeën voor inzichtelijke representaties van je gegevens.
 \n
-\nIk heb al een aantal dingen op mijn roadmap staan, maar ik zou graag van u horen: wat vindt u van usageDirect\?</string>
+\nIk heb al een aantal dingen op mijn lijstje staan, maar ik zou graag van je willen weten wat je van usageDirect vindt.</string>
 </resources>
