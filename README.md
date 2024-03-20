@@ -1,7 +1,9 @@
 
 # usageDirect
 
-This source builds the two apps "usageDirect" (`database` flavor) as well a "System usage stats" (`system` flavor).
+This project is in a low-maintenance state. This means that you are not guaranteed to receive responses to emails or issues, but I will look at your pull requests in due time. Occasionally, there may be a maintenance release.
+
+This source builds the two apps "usageDirect" (`database` flavor) as well as "System usage stats" (`system` flavor, to be removed).
 
 ### [Download usageDirect from F-Droid](https://f-droid.org/packages/godau.fynn.usagedirect)
 
