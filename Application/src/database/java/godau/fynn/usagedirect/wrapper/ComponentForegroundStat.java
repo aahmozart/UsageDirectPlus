@@ -56,4 +56,13 @@ public class ComponentForegroundStat {
                 endTime.getHour(), endTime.getMinute(), endTime.getSecond() + 10
         );
     }
+
+    @Override
+    public String toString() {
+        return "ComponentForegroundStat{" +
+                "beginTime=" + Instant.ofEpochMilli(beginTime) +
+                ", endTime=" + Instant.ofEpochMilli(endTime) +
+                ", packageName='" + packageName + '\'' +
+                '}';
+    }
 }

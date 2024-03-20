@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import godau.fynn.usagedirect.SimpleUsageStat;
 
@@ -83,17 +85,19 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
          * before start" (as they are not a True unmatched close event).
         */
 
-        // Map package names to the last moveToForeground event
-        Map<String, Long> moveToForegroundMap = new HashMap<>();
+        // Map components to the last moveToForeground event
+        Map<AppClass, Long> moveToForegroundMap = new HashMap<>();
 
         // Collect timespans during which components are in foreground
         ArrayList<ComponentForegroundStat> componentForegroundStats = new ArrayList<>();
 
         // Iterate over events
         UsageEvents.Event event = new UsageEvents.Event();
+        AppClass appClass;
 
         while (events.hasNextEvent()) {
             events.getNextEvent(event);
+            appClass = new AppClass(event.getPackageName(), event.getClassName());
 
             switch (event.getEventType()) {
                 /*
@@ -109,7 +113,7 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
                  */
                 case 4:
                     // Store open timestamp in map, overwriting earlier timestamps in case of Duplicate open event
-                    moveToForegroundMap.put(event.getPackageName(), event.getTimeStamp());
+                    moveToForegroundMap.put(appClass, event.getTimeStamp());
 
                     break;
                 /*
@@ -118,20 +122,25 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
                  */
                 case UsageEvents.Event.ACTIVITY_PAUSED:
                 /*
+                 * "An activity becomes invisible on the UI, corresponding to Activity.onStop()
+                 * of the activity's lifecycle."
+                 */
+                case UsageEvents.Event.ACTIVITY_STOPPED:
+                /*
                  * public static final int android.app.usage.UsageEvents.Event.END_OF_DAY = 3;
                  * (annotated as @hide)
                  * "An event type denoting that a component was in the foreground when the stats
                  * rolled-over. This is effectively treated as a {@link #MOVE_TO_BACKGROUND}."
                  */
                 case 3:
-                    long eventBeginTime;
-                    if (moveToForegroundMap.get(event.getPackageName()) != null) {
+                    Long eventBeginTime = moveToForegroundMap.get(appClass);
+                    if (eventBeginTime != null) {
                         // Open and close events in order
-                        eventBeginTime = moveToForegroundMap.get(event.getPackageName());
-                        moveToForegroundMap.put(event.getPackageName(), null);
+                        moveToForegroundMap.put(appClass, null);
                     } else if (
                             // App has not been in this query yet (test for Duplicate close event)
-                            !moveToForegroundMap.containsKey(event.getPackageName()) &&
+                            moveToForegroundMap.keySet().stream()
+                                    .noneMatch(key -> event.getPackageName().equals(key.packageName)) &&
                             /*
                              * Test if this unmatched close event is True by asking the Guardian
                              * to scan for it
@@ -143,9 +152,17 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
                         eventBeginTime = start;
                     } else break; // Ignore Faulty unmatched close event
 
+                    // Check if another of the app's components have moved to the foreground in the meantime
+                    OptionalLong endTime =
+                            moveToForegroundMap.entrySet().stream()
+                                    .filter(entry -> event.getPackageName().equals(entry.getKey().packageName))
+                                    .filter(entry -> entry.getValue() != null)
+                                    .mapToLong(entry -> entry.getValue())
+                                    .min();
+
                     componentForegroundStats.add(new ComponentForegroundStat(
                             eventBeginTime,
-                            event.getTimeStamp(),
+                            endTime.orElse(event.getTimeStamp()),
                             event.getPackageName()
                     ));
                     break;
@@ -159,20 +176,23 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
                  */
                 case UsageEvents.Event.DEVICE_SHUTDOWN:
                     // Per docs: iterate over remaining start events and treat them as closed
-                    for (String packageName : moveToForegroundMap.keySet()) {
+                    for (AppClass key : moveToForegroundMap.keySet()) {
 
-                        if (moveToForegroundMap.get(packageName) == null) {
+                        if (moveToForegroundMap.get(key) == null) {
                             // Not a remaining start event
                             continue;
                         }
 
                         componentForegroundStats.add(new ComponentForegroundStat(
-                                moveToForegroundMap.get(packageName),
+                                moveToForegroundMap.get(key),
                                 event.getTimeStamp(),
-                                packageName
+                                key.packageName
                         ));
 
-                        moveToForegroundMap.put(packageName, null);
+                        // Set entire app to closed
+                        moveToForegroundMap.keySet().stream()
+                                .filter(key1 -> key.packageName.equals(key1.packageName))
+                                .forEach(samePackageKey -> moveToForegroundMap.put(samePackageKey, null));
                     }
                     break;
                 /*
@@ -183,9 +203,9 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
                  */
                 case UsageEvents.Event.DEVICE_STARTUP:
                     // Per docs: remove pending open events
-                    for (String packageName : moveToForegroundMap.keySet()) {
+                    for (AppClass key : moveToForegroundMap.keySet()) {
                         // Overwrite all times with null
-                        moveToForegroundMap.put(packageName, null);
+                        moveToForegroundMap.put(key, null);
                     }
 
                     /* No package could be open longer than a reboot. Thus, we set the `start`
@@ -200,22 +220,22 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
         }
 
         // Iterate over remaining start events
-        for (String packageName : moveToForegroundMap.keySet()) {
+        for (AppClass key : moveToForegroundMap.keySet()) {
 
-            if (moveToForegroundMap.get(packageName) == null) {
+            if (moveToForegroundMap.get(key) == null) {
                 // Not a remaining start event
                 continue;
             }
 
             // Test if foreground app
             for (String foregroundProcess : foregroundProcesses) {
-                if (foregroundProcess.contains(packageName)) {
+                if (foregroundProcess.contains(key.packageName)) {
 
                     // Is a foreground app (True unmatched open event)
                     componentForegroundStats.add(new ComponentForegroundStat(
-                            moveToForegroundMap.get(packageName),
+                            moveToForegroundMap.get(key),
                             Math.min(System.currentTimeMillis(), end),
-                            packageName
+                            key.packageName
                     ));
 
                     break;
@@ -420,5 +440,36 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
 
         List<ComponentForegroundStat> foregroundStats = getForegroundStatsByPartialDay(timestamp);
         return aggregateForegroundStats(foregroundStats, endConsumer);
+    }
+
+    /**
+     * Stores a class name and its corresponding package.
+     */
+    private class AppClass {
+        public @NonNull String packageName;
+        public @NonNull String className;
+
+        public AppClass(@NonNull String packageName, @NonNull String className) {
+            this.packageName = packageName;
+            this.className = className;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            AppClass appClass = (AppClass) o;
+
+            if (!packageName.equals(appClass.packageName)) return false;
+            return className.equals(appClass.className);
+        }
+
+        @Override
+        public int hashCode() {
+            int result = packageName.hashCode();
+            result = 31 * result + className.hashCode();
+            return result;
+        }
     }
 }
