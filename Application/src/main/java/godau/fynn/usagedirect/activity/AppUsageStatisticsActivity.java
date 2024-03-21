@@ -113,7 +113,7 @@ public abstract class AppUsageStatisticsActivity extends Activity {
                         .setAppDeveloperName("Fynn Godau")
                         .setAppDeveloperMastodon("https://fosstodon.org/@fynnDirect")
                         .setContent(new Object[]{
-                                new Artwork(getString(R.string.icon), new License("CC BY-SA", null), null, "m4TZ", false,"https://social.anoxinon.de/@m4TZ"),
+                                new Artwork(getString(R.string.icon), new License("CC BY-SA", null), null, "m4TZ", false, "https://social.anoxinon.de/@m4TZ"),
                                 new Translator("Стоян", null, new Locale("bg")),
                                 new Translator("dc7ia", null, new Locale("da")),
                                 new Translator("mondstern", null, new Locale("da")),
@@ -161,6 +161,19 @@ public abstract class AppUsageStatisticsActivity extends Activity {
                                 new Library("librariesDirect", License.CC0_LICENSE, null, "Fynn Godau", false, "https://codeberg.org/fynngodau/librariesDirect"),
                                 new Fork("AppUsageStatistics", License.APACHE_20_LICENSE, null, "AOSP", false, "https://github.com/googlesamples/android-AppUsageStatistics"),
                                 new OwnLicense(License.GNU_GPL_V3_OR_LATER_LICENSE, null, "https://codeberg.org/fynngodau/usageDirect"),
+                                new Imprint("Fynn Godau\n" +
+                                        "Stößelstraße 6\n" +
+                                        "97422 Schweinfurt\n" +
+                                        "Deutschland\n" +
+                                        "\n" +
+                                        "fynngodau@mailbox.org\n" +
+                                        "+49 9721 730335\n" +
+                                        "\n" +
+                                        "Umsatzsteuer-Identifikationsnummer (VAT identification number): DE347187327\n" +
+                                        "\n" +
+                                        "Plattform der EU zur außergerichtlichen Streitbeilegung\n" +
+                                        "(EU platform for Online Dispute Resolution):\n" +
+                                        "https://ec.europa.eu/consumers/odr/"),
                         })
                         .build();
 
