@@ -1,8 +1,9 @@
+usageDirect tracks your daily screen time and creates a log of how long you used each app on each day.
+
 – Display reliable app usage statistics from up to ten days before the app was installed
 – Display historical data in chart
 – Show usage times on a clock pie chart per day
 – Display weekday average chart
 – Daily usage time in widget
-– More awesome ideas for the future!
 
 All available statistics are stored in the app's database for historic data.

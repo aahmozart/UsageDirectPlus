@@ -1,10 +1,10 @@
 <b>Please install <a href="https://f-droid.org/packages/godau.fynn.usagedirect">usageDirect</a> instead of this app if you are interested in system usage statistics.</b>
 
-This museum showcases an utterly broken API from the Android system. It is the API that is supposed to return aggregated system usage statistics.
+<i>This app reflects my experience with the usagae statistics API from a few Android versions ago. It may no longer be current and this app is no longer being maintained.</i>
 
-The Android system collects app usage statistics in the background; however, native Android contains no way to read out this data properly. That is why I wanted to create a tool to display it. Unfortunately, I had to learn that this data is very broken and highly unreliable.
+The Android system collects app usage statistics in the background; however, native Android contains no way to read out this data properly. That is why I wanted to create a tool to display it. Unfortunately, I had to learn that this data source was riddled with bugs and highly unreliable.
 
-Thus, this application was converted into a museum. It exhibits aggregated usage statistics per day for usually the past ten days, per week for the past four weeks, per month for the past six months as well as data aggregated by year. As a special exhibition, it can display this data as charts.
+Thus, I converted this application into a museum. It exhibits aggregated usage statistics per day for usually the past ten days, per week for the past four weeks, per month for the past six months as well as data aggregated by year. As a special exhibition, it can display this data as charts.
 
 Design-wise, the app comes in the style of the settings app to highlight that this API is a part of the Android system.
 

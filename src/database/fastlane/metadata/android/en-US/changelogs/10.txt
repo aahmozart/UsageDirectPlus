@@ -1,0 +1,6 @@
+Maintainance release.
+
+– Auto-themed widget, monochrome Android 13 icon
+– New translations
+– Improve measurement accuracy
+– Fix bugs
