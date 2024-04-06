@@ -136,7 +136,7 @@ public abstract class AppUsageStatisticsActivity extends Activity {
                                 new Translator("mondstern", null, new Locale("nb")),
                                 new Translator("Vistaus", null, new Locale("nl")),
                                 new Translator("mondstern", null, new Locale("nl")),
-                                new Translator("SlaVistaPL", null, new Locale("pl")),
+                                new Translator("Oliwier Jaszczyszyn", null, new Locale("pl")),
                                 new Translator("ewm", null, new Locale("pl")),
                                 new Translator("André Marcelo Alvarenga", null, new Locale("pt", "br")),
                                 new Translator("aevw", null, new Locale("pt", "br")),

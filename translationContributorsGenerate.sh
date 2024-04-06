@@ -25,5 +25,5 @@ do
 		git log --format="%an" --follow $dir/strings.xml
 		git log --format="%an" --follow "$(echo $dir | sed 's/main/database/')/strings.xml"
 		git log --format="%an" --follow "$(echo $dir | sed 's/main/system/')/strings.xml"
-	} | sort | uniq | sed "/Weblate\|Fynn Godau/d" | xargs -i echo "new Translator(\"{}\", null, new Locale($LANG)),"
+	} | sort | uniq | sed "/Weblate\|Fynn Godau/d" | sed "s/SlaVistaPL/Oliwier Jaszczyszyn/" | xargs -i echo "new Translator(\"{}\", null, new Locale($LANG)),"
 done
