@@ -11,7 +11,7 @@ deducted from the amount that I receive.
 
 You may transfer funds to:
 
-    Recipient            Johannes Fynn Godau
+    Recipient            Fynn Godau
     IBAN                 DE37 4306 0967 1010 2633 00
     BIC                  GENODEM1GLS
     Reason for transfer  usageDirect donation
