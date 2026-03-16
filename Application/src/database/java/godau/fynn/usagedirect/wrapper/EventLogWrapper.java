@@ -387,7 +387,7 @@ public class EventLogWrapper extends UsageStatsManagerWrapper {
      *
      * @param day Day since epoch
      */
-    private List<ComponentForegroundStat> getForegroundStatsByDay(long day) {
+    public List<ComponentForegroundStat> getForegroundStatsByDay(long day) {
         LocalDate date = LocalDate.ofEpochDay(day);
         long start = date.atStartOfDay(ZoneId.systemDefault())
                 .toInstant().toEpochMilli();

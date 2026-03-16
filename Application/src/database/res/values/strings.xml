@@ -45,4 +45,16 @@
         <item quantity="one">Would you like to restore one deleted row?</item>
         <item quantity="other">You have, in total, deleted %1$d rows. Would you like to restore them?</item>
     </plurals>
+
+    <string name="menu_export_settings">Auto-export settings</string>
+    <string name="export_settings_title">Periodic Database Export</string>
+    <string name="export_settings_description">Automatically export the database to a directory of your choice on a schedule. Exports are timestamped SQLite files.</string>
+    <string name="export_settings_enable">Enable periodic export</string>
+    <string name="export_settings_directory">Export directory</string>
+    <string name="export_settings_no_directory">No directory selected</string>
+    <string name="export_settings_choose">Choose</string>
+    <string name="export_settings_interval">Export interval</string>
+    <string name="export_settings_export_now">Export now</string>
+    <string name="export_settings_pick_directory_first">Please choose an export directory first</string>
+    <string name="export_settings_export_queued">Export queued</string>
 </resources>

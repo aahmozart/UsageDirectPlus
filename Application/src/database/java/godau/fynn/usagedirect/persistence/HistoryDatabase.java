@@ -41,11 +41,12 @@ import java.time.LocalDate;
  * <ul><b>3</b>: {@link LastUsedStat} added</ul>
  * <ul><b>4</b>: {@link SimpleUsageStat} has <code>hidden</code> flag</ul>
  * <ul><b>5</b>: {@link AppColor} added</ul>
+ * <ul><b>6</b>: {@link UsageInterval} and {@link ScreenEvent} tables added</ul>
  *
  * <p>See also: <code>/Application/schemas</code></p>
  */
 @Database(
-        version = 5, entities = {SimpleUsageStat.class, LastUsedStat.class, AppColor.class}
+        version = 6, entities = {SimpleUsageStat.class, LastUsedStat.class, AppColor.class, UsageInterval.class, ScreenEvent.class}
 
 )
 public abstract class HistoryDatabase extends RoomDatabase {
@@ -60,13 +61,18 @@ public abstract class HistoryDatabase extends RoomDatabase {
 
     public abstract WeeklyAverageBarChart.WeeklyAverageDao getWeeklyDao();
 
+    public abstract UsageIntervalDao getUsageIntervalDao();
+
+    public abstract ScreenEventDao getScreenEventDao();
+
     public static HistoryDatabase get(Context context) {
         return Room.databaseBuilder(context, HistoryDatabase.class, DATABASE_NAME)
                 .addMigrations(
                         MIGRATION_DAY_TO_DATE,
                         MIGRATION_ADD_LAST_USED,
                         MIGRATION_ADD_HIDDEN_FLAG,
-                        MIGRATION_ADD_COLORS
+                        MIGRATION_ADD_COLORS,
+                        MIGRATION_ADD_INTERVALS_AND_SCREEN_EVENTS
                 )
                 .build();
     }
@@ -140,6 +146,21 @@ public abstract class HistoryDatabase extends RoomDatabase {
             Log.d("HistoryDatabase", "Migration 4 → 5: creating app color table");
 
             database.execSQL("CREATE TABLE IF NOT EXISTS `colors` (`applicationId` TEXT NOT NULL, `color` INTEGER NOT NULL, `priority` INTEGER NOT NULL, PRIMARY KEY(`applicationId`))");
+        }
+    };
+
+    private static final Migration MIGRATION_ADD_INTERVALS_AND_SCREEN_EVENTS = new Migration(5, 6) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+
+            Log.d("HistoryDatabase", "Migration 5 → 6: creating usage intervals and screen events tables");
+
+            database.execSQL("CREATE TABLE IF NOT EXISTS `usageIntervals` (`beginTime` INTEGER NOT NULL, `endTime` INTEGER NOT NULL, `applicationId` TEXT NOT NULL, PRIMARY KEY(`beginTime`, `applicationId`))");
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_usageIntervals_applicationId` ON `usageIntervals` (`applicationId`)");
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_usageIntervals_beginTime` ON `usageIntervals` (`beginTime`)");
+
+            database.execSQL("CREATE TABLE IF NOT EXISTS `screenEvents` (`timestamp` INTEGER NOT NULL, `eventType` INTEGER NOT NULL, PRIMARY KEY(`timestamp`))");
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_screenEvents_timestamp` ON `screenEvents` (`timestamp`)");
         }
     };
 }

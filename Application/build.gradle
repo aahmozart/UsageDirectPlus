@@ -15,6 +15,7 @@ plugins {
 apply plugin: 'com.android.application'
 
 repositories {
+    mavenLocal()
     mavenCentral()
     google()
     maven { url 'https://jitpack.io' }
@@ -36,6 +37,9 @@ dependencies {
     implementation 'org.codeberg.fynngodau:chartDirect:2.0'
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
+
+    implementation 'androidx.work:work-runtime:2.9.0'
+    implementation 'androidx.documentfile:documentfile:1.0.1'
 
     def room_version = "2.6.1"
     implementation "androidx.room:room-runtime:$room_version"

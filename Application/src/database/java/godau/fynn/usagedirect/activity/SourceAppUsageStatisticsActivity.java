@@ -151,6 +151,10 @@ public class SourceAppUsageStatisticsActivity extends AppUsageStatisticsActivity
                         })
                         .setNegativeButton(R.string.cancel, null)
                         .show();
+                break;
+            case R.id.menu_export_settings:
+                startActivity(new Intent(this, ExportSettingsActivity.class));
+                break;
         }
 
         return super.onOptionsItemSelected(item);
