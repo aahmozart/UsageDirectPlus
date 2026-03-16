@@ -5,11 +5,11 @@
     <string name="widget_today_name">Tiempo total para hoy</string>
     <string name="menu_feedback">Envíanos una sugerencia</string>
     <string name="menu_export">Exportar base de datos</string>
-    <string name="feedback_message">usageDirect sigue buscando ideas interesantes que le permitan hacer representaciones más perspicaces de tus datos.
+    <string name="feedback_message">UsageDirectPlus sigue buscando ideas interesantes que le permitan hacer representaciones más perspicaces de tus datos.
 \n
-\nYa tengo un cierto número de cosas en mi hoja de ruta, pero me gustaría que me dieras tu opinión: ¿qué te parece usageDirect\?</string>
+\nYa tengo un cierto número de cosas en mi hoja de ruta, pero me gustaría que me dieras tu opinión: ¿qué te parece UsageDirectPlus\?</string>
     <string name="cancel">Cancelar</string>
-    <string name="app_name">usageDirect</string>
+    <string name="app_name">UsageDirectPlus</string>
     <string name="db_job_schedule_failure">Advertencia: no fue posible configurar la recopilación automática de datos. Por favor, verifíquelos periódicamente</string>
     <string name="chart_average">∅ Promedio de uso de aplicaciones por día de la semana</string>
     <string name="charts_bar_daily_condensed">Uso de aplicaciones a largo plazo</string>

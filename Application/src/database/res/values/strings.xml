@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">usageDirect</string>
+    <string name="app_name">UsageDirectPlus</string>
     <string name="db_job_schedule_failure">Warning: automatic data collection could not be set up, please check back regularly</string>
     <string name="chart_average">∅ Average app usage per weekday</string>
     <string name="charts_clock_pie">%s as a clock pie chart</string>
@@ -11,8 +11,8 @@
     <string name="widget_today_name">Time today</string>
     <string name="menu_feedback">Send an idea</string>
     <string name="menu_export">Export database</string>
-    <string name="feedback_message">usageDirect keeps looking for more interesting ideas for insightful representations of your data.
-        \n\nI already have a number of things on my roadmap, but I would like to hear from you: what do you think about usageDirect?</string>
+    <string name="feedback_message">UsageDirectPlus keeps looking for more interesting ideas for insightful representations of your data.
+        \n\nI already have a number of things on my roadmap, but I would like to hear from you: what do you think about UsageDirectPlus?</string>
     <string name="cancel">Cancel</string>
     <string name="charts_bar_daily_condensed">Long-term app usage</string>
 
@@ -35,7 +35,7 @@
 
     <string name="drag_handle">Drag handle</string>
 
-    <string name="url_email" translatable="false">mailto:fynngodau@mailbox.org?subject=usageDirect</string>
+    <string name="url_email" translatable="false">mailto:fynngodau@mailbox.org?subject=UsageDirectPlus</string>
     <plurals name="time_used_total_hours">
         <item quantity="one">%1$d hour used total</item>
         <item quantity="other">%1$d hours used total</item>

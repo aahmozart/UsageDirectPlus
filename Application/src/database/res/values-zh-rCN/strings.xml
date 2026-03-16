@@ -8,7 +8,7 @@
     <string name="db_job_schedule_failure">警告：无法设置后台自动数据收集，请时常打开应用喵～</string>
     <string name="charts_clock_pie">%s饼状图</string>
     <string name="widget_today_name">今日使用总时长</string>
-    <string name="feedback_message">为了更好地展示你的数据，usageDirect随时欢迎奇思妙想。
+    <string name="feedback_message">为了更好地展示你的数据，UsageDirectPlus随时欢迎奇思妙想。
 \n
 \n我已经有几个点子在本本上了，但我想听听你的意见。你怎么想？</string>
 </resources>

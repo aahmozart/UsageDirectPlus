@@ -12,7 +12,7 @@
         <item quantity="one">நீக்கப்பட்ட ஒரு வரிசையை மீட்டெடுக்க விரும்புகிறீர்களா\?</item>
         <item quantity="other">நீங்கள் மொத்தம் %1$d வரிசைகளை நீக்கியுள்ளீர்கள். நீங்கள் அவற்றை மீட்டெடுக்க விரும்புகிறீர்களா\?</item>
     </plurals>
-    <string name="app_name">usageDirect</string>
+    <string name="app_name">UsageDirectPlus</string>
     <string name="db_job_schedule_failure">எச்சரிக்கை: தானியங்கி தரவு சேகரிப்பை அமைக்க முடியவில்லை, தயவுசெய்து தவறாமல் சரிபார்க்கவும்</string>
     <string name="charts_clock_pie_general">சமீபத்திய கடிகாரம் பை விளக்கப்படங்கள்</string>
     <string name="menu_feedback">ஒரு யோசனையை அனுப்பவும்</string>

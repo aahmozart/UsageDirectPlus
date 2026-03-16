@@ -31,8 +31,8 @@
     </plurals>
     <string name="db_job_schedule_failure">Attenzione: non è stato possibile impostare la raccolta automatica dei dati, si prega di ricontrollare regolarmente</string>
     <string name="widget_today_name">Tempo oggi</string>
-    <string name="feedback_message">usageDirect è alla continua ricerca di idee interessanti per rappresentare dei tuoi dati di utilizzo.
+    <string name="feedback_message">UsageDirectPlus è alla continua ricerca di idee interessanti per rappresentare dei tuoi dati di utilizzo.
 \n
-\nHo già un paio di idee sulla mia lavagna, ma mi piacerebbe riceverne qualcuna da te: cosa ne pensi di usageDirect\?</string>
+\nHo già un paio di idee sulla mia lavagna, ma mi piacerebbe riceverne qualcuna da te: cosa ne pensi di UsageDirectPlus\?</string>
     <string name="color_explanation">Le app colorate sono evidenziate in tutta l\'applicazione, permettendoti di focalizzarti sul loro utilizzo. Imposta un ordine usando il drag-and-drop per determinare l\'ordinamento nei grafici e sulla schermata principale.</string>
 </resources>

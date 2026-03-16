@@ -13,8 +13,8 @@
     <string name="help_bug_3">\"hoje\" começando em momentos aparentemente aleatórios no tempo</string>
     <string name="help_bug_4">obter menos dados numa tentativa mas não na outra</string>
     <string name="help_bug_5">inesperadamente não obter nenhum dado</string>
-    <string name="help_database_flavor_download">Você está procurando por dados de uso confiáveis e persistentes\? usageDirect os tem.</string>
-    <string name="help_database_flavor_installed">usageDirect fornece dados confiáveis e persistentes.</string>
+    <string name="help_database_flavor_download">Você está procurando por dados de uso confiáveis e persistentes\? UsageDirectPlus os tem.</string>
+    <string name="help_database_flavor_installed">UsageDirectPlus fornece dados confiáveis e persistentes.</string>
     <string name="system_stats_warning">Ver guia da exposição</string>
     <string name="title_system_stats">Exposição</string>
     <string name="title_help">Guia para a exposição</string>

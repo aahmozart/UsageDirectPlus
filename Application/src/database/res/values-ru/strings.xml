@@ -8,9 +8,9 @@
     <string name="charts_clock_pie_general">Последние круговые диаграммы часов</string>
     <string name="widget_today_name">Время сегодня</string>
     <string name="menu_feedback">Отправить идею</string>
-    <string name="feedback_message">usageDirect постоянно ищет более интересные идеи для информативного представления ваших данных.
+    <string name="feedback_message">UsageDirectPlus постоянно ищет более интересные идеи для информативного представления ваших данных.
 \n
-\nУ меня уже есть ряд вещей в моей дорожной карте, но я хочу услышать это от вас: что вы думаете об usageDirect\?</string>
+\nУ меня уже есть ряд вещей в моей дорожной карте, но я хочу услышать это от вас: что вы думаете об UsageDirectPlus\?</string>
     <string name="menu_export">Экспорт базы данных</string>
     <string name="export_title">Предварительный просмотр функции: экспорт базы данных</string>
     <string name="export_message">База данных SQLite может быть экспортирована для внешнего анализа.

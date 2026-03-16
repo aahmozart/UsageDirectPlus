@@ -8,7 +8,7 @@
     <string name="help_bug_5">đột nhiên không nhận được dữ liệu nào</string>
     <string name="help_unreliable_4">Đừng sử dụng lệnh gọi API này.</string>
     <string name="help_unreliable_5">Nó rất lãng phí thời gian.</string>
-    <string name="help_database_flavor_installed">usageDirect cung cấp dữ liệu đáng tin cậy và liên tục.</string>
+    <string name="help_database_flavor_installed">UsageDirectPlus cung cấp dữ liệu đáng tin cậy và liên tục.</string>
     <string name="system_stats_warning">Xem hướng dẫn buổi triển lãm</string>
     <string name="title_system_stats">Buổi triển lãm</string>
     <string name="title_help">Hướng dẫn buổi triển lãm</string>
@@ -20,7 +20,7 @@
     <string name="charts_bar_monthly">Dữ liệu sử dụng ứng dụng mỗi tháng</string>
     <string name="charts_bar_yearly">Dữ liệu sử dụng ứng dụng mỗi năm</string>
     <string name="help_unreliable_1">Ứng dụng này sử dụng lệnh gọi hàm sau đây để truy vấn dữ liệu của nó.</string>
-    <string name="help_database_flavor_download">Bạn có đang tìm dữ liệu sử dụng đáng tin cậy và liên tục không\? usageDirect có nó.</string>
+    <string name="help_database_flavor_download">Bạn có đang tìm dữ liệu sử dụng đáng tin cậy và liên tục không\? UsageDirectPlus có nó.</string>
     <string name="help_bug_2">dữ liệu của một khoảng thời gian giống hệt của một khoảng thời gian khác khi nó không nên giống</string>
     <string name="charts_bar_weekly">Dữ liệu sử dụng ứng dụng mỗi tuần</string>
     <string name="help_unreliable_3">Sau đó, hãy làm theo lời khuyên này:</string>

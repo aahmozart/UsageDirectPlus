@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">usageDirect</string>
+    <string name="app_name">UsageDirectPlus</string>
     <string name="chart_average">∅ Durchschnittliche Nutzungszeit pro Wochentag</string>
     <string name="widget_today_name">Nutzungszeit heute</string>
     <string name="db_job_schedule_failure">Warnung: automatische Datensammlung konnte nicht eingerichtet werden, bitte schaue regelmäßig vorbei</string>
@@ -11,9 +11,9 @@
     <string name="usagestat_hide">Diese Reihe löschen</string>
     <string name="menu_restore_hidden">Gelöschte Reihen wiederherstellen</string>
     <string name="menu_restore_hidden_positive">Wiederherstellen</string>
-    <string name="feedback_message">usageDirect ist immer auf der Suche nach interessanten, neuen Ideen für einsichtreiche Darstellungen von Daten.
+    <string name="feedback_message">UsageDirectPlus ist immer auf der Suche nach interessanten, neuen Ideen für einsichtreiche Darstellungen von Daten.
 \n
-\nIch habe selbst schon ein paar Dinge geplant, aber ich will auch von dir hören: was denkst du über usageDirect\?</string>
+\nIch habe selbst schon ein paar Dinge geplant, aber ich will auch von dir hören: was denkst du über UsageDirectPlus\?</string>
     <string name="charts_bar_daily_condensed">Nutzungszeit über langen Zeitraum</string>
     <plurals name="menu_restore_hidden_details">
         <item quantity="one">Möchtest du eine gelöschte Reihe wiederherstellen\?</item>

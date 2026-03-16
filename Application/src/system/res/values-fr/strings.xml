@@ -11,8 +11,8 @@
     <string name="help_unreliable_3">Ensuite, veuillez suivre ce conseil :</string>
     <string name="help_unreliable_4">N\'utilisez pas cet appel API.</string>
     <string name="help_unreliable_5">C\'est une perte de temps.</string>
-    <string name="help_database_flavor_download">Vous recherchez des données d\'utilisation fiables et persistantes \? usageDirect les a.</string>
-    <string name="help_database_flavor_installed">usageDirect fournit des données fiables et persistantes.</string>
+    <string name="help_database_flavor_download">Vous recherchez des données d\'utilisation fiables et persistantes \? UsageDirectPlus les a.</string>
+    <string name="help_database_flavor_installed">UsageDirectPlus fournit des données fiables et persistantes.</string>
     <string name="system_stats_warning">Voir le guide de l\'exposition</string>
     <string name="title_system_stats">Exposition</string>
     <string name="title_help">Guide de l\'exposition</string>

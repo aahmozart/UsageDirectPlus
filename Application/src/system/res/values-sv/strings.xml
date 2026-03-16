@@ -8,8 +8,8 @@
     <string name="help_bug_3">\"idag\" börjar på till synes slumpmässiga tidpunkter</string>
     <string name="help_bug_4">få mindre data vid ett försök men inte ett annat</string>
     <string name="help_bug_5">plötsligt får inga data alls</string>
-    <string name="help_database_flavor_download">Letar du efter tillförlitliga och ihållande användningsdata\? usageDirect har det.</string>
-    <string name="help_database_flavor_installed">usageDirect tillhandahåller pålitlig och ihållande data.</string>
+    <string name="help_database_flavor_download">Letar du efter tillförlitliga och ihållande användningsdata\? UsageDirectPlus har det.</string>
+    <string name="help_database_flavor_installed">UsageDirectPlus tillhandahåller pålitlig och ihållande data.</string>
     <string name="title_system_stats">Utställning</string>
     <string name="title_help">Guide till utställningen</string>
     <string name="span_daily">Daglig</string>

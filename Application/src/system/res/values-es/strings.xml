@@ -10,7 +10,7 @@
     <string name="help_unreliable_3">Después de eso, por favor sigue este consejo:</string>
     <string name="help_unreliable_4">No uses esta llamada de API.</string>
     <string name="help_unreliable_5">Es una pérdida de tiempo.</string>
-    <string name="help_database_flavor_installed">usageDirect te da datos que son confiables y persistentes.</string>
+    <string name="help_database_flavor_installed">UsageDirectPlus te da datos que son confiables y persistentes.</string>
     <string name="system_stats_warning">Ver la guía de presentación</string>
     <string name="title_system_stats">Presentación</string>
     <string name="title_help">Guía de presentación</string>
@@ -22,7 +22,7 @@
     <string name="charts_bar_monthly">Uso de aplicaciones por mes</string>
     <string name="charts_bar_yearly">Uso de aplicaciones por año</string>
     <string name="help_bug_2">Que los datos de un período continuo sean los mismos que para otro período, no debiendo serlo</string>
-    <string name="help_database_flavor_download">¿Quieres datos de uso que sean confiables y persistentes\? usageDirect los da.</string>
+    <string name="help_database_flavor_download">¿Quieres datos de uso que sean confiables y persistentes\? UsageDirectPlus los da.</string>
     <string name="charts_bar_weekly">Uso de aplicaciones por semana</string>
     <string name="error_no_data">Se produjo un error: el sistema no presentó ningún dato. Por favor, trata de reiniciar esta aplicación</string>
 </resources>

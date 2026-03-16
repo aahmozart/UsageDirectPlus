@@ -5,9 +5,9 @@
     <string name="charts_clock_pie">%s dưới dạng biểu đồ đồng hồ tròn</string>
     <string name="widget_today_name">Thời gian hôm nay</string>
     <string name="menu_feedback">Gửi một ý tưởng</string>
-    <string name="feedback_message">usageDirect tiếp tục tìm kiếm các ý tưởng thú vị cho việc diễn tả sâu sắc dữ liệu của bạn.
+    <string name="feedback_message">UsageDirectPlus tiếp tục tìm kiếm các ý tưởng thú vị cho việc diễn tả sâu sắc dữ liệu của bạn.
 \n
-\nTôi đã có một số thứ trên kế hoạch của tôi, nhưng tôi muốn lắng nghe bạn: bạn nghĩ gì về usageDirect\?</string>
+\nTôi đã có một số thứ trên kế hoạch của tôi, nhưng tôi muốn lắng nghe bạn: bạn nghĩ gì về UsageDirectPlus\?</string>
     <string name="cancel">Huỷ</string>
     <string name="charts_bar_daily_condensed">Dữ liệu sử dụng ứng dụng dài hạn</string>
     <string name="usagestat_hide">Xoá dòng này</string>
@@ -16,7 +16,7 @@
     <plurals name="menu_restore_hidden_details">
         <item quantity="other">Bạn đã xoá tổng cộng là %1$d dòng. Bạn có muốn khôi phục chúng không\?</item>
     </plurals>
-    <string name="app_name">usageDirect</string>
+    <string name="app_name">UsageDirectPlus</string>
     <string name="db_job_schedule_failure">Cảnh báo: Không thể thiết lập thu thập dữ liệu tự động, vui lòng xem lại thường xuyên</string>
     <string name="menu_export">Xuất cơ sở dữ liệu</string>
     <string name="export_title">Xem trước tính năng: xuất cơ sở dữ liệu</string>

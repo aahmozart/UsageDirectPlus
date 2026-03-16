@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">usageDirect</string>
+    <string name="app_name">UsageDirectPlus</string>
     <string name="db_job_schedule_failure">Varning: automatisk datainsamling kunde inte ställas in, kom tillbaka regelbundet</string>
     <string name="chart_average">∅ Genomsnittlig appanvändning per veckodag</string>
     <string name="widget_today_name">Tid i dag</string>
@@ -8,9 +8,9 @@
     <string name="charts_clock_pie">%s som en klocka cirkeldiagram</string>
     <string name="menu_feedback">Skicka en idé</string>
     <string name="cancel">Annullera</string>
-    <string name="feedback_message">usageDirect fortsätter att leta efter mer intressanta idéer för insiktsfulla representationer av dina data.
+    <string name="feedback_message">UsageDirectPlus fortsätter att leta efter mer intressanta idéer för insiktsfulla representationer av dina data.
 \n
-\nJag har redan ett antal saker på min färdplan, men jag vill höra det från dig: vad tycker du om usageDirect\?</string>
+\nJag har redan ett antal saker på min färdplan, men jag vill höra det från dig: vad tycker du om UsageDirectPlus\?</string>
     <string name="usagestat_hide">Ta bort den här raden</string>
     <string name="menu_restore_hidden">Återställa borttagna rader</string>
     <string name="menu_restore_hidden_positive">Återställ</string>

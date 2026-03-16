@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">usageDirect</string>
+    <string name="app_name">UsageDirectPlus</string>
     <string name="db_job_schedule_failure">Peringatan: pengumpulan data otomatis tidak dapat disiapkan, harap periksa aplikasi secara berkala</string>
     <string name="widget_today_name">Waktu hari ini</string>
     <string name="menu_feedback">Kirim ide</string>
@@ -30,7 +30,7 @@
     <string name="menu_color">App warna</string>
     <string name="drag_handle">Handel seret</string>
     <string name="charts_clock_pie_general">Grafik pai jam terkiniweather condition</string>
-    <string name="feedback_message">usageDirect terus mencari ide-ide yang lebih menarik untuk representasi wawasan dari data anda.
+    <string name="feedback_message">UsageDirectPlus terus mencari ide-ide yang lebih menarik untuk representasi wawasan dari data anda.
 \n
-\nAku sudah punya beberapa peta di peta jalanku tapi aku ingin mendengarnya darimu: apa pendapatmu tentang langsung dari usageDirect\?</string>
+\nAku sudah punya beberapa peta di peta jalanku tapi aku ingin mendengarnya darimu: apa pendapatmu tentang langsung dari UsageDirectPlus\?</string>
 </resources>

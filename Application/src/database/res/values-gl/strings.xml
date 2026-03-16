@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">usageDirect</string>
+    <string name="app_name">UsageDirectPlus</string>
     <string name="db_job_schedule_failure">Aviso: a recoleción automática de datos non se puido establecer, volve a comprobalos con regularidade</string>
     <string name="chart_average">∅ Uso promedio da app por día</string>
     <string name="charts_clock_pie_general">Gráficos de uso recentes</string>
     <string name="widget_today_name">Tempo hoxe</string>
     <string name="menu_feedback">Enviar unha idea</string>
     <string name="charts_clock_pie">%s como un gráfico circular</string>
-    <string name="feedback_message">usageDirect busca mellores xeitos e ideas interesantes para representar os teus datos.
+    <string name="feedback_message">UsageDirectPlus busca mellores xeitos e ideas interesantes para representar os teus datos.
 \n
-\nXa temos varias ideas no forno, pero encantaríanos coñecer as túas: que opinas acerca de usageDirect\?</string>
+\nXa temos varias ideas no forno, pero encantaríanos coñecer as túas: que opinas acerca de UsageDirectPlus\?</string>
     <string name="cancel">Cancelar</string>
     <string name="charts_bar_daily_condensed">Uso histórico da app</string>
     <string name="usagestat_hide">Eliminar esta fila</string>

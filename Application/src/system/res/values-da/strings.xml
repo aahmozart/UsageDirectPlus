@@ -10,7 +10,7 @@
     <string name="help_unreliable_3">Bagefter skal du følge dette råd:</string>
     <string name="help_unreliable_4">Brug ikke dette API call.</string>
     <string name="help_unreliable_5">Det er spild af tid.</string>
-    <string name="help_database_flavor_installed">usageDirect leverer pålidelige og vedvarende data.</string>
+    <string name="help_database_flavor_installed">UsageDirectPlus leverer pålidelige og vedvarende data.</string>
     <string name="system_stats_warning">Se udstillingsguide</string>
     <string name="title_system_stats">Udstilling</string>
     <string name="title_help">Vejledning til udstillingen</string>
@@ -24,5 +24,5 @@
     <string name="charts_bar_yearly">Appbrug pr. År</string>
     <string name="error_no_data">Der opstod en fejl: systemet har ikke returneret data. Prøv at genstarte applikationen</string>
     <string name="help_bug_2">data for en løbende periode er de samme som for en anden, når de ikke burde</string>
-    <string name="help_database_flavor_download">Leder du efter pålidelige og vedvarende brugsdata\? usageDirect har det.</string>
+    <string name="help_database_flavor_download">Leder du efter pålidelige og vedvarende brugsdata\? UsageDirectPlus har det.</string>
 </resources>

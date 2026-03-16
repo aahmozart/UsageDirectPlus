@@ -4,8 +4,8 @@
     <string name="help_bug_3">\"Heute\", was zu scheinbar zufälligen Tageszeiten anbricht</string>
     <string name="help_bug_4">Anfragen, die zu verschiedenen Zeitpunkten unterschiedliche Daten hervorbringen</string>
     <string name="help_bug_5">Daten, die plötzlich gar nicht mehr angezeigt werden</string>
-    <string name="help_database_flavor_download">Auf der Suche nach zuverlässigen und persistenten Nutzungsstatistiken\? usageDirect bietet genau das.</string>
-    <string name="help_database_flavor_installed">usageDirect stellt verlässliche und persistente Daten zur Verfügung.</string>
+    <string name="help_database_flavor_download">Auf der Suche nach zuverlässigen und persistenten Nutzungsstatistiken\? UsageDirectPlus bietet genau das.</string>
+    <string name="help_database_flavor_installed">UsageDirectPlus stellt verlässliche und persistente Daten zur Verfügung.</string>
     <string name="title_system_stats">Ausstellung</string>
     <string name="system_stats_warning">Ausstellungskatalog öffnen</string>
     <string name="title_help">Führer zur Ausstellung</string>

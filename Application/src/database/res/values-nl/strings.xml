@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">usageDirect</string>
+    <string name="app_name">UsageDirectPlus</string>
     <string name="chart_average">∅ Gemiddeld appgebruik per werkdag</string>
     <string name="charts_clock_pie">%s als cirkeldiagram</string>
     <string name="charts_clock_pie_general">Recente cirkeldiagrammen</string>
@@ -32,7 +32,7 @@
     </plurals>
     <string name="color_explanation">Gekleurde apps worden in de hele app gemarkeerd, zodat je je kunt concentreren op het gebruik ervan. Bepaal de volgorde met behulp van slepen-en-neerzetten om de sortering in grafieken en op het hoofdscherm te wĳzigen.</string>
     <string name="db_job_schedule_failure">Waarschuwing: automatische gegevensverzameling kan niet worden ingesteld - kijk later nog eens</string>
-    <string name="feedback_message">usageDirect is altijd op zoek naar interessante ideeën voor inzichtelijke representaties van je gegevens.
+    <string name="feedback_message">UsageDirectPlus is altijd op zoek naar interessante ideeën voor inzichtelijke representaties van je gegevens.
 \n
-\nIk heb al een aantal dingen op mijn lijstje staan, maar ik zou graag van je willen weten wat je van usageDirect vindt.</string>
+\nIk heb al een aantal dingen op mijn lijstje staan, maar ik zou graag van je willen weten wat je van UsageDirectPlus vindt.</string>
 </resources>

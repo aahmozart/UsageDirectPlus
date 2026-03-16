@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ usageDirect
+  ~ UsageDirectPlus
   ~ Copyright (C) 2020 Fynn Godau
   ~
   ~ This program is free software: you can redistribute it and/or modify
@@ -29,8 +29,8 @@
     <string name="help_unreliable_3">Afterwards, please follow this advice:</string>
     <string name="help_unreliable_4">Do not use this API call.</string>
     <string name="help_unreliable_5">It is a waste of time.</string>
-    <string name="help_database_flavor_download">Are you looking for reliable and persistent usage data? usageDirect has it.</string>
-    <string name="help_database_flavor_installed">usageDirect provides reliable and persistent data.</string>
+    <string name="help_database_flavor_download">Are you looking for reliable and persistent usage data? UsageDirectPlus has it.</string>
+    <string name="help_database_flavor_installed">UsageDirectPlus provides reliable and persistent data.</string>
     <string name="system_stats_warning">View exhibition guide</string>
     <string name="title_system_stats">Exhibition</string>
     <string name="title_help">Guide to the exhibition</string>

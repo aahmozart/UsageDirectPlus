@@ -50,10 +50,10 @@ dependencies {
 android {
     compileSdk 34
 
-    namespace 'godau.fynn.usagedirect'
+    namespace 'godau.fynn.usagedirectplus'
 
     defaultConfig {
-        applicationId "godau.fynn.usagedirect"
+        applicationId "godau.fynn.usagedirectplus"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 10

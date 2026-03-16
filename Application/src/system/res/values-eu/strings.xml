@@ -5,8 +5,8 @@
     <string name="help_bug_3">\"gaur\" itxuraz ausazkoak diren momentutan hastea</string>
     <string name="help_bug_4">saiakera batean bestean baino datu gutxiago jasotzea</string>
     <string name="help_bug_5">bat-batean daturik ez jasotzea</string>
-    <string name="help_database_flavor_download">Erabilera-datu fidagarri eta iraunkorren bila zabiltza\? Erabili usageDirect bere hortan.</string>
-    <string name="help_database_flavor_installed">usageDirect-ek datu fidagarri eta iraunkorrak ematen ditu.</string>
+    <string name="help_database_flavor_download">Erabilera-datu fidagarri eta iraunkorren bila zabiltza\? Erabili UsageDirectPlus bere hortan.</string>
+    <string name="help_database_flavor_installed">UsageDirectPlus-ek datu fidagarri eta iraunkorrak ematen ditu.</string>
     <string name="system_stats_warning">Ikusi agerraldi-gida</string>
     <string name="title_system_stats">Agerraldia</string>
     <string name="title_help">Agerraldiaren gida</string>

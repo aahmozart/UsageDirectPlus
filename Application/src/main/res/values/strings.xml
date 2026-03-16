@@ -26,7 +26,7 @@
     <string name="menu_charts">Charts</string>
     <string name="last_used_now">currently in use</string>
     <string name="charts_bar_daily">App usage per day</string>
-    <string name="title_feature_preview">usageDirect feature preview</string>
+    <string name="title_feature_preview">UsageDirectPlus feature preview</string>
     <string name="ts_today">Today</string>
     <string name="ts_yesterday">Yesterday</string>
     <string name="ts_this_week">This week</string>

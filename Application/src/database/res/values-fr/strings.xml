@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="charts_clock_pie">%s en diagramme circulaire</string>
-    <string name="app_name">usageDirect</string>
+    <string name="app_name">UsageDirectPlus</string>
     <string name="chart_average">∅ utilisation moyenne de l\'appli / jour de la semaine</string>
     <string name="charts_clock_pie_general">Diagrammes en horloge récents</string>
     <string name="widget_today_name">Temps aujourd\'hui</string>
@@ -30,9 +30,9 @@
     </plurals>
     <string name="db_job_schedule_failure">Avertissement : la collecte automatique des données pourrait ne pas être configuée, veuillez vérifier régulièrement</string>
     <string name="menu_feedback">Faire une suggestion</string>
-    <string name="feedback_message">usageDirect continue de chercher des idées plus intéressantes pour des représentations parlantes de vos données.
+    <string name="feedback_message">UsageDirectPlus continue de chercher des idées plus intéressantes pour des représentations parlantes de vos données.
 \n
-\nJ\'ai déjà un certain nombre de choses à ajouter, mais j\'aimerais entendre vos idées : que pensez-vous d\'usageDirect \?</string>
+\nJ\'ai déjà un certain nombre de choses à ajouter, mais j\'aimerais entendre vos idées : que pensez-vous d\'UsageDirectPlus \?</string>
     <string name="menu_restore_hidden_positive">Restaurer</string>
     <string name="drag_handle">Poignée de déplacement</string>
 </resources>

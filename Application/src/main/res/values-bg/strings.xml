@@ -18,6 +18,6 @@
     <string name="total">Всичко</string>
     <string name="last_used_this_day">последно използвано на този ден</string>
     <string name="icon">Пиктограма</string>
-    <string name="title_feature_preview">Предварителен преглед на възможност на usageDirect</string>
+    <string name="title_feature_preview">Предварителен преглед на възможност на UsageDirectPlus</string>
     <string name="explanation_access_appusage_message">Разрешете достъпа до данните за ползването в следващия екран.</string>
 </resources>

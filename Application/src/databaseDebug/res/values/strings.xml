@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ usageDirect
+  ~ UsageDirectPlus
   ~ Copyright (C) 2020 Fynn Godau
   ~
   ~ This program is free software: you can redistribute it and/or modify
@@ -18,8 +18,8 @@
   -->
 
 <resources>
-    <string name="app_name">usageDirect debug</string>
-    <string name="explanation_access_appusage_message">Please grant access to your system\'s usage statistics on the next page.\n\nPlease make sure to grant access to the debug version of usageDirect.</string>
+    <string name="app_name">UsageDirectPlus debug</string>
+    <string name="explanation_access_appusage_message">Please grant access to your system\'s usage statistics on the next page.\n\nPlease make sure to grant access to the debug version of UsageDirectPlus.</string>
     <string name="menu_debug">Debug options</string>
     <string name="menu_debug_database">Database inspector</string>
     <string name="menu_debug_custom_query">Custom event log query</string>

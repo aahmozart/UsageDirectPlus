@@ -7,11 +7,11 @@
         android:shortcutShortLabel="@string/menu_charts">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetPackage="godau.fynn.usagedirect.debug"
-            android:targetClass="godau.fynn.usagedirect.activity.SourceAppUsageStatisticsActivity" />
+            android:targetPackage="godau.fynn.usagedirectplus.debug"
+            android:targetClass="godau.fynn.usagedirectplus.activity.SourceAppUsageStatisticsActivity" />
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetPackage="godau.fynn.usagedirect.debug"
-            android:targetClass="godau.fynn.usagedirect.activity.ChartsActivity" />
+            android:targetPackage="godau.fynn.usagedirectplus.debug"
+            android:targetClass="godau.fynn.usagedirectplus.activity.ChartsActivity" />
     </shortcut>
 </shortcuts>

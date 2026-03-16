@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">usageDirect</string>
+    <string name="app_name">UsageDirectPlus</string>
     <string name="chart_average">∅ Średnie użycie aplikacji na dzień tygodnia</string>
     <string name="widget_today_name">Dzisiejszy czas użycia</string>
     <string name="menu_feedback">Prześlij sugestię</string>
@@ -26,9 +26,9 @@
         <item quantity="other">Używano łącznie przez %1$d godzin</item>
     </plurals>
     <string name="db_job_schedule_failure">Ostrzeżenie: konfiguracja automatycznego zbierania danych jest niemożliwa, wymagane jest regularne sprawdzanie aplikacji.</string>
-    <string name="feedback_message">usageDirect szuka ciekawszych pomysłów na wnikliwą reprezentację danych.
+    <string name="feedback_message">UsageDirectPlus szuka ciekawszych pomysłów na wnikliwą reprezentację danych.
 \n
-\nMam już wiele rzeczy do zrobienia w kolejce, ale chciałbym usłyszeć od Ciebie: co sądzisz o usageDirect?</string>
+\nMam już wiele rzeczy do zrobienia w kolejce, ale chciałbym usłyszeć od Ciebie: co sądzisz o UsageDirectPlus?</string>
     <string name="color_explanation">Wybrane pozycje są wyróżnione kolorem w całej aplikacji, co pozwala skupić się na ich czasie użycia. Ustaw kolejność za pomocą przeciągania i upuszczania, aby określić ich sortowanie na wykresach i na ekranie głównym.</string>
     <string name="charts_clock_pie">%s jako wykres kołowy</string>
     <string name="charts_clock_pie_general">Ostatnie wykresy kołowe</string>

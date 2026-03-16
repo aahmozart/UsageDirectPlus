@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">usageDirect</string>
+    <string name="app_name">UsageDirectPlus</string>
     <string name="db_job_schedule_failure">Advarsel: automatisk dataindsamling kunne ikke oprettes. Kontroller regelmæssigt igen</string>
     <string name="chart_average">∅ Gennemsnitlig appbrug pr. Hverdag</string>
     <string name="charts_clock_pie">%s som et cirkeldiagram</string>
@@ -8,7 +8,7 @@
     <string name="widget_today_name">Tid i dag</string>
     <string name="menu_feedback">Send en idé</string>
     <string name="cancel">Afbestille</string>
-    <string name="feedback_message">usageDirect holder konstant på udkig efter mere interessante ideer til indsigtsfulde repræsentationer af dine data.
+    <string name="feedback_message">UsageDirectPlus holder konstant på udkig efter mere interessante ideer til indsigtsfulde repræsentationer af dine data.
 \n
 \nJeg har allerede en række ting på min køreplan, men jeg vil gerne høre det fra dig: hvad synes du om useDirect\?</string>
     <string name="menu_restore_hidden_positive">Restaurere</string>
