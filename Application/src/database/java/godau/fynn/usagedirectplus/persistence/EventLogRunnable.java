@@ -50,7 +50,7 @@ public class EventLogRunnable implements Runnable {
         usageStats.insertIncremental(
                 eventLogWrapper.aggregateForegroundStats(partialDayStats, consumer)
         );
-        intervalDao.insert(toUsageIntervals(partialDayStats));
+        intervalDao.insertNonOverlapping(toUsageIntervals(partialDayStats));
 
         // Insert all days following the day that contains "since"
         long nextDay = Instant.ofEpochMilli(since)
@@ -68,7 +68,7 @@ public class EventLogRunnable implements Runnable {
             usageStats.insert(
                     eventLogWrapper.aggregateForegroundStats(dayStats, consumer)
             );
-            intervalDao.insert(toUsageIntervals(dayStats));
+            intervalDao.insertNonOverlapping(toUsageIntervals(dayStats));
 
             nextDay++;
         }
