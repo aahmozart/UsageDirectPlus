@@ -60,4 +60,6 @@
 
     <string name="usage_intervals_title">Usage intervals</string>
     <string name="usage_intervals_empty">No usage intervals recorded for this day</string>
+
+    <string name="charts_usage_timeline_general">Usage timelines</string>
 </resources>
