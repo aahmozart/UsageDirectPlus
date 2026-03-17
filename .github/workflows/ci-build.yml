@@ -1,0 +1,149 @@
+name: CI Build
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  version-bump:
+    if: >
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get last tag
+        id: last_tag
+        run: |
+          TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Parse conventional commits
+        id: bump
+        run: |
+          LAST_TAG="${{ steps.last_tag.outputs.tag }}"
+          if [ -z "$LAST_TAG" ]; then
+            RANGE="HEAD"
+          else
+            RANGE="${LAST_TAG}..HEAD"
+          fi
+
+          COMMITS=$(git log --pretty=format:"%s" "$RANGE" 2>/dev/null || git log --pretty=format:"%s")
+
+          BUMP="none"
+          while IFS= read -r msg; do
+            case "$msg" in
+              feat\!:*|feat\(*\)\!:*|BREAKING\ CHANGE:*)
+                BUMP="major" ;;
+              feat:*|feat\(*\):*)
+                if [ "$BUMP" != "major" ]; then BUMP="minor"; fi ;;
+              fix:*|fix\(*\):*|perf:*|perf\(*\):*)
+                if [ "$BUMP" = "none" ]; then BUMP="patch"; fi ;;
+            esac
+          done <<< "$COMMITS"
+
+          echo "bump=$BUMP" >> "$GITHUB_OUTPUT"
+          echo "Detected bump type: $BUMP"
+
+      - name: Bump version
+        if: steps.bump.outputs.bump != 'none'
+        id: version
+        run: |
+          BUMP="${{ steps.bump.outputs.bump }}"
+
+          VERSION_NAME=$(grep '^VERSION_NAME=' version.properties | cut -d= -f2)
+          VERSION_CODE=$(grep '^VERSION_CODE=' version.properties | cut -d= -f2)
+
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION_NAME"
+
+          case "$BUMP" in
+            major) MAJOR=$((MAJOR + 1)); MINOR=0; PATCH=0 ;;
+            minor) MINOR=$((MINOR + 1)); PATCH=0 ;;
+            patch) PATCH=$((PATCH + 1)) ;;
+          esac
+
+          NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}"
+          NEW_CODE=$((VERSION_CODE + 1))
+
+          cat > version.properties << EOF
+          VERSION_NAME=${NEW_VERSION}
+          VERSION_CODE=${NEW_CODE}
+          EOF
+          # Remove leading whitespace from heredoc
+          sed -i 's/^[[:space:]]*//' version.properties
+
+          echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+          echo "New version: $NEW_VERSION (code: $NEW_CODE)"
+
+      - name: Generate changelog entry
+        if: steps.bump.outputs.bump != 'none'
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          LAST_TAG="${{ steps.last_tag.outputs.tag }}"
+          DATE=$(date +%Y-%m-%d)
+
+          if [ -z "$LAST_TAG" ]; then
+            RANGE="HEAD"
+          else
+            RANGE="${LAST_TAG}..HEAD"
+          fi
+
+          FEATURES=""
+          FIXES=""
+          OTHER=""
+
+          while IFS= read -r msg; do
+            case "$msg" in
+              feat:*|feat\(*\):*)
+                CLEAN=$(echo "$msg" | sed 's/^feat[^:]*: //')
+                FEATURES="${FEATURES}- ${CLEAN}\n" ;;
+              fix:*|fix\(*\):*)
+                CLEAN=$(echo "$msg" | sed 's/^fix[^:]*: //')
+                FIXES="${FIXES}- ${CLEAN}\n" ;;
+              *\[skip\ ci\]*) ;;
+              *)
+                if [ -n "$msg" ]; then
+                  CLEAN=$(echo "$msg" | sed 's/^[a-z]*[^:]*: //')
+                  OTHER="${OTHER}- ${CLEAN}\n"
+                fi ;;
+            esac
+          done <<< "$(git log --pretty=format:"%s" "$RANGE")"
+
+          ENTRY="## [${VERSION}] - ${DATE}\n\n"
+          if [ -n "$FEATURES" ]; then
+            ENTRY="${ENTRY}### Added\n\n${FEATURES}\n"
+          fi
+          if [ -n "$FIXES" ]; then
+            ENTRY="${ENTRY}### Fixed\n\n${FIXES}\n"
+          fi
+          if [ -n "$OTHER" ]; then
+            ENTRY="${ENTRY}### Changed\n\n${OTHER}\n"
+          fi
+
+          if [ -f CHANGELOG.md ]; then
+            HEADER=$(head -n 2 CHANGELOG.md)
+            BODY=$(tail -n +3 CHANGELOG.md)
+            printf "%s\n\n%b%s" "$HEADER" "$ENTRY" "$BODY" > CHANGELOG.md
+          else
+            printf "# Changelog\n\n%b" "$ENTRY" > CHANGELOG.md
+          fi
+
+      - name: Commit and tag
+        if: steps.bump.outputs.bump != 'none'
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add version.properties CHANGELOG.md
+          git commit -m "chore(release): v${VERSION} [skip ci]"
+          git tag "v${VERSION}"
+          git push origin main --tags

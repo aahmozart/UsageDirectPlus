@@ -5,4 +5,8 @@ Application/Application.iml
 Application/build/
 build/
 local.properties
+*.jks
+*.keystore
+keystore.properties
+*.hprof
 

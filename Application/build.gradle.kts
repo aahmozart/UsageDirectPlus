@@ -1,7 +1,14 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
+}
+
+val versionProps = Properties().apply {
+    val file = rootProject.file("version.properties")
+    if (file.exists()) load(file.inputStream())
 }
 
 android {
@@ -13,17 +20,34 @@ android {
         applicationId = "godau.fynn.usagedirectplus"
         minSdk = 26
         targetSdk = 34
-        versionCode = 10
-        versionName = "0.8.1"
+        versionCode = (versionProps["VERSION_CODE"] as? String)?.toIntOrNull() ?: 10
+        versionName = (versionProps["VERSION_NAME"] as? String) ?: "0.8.1"
 
         ksp {
             arg("room.schemaLocation", "$projectDir/schemas")
         }
     }
 
+    signingConfigs {
+        if (System.getenv("KEYSTORE_FILE") != null) {
+            create("release") {
+                storeFile = file(System.getenv("KEYSTORE_FILE"))
+                storePassword = System.getenv("KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("KEY_ALIAS")
+                keyPassword = System.getenv("KEY_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
+        }
+        release {
+            isMinifyEnabled = false
+            if (System.getenv("KEYSTORE_FILE") != null) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
 
