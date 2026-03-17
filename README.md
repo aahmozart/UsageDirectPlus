@@ -1,6 +1,19 @@
 # usageDirectPlus
 
-A fork of [usageDirect](https://codeberg.org/fynngodau/usageDirect) that adds detailed app usage interval tracking, screen lock event logging, and periodic database export.
+A fork of [usageDirect](https://codeberg.org/fynngodau/usageDirect) that adds detailed app usage interval tracking, screen lock event logging, and periodic database export. The codebase has been fully modernized to current Android development standards.
+
+## Modernization
+
+The original usageDirect targeted SDK 28 and was written entirely in Java. This fork has been brought up to 2025-2026 standards:
+
+- **100% Kotlin** — all 91 Java source files converted
+- **Target SDK 34**, min SDK 26 (Android 8.0+)
+- **Kotlin DSL** build files with a Gradle version catalog (`libs.versions.toml`)
+- **Kotlin 2.0**, Room with KSP, Java 17
+- **ViewBinding** replacing all `findViewById` calls
+- **Coroutines** replacing raw Threads, Timers, and Handlers
+- **AppCompatActivity** and **Activity Result API** replacing deprecated patterns
+- **Material 3** theme and `MaterialAlertDialogBuilder` (database flavor)
 
 ## What's new
 
@@ -61,9 +74,9 @@ cd usageDirectPlus
 The APK will be at `Application/build/outputs/apk/database/release/`.
 
 ### Requirements
-- JDK 8+ (project uses desugared `java.time`)
+- JDK 17+
 - Android SDK with compileSdk 34
-- Gradle (wrapper included)
+- Gradle 8.4+ (wrapper included)
 
 ## Verification queries
 
