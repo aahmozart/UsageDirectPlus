@@ -89,7 +89,6 @@ open class EventLogWrapper(context: Context) : UsageStatsManagerWrapper(context)
 
         while (events.hasNextEvent()) {
             events.getNextEvent(event)
-            val appClass = AppClass(event.packageName, event.className)
 
             when (event.eventType) {
                 /*
@@ -104,6 +103,7 @@ open class EventLogWrapper(context: Context) : UsageStatsManagerWrapper(context)
                  * This is effectively treated as a MOVE_TO_FOREGROUND."
                  */
                 4 -> {
+                    val appClass = AppClass(event.packageName, event.className ?: continue)
                     // Store open timestamp in map, overwriting earlier timestamps in case of Duplicate open event
                     moveToForegroundMap[appClass] = event.timeStamp
                 }
@@ -125,6 +125,7 @@ open class EventLogWrapper(context: Context) : UsageStatsManagerWrapper(context)
                  * rolled-over. This is effectively treated as a MOVE_TO_BACKGROUND."
                  */
                 3 -> {
+                    val appClass = AppClass(event.packageName, event.className ?: continue)
                     var eventBeginTime = moveToForegroundMap[appClass]
                     if (eventBeginTime != null) {
                         // Open and close events in order
