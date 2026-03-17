@@ -70,6 +70,13 @@ class ExportSettingsActivity : AppCompatActivity() {
         // Restore saved directory display
         updateDirectoryLabel()
 
+        // Restore fixed filename toggle state
+        binding.exportFixedFilenameSwitch.isChecked =
+            prefs.getBoolean(DatabaseExportWorker.PREF_EXPORT_FIXED_FILENAME, false)
+        binding.exportFixedFilenameSwitch.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean(DatabaseExportWorker.PREF_EXPORT_FIXED_FILENAME, isChecked).apply()
+        }
+
         // Restore toggle state
         val enabled = prefs.getBoolean(DatabaseExportWorker.PREF_EXPORT_ENABLED, false)
         binding.exportToggle.isChecked = enabled
@@ -132,6 +139,7 @@ class ExportSettingsActivity : AppCompatActivity() {
     private fun setControlsEnabled(enabled: Boolean) {
         binding.exportDirectoryButton.isEnabled = enabled
         binding.exportIntervalSpinner.isEnabled = enabled
+        binding.exportFixedFilenameSwitch.isEnabled = enabled
         binding.exportNowButton.isEnabled = enabled
     }
 

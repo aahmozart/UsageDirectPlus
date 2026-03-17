@@ -20,8 +20,8 @@ class DatabaseExportWorker(context: Context, params: WorkerParameters) : Worker(
 
     override fun doWork(): Result {
         val context = applicationContext
-        val uriString = context.getSharedPreferences(HistoryDatabase.DATABASE_NAME, Context.MODE_PRIVATE)
-            .getString(PREF_EXPORT_URI, null)
+        val prefs = context.getSharedPreferences(HistoryDatabase.DATABASE_NAME, Context.MODE_PRIVATE)
+        val uriString = prefs.getString(PREF_EXPORT_URI, null)
 
         if (uriString == null) {
             Log.w(TAG, "No export directory configured")
@@ -35,10 +35,8 @@ class DatabaseExportWorker(context: Context, params: WorkerParameters) : Worker(
             return Result.failure()
         }
 
-        val timestamp = SimpleDateFormat("yyyy-MM-dd_HHmmss", Locale.US).format(Date())
-        val fileName = "usageDirectPlus-$timestamp.sqlite3"
-
-        val outputFile = directory.createFile("application/vnd.sqlite3", fileName)
+        val useFixedFilename = prefs.getBoolean(PREF_EXPORT_FIXED_FILENAME, false)
+        val outputFile = resolveOutputFile(directory, useFixedFilename)
         if (outputFile == null) {
             Log.e(TAG, "Could not create output file")
             return Result.failure()
@@ -52,7 +50,8 @@ class DatabaseExportWorker(context: Context, params: WorkerParameters) : Worker(
 
         try {
             FileInputStream(databaseFile).use { inputStream ->
-                context.contentResolver.openOutputStream(outputFile.uri).use { outputStream ->
+                val openMode = if (useFixedFilename && outputFile.length() > 0) "wt" else "w"
+                context.contentResolver.openOutputStream(outputFile.uri, openMode).use { outputStream ->
                     if (outputStream == null) {
                         Log.e(TAG, "Could not open output stream")
                         return Result.failure()
@@ -65,7 +64,7 @@ class DatabaseExportWorker(context: Context, params: WorkerParameters) : Worker(
                     }
                     outputStream.flush()
 
-                    Log.i(TAG, "Database exported to $fileName")
+                    Log.i(TAG, "Database exported to ${outputFile.name}")
                     return Result.success()
                 }
             }
@@ -81,6 +80,23 @@ class DatabaseExportWorker(context: Context, params: WorkerParameters) : Worker(
         const val PREF_EXPORT_ENABLED = "export_enabled"
         const val PREF_EXPORT_URI = "export_uri"
         const val PREF_EXPORT_INTERVAL_HOURS = "export_interval_hours"
+        const val PREF_EXPORT_FIXED_FILENAME = "export_fixed_filename"
+        private const val FIXED_FILENAME = "usageDirectPlus.sqlite3"
+        private const val MIME_TYPE = "application/vnd.sqlite3"
+
+        @JvmStatic
+        internal fun resolveOutputFile(
+            directory: DocumentFile,
+            useFixedFilename: Boolean
+        ): DocumentFile? {
+            return if (useFixedFilename) {
+                directory.findFile(FIXED_FILENAME)
+                    ?: directory.createFile(MIME_TYPE, FIXED_FILENAME)
+            } else {
+                val timestamp = SimpleDateFormat("yyyy-MM-dd_HHmmss", Locale.US).format(Date())
+                directory.createFile(MIME_TYPE, "usageDirectPlus-$timestamp.sqlite3")
+            }
+        }
 
         /**
          * Schedules periodic database export with the given interval.

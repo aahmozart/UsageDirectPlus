@@ -63,6 +63,13 @@
         android:id="@+id/export_interval_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp" />
+
+    <Switch
+        android:id="@+id/export_fixed_filename_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/export_settings_fixed_filename"
         android:layout_marginBottom="24dp" />
 
     <Button
