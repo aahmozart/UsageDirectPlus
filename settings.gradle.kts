@@ -1,0 +1,35 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        google()
+        mavenCentral()
+        mavenLocal()
+        maven { url = uri("https://jitpack.io") }
+    }
+}
+
+include(":Application")
+
+/* Uncomment if you want to use a local copy of SmartTabLayout (requires many adjustments in library)
+includeBuild("../SmartTabLayout") {
+    dependencySubstitution {
+        substitute(module("com.ogaclejapan.smarttablayout:library")).using(project(":library"))
+    }
+}
+*/
+
+/* Uncomment if you want to use a local chartDirect copy
+includeBuild("../chartDirect") {
+    dependencySubstitution {
+        substitute(module("org.codeberg.fynngodau:chartDirect:2.0")).using(project(":AndroidCharts"))
+    }
+}
+*/

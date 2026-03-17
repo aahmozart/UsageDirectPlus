@@ -44,6 +44,7 @@
             android:exported="true" />
 
         <receiver android:name=".widget.TimeTodayWidgetProvider"
+            android:exported="true"
             android:label="@string/widget_today_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

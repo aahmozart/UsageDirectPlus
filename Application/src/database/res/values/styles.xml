@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="BaseTheme" parent="@android:style/Theme.DeviceDefault.Light.DarkActionBar" />
+    <style name="BaseTheme" parent="Theme.Material3.DayNight" />
 
     <style name="AppTheme" parent="BaseTheme">
-        <item name="android:colorPrimary">@color/primary</item>
-        <item name="android:colorPrimaryDark">@color/primaryDark</item>
-        <item name="android:colorAccent">@color/accent</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorAccent">@color/accent</item>
         <item name="primaryTabBackground">@color/primaryLight</item>
         <item name="tabText">@color/tab_text_light</item>
     </style>

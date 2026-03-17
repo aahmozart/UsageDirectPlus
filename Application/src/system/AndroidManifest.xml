@@ -19,6 +19,7 @@
     <application>
 
         <activity android:name=".activity.HelpActivity"
+            android:exported="true"
             android:label="@string/title_help"
             android:parentActivityName=".activity.SourceAppUsageStatisticsActivity">
             <intent-filter>
