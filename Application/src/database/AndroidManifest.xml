@@ -28,6 +28,12 @@
             android:label="@string/menu_color" />
 
         <activity
+            android:name=".activity.UsageIntervalsActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:parentActivityName=".activity.SourceAppUsageStatisticsActivity"
+            android:label="@string/usage_intervals_title" />
+
+        <activity
             android:name=".activity.ExportSettingsActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:parentActivityName=".activity.SourceAppUsageStatisticsActivity"

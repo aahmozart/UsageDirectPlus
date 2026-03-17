@@ -78,6 +78,8 @@ public abstract class UsageListViewPagerAdapter extends PagerAdapter {
         }
         container.addView(usageListView);
 
+        usageListView.setOnItemClickListener(getOnItemClickListener());
+
         // Get data
 
         new Thread(() -> {
@@ -156,5 +158,9 @@ public abstract class UsageListViewPagerAdapter extends PagerAdapter {
 
     protected @NonNull Map<String, Integer> getColorMap() {
         return new HashMap<>();
+    }
+
+    protected UsageListAdapter.OnItemClickListener getOnItemClickListener() {
+        return null;
     }
 }

@@ -58,4 +58,8 @@ public class UsageListView extends RecyclerView {
     public void setColorMap(Map<String, Integer> colorMap) {
         adapter.setColorMap(colorMap);
     }
+
+    public void setOnItemClickListener(UsageListAdapter.OnItemClickListener listener) {
+        adapter.setOnItemClickListener(listener);
+    }
 }

@@ -19,17 +19,17 @@
 package godau.fynn.usagedirectplus.view.adapter.database;
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import godau.fynn.usagedirectplus.SimpleUsageStat;
+import godau.fynn.usagedirectplus.activity.UsageIntervalsActivity;
 import godau.fynn.usagedirectplus.persistence.LastUsedStat;
+import godau.fynn.usagedirectplus.view.adapter.UsageListAdapter;
 import godau.fynn.usagedirectplus.view.adapter.UsageListViewPagerAdapter;
 import godau.fynn.usagedirectplus.wrapper.TextFormat;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -102,6 +102,16 @@ public class DatabaseUsageListViewPagerAdapter extends UsageListViewPagerAdapter
         int offset = (int) (dayNow - day);
 
         return TextFormat.formatDay(offset, context.getResources()).replace(' ', '\n');
+    }
+
+    @Override
+    protected UsageListAdapter.OnItemClickListener getOnItemClickListener() {
+        return stat -> {
+            Intent intent = new Intent(context, UsageIntervalsActivity.class);
+            intent.putExtra("applicationId", stat.getApplicationId());
+            intent.putExtra("day", stat.getDay());
+            context.startActivity(intent);
+        };
     }
 
     public void setUsageStats(SimpleUsageStat[] usageStats, long[] days, LastUsedStat[] lastUsedStats, Map<String, Integer> colorMap) {

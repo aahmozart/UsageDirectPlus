@@ -52,9 +52,18 @@ import java.util.Map;
  */
 public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat, UsageListAdapter.ViewHolder> {
 
+    public interface OnItemClickListener {
+        void onItemClick(SimpleUsageStat stat);
+    }
+
     private Map<String, Long> lastUsedMap;
     private Map<String, Integer> colorMap;
     private final PrettyTime prettyTime = new PrettyTime();
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView packageName;
@@ -103,6 +112,13 @@ public class UsageListAdapter extends SimpleRecyclerViewAdapter<SimpleUsageStat,
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                     Toast.makeText(context, R.string.launch_unavailable, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            v.setOnClickListener(v1 -> {
+                SimpleUsageStat stat = (SimpleUsageStat) v1.getTag();
+                if (stat != null && onItemClickListener != null) {
+                    onItemClickListener.onItemClick(stat);
                 }
             });
 
