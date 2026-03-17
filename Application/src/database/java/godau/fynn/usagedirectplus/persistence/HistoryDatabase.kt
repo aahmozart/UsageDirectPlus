@@ -42,7 +42,7 @@ abstract class HistoryDatabase : RoomDatabase() {
                 .build()
         }
 
-        private val MIGRATION_DAY_TO_DATE = object : Migration(1, 2) {
+        internal val MIGRATION_DAY_TO_DATE = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 Log.d("HistoryDatabase", "Migration 1 → 2")
 
@@ -71,28 +71,28 @@ abstract class HistoryDatabase : RoomDatabase() {
             }
         }
 
-        private val MIGRATION_ADD_LAST_USED = object : Migration(2, 3) {
+        internal val MIGRATION_ADD_LAST_USED = object : Migration(2, 3) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 Log.d("HistoryDatabase", "Migration 2 → 3: creating last used table")
                 database.execSQL("CREATE TABLE `lastUsed` (`applicationId` TEXT NOT NULL, `lastUsed` INTEGER NOT NULL, PRIMARY KEY(`applicationId`))")
             }
         }
 
-        private val MIGRATION_ADD_HIDDEN_FLAG = object : Migration(3, 4) {
+        internal val MIGRATION_ADD_HIDDEN_FLAG = object : Migration(3, 4) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 Log.d("HistoryDatabase", "Migration 3 → 4: adding hidden flag to usage stats table")
                 database.execSQL("ALTER TABLE usageStats ADD COLUMN `hidden` INTEGER NOT NULL DEFAULT(0)")
             }
         }
 
-        private val MIGRATION_ADD_COLORS = object : Migration(4, 5) {
+        internal val MIGRATION_ADD_COLORS = object : Migration(4, 5) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 Log.d("HistoryDatabase", "Migration 4 → 5: creating app color table")
                 database.execSQL("CREATE TABLE IF NOT EXISTS `colors` (`applicationId` TEXT NOT NULL, `color` INTEGER NOT NULL, `priority` INTEGER NOT NULL, PRIMARY KEY(`applicationId`))")
             }
         }
 
-        private val MIGRATION_ADD_INTERVALS_AND_SCREEN_EVENTS = object : Migration(5, 6) {
+        internal val MIGRATION_ADD_INTERVALS_AND_SCREEN_EVENTS = object : Migration(5, 6) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 Log.d("HistoryDatabase", "Migration 5 → 6: creating usage intervals and screen events tables")
                 database.execSQL("CREATE TABLE IF NOT EXISTS `usageIntervals` (`beginTime` INTEGER NOT NULL, `endTime` INTEGER NOT NULL, `applicationId` TEXT NOT NULL, PRIMARY KEY(`beginTime`, `applicationId`))")
@@ -102,5 +102,13 @@ abstract class HistoryDatabase : RoomDatabase() {
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_screenEvents_timestamp` ON `screenEvents` (`timestamp`)")
             }
         }
+
+        internal val ALL_MIGRATIONS = arrayOf(
+            MIGRATION_DAY_TO_DATE,
+            MIGRATION_ADD_LAST_USED,
+            MIGRATION_ADD_HIDDEN_FLAG,
+            MIGRATION_ADD_COLORS,
+            MIGRATION_ADD_INTERVALS_AND_SCREEN_EVENTS
+        )
     }
 }
