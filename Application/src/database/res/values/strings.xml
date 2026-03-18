@@ -59,6 +59,7 @@
     <string name="export_settings_pick_directory_first">Please choose an export directory first</string>
     <string name="export_settings_export_queued">Export queued</string>
     <string name="export_settings_fixed_filename">Use fixed filename (overwrite)</string>
+    <string name="export_settings_remove_old">Remove old exports (keep latest only)</string>
     <string name="export_settings_compress">Compress export (GZIP)</string>
 
     <string name="usage_intervals_title">Usage intervals</string>

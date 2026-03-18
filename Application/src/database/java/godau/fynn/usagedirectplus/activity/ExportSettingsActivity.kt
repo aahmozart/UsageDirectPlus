@@ -71,10 +71,19 @@ class ExportSettingsActivity : AppCompatActivity() {
         updateDirectoryLabel()
 
         // Restore fixed filename toggle state
-        binding.exportFixedFilenameSwitch.isChecked =
-            prefs.getBoolean(DatabaseExportWorker.PREF_EXPORT_FIXED_FILENAME, false)
+        val fixedFilenameChecked = prefs.getBoolean(DatabaseExportWorker.PREF_EXPORT_FIXED_FILENAME, false)
+        binding.exportFixedFilenameSwitch.isChecked = fixedFilenameChecked
+        binding.exportRemoveOldSwitch.visibility = if (fixedFilenameChecked) View.GONE else View.VISIBLE
         binding.exportFixedFilenameSwitch.setOnCheckedChangeListener { _, isChecked ->
             prefs.edit().putBoolean(DatabaseExportWorker.PREF_EXPORT_FIXED_FILENAME, isChecked).apply()
+            binding.exportRemoveOldSwitch.visibility = if (isChecked) View.GONE else View.VISIBLE
+        }
+
+        // Restore remove old exports toggle state
+        binding.exportRemoveOldSwitch.isChecked =
+            prefs.getBoolean(DatabaseExportWorker.PREF_EXPORT_REMOVE_OLD, false)
+        binding.exportRemoveOldSwitch.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean(DatabaseExportWorker.PREF_EXPORT_REMOVE_OLD, isChecked).apply()
         }
 
         // Restore compress toggle state
@@ -147,6 +156,7 @@ class ExportSettingsActivity : AppCompatActivity() {
         binding.exportDirectoryButton.isEnabled = enabled
         binding.exportIntervalSpinner.isEnabled = enabled
         binding.exportFixedFilenameSwitch.isEnabled = enabled
+        binding.exportRemoveOldSwitch.isEnabled = enabled
         binding.exportCompressSwitch.isEnabled = enabled
         binding.exportNowButton.isEnabled = enabled
     }

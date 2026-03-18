@@ -73,6 +73,15 @@ class DatabaseExportWorker(context: Context, params: WorkerParameters) : Worker(
                     }
 
                     Log.i(TAG, "Database exported to ${outputFile.name}")
+
+                    val removeOld = prefs.getBoolean(PREF_EXPORT_REMOVE_OLD, false)
+                    if (removeOld && !useFixedFilename) {
+                        val deleted = removeOldExports(directory, outputFile)
+                        if (deleted > 0) {
+                            Log.i(TAG, "Removed $deleted old export(s)")
+                        }
+                    }
+
                     return Result.success()
                 }
             }
@@ -89,11 +98,32 @@ class DatabaseExportWorker(context: Context, params: WorkerParameters) : Worker(
         const val PREF_EXPORT_URI = "export_uri"
         const val PREF_EXPORT_INTERVAL_HOURS = "export_interval_hours"
         const val PREF_EXPORT_FIXED_FILENAME = "export_fixed_filename"
+        const val PREF_EXPORT_REMOVE_OLD = "export_remove_old"
         const val PREF_EXPORT_COMPRESS = "export_compress"
         private const val FIXED_FILENAME = "usageDirectPlus.sqlite3"
         private const val FIXED_FILENAME_GZ = "usageDirectPlus.sqlite3.gz"
         private const val MIME_TYPE = "application/vnd.sqlite3"
         private const val MIME_TYPE_GZ = "application/gzip"
+
+        private val TIMESTAMPED_PATTERN = Regex("^usageDirectPlus-.*\\.sqlite3(\\.gz)?$")
+
+        @JvmStatic
+        internal fun removeOldExports(directory: DocumentFile, currentFile: DocumentFile): Int {
+            val files = directory.listFiles()
+            var deleted = 0
+            for (file in files) {
+                if (file.uri == currentFile.uri) continue
+                val name = file.name ?: continue
+                if (TIMESTAMPED_PATTERN.matches(name)) {
+                    if (file.delete()) {
+                        deleted++
+                    } else {
+                        Log.w(TAG, "Failed to delete old export: $name")
+                    }
+                }
+            }
+            return deleted
+        }
 
         @JvmStatic
         internal fun resolveOutputFile(
