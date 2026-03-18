@@ -23,6 +23,7 @@
     <string name="export_title">Feature preview: export database</string>
     <string name="export_message">The SQLite database can be exported for external analysis.
         \n\nYou will only be able to import it in future app versions.</string>
+    <string name="export_dialog_description">Export the database for external analysis. Choose a directory and optionally compress the file.</string>
     <string name="export_io_error">An error occurred while saving the file</string>
     <string name="export_okay">The export was successful</string>
 

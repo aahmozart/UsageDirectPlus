@@ -18,7 +18,6 @@
 
 package godau.fynn.usagedirectplus.activity
 
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -27,7 +26,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
@@ -37,13 +35,12 @@ import godau.fynn.usagedirectplus.databinding.ActivityAppUsageStatisticsBinding
 import godau.fynn.usagedirectplus.SimpleUsageStat
 import godau.fynn.usagedirectplus.persistence.EventLogRunnable
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import godau.fynn.usagedirectplus.persistence.Export
 import godau.fynn.usagedirectplus.persistence.HistoryDatabase
 import godau.fynn.usagedirectplus.view.adapter.database.DatabaseTimespanPagerAdapter
+import godau.fynn.usagedirectplus.view.dialog.ExportDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.IOException
 
 /**
  * Different implementation of AUSA for the two source flavors
@@ -53,20 +50,20 @@ class SourceAppUsageStatisticsActivity : AppUsageStatisticsActivity() {
     private lateinit var databaseTimespanPagerAdapter: DatabaseTimespanPagerAdapter
 
     private var lastContextMenuTag: Any? = null
+    private var currentExportDialog: ExportDialog? = null
 
-    private val exportPickFileLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK && result.data != null) {
-            try {
-                Export.exportHistoryDatabase(result.data!!, this)
-            } catch (e: IOException) {
-                Toast.makeText(this, R.string.export_io_error, Toast.LENGTH_SHORT).show()
-                e.printStackTrace()
-            }
+    val exportDirectoryPickerLauncher = registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
+        if (uri != null) {
+            contentResolver.takePersistableUriPermission(
+                uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            )
+            currentExportDialog?.onDirectorySelected(uri)
         }
     }
 
     private val colorActivityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
+        if (result.resultCode == android.app.Activity.RESULT_OK) {
             reload()
         }
     }
@@ -151,19 +148,11 @@ class SourceAppUsageStatisticsActivity : AppUsageStatisticsActivity() {
                     }
                 }
 
-            R.id.menu_export_database ->
-                MaterialAlertDialogBuilder(this)
-                    .setTitle(R.string.export_title)
-                    .setMessage(R.string.export_message)
-                    .setPositiveButton(R.string.go) { _, _ ->
-                        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-                        intent.addCategory(Intent.CATEGORY_OPENABLE)
-                        intent.type = "application/vnd.sqlite3"
-                        intent.putExtra(Intent.EXTRA_TITLE, "UsageDirectPlus-history.sqlite3")
-                        exportPickFileLauncher.launch(intent)
-                    }
-                    .setNegativeButton(R.string.cancel, null)
-                    .show()
+            R.id.menu_export_database -> {
+                val dialog = ExportDialog(this, exportDirectoryPickerLauncher)
+                currentExportDialog = dialog
+                dialog.show()
+            }
 
             R.id.menu_export_settings ->
                 startActivity(Intent(this, ExportSettingsActivity::class.java))
