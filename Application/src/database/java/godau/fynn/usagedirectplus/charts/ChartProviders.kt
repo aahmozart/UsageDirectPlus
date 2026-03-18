@@ -12,7 +12,8 @@ object ChartProviders {
             ChartSelectionAdapter.ChartProvider(R.string.charts_bar_daily_condensed, DailyCondensedBarChart::class.java),
             ChartSelectionAdapter.ChartProvider(R.string.chart_average, WeeklyAverageBarChart::class.java),
             ChartSelectionAdapter.ChartProvider(R.string.charts_clock_pie_general, ClockPieCharts::class.java),
-            ChartSelectionAdapter.ChartProvider(R.string.charts_usage_timeline_general, UsageTimelineChart::class.java)
+            ChartSelectionAdapter.ChartProvider(R.string.charts_usage_timeline_general, UsageTimelineChart::class.java),
+            ChartSelectionAdapter.ChartProvider(R.string.charts_unlock_timeline_general, UnlockTimelineChart::class.java)
         )
     }
 }

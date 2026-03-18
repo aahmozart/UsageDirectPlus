@@ -19,4 +19,7 @@ interface ScreenEventDao {
 
     @Query("SELECT * FROM screenEvents WHERE eventType IN (17, 18) AND timestamp >= :start AND timestamp <= :end ORDER BY timestamp")
     fun getKeyguardEvents(start: Long, end: Long): List<ScreenEvent>
+
+    @Query("SELECT MIN(timestamp) FROM screenEvents")
+    fun getFirstScreenEventTimestamp(): Long
 }
