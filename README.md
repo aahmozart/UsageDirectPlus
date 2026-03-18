@@ -30,7 +30,7 @@ A new settings screen lets you configure automatic export of the SQLite database
 - Set interval (6h / 12h / 24h / 48h / 7 days)
 - One-tap "Export now" button
 
-Exports are timestamped (`usageDirectPlus-2026-03-16_143000.sqlite3`) so they never overwrite each other.
+Exports are timestamped (`usageDirectPlus-2026-03-16_143000.sqlite3`) so they never overwrite each other. Optional GZIP compression produces `.sqlite3.gz` files for significantly reduced export size.
 
 ### Faster sync cycle
 The background data collection interval has been reduced from 24 hours to 6 hours for more timely data.

@@ -11,10 +11,12 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import java.io.FileInputStream
 import java.io.IOException
+import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.concurrent.TimeUnit
+import java.util.zip.GZIPOutputStream
 
 class DatabaseExportWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
 
@@ -36,7 +38,8 @@ class DatabaseExportWorker(context: Context, params: WorkerParameters) : Worker(
         }
 
         val useFixedFilename = prefs.getBoolean(PREF_EXPORT_FIXED_FILENAME, false)
-        val outputFile = resolveOutputFile(directory, useFixedFilename)
+        val compress = prefs.getBoolean(PREF_EXPORT_COMPRESS, false)
+        val outputFile = resolveOutputFile(directory, useFixedFilename, compress)
         if (outputFile == null) {
             Log.e(TAG, "Could not create output file")
             return Result.failure()
@@ -51,11 +54,13 @@ class DatabaseExportWorker(context: Context, params: WorkerParameters) : Worker(
         try {
             FileInputStream(databaseFile).use { inputStream ->
                 val openMode = if (useFixedFilename && outputFile.length() > 0) "wt" else "w"
-                context.contentResolver.openOutputStream(outputFile.uri, openMode).use { outputStream ->
-                    if (outputStream == null) {
+                context.contentResolver.openOutputStream(outputFile.uri, openMode).use { rawOutputStream ->
+                    if (rawOutputStream == null) {
                         Log.e(TAG, "Could not open output stream")
                         return Result.failure()
                     }
+
+                    val outputStream: OutputStream = if (compress) GZIPOutputStream(rawOutputStream) else rawOutputStream
 
                     val buffer = ByteArray(4096)
                     var len: Int
@@ -63,6 +68,9 @@ class DatabaseExportWorker(context: Context, params: WorkerParameters) : Worker(
                         outputStream.write(buffer, 0, len)
                     }
                     outputStream.flush()
+                    if (outputStream is GZIPOutputStream) {
+                        outputStream.finish()
+                    }
 
                     Log.i(TAG, "Database exported to ${outputFile.name}")
                     return Result.success()
@@ -81,20 +89,27 @@ class DatabaseExportWorker(context: Context, params: WorkerParameters) : Worker(
         const val PREF_EXPORT_URI = "export_uri"
         const val PREF_EXPORT_INTERVAL_HOURS = "export_interval_hours"
         const val PREF_EXPORT_FIXED_FILENAME = "export_fixed_filename"
+        const val PREF_EXPORT_COMPRESS = "export_compress"
         private const val FIXED_FILENAME = "usageDirectPlus.sqlite3"
+        private const val FIXED_FILENAME_GZ = "usageDirectPlus.sqlite3.gz"
         private const val MIME_TYPE = "application/vnd.sqlite3"
+        private const val MIME_TYPE_GZ = "application/gzip"
 
         @JvmStatic
         internal fun resolveOutputFile(
             directory: DocumentFile,
-            useFixedFilename: Boolean
+            useFixedFilename: Boolean,
+            compress: Boolean = false
         ): DocumentFile? {
+            val mimeType = if (compress) MIME_TYPE_GZ else MIME_TYPE
             return if (useFixedFilename) {
-                directory.findFile(FIXED_FILENAME)
-                    ?: directory.createFile(MIME_TYPE, FIXED_FILENAME)
+                val filename = if (compress) FIXED_FILENAME_GZ else FIXED_FILENAME
+                directory.findFile(filename)
+                    ?: directory.createFile(mimeType, filename)
             } else {
                 val timestamp = SimpleDateFormat("yyyy-MM-dd_HHmmss", Locale.US).format(Date())
-                directory.createFile(MIME_TYPE, "usageDirectPlus-$timestamp.sqlite3")
+                val ext = if (compress) "sqlite3.gz" else "sqlite3"
+                directory.createFile(mimeType, "usageDirectPlus-$timestamp.$ext")
             }
         }
 

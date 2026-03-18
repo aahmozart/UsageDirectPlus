@@ -77,6 +77,13 @@ class ExportSettingsActivity : AppCompatActivity() {
             prefs.edit().putBoolean(DatabaseExportWorker.PREF_EXPORT_FIXED_FILENAME, isChecked).apply()
         }
 
+        // Restore compress toggle state
+        binding.exportCompressSwitch.isChecked =
+            prefs.getBoolean(DatabaseExportWorker.PREF_EXPORT_COMPRESS, false)
+        binding.exportCompressSwitch.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean(DatabaseExportWorker.PREF_EXPORT_COMPRESS, isChecked).apply()
+        }
+
         // Restore toggle state
         val enabled = prefs.getBoolean(DatabaseExportWorker.PREF_EXPORT_ENABLED, false)
         binding.exportToggle.isChecked = enabled
@@ -140,6 +147,7 @@ class ExportSettingsActivity : AppCompatActivity() {
         binding.exportDirectoryButton.isEnabled = enabled
         binding.exportIntervalSpinner.isEnabled = enabled
         binding.exportFixedFilenameSwitch.isEnabled = enabled
+        binding.exportCompressSwitch.isEnabled = enabled
         binding.exportNowButton.isEnabled = enabled
     }
 
