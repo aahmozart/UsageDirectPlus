@@ -110,6 +110,34 @@ abstract class UsageStatsDao {
         insert(applicationStatMap.values)
     }
 
+    /**
+     * Recomputes usage stats for the given day from the provided intervals.
+     * This is idempotent: calling it multiple times with the same intervals produces
+     * the same result. Preserves hidden flags from existing stats.
+     */
+    @Transaction
+    open fun replaceFromIntervals(day: Long, intervals: List<UsageInterval>) {
+        val oldUsageStats = getUsageStats(day)
+        val hiddenMap = HashMap<String, Boolean>()
+        for (stat in oldUsageStats) {
+            hiddenMap[stat.applicationId] = stat.hidden
+        }
+
+        val timeByApp = HashMap<String, Long>()
+        for (interval in intervals) {
+            timeByApp[interval.applicationId] =
+                (timeByApp[interval.applicationId] ?: 0L) + (interval.endTime - interval.beginTime)
+        }
+
+        val stats = timeByApp.map { (appId, time) ->
+            SimpleUsageStat(day, time, appId, hiddenMap[appId] ?: false)
+        }
+
+        if (stats.isNotEmpty()) {
+            insert(stats)
+        }
+    }
+
     @Transaction
     open fun markHidden(usageStat: SimpleUsageStat) {
         insert(

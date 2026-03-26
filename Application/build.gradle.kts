@@ -121,10 +121,14 @@ dependencies {
     // JVM unit tests
     testImplementation(libs.junit5.api)
     testRuntimeOnly(libs.junit5.engine)
+    testRuntimeOnly(libs.junit.vintage.engine)
     testImplementation(libs.junit5.params)
     testImplementation(libs.mockk)
     testImplementation(libs.truth)
     testImplementation(libs.coroutines.test)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.room.testing)
 
     // Instrumented tests
     androidTestImplementation(libs.mockk.android)

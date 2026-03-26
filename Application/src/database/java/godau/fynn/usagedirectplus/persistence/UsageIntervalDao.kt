@@ -12,13 +12,13 @@ abstract class UsageIntervalDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     protected abstract fun insert(intervals: List<UsageInterval>)
 
-    @Query("SELECT * FROM usageIntervals WHERE beginTime >= :start AND endTime <= :end ORDER BY beginTime")
+    @Query("SELECT * FROM usageIntervals WHERE beginTime < :end AND endTime > :start ORDER BY beginTime")
     abstract fun getByTimeRange(start: Long, end: Long): List<UsageInterval>
 
     @Query("SELECT * FROM usageIntervals WHERE applicationId = :applicationId ORDER BY beginTime")
     abstract fun getByApp(applicationId: String): List<UsageInterval>
 
-    @Query("SELECT * FROM usageIntervals WHERE applicationId = :applicationId AND beginTime >= :start AND endTime <= :end ORDER BY beginTime")
+    @Query("SELECT * FROM usageIntervals WHERE applicationId = :applicationId AND beginTime < :end AND endTime > :start ORDER BY beginTime")
     abstract fun getByAppAndTimeRange(applicationId: String, start: Long, end: Long): List<UsageInterval>
 
     @Query("SELECT MAX(endTime) FROM usageIntervals")
@@ -34,9 +34,12 @@ abstract class UsageIntervalDao {
         var minBegin = Long.MAX_VALUE
         var maxEnd = Long.MIN_VALUE
         for (interval in intervals) {
+            if (interval.endTime <= interval.beginTime) continue
             if (interval.beginTime < minBegin) minBegin = interval.beginTime
             if (interval.endTime > maxEnd) maxEnd = interval.endTime
         }
+
+        if (minBegin == Long.MAX_VALUE) return
 
         val existing = getOverlappingInRange(minBegin, maxEnd)
 
@@ -47,6 +50,7 @@ abstract class UsageIntervalDao {
 
         val toInsert = mutableListOf<UsageInterval>()
         for (candidate in intervals) {
+            if (candidate.endTime <= candidate.beginTime) continue
             val appExisting = existingByApp[candidate.applicationId]
             if (appExisting == null || !overlapsAny(candidate, appExisting)) {
                 toInsert.add(candidate)

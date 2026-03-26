@@ -33,12 +33,17 @@ class EventLogRunnable(private val context: Context) : Runnable {
         val consumer = LastUsedConsumer()
 
         // Insert the remainder of the day that contains the timestamp "since" (in current timezone)
-        // Also capture raw intervals from the partial day
         val partialDayStats = eventLogWrapper.getForegroundStatsByPartialDay(since)
-        usageStats.insertIncremental(
-            eventLogWrapper.aggregateForegroundStats(partialDayStats, consumer)
-        )
+        // Aggregate for lastUsed consumer tracking only
+        eventLogWrapper.aggregateForegroundStats(partialDayStats, consumer)
+        // Insert intervals first (correctly deduplicated via overlap detection)
         intervalDao.insertNonOverlapping(toUsageIntervals(partialDayStats))
+        // Recompute stats from all stored intervals for this day (idempotent)
+        val zone = ZoneId.systemDefault()
+        val sinceDate = Instant.ofEpochMilli(since).atZone(zone).toLocalDate()
+        val dayStart = sinceDate.atStartOfDay(zone).toInstant().toEpochMilli()
+        val dayEnd = sinceDate.plusDays(1).atStartOfDay(zone).toInstant().toEpochMilli()
+        usageStats.replaceFromIntervals(sinceDate.toEpochDay(), intervalDao.getByTimeRange(dayStart, dayEnd))
 
         // Insert all days following the day that contains "since"
         var nextDay = Instant.ofEpochMilli(since)
