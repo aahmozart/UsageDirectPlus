@@ -131,4 +131,5 @@ class UsageIntervalDaoTest {
         val result = dao.getByTimeRange(0L, Long.MAX_VALUE)
         assertThat(result).isEmpty()
     }
+
 }

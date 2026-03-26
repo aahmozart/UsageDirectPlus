@@ -135,4 +135,5 @@ class UsageStatsDaoTest {
         assertThat(dao.getHiddenAmount()).isEqualTo(0)
         assertThat(dao.getTotalTimeUsed()).isEqualTo(3000L)
     }
+
 }
