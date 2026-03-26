@@ -38,46 +38,45 @@ class WeeklyAverageBarChart : UsageStatBarChart() {
         addScale(chartMax)
     }
 
-    class UsageDay {
-        var day: Long = 0
-        @Relation(
-            parentColumn = "day",
-            entityColumn = "day",
-            entity = SimpleUsageStat::class
-        )
-        lateinit var usageStats: List<SimpleUsageStat>
-    }
-
     @Dao
     abstract class WeeklyAverageDao {
 
         @Query(
-            "SELECT day, timeUsed, usageStats.applicationId AS applicationId FROM usageStats " +
-                    "LEFT JOIN colors ON usageStats.applicationId == colors.applicationId " +
-                    "WHERE hidden = 0 " +
-                    "GROUP BY day"
+            "SELECT usageStats.day AS day, usageStats.timeUsed AS timeUsed, apps.applicationId AS applicationId, usageStats.hidden AS hidden " +
+                "FROM usageStats " +
+                "INNER JOIN apps ON apps.id = usageStats.appId " +
+                "WHERE usageStats.hidden = 0"
         )
-        protected abstract fun getUsageDays(): Array<UsageDay>
+        protected abstract fun getUsageStats(): Array<SimpleUsageStat>
 
         @Query(
-            "SELECT DISTINCT colors.applicationId, color, priority FROM colors " +
-                    // Only return colors that actually appear in the usageStats to avoid NullPointerExceptions
-                    // in connection with the Map that is filled using `getAllApplicationIds()`
-                    "INNER JOIN usageStats ON usageStats.applicationId == colors.applicationId " +
-                    "ORDER BY priority DESC"
+            "SELECT apps.applicationId AS applicationId, colors.color AS color, colors.priority AS priority " +
+                "FROM colors " +
+                "INNER JOIN apps ON apps.id = colors.appId " +
+                // Only return colors that actually appear in the usageStats to avoid NullPointerExceptions
+                // in connection with the Map that is filled using `getAllApplicationIds()`
+                "INNER JOIN usageStats ON usageStats.appId == colors.appId " +
+                "ORDER BY colors.priority DESC"
         )
         protected abstract fun getColors(): Array<AppColor>
 
-        @Query("SELECT DISTINCT applicationId FROM usageStats")
+        @Query(
+            "SELECT DISTINCT apps.applicationId " +
+                "FROM usageStats " +
+                "INNER JOIN apps ON apps.id = usageStats.appId"
+        )
         protected abstract fun getAllApplicationIds(): Array<String>
 
         @Transaction
         open fun getData(): Array<Value> {
             val values = arrayOfNulls<Value>(DayOfWeek.values().size)
 
-            // Query usage data for all days (grouped by day in UsageDay object)
-            val usageDays = getUsageDays()
+            val usageStats = getUsageStats()
             val allApplicationIds = getAllApplicationIds()
+            val usageByDay = LinkedHashMap<Long, MutableList<SimpleUsageStat>>()
+            for (stat in usageStats) {
+                usageByDay.getOrPut(stat.day) { mutableListOf() }.add(stat)
+            }
 
             for (day in DayOfWeek.values().indices) {
                 val weekday = DayOfWeek.values()[day]
@@ -90,12 +89,12 @@ class WeeklyAverageBarChart : UsageStatBarChart() {
 
                 // Count days for average calculation
                 var daysConsidered = 0
-                for (usageDay in usageDays) {
+                for ((epochDay, statsForDay) in usageByDay) {
                     // Skip days that are not of the correct weekday
-                    if (LocalDate.ofEpochDay(usageDay.day).dayOfWeek != weekday) continue
+                    if (LocalDate.ofEpochDay(epochDay).dayOfWeek != weekday) continue
                     else daysConsidered++
 
-                    for (stat in usageDay.usageStats) {
+                    for (stat in statsForDay) {
                         applicationSum[stat.applicationId] =
                             applicationSum[stat.applicationId]!! + stat.timeUsed
                     }

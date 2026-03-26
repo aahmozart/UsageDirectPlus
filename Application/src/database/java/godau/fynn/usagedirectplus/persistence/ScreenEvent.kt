@@ -1,13 +1,9 @@
 package godau.fynn.usagedirectplus.persistence
 
 import androidx.room.Entity
-import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(
-    tableName = "screenEvents",
-    indices = [Index("timestamp")]
-)
+@Entity(tableName = "screenEvents")
 data class ScreenEvent(
     @PrimaryKey
     val timestamp: Long,

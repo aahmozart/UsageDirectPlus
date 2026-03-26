@@ -1,12 +1,10 @@
 package godau.fynn.usagedirectplus
 
 import android.app.usage.UsageStats
-import androidx.room.Entity
 import androidx.room.Ignore
 import java.time.Instant
 import java.time.ZoneId
 
-@Entity(tableName = "usageStats", primaryKeys = ["day", "applicationId"])
 open class SimpleUsageStat(
     val day: Long,
     val timeUsed: Long,

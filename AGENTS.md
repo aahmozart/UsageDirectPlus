@@ -29,6 +29,13 @@ APK output paths:
 - `Application/build/outputs/apk/database/debug/`
 - `Application/build/outputs/apk/system/debug/`
 
+## Data Retention
+
+The SQLite history data represented by the exported production database is intended to be stored forever.
+
+- Optimize schema and storage efficiency without introducing retention-based deletion by default
+- Do not add pruning or expiration logic for raw `usageIntervals` or `screenEvents` unless explicitly requested
+
 ## Commit Convention
 
 This project uses **conventional commits** for automated version bumping and changelog generation. All commit messages must follow this format:

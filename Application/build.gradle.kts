@@ -75,9 +75,25 @@ android {
         viewBinding = true
     }
 
+    packaging {
+        resources {
+            excludes += setOf(
+                "META-INF/LICENSE.md",
+                "META-INF/NOTICE.md",
+                "META-INF/LICENSE-notice.md"
+            )
+        }
+    }
+
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
+        }
+    }
+
+    sourceSets {
+        getByName("androidTestDatabase") {
+            assets.srcDir("$projectDir/schemas")
         }
     }
 }

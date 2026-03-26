@@ -9,13 +9,19 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import godau.fynn.usagedirectplus.SimpleUsageStat
 import godau.fynn.usagedirectplus.charts.WeeklyAverageBarChart
 import java.time.LocalDate
 
 @Database(
-    version = 6,
-    entities = [SimpleUsageStat::class, LastUsedStat::class, AppColor::class, UsageInterval::class, ScreenEvent::class]
+    version = 7,
+    entities = [
+        StoredUsageStat::class,
+        StoredLastUsedStat::class,
+        StoredAppColor::class,
+        StoredUsageInterval::class,
+        StoredApp::class,
+        ScreenEvent::class
+    ]
 )
 abstract class HistoryDatabase : RoomDatabase() {
 
@@ -28,18 +34,65 @@ abstract class HistoryDatabase : RoomDatabase() {
 
     companion object {
         const val DATABASE_NAME = "history"
+        internal const val LAST_VACUUMED_VERSION_KEY = "lastVacuumedVersion"
 
         @JvmStatic
         fun get(context: Context): HistoryDatabase {
-            return Room.databaseBuilder(context, HistoryDatabase::class.java, DATABASE_NAME)
+            val appContext = context.applicationContext
+            return Room.databaseBuilder(appContext, HistoryDatabase::class.java, DATABASE_NAME)
                 .addMigrations(
                     MIGRATION_DAY_TO_DATE,
                     MIGRATION_ADD_LAST_USED,
                     MIGRATION_ADD_HIDDEN_FLAG,
                     MIGRATION_ADD_COLORS,
-                    MIGRATION_ADD_INTERVALS_AND_SCREEN_EVENTS
+                    MIGRATION_ADD_INTERVALS_AND_SCREEN_EVENTS,
+                    MIGRATION_NORMALIZE_APP_IDS
                 )
+                .addCallback(getVacuumCallback(appContext))
                 .build()
+        }
+
+        private fun getVacuumCallback(context: Context) = object : RoomDatabase.Callback() {
+            override fun onCreate(db: SupportSQLiteDatabase) {
+                super.onCreate(db)
+                getPreferences(context).edit()
+                    .putInt(LAST_VACUUMED_VERSION_KEY, getUserVersion(db))
+                    .apply()
+            }
+
+            override fun onOpen(db: SupportSQLiteDatabase) {
+                super.onOpen(db)
+
+                val currentVersion = getUserVersion(db)
+                val prefs = getPreferences(context)
+                val lastVacuumedVersion = prefs.getInt(LAST_VACUUMED_VERSION_KEY, 0)
+
+                if (lastVacuumedVersion >= currentVersion) {
+                    return
+                }
+
+                try {
+                    Log.d(
+                        "HistoryDatabase",
+                        "Running VACUUM for database version $currentVersion after last vacuumed version $lastVacuumedVersion"
+                    )
+                    db.execSQL("VACUUM")
+                    prefs.edit()
+                        .putInt(LAST_VACUUMED_VERSION_KEY, currentVersion)
+                        .apply()
+                } catch (exception: Exception) {
+                    Log.w("HistoryDatabase", "VACUUM after database upgrade failed", exception)
+                }
+            }
+        }
+
+        private fun getPreferences(context: Context) =
+            context.getSharedPreferences(DATABASE_NAME, Context.MODE_PRIVATE)
+
+        private fun getUserVersion(database: SupportSQLiteDatabase): Int {
+            database.query("PRAGMA user_version").use { cursor ->
+                return if (cursor.moveToFirst()) cursor.getInt(0) else 0
+            }
         }
 
         internal val MIGRATION_DAY_TO_DATE = object : Migration(1, 2) {
@@ -103,12 +156,104 @@ abstract class HistoryDatabase : RoomDatabase() {
             }
         }
 
+        internal val MIGRATION_NORMALIZE_APP_IDS = object : Migration(6, 7) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                Log.d("HistoryDatabase", "Migration 6 → 7: normalizing app ids")
+
+                database.execSQL(
+                    "CREATE TABLE IF NOT EXISTS `apps` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `applicationId` TEXT NOT NULL)"
+                )
+                database.execSQL(
+                    "CREATE UNIQUE INDEX IF NOT EXISTS `index_apps_applicationId` ON `apps` (`applicationId`)"
+                )
+                database.execSQL(
+                    "INSERT OR IGNORE INTO `apps` (`applicationId`) " +
+                        "SELECT `applicationId` FROM `usageIntervals` " +
+                        "UNION SELECT `applicationId` FROM `usageStats` " +
+                        "UNION SELECT `applicationId` FROM `lastUsed` " +
+                        "UNION SELECT `applicationId` FROM `colors`"
+                )
+
+                database.execSQL(
+                    "CREATE TABLE IF NOT EXISTS `usageStats_new` (" +
+                        "`day` INTEGER NOT NULL, " +
+                        "`timeUsed` INTEGER NOT NULL, " +
+                        "`appId` INTEGER NOT NULL, " +
+                        "`hidden` INTEGER NOT NULL, " +
+                        "PRIMARY KEY(`day`, `appId`))"
+                )
+                database.execSQL(
+                    "INSERT INTO `usageStats_new` (`day`, `timeUsed`, `appId`, `hidden`) " +
+                        "SELECT `usageStats`.`day`, `usageStats`.`timeUsed`, `apps`.`id`, `usageStats`.`hidden` " +
+                        "FROM `usageStats` " +
+                        "INNER JOIN `apps` ON `apps`.`applicationId` = `usageStats`.`applicationId`"
+                )
+
+                database.execSQL(
+                    "CREATE TABLE IF NOT EXISTS `lastUsed_new` (" +
+                        "`appId` INTEGER NOT NULL, " +
+                        "`lastUsed` INTEGER NOT NULL, " +
+                        "PRIMARY KEY(`appId`))"
+                )
+                database.execSQL(
+                    "INSERT INTO `lastUsed_new` (`appId`, `lastUsed`) " +
+                        "SELECT `apps`.`id`, `lastUsed`.`lastUsed` " +
+                        "FROM `lastUsed` " +
+                        "INNER JOIN `apps` ON `apps`.`applicationId` = `lastUsed`.`applicationId`"
+                )
+
+                database.execSQL(
+                    "CREATE TABLE IF NOT EXISTS `colors_new` (" +
+                        "`appId` INTEGER NOT NULL, " +
+                        "`color` INTEGER NOT NULL, " +
+                        "`priority` INTEGER NOT NULL, " +
+                        "PRIMARY KEY(`appId`))"
+                )
+                database.execSQL(
+                    "INSERT INTO `colors_new` (`appId`, `color`, `priority`) " +
+                        "SELECT `apps`.`id`, `colors`.`color`, `colors`.`priority` " +
+                        "FROM `colors` " +
+                        "INNER JOIN `apps` ON `apps`.`applicationId` = `colors`.`applicationId`"
+                )
+
+                database.execSQL(
+                    "CREATE TABLE IF NOT EXISTS `usageIntervals_new` (" +
+                        "`beginTime` INTEGER NOT NULL, " +
+                        "`endTime` INTEGER NOT NULL, " +
+                        "`appId` INTEGER NOT NULL, " +
+                        "PRIMARY KEY(`beginTime`, `appId`))"
+                )
+                database.execSQL(
+                    "INSERT INTO `usageIntervals_new` (`beginTime`, `endTime`, `appId`) " +
+                        "SELECT `usageIntervals`.`beginTime`, `usageIntervals`.`endTime`, `apps`.`id` " +
+                        "FROM `usageIntervals` " +
+                        "INNER JOIN `apps` ON `apps`.`applicationId` = `usageIntervals`.`applicationId`"
+                )
+
+                database.execSQL("DROP TABLE `usageStats`")
+                database.execSQL("DROP TABLE `lastUsed`")
+                database.execSQL("DROP TABLE `colors`")
+                database.execSQL("DROP TABLE `usageIntervals`")
+
+                database.execSQL("ALTER TABLE `usageStats_new` RENAME TO `usageStats`")
+                database.execSQL("ALTER TABLE `lastUsed_new` RENAME TO `lastUsed`")
+                database.execSQL("ALTER TABLE `colors_new` RENAME TO `colors`")
+                database.execSQL("ALTER TABLE `usageIntervals_new` RENAME TO `usageIntervals`")
+
+                database.execSQL(
+                    "CREATE INDEX IF NOT EXISTS `index_usageIntervals_appId` ON `usageIntervals` (`appId`)"
+                )
+                database.execSQL("DROP INDEX IF EXISTS `index_screenEvents_timestamp`")
+            }
+        }
+
         internal val ALL_MIGRATIONS = arrayOf(
             MIGRATION_DAY_TO_DATE,
             MIGRATION_ADD_LAST_USED,
             MIGRATION_ADD_HIDDEN_FLAG,
             MIGRATION_ADD_COLORS,
-            MIGRATION_ADD_INTERVALS_AND_SCREEN_EVENTS
+            MIGRATION_ADD_INTERVALS_AND_SCREEN_EVENTS,
+            MIGRATION_NORMALIZE_APP_IDS
         )
     }
 }

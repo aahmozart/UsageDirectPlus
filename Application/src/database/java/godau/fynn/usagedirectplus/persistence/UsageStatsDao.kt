@@ -12,7 +12,13 @@ import godau.fynn.usagedirectplus.SimpleUsageStat
 abstract class UsageStatsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insert(entities: Collection<SimpleUsageStat>)
+    protected abstract fun insertStored(entities: Collection<StoredUsageStat>)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    protected abstract fun insertApps(apps: List<StoredApp>)
+
+    @Query("SELECT * FROM apps WHERE applicationId IN (:applicationIds)")
+    protected abstract fun getAppsByApplicationIds(applicationIds: List<String>): List<StoredApp>
 
     @Query("SELECT sum(timeUsed) FROM usageStats WHERE hidden = 0")
     abstract fun getTotalTimeUsed(): Long
@@ -30,11 +36,12 @@ abstract class UsageStatsDao {
     abstract fun getMaximumDay(): Long
 
     @Query(
-        "SELECT timeUsed, usageStats.applicationId, day, hidden " +
+        "SELECT usageStats.timeUsed AS timeUsed, apps.applicationId AS applicationId, usageStats.day AS day, usageStats.hidden AS hidden " +
             "FROM usageStats " +
-            "LEFT JOIN colors ON colors.applicationId = usageStats.applicationId " +
-            "WHERE hidden = 0 " +
-            "ORDER BY priority DESC, timeUsed DESC"
+            "INNER JOIN apps ON apps.id = usageStats.appId " +
+            "LEFT JOIN colors ON colors.appId = usageStats.appId " +
+            "WHERE usageStats.hidden = 0 " +
+            "ORDER BY colors.priority DESC, usageStats.timeUsed DESC"
     )
     abstract fun getUsageStats(): Array<SimpleUsageStat>
 
@@ -47,14 +54,39 @@ abstract class UsageStatsDao {
     @Query("UPDATE usageStats SET hidden = 0")
     abstract fun markUnhiddenAll()
 
-    @Query("SELECT * FROM usageStats WHERE day == :day")
+    @Query(
+        "SELECT usageStats.day AS day, usageStats.timeUsed AS timeUsed, apps.applicationId AS applicationId, usageStats.hidden AS hidden " +
+            "FROM usageStats " +
+            "INNER JOIN apps ON apps.id = usageStats.appId " +
+            "WHERE usageStats.day == :day"
+    )
     protected abstract fun getUsageStats(day: Long): Array<SimpleUsageStat>
 
     @Query("SELECT day, sum(timeUsed) FROM usageStats WHERE hidden = 0 GROUP BY day ORDER BY day")
     protected abstract fun getTotalTimePerDayCursor(): Cursor
 
-    @Query("SELECT applicationId, sum(timeUsed) FROM usageStats WHERE hidden = 0 GROUP BY applicationId ORDER BY sum(timeUsed) DESC")
+    @Query(
+        "SELECT apps.applicationId AS applicationId, sum(usageStats.timeUsed) " +
+            "FROM usageStats " +
+            "INNER JOIN apps ON apps.id = usageStats.appId " +
+            "WHERE usageStats.hidden = 0 " +
+            "GROUP BY usageStats.appId " +
+            "ORDER BY sum(usageStats.timeUsed) DESC"
+    )
     protected abstract fun getTotalTimePerAppCursor(): Cursor
+
+    @Transaction
+    open fun insert(entities: Collection<SimpleUsageStat>) {
+        if (entities.isEmpty()) return
+
+        val appIds = resolveAppIds(entities.map(SimpleUsageStat::applicationId))
+        insertStored(
+            entities.mapNotNull { entity ->
+                val appId = appIds[entity.applicationId] ?: return@mapNotNull null
+                StoredUsageStat(entity.day, entity.timeUsed, appId, entity.hidden)
+            }
+        )
+    }
 
     fun getTotalTimePerDay(): Map<Long, Long> {
         val cursor = getTotalTimePerDayCursor()
@@ -149,5 +181,14 @@ abstract class UsageStatsDao {
                 )
             )
         )
+    }
+
+    private fun resolveAppIds(applicationIds: Collection<String>): Map<String, Long> {
+        val uniqueIds = LinkedHashSet(applicationIds)
+        if (uniqueIds.isEmpty()) return emptyMap()
+
+        insertApps(uniqueIds.map { StoredApp(applicationId = it) })
+        return getAppsByApplicationIds(uniqueIds.toList())
+            .associate { it.applicationId to it.id }
     }
 }
