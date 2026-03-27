@@ -13,14 +13,15 @@ import godau.fynn.usagedirectplus.charts.WeeklyAverageBarChart
 import java.time.LocalDate
 
 @Database(
-    version = 7,
+    version = 8,
     entities = [
         StoredUsageStat::class,
         StoredLastUsedStat::class,
         StoredAppColor::class,
         StoredUsageInterval::class,
         StoredApp::class,
-        ScreenEvent::class
+        ScreenEvent::class,
+        StoredBrowserTabSession::class
     ]
 )
 abstract class HistoryDatabase : RoomDatabase() {
@@ -31,6 +32,7 @@ abstract class HistoryDatabase : RoomDatabase() {
     abstract fun getWeeklyDao(): WeeklyAverageBarChart.WeeklyAverageDao
     abstract fun getUsageIntervalDao(): UsageIntervalDao
     abstract fun getScreenEventDao(): ScreenEventDao
+    abstract fun getBrowserTabSessionDao(): BrowserTabSessionDao
 
     companion object {
         const val DATABASE_NAME = "history"
@@ -46,7 +48,8 @@ abstract class HistoryDatabase : RoomDatabase() {
                     MIGRATION_ADD_HIDDEN_FLAG,
                     MIGRATION_ADD_COLORS,
                     MIGRATION_ADD_INTERVALS_AND_SCREEN_EVENTS,
-                    MIGRATION_NORMALIZE_APP_IDS
+                    MIGRATION_NORMALIZE_APP_IDS,
+                    MIGRATION_ADD_BROWSER_TAB_SESSIONS
                 )
                 .addCallback(getVacuumCallback(appContext))
                 .build()
@@ -247,13 +250,41 @@ abstract class HistoryDatabase : RoomDatabase() {
             }
         }
 
+        internal val MIGRATION_ADD_BROWSER_TAB_SESSIONS = object : Migration(7, 8) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                Log.d("HistoryDatabase", "Migration 7 → 8: creating browser tab sessions table")
+                database.execSQL(
+                    "CREATE TABLE IF NOT EXISTS `browserTabSessions` (" +
+                        "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                        "`appId` INTEGER NOT NULL, " +
+                        "`openedAt` INTEGER NOT NULL, " +
+                        "`closedAt` INTEGER, " +
+                        "`title` TEXT, " +
+                        "`url` TEXT, " +
+                        "`privacyMode` INTEGER NOT NULL, " +
+                        "`urlConfidence` INTEGER NOT NULL, " +
+                        "`closeReason` INTEGER)"
+                )
+                database.execSQL(
+                    "CREATE INDEX IF NOT EXISTS `index_browserTabSessions_appId` ON `browserTabSessions` (`appId`)"
+                )
+                database.execSQL(
+                    "CREATE INDEX IF NOT EXISTS `index_browserTabSessions_openedAt` ON `browserTabSessions` (`openedAt`)"
+                )
+                database.execSQL(
+                    "CREATE INDEX IF NOT EXISTS `index_browserTabSessions_appId_openedAt` ON `browserTabSessions` (`appId`, `openedAt`)"
+                )
+            }
+        }
+
         internal val ALL_MIGRATIONS = arrayOf(
             MIGRATION_DAY_TO_DATE,
             MIGRATION_ADD_LAST_USED,
             MIGRATION_ADD_HIDDEN_FLAG,
             MIGRATION_ADD_COLORS,
             MIGRATION_ADD_INTERVALS_AND_SCREEN_EVENTS,
-            MIGRATION_NORMALIZE_APP_IDS
+            MIGRATION_NORMALIZE_APP_IDS,
+            MIGRATION_ADD_BROWSER_TAB_SESSIONS
         )
     }
 }

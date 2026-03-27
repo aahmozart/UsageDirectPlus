@@ -124,6 +124,48 @@ class HistoryDatabaseMigrationTest {
         }
     }
 
+    @Test
+    fun migrate7To8_createsBrowserTabSessionsTableAndKeepsExistingDataAccessible() {
+        helper.createDatabase(databaseName, 7).apply {
+            execSQL("INSERT INTO apps(id, applicationId) VALUES (1, 'com.android.chrome')")
+            execSQL("INSERT INTO usageIntervals(beginTime, endTime, appId) VALUES (1000, 2000, 1)")
+            close()
+        }
+
+        helper.runMigrationsAndValidate(databaseName, 8, true, *HistoryDatabase.ALL_MIGRATIONS)
+
+        val db = Room.databaseBuilder(context, HistoryDatabase::class.java, databaseName)
+            .addMigrations(*HistoryDatabase.ALL_MIGRATIONS)
+            .allowMainThreadQueries()
+            .build()
+
+        try {
+            assertThat(db.getUsageIntervalDao().getByApp("com.android.chrome"))
+                .containsExactly(UsageInterval(1000L, 2000L, "com.android.chrome"))
+
+            val browserSessionId = db.getBrowserTabSessionDao().insertOpenSession(
+                applicationId = "com.android.chrome",
+                openedAt = 3000L,
+                title = "Example Domain",
+                url = "example.com",
+                privacyMode = BrowserTabSession.PRIVACY_MODE_UNKNOWN,
+                urlConfidence = BrowserTabSession.URL_CONFIDENCE_HIGH
+            )
+            assertThat(browserSessionId).isGreaterThan(0L)
+
+            val writableDatabase = db.openHelper.writableDatabase
+            val browserIndexes = querySecondColumnStrings(
+                writableDatabase,
+                "PRAGMA index_list(`browserTabSessions`)"
+            )
+            assertThat(browserIndexes).contains("index_browserTabSessions_appId")
+            assertThat(browserIndexes).contains("index_browserTabSessions_openedAt")
+            assertThat(browserIndexes).contains("index_browserTabSessions_appId_openedAt")
+        } finally {
+            db.close()
+        }
+    }
+
     private fun queryLong(database: SupportSQLiteDatabase, sql: String): Long {
         database.query(sql).use { cursor ->
             cursor.moveToFirst()

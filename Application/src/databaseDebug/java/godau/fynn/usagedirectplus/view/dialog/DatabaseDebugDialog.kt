@@ -7,12 +7,17 @@ import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import godau.fynn.usagedirectplus.R
 import godau.fynn.usagedirectplus.databinding.DialogDatabaseBinding
+import godau.fynn.usagedirectplus.persistence.BrowserCaptureDiagnostics
 import godau.fynn.usagedirectplus.persistence.EventLogRunnable
 import godau.fynn.usagedirectplus.persistence.HistoryDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 class DatabaseDebugDialog(context: Context) : MaterialAlertDialogBuilder(context) {
 
@@ -59,11 +64,29 @@ class DatabaseDebugDialog(context: Context) : MaterialAlertDialogBuilder(context
         MainScope().launch(Dispatchers.IO) {
             val daysStored = usageStats.getDaysStoredAmount()
             val totalHours = usageStats.getTotalTimeUsed() / 1000 / 60 / 60
+            val captureStatus = BrowserCaptureDiagnostics.load(getContext())
 
             withContext(Dispatchers.Main) {
                 binding.textStatus.text = getContext().getString(R.string.db_status, daysStored, totalHours)
+                binding.textBrowserCapture.text = getContext().getString(
+                    R.string.db_browser_capture,
+                    BrowserCaptureDiagnostics.formatResult(getContext(), captureStatus),
+                    captureStatus.packageName ?: getContext().getString(R.string.db_browser_capture_no_package),
+                    if (captureStatus.timestamp > 0) {
+                        TIME_FORMATTER.format(
+                            Instant.ofEpochMilli(captureStatus.timestamp).atZone(ZoneId.systemDefault())
+                        )
+                    } else {
+                        getContext().getString(R.string.db_browser_capture_no_time)
+                    }
+                )
                 binding.buttonInsert.isEnabled = true
             }
         }
+    }
+
+    companion object {
+        private val TIME_FORMATTER: DateTimeFormatter =
+            DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
     }
 }

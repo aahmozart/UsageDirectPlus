@@ -1,12 +1,17 @@
 package godau.fynn.usagedirectplus.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import godau.fynn.usagedirectplus.R
+import godau.fynn.usagedirectplus.browser.BrowserSupport
 import godau.fynn.usagedirectplus.databinding.ActivityUsageIntervalsBinding
+import godau.fynn.usagedirectplus.persistence.BrowserCaptureAccessibilityService
 import godau.fynn.usagedirectplus.persistence.HistoryDatabase
 import godau.fynn.usagedirectplus.thread.icon.IconThread
 import godau.fynn.usagedirectplus.view.adapter.UsageIntervalAdapter
@@ -49,6 +54,32 @@ class UsageIntervalsActivity : AppCompatActivity() {
             binding.appIcon.setImageDrawable(icon)
         } else {
             binding.appIcon.visibility = View.GONE
+        }
+
+        if (BrowserSupport.isSupportedBrowser(applicationId)) {
+            binding.browserTabHistoryButton.visibility = View.VISIBLE
+            binding.browserTabHistoryButton.setOnClickListener {
+                val browserTabHistoryIntent = Intent(this, BrowserTabSessionsActivity::class.java).apply {
+                    putExtra("applicationId", applicationId)
+                    putExtra("day", day)
+                }
+
+                if (BrowserCaptureAccessibilityService.isEnabled(this)) {
+                    startActivity(browserTabHistoryIntent)
+                } else {
+                    MaterialAlertDialogBuilder(this)
+                        .setTitle(R.string.browser_capture_dialog_title)
+                        .setMessage(R.string.browser_capture_dialog_message)
+                        .setPositiveButton(R.string.go) { _, _ ->
+                            startActivity(Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS))
+                        }
+                        .setNeutralButton(R.string.browser_capture_dialog_view_history) { _, _ ->
+                            startActivity(browserTabHistoryIntent)
+                        }
+                        .setNegativeButton(R.string.cancel, null)
+                        .show()
+                }
+            }
         }
 
         // Compute day boundaries
