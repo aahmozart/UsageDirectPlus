@@ -26,6 +26,7 @@ class BrowserObservationExtractor {
 
         orderedWindows(context).forEachIndexed { windowIndex, window ->
             window.title?.let { title ->
+                privacyMode = maxPrivacyMode(privacyMode, detectPrivacyMode(title, family))
                 if (isLikelyTitle(title, family)) {
                     titleCandidates += TitleCandidate(cleanText(title), 65 - windowIndex)
                 }
@@ -38,6 +39,10 @@ class BrowserObservationExtractor {
 
                 if (isToolbarSignal(node)) {
                     sawToolbarSignal = true
+                }
+
+                if (family == BrowserFamily.CHROMIUM) {
+                    privacyMode = maxPrivacyMode(privacyMode, detectPrivacyModeFromViewId(node))
                 }
 
                 val values = listOfNotNull(
@@ -221,7 +226,9 @@ class BrowserObservationExtractor {
                     "selected incognito tab" in normalized ||
                     "incognito tab" in normalized ||
                     "new incognito tab" in normalized ||
-                    "leave incognito mode" in normalized
+                    "leave incognito mode" in normalized ||
+                    "gone incognito" in normalized ||
+                    "incognito tabs" in normalized
                 ) {
                     BrowserTabSession.PRIVACY_MODE_PRIVATE
                 } else {
@@ -238,6 +245,15 @@ class BrowserObservationExtractor {
                 } else {
                     BrowserTabSession.PRIVACY_MODE_UNKNOWN
                 }
+        }
+    }
+
+    private fun detectPrivacyModeFromViewId(node: BrowserNodeSnapshot): Int {
+        val viewId = node.viewIdResourceName?.lowercase(Locale.US) ?: return BrowserTabSession.PRIVACY_MODE_UNKNOWN
+        return if ("incognito" in viewId) {
+            BrowserTabSession.PRIVACY_MODE_PRIVATE
+        } else {
+            BrowserTabSession.PRIVACY_MODE_UNKNOWN
         }
     }
 
@@ -335,6 +351,7 @@ class BrowserObservationExtractor {
             "selected tab",
             "tab",
             "incognito tab",
+            "incognito tabs",
             "selected incognito tab",
             "private browsing",
             "private browsing session",
@@ -342,9 +359,11 @@ class BrowserObservationExtractor {
             "new tab",
             "new private tab",
             "new incognito tab",
+            "you've gone incognito",
             "search or enter address",
             "search or type address",
             "enter search or address",
+            "search google or type url",
             "share"
         )
     }

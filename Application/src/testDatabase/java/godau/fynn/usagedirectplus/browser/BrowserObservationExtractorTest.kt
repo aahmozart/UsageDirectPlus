@@ -199,4 +199,120 @@ class BrowserObservationExtractorTest {
             ExtractionResult.Rejected(ExtractionRejectReason.NO_SUPPORTED_WINDOWS)
         )
     }
+
+    @Test
+    fun `extract detects Vanadium incognito from NTP title text`() {
+        val context = BrowserObservationContext(
+            applicationId = BrowserSupport.VANADIUM_PACKAGE,
+            windows = listOf(
+                BrowserWindowSnapshot(
+                    id = 1,
+                    title = "Vanadium: New Incognito tab",
+                    isActive = true,
+                    nodes = listOf(
+                        BrowserNodeSnapshot(
+                            viewIdResourceName = "app.vanadium.browser:id/new_tab_incognito_title",
+                            text = "You've gone Incognito"
+                        ),
+                        BrowserNodeSnapshot(
+                            text = "gg.com",
+                            viewIdResourceName = "app.vanadium.browser:id/url_bar",
+                            isEditable = true
+                        )
+                    )
+                )
+            )
+        )
+
+        val result = extractor.extract(context) as ExtractionResult.Accepted
+
+        assertThat(result.observation.privacyMode).isEqualTo(BrowserTabSession.PRIVACY_MODE_PRIVATE)
+        assertThat(result.observation.url).isEqualTo("gg.com")
+    }
+
+    @Test
+    fun `extract detects Vanadium incognito from window title`() {
+        val context = BrowserObservationContext(
+            applicationId = BrowserSupport.VANADIUM_PACKAGE,
+            windows = listOf(
+                BrowserWindowSnapshot(
+                    id = 1,
+                    title = "Vanadium: New Incognito tab",
+                    isActive = true,
+                    nodes = listOf(
+                        BrowserNodeSnapshot(
+                            text = "Example Domain",
+                            viewIdResourceName = "app.vanadium.browser:id/tab_title"
+                        ),
+                        BrowserNodeSnapshot(
+                            text = "example.com",
+                            viewIdResourceName = "app.vanadium.browser:id/url_bar",
+                            isEditable = true
+                        )
+                    )
+                )
+            )
+        )
+
+        val result = extractor.extract(context) as ExtractionResult.Accepted
+
+        assertThat(result.observation.privacyMode).isEqualTo(BrowserTabSession.PRIVACY_MODE_PRIVATE)
+    }
+
+    @Test
+    fun `extract detects incognito from view id containing incognito`() {
+        val context = BrowserObservationContext(
+            applicationId = BrowserSupport.VANADIUM_PACKAGE,
+            windows = listOf(
+                BrowserWindowSnapshot(
+                    id = 1,
+                    isActive = true,
+                    nodes = listOf(
+                        BrowserNodeSnapshot(
+                            viewIdResourceName = "app.vanadium.browser:id/new_tab_incognito_features",
+                            text = "Vanadium won't save: Your browsing history"
+                        ),
+                        BrowserNodeSnapshot(
+                            text = "example.com",
+                            viewIdResourceName = "app.vanadium.browser:id/url_bar",
+                            isEditable = true
+                        )
+                    )
+                )
+            )
+        )
+
+        val result = extractor.extract(context) as ExtractionResult.Accepted
+
+        assertThat(result.observation.privacyMode).isEqualTo(BrowserTabSession.PRIVACY_MODE_PRIVATE)
+    }
+
+    @Test
+    fun `extract returns unknown privacy mode for normal Vanadium browsing`() {
+        val context = BrowserObservationContext(
+            applicationId = BrowserSupport.VANADIUM_PACKAGE,
+            windows = listOf(
+                BrowserWindowSnapshot(
+                    id = 1,
+                    title = "Vanadium: Example Domain",
+                    isActive = true,
+                    nodes = listOf(
+                        BrowserNodeSnapshot(
+                            text = "Example Domain",
+                            viewIdResourceName = "app.vanadium.browser:id/tab_title"
+                        ),
+                        BrowserNodeSnapshot(
+                            text = "example.com",
+                            viewIdResourceName = "app.vanadium.browser:id/url_bar",
+                            isEditable = true
+                        )
+                    )
+                )
+            )
+        )
+
+        val result = extractor.extract(context) as ExtractionResult.Accepted
+
+        assertThat(result.observation.privacyMode).isEqualTo(BrowserTabSession.PRIVACY_MODE_UNKNOWN)
+    }
 }
