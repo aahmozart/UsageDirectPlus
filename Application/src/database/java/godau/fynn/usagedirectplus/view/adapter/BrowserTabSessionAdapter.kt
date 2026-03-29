@@ -30,9 +30,7 @@ class BrowserTabSessionAdapter(
         val closedAt = session.closedAt ?: session.openedAt
         val durationMinutes = (closedAt - session.openedAt).coerceAtLeast(0) / 60000
 
-        holder.binding.title.text = session.title ?: context.getString(R.string.browser_tab_sessions_untitled)
-        holder.binding.url.text = session.url
-        holder.binding.url.visibility = if (session.url.isNullOrBlank()) View.GONE else View.VISIBLE
+        holder.binding.hostname.text = session.hostname
 
         val begin = TIME_FORMAT.format(Instant.ofEpochMilli(session.openedAt))
         val end = TIME_FORMAT.format(Instant.ofEpochMilli(closedAt))

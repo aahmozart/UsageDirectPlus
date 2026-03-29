@@ -34,8 +34,7 @@ class BrowserTabSessionDaoTest {
         val id = dao.insertOpenSession(
             applicationId = "com.android.chrome",
             openedAt = 1_000L,
-            title = "Example Domain",
-            url = "example.com",
+            hostname = "example.com",
             privacyMode = BrowserTabSession.PRIVACY_MODE_UNKNOWN,
             urlConfidence = BrowserTabSession.URL_CONFIDENCE_HIGH
         )
@@ -49,8 +48,7 @@ class BrowserTabSessionDaoTest {
                 openedAt = 1_000L,
                 closedAt = null,
                 applicationId = "com.android.chrome",
-                title = "Example Domain",
-                url = "example.com",
+                hostname = "example.com",
                 privacyMode = BrowserTabSession.PRIVACY_MODE_UNKNOWN,
                 urlConfidence = BrowserTabSession.URL_CONFIDENCE_HIGH,
                 closeReason = null
@@ -63,8 +61,7 @@ class BrowserTabSessionDaoTest {
         val id = dao.insertOpenSession(
             applicationId = "org.mozilla.firefox",
             openedAt = 10_000L,
-            title = "Mozilla",
-            url = "mozilla.org",
+            hostname = "mozilla.org",
             privacyMode = BrowserTabSession.PRIVACY_MODE_PRIVATE,
             urlConfidence = BrowserTabSession.URL_CONFIDENCE_HIGH
         )
@@ -73,8 +70,7 @@ class BrowserTabSessionDaoTest {
             id = id,
             closedAt = 20_000L,
             closeReason = BrowserTabSession.CLOSE_REASON_APP_BACKGROUND,
-            title = "Mozilla",
-            url = "mozilla.org",
+            hostname = "mozilla.org",
             privacyMode = BrowserTabSession.PRIVACY_MODE_PRIVATE,
             urlConfidence = BrowserTabSession.URL_CONFIDENCE_HIGH
         )
@@ -87,27 +83,24 @@ class BrowserTabSessionDaoTest {
     }
 
     @Test
-    fun updateOpenSessionMetadataOverwritesTitleAndUrl() {
+    fun updateOpenSessionMetadataOverwritesHostname() {
         val id = dao.insertOpenSession(
             applicationId = "com.android.chrome",
             openedAt = 1_000L,
-            title = "Chrome",
-            url = null,
+            hostname = "example.com",
             privacyMode = BrowserTabSession.PRIVACY_MODE_UNKNOWN,
-            urlConfidence = BrowserTabSession.URL_CONFIDENCE_NONE
+            urlConfidence = BrowserTabSession.URL_CONFIDENCE_HIGH
         )
 
         dao.updateOpenSessionMetadata(
             id = id,
-            title = "Example Domain",
-            url = "example.com",
+            hostname = "example.org",
             privacyMode = BrowserTabSession.PRIVACY_MODE_PRIVATE,
             urlConfidence = BrowserTabSession.URL_CONFIDENCE_HIGH
         )
 
         val openSession = dao.getOpenSession()
-        assertThat(openSession?.title).isEqualTo("Example Domain")
-        assertThat(openSession?.url).isEqualTo("example.com")
+        assertThat(openSession?.hostname).isEqualTo("example.org")
         assertThat(openSession?.privacyMode).isEqualTo(BrowserTabSession.PRIVACY_MODE_PRIVATE)
     }
 }

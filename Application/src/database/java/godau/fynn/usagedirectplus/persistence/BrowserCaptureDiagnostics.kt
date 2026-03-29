@@ -17,13 +17,13 @@ object BrowserCaptureDiagnostics {
     private const val KEY_RESULT = "browserCaptureLastResult"
     private const val KEY_DETAIL = "browserCaptureLastDetail"
 
-    fun recordAccepted(context: Context, packageName: String, timestamp: Long, hasUrl: Boolean) {
+    fun recordAccepted(context: Context, packageName: String, timestamp: Long) {
         write(
             context = context,
             packageName = packageName,
             timestamp = timestamp,
             result = RESULT_ACCEPTED,
-            detail = if (hasUrl) DETAIL_ACCEPTED_WITH_URL else DETAIL_ACCEPTED_TITLE_ONLY
+            detail = DETAIL_ACCEPTED_WITH_HOSTNAME
         )
     }
 
@@ -55,10 +55,7 @@ object BrowserCaptureDiagnostics {
     fun formatResult(context: Context, status: BrowserCaptureStatus): String {
         return when (status.result) {
             RESULT_ACCEPTED -> {
-                val detail = when (status.detail) {
-                    DETAIL_ACCEPTED_WITH_URL -> context.getString(R.string.browser_capture_status_title_and_url)
-                    else -> context.getString(R.string.browser_capture_status_title_only)
-                }
+                val detail = context.getString(R.string.browser_capture_status_hostname)
                 context.getString(R.string.browser_capture_status_accepted, detail)
             }
 
@@ -82,8 +79,8 @@ object BrowserCaptureDiagnostics {
             ExtractionRejectReason.TOOLBAR_NOT_FOUND.name ->
                 context.getString(R.string.browser_capture_reason_toolbar_not_found)
 
-            ExtractionRejectReason.NO_TITLE_CANDIDATE.name ->
-                context.getString(R.string.browser_capture_reason_no_title_candidate)
+            ExtractionRejectReason.NO_HOSTNAME.name ->
+                context.getString(R.string.browser_capture_reason_no_hostname)
 
             ExtractionRejectReason.URL_LOW_CONFIDENCE_ONLY.name ->
                 context.getString(R.string.browser_capture_reason_url_low_confidence_only)
@@ -110,6 +107,5 @@ object BrowserCaptureDiagnostics {
 
     const val RESULT_ACCEPTED = "accepted"
     const val RESULT_REJECTED = "rejected"
-    const val DETAIL_ACCEPTED_TITLE_ONLY = "TITLE_ONLY"
-    const val DETAIL_ACCEPTED_WITH_URL = "TITLE_AND_URL"
+    const val DETAIL_ACCEPTED_WITH_HOSTNAME = "HOSTNAME"
 }

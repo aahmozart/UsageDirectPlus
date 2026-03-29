@@ -42,7 +42,7 @@ class HistoryDatabaseVacuumTest {
             .getSharedPreferences(HistoryDatabase.DATABASE_NAME, Context.MODE_PRIVATE)
             .getInt(HistoryDatabase.LAST_VACUUMED_VERSION_KEY, 0)
 
-        assertThat(lastVacuumedVersion).isEqualTo(8)
+        assertThat(lastVacuumedVersion).isEqualTo(9)
     }
 
     @Test
@@ -82,7 +82,7 @@ class HistoryDatabaseVacuumTest {
         val lastVacuumedVersion = context
             .getSharedPreferences(HistoryDatabase.DATABASE_NAME, Context.MODE_PRIVATE)
             .getInt(HistoryDatabase.LAST_VACUUMED_VERSION_KEY, 0)
-        assertThat(lastVacuumedVersion).isEqualTo(8)
+        assertThat(lastVacuumedVersion).isEqualTo(9)
     }
 
     private fun queryLong(database: SQLiteDatabase, sql: String): Long {

@@ -15,6 +15,12 @@ abstract class BrowserTabSessionDao {
     @Query("SELECT * FROM apps WHERE applicationId IN (:applicationIds)")
     protected abstract fun getAppsByApplicationIds(applicationIds: List<String>): List<StoredApp>
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    protected abstract fun insertHostnames(hostnames: List<StoredHostname>)
+
+    @Query("SELECT * FROM hostnames WHERE hostname IN (:hostnames)")
+    protected abstract fun getHostnamesByNames(hostnames: List<String>): List<StoredHostname>
+
     @Insert
     protected abstract fun insertStored(session: StoredBrowserTabSession): Long
 
@@ -23,13 +29,13 @@ abstract class BrowserTabSessionDao {
             "browserTabSessions.openedAt AS openedAt, " +
             "browserTabSessions.closedAt AS closedAt, " +
             "apps.applicationId AS applicationId, " +
-            "browserTabSessions.title AS title, " +
-            "browserTabSessions.url AS url, " +
+            "hostnames.hostname AS hostname, " +
             "browserTabSessions.privacyMode AS privacyMode, " +
             "browserTabSessions.urlConfidence AS urlConfidence, " +
             "browserTabSessions.closeReason AS closeReason " +
             "FROM browserTabSessions " +
             "INNER JOIN apps ON apps.id = browserTabSessions.appId " +
+            "INNER JOIN hostnames ON hostnames.id = browserTabSessions.hostnameId " +
             "WHERE browserTabSessions.closedAt IS NULL " +
             "ORDER BY browserTabSessions.openedAt DESC " +
             "LIMIT 1"
@@ -41,13 +47,13 @@ abstract class BrowserTabSessionDao {
             "browserTabSessions.openedAt AS openedAt, " +
             "browserTabSessions.closedAt AS closedAt, " +
             "apps.applicationId AS applicationId, " +
-            "browserTabSessions.title AS title, " +
-            "browserTabSessions.url AS url, " +
+            "hostnames.hostname AS hostname, " +
             "browserTabSessions.privacyMode AS privacyMode, " +
             "browserTabSessions.urlConfidence AS urlConfidence, " +
             "browserTabSessions.closeReason AS closeReason " +
             "FROM browserTabSessions " +
             "INNER JOIN apps ON apps.id = browserTabSessions.appId " +
+            "INNER JOIN hostnames ON hostnames.id = browserTabSessions.hostnameId " +
             "WHERE apps.applicationId = :applicationId " +
             "AND browserTabSessions.openedAt < :end " +
             "AND COALESCE(browserTabSessions.closedAt, 9223372036854775807) > :start " +
@@ -64,13 +70,12 @@ abstract class BrowserTabSessionDao {
 
     @Query(
         "UPDATE browserTabSessions " +
-            "SET title = :title, url = :url, privacyMode = :privacyMode, urlConfidence = :urlConfidence " +
+            "SET hostnameId = :hostnameId, privacyMode = :privacyMode, urlConfidence = :urlConfidence " +
             "WHERE id = :id"
     )
     protected abstract fun updateMetadata(
         id: Long,
-        title: String?,
-        url: String?,
+        hostnameId: Long,
         privacyMode: Int,
         urlConfidence: Int
     )
@@ -78,15 +83,14 @@ abstract class BrowserTabSessionDao {
     @Query(
         "UPDATE browserTabSessions " +
             "SET closedAt = :closedAt, closeReason = :closeReason, " +
-            "title = :title, url = :url, privacyMode = :privacyMode, urlConfidence = :urlConfidence " +
+            "hostnameId = :hostnameId, privacyMode = :privacyMode, urlConfidence = :urlConfidence " +
             "WHERE id = :id"
     )
     protected abstract fun closeSession(
         id: Long,
         closedAt: Long,
         closeReason: Int,
-        title: String?,
-        url: String?,
+        hostnameId: Long,
         privacyMode: Int,
         urlConfidence: Int
     )
@@ -95,18 +99,17 @@ abstract class BrowserTabSessionDao {
     open fun insertOpenSession(
         applicationId: String,
         openedAt: Long,
-        title: String?,
-        url: String?,
+        hostname: String,
         privacyMode: Int,
         urlConfidence: Int
     ): Long {
         val appId = resolveAppIds(listOf(applicationId))[applicationId] ?: return -1
+        val hostnameId = resolveHostnameIds(listOf(hostname))[hostname] ?: return -1
         return insertStored(
             StoredBrowserTabSession(
                 appId = appId,
+                hostnameId = hostnameId,
                 openedAt = openedAt,
-                title = title,
-                url = url,
                 privacyMode = privacyMode,
                 urlConfidence = urlConfidence
             )
@@ -116,12 +119,12 @@ abstract class BrowserTabSessionDao {
     @Transaction
     open fun updateOpenSessionMetadata(
         id: Long,
-        title: String?,
-        url: String?,
+        hostname: String,
         privacyMode: Int,
         urlConfidence: Int
     ) {
-        updateMetadata(id, title, url, privacyMode, urlConfidence)
+        val hostnameId = resolveHostnameIds(listOf(hostname))[hostname] ?: return
+        updateMetadata(id, hostnameId, privacyMode, urlConfidence)
     }
 
     @Transaction
@@ -129,12 +132,12 @@ abstract class BrowserTabSessionDao {
         id: Long,
         closedAt: Long,
         closeReason: Int,
-        title: String?,
-        url: String?,
+        hostname: String,
         privacyMode: Int,
         urlConfidence: Int
     ) {
-        closeSession(id, closedAt, closeReason, title, url, privacyMode, urlConfidence)
+        val hostnameId = resolveHostnameIds(listOf(hostname))[hostname] ?: return
+        closeSession(id, closedAt, closeReason, hostnameId, privacyMode, urlConfidence)
     }
 
     private fun resolveAppIds(applicationIds: Collection<String>): Map<String, Long> {
@@ -144,5 +147,14 @@ abstract class BrowserTabSessionDao {
         insertApps(uniqueIds.map { StoredApp(applicationId = it) })
         return getAppsByApplicationIds(uniqueIds.toList())
             .associate { it.applicationId to it.id }
+    }
+
+    private fun resolveHostnameIds(hostnames: Collection<String>): Map<String, Long> {
+        val uniqueNames = LinkedHashSet(hostnames)
+        if (uniqueNames.isEmpty()) return emptyMap()
+
+        insertHostnames(uniqueNames.map { StoredHostname(hostname = it) })
+        return getHostnamesByNames(uniqueNames.toList())
+            .associate { it.hostname to it.id }
     }
 }

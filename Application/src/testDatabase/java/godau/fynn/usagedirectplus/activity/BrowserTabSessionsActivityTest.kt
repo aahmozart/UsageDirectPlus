@@ -56,7 +56,7 @@ class BrowserTabSessionsActivityTest {
 
     @Test
     fun showsCapturedSessionsWhenPresentOnFirstLaunch() {
-        insertClosedSession(title = "Reddit", url = "www.reddit.com")
+        insertClosedSession(hostname = "reddit.com")
 
         val controller = Robolectric.buildActivity(BrowserTabSessionsActivity::class.java, createIntent())
             .setup()
@@ -85,7 +85,7 @@ class BrowserTabSessionsActivityTest {
 
         controller.pause().stop()
 
-        insertClosedSession(title = "Example Domain", url = "example.com")
+        insertClosedSession(hostname = "example.com")
 
         controller.restart().start().resume().visible()
 
@@ -100,7 +100,7 @@ class BrowserTabSessionsActivityTest {
         controller.pause().stop().destroy()
     }
 
-    private fun insertClosedSession(title: String, url: String) {
+    private fun insertClosedSession(hostname: String) {
         val date = LocalDate.ofEpochDay(DAY)
         val start = date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
         val openedAt = start + TimeUnit.MINUTES.toMillis(1)
@@ -114,8 +114,7 @@ class BrowserTabSessionsActivityTest {
                     val id = dao.insertOpenSession(
                         applicationId = APPLICATION_ID,
                         openedAt = openedAt,
-                        title = title,
-                        url = url,
+                        hostname = hostname,
                         privacyMode = BrowserTabSession.PRIVACY_MODE_UNKNOWN,
                         urlConfidence = BrowserTabSession.URL_CONFIDENCE_HIGH
                     )
@@ -123,8 +122,7 @@ class BrowserTabSessionsActivityTest {
                         id = id,
                         closedAt = closedAt,
                         closeReason = BrowserTabSession.CLOSE_REASON_APP_BACKGROUND,
-                        title = title,
-                        url = url,
+                        hostname = hostname,
                         privacyMode = BrowserTabSession.PRIVACY_MODE_UNKNOWN,
                         urlConfidence = BrowserTabSession.URL_CONFIDENCE_HIGH
                     )

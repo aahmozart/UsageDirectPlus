@@ -1,7 +1,6 @@
 package godau.fynn.usagedirectplus.browser
 
 import godau.fynn.usagedirectplus.persistence.BrowserTabSession
-import java.util.Locale
 
 object BrowserSessionReducer {
 
@@ -24,160 +23,46 @@ object BrowserSessionReducer {
         }
 
         if (openSession.applicationId != observation.applicationId) {
-            return BrowserSessionDecision.CloseAndOpen(openSession.id, timestamp, closeReason, observation, timestamp)
+            return BrowserSessionDecision.CloseAndOpen(
+                openSession.id, timestamp, closeReason, observation, timestamp
+            )
         }
 
-        if (!shouldKeepSameSession(openSession, observation)) {
-            return BrowserSessionDecision.CloseAndOpen(openSession.id, timestamp, closeReason, observation, timestamp)
+        if (!isSameSession(openSession, observation)) {
+            return BrowserSessionDecision.CloseAndOpen(
+                openSession.id, timestamp, closeReason, observation, timestamp
+            )
         }
 
-        val mergedObservation = mergeObservation(openSession, observation)
-        return if (isSameMetadata(openSession, mergedObservation)) {
+        return if (isSameMetadata(openSession, observation)) {
             BrowserSessionDecision.None
         } else {
-            BrowserSessionDecision.Update(openSession.id, mergedObservation)
+            BrowserSessionDecision.Update(openSession.id, observation)
         }
     }
 
-    private fun shouldKeepSameSession(
+    private fun isSameSession(
         openSession: BrowserTabSession,
         observation: BrowserObservation
     ): Boolean {
-        val existingUrl = normalizeUrl(openSession.url)
-        val newUrl = normalizeUrl(observation.url)
+        if (openSession.hostname != observation.hostname) return false
 
         if (openSession.privacyMode != BrowserTabSession.PRIVACY_MODE_UNKNOWN &&
             observation.privacyMode != BrowserTabSession.PRIVACY_MODE_UNKNOWN &&
             openSession.privacyMode != observation.privacyMode
-        ) {
-            return false
-        }
+        ) return false
 
-        if (openSession.urlConfidence == BrowserTabSession.URL_CONFIDENCE_HIGH &&
-            observation.urlConfidence == BrowserTabSession.URL_CONFIDENCE_HIGH
-        ) {
-            return existingUrl == newUrl
-        }
-
-        if (isBlankOrPlaceholder(observation.title) && observation.urlConfidence < openSession.urlConfidence) {
-            return true
-        }
-
-        if (equivalentTitle(openSession.title, observation.title)) {
-            return true
-        }
-
-        if (isBlankOrPlaceholder(openSession.title) && !observation.title.isNullOrBlank()) {
-            return true
-        }
-
-        if (openSession.title.isNullOrBlank() && !observation.title.isNullOrBlank()) {
-            return true
-        }
-
-        if (openSession.url.isNullOrBlank() &&
-            observation.urlConfidence > openSession.urlConfidence &&
-            !observation.url.isNullOrBlank()
-        ) {
-            return true
-        }
-
-        return false
-    }
-
-    private fun mergeObservation(
-        openSession: BrowserTabSession,
-        observation: BrowserObservation
-    ): BrowserObservation {
-        val mergedTitle = when {
-            observation.title.isNullOrBlank() -> openSession.title
-            isBlankOrPlaceholder(observation.title) && !openSession.title.isNullOrBlank() -> openSession.title
-            isBlankOrPlaceholder(openSession.title) -> observation.title
-            equivalentTitle(openSession.title, observation.title) -> {
-                if (observation.title.length >= openSession.title.orEmpty().length) {
-                    observation.title
-                } else {
-                    openSession.title
-                }
-            }
-            else -> observation.title
-        }
-
-        val mergedUrl = when {
-            observation.urlConfidence > openSession.urlConfidence && !observation.url.isNullOrBlank() -> observation.url
-            else -> openSession.url
-        }
-
-        val mergedUrlConfidence = when {
-            observation.urlConfidence > openSession.urlConfidence -> observation.urlConfidence
-            else -> openSession.urlConfidence
-        }
-
-        val mergedPrivacy = when {
-            observation.privacyMode != BrowserTabSession.PRIVACY_MODE_UNKNOWN -> observation.privacyMode
-            else -> openSession.privacyMode
-        }
-
-        return BrowserObservation(
-            applicationId = observation.applicationId,
-            title = mergedTitle,
-            url = mergedUrl,
-            privacyMode = mergedPrivacy,
-            urlConfidence = mergedUrlConfidence
-        )
+        return true
     }
 
     private fun isSameMetadata(
         openSession: BrowserTabSession,
         observation: BrowserObservation
     ): Boolean {
-        return normalizeText(openSession.title) == normalizeText(observation.title) &&
-            normalizeUrl(openSession.url) == normalizeUrl(observation.url) &&
+        return openSession.hostname == observation.hostname &&
             openSession.privacyMode == observation.privacyMode &&
             openSession.urlConfidence == observation.urlConfidence
     }
-
-    private fun equivalentTitle(first: String?, second: String?): Boolean {
-        return normalizeText(first) == normalizeText(second)
-    }
-
-    private fun normalizeText(value: String?): String? {
-        return value
-            ?.replace("\\s+".toRegex(), " ")
-            ?.trim()
-            ?.lowercase(Locale.US)
-            ?.ifBlank { null }
-    }
-
-    private fun normalizeUrl(value: String?): String? {
-        return value
-            ?.trim()
-            ?.lowercase(Locale.US)
-            ?.removePrefix("https://")
-            ?.removePrefix("http://")
-            ?.removePrefix("www.")
-            ?.ifBlank { null }
-    }
-
-    private fun isBlankOrPlaceholder(value: String?): Boolean {
-        val normalized = normalizeText(value) ?: return true
-        return normalized in PLACEHOLDER_TITLES
-    }
-
-    private val PLACEHOLDER_TITLES = setOf(
-        "chrome",
-        "vanadium",
-        "firefox",
-        "new tab",
-        "new private tab",
-        "new incognito tab",
-        "private browsing",
-        "private browsing session",
-        "incognito tab",
-        "selected incognito tab",
-        "selected tab",
-        "tab"
-    )
 }
 
 sealed interface BrowserSessionDecision {

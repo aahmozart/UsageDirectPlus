@@ -9,17 +9,17 @@ import androidx.room.PrimaryKey
     indices = [
         Index("appId"),
         Index("openedAt"),
-        Index(value = ["appId", "openedAt"])
+        Index(value = ["appId", "openedAt"]),
+        Index("hostnameId")
     ]
 )
 data class StoredBrowserTabSession(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val appId: Long,
+    val hostnameId: Long,
     val openedAt: Long,
     val closedAt: Long? = null,
-    val title: String? = null,
-    val url: String? = null,
     val privacyMode: Int = BrowserTabSession.PRIVACY_MODE_UNKNOWN,
     val urlConfidence: Int = BrowserTabSession.URL_CONFIDENCE_NONE,
     val closeReason: Int? = null

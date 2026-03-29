@@ -5,8 +5,7 @@ data class BrowserTabSession(
     val openedAt: Long,
     val closedAt: Long?,
     val applicationId: String,
-    val title: String?,
-    val url: String?,
+    val hostname: String,
     val privacyMode: Int,
     val urlConfidence: Int,
     val closeReason: Int?

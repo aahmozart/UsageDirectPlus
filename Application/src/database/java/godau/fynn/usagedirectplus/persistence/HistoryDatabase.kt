@@ -13,7 +13,7 @@ import godau.fynn.usagedirectplus.charts.WeeklyAverageBarChart
 import java.time.LocalDate
 
 @Database(
-    version = 8,
+    version = 9,
     entities = [
         StoredUsageStat::class,
         StoredLastUsedStat::class,
@@ -21,7 +21,8 @@ import java.time.LocalDate
         StoredUsageInterval::class,
         StoredApp::class,
         ScreenEvent::class,
-        StoredBrowserTabSession::class
+        StoredBrowserTabSession::class,
+        StoredHostname::class
     ]
 )
 abstract class HistoryDatabase : RoomDatabase() {
@@ -49,7 +50,8 @@ abstract class HistoryDatabase : RoomDatabase() {
                     MIGRATION_ADD_COLORS,
                     MIGRATION_ADD_INTERVALS_AND_SCREEN_EVENTS,
                     MIGRATION_NORMALIZE_APP_IDS,
-                    MIGRATION_ADD_BROWSER_TAB_SESSIONS
+                    MIGRATION_ADD_BROWSER_TAB_SESSIONS,
+                    MIGRATION_SIMPLIFY_BROWSER_SESSIONS
                 )
                 .addCallback(getVacuumCallback(appContext))
                 .build()
@@ -277,6 +279,103 @@ abstract class HistoryDatabase : RoomDatabase() {
             }
         }
 
+        internal val MIGRATION_SIMPLIFY_BROWSER_SESSIONS = object : Migration(8, 9) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                Log.d("HistoryDatabase", "Migration 8 → 9: simplifying browser tab sessions")
+
+                database.execSQL(
+                    "CREATE TABLE IF NOT EXISTS `hostnames` (" +
+                        "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                        "`hostname` TEXT NOT NULL)"
+                )
+                database.execSQL(
+                    "CREATE UNIQUE INDEX IF NOT EXISTS `index_hostnames_hostname` ON `hostnames` (`hostname`)"
+                )
+
+                val urlCursor = database.query(
+                    "SELECT DISTINCT url FROM browserTabSessions WHERE url IS NOT NULL AND url != ''"
+                )
+                while (urlCursor.moveToNext()) {
+                    val url = urlCursor.getString(0)
+                    val hostname = extractHostnameForMigration(url) ?: continue
+                    val values = ContentValues(1)
+                    values.put("hostname", hostname)
+                    database.insert("hostnames", SQLiteDatabase.CONFLICT_IGNORE, values)
+                }
+                urlCursor.close()
+
+                database.execSQL(
+                    "CREATE TABLE IF NOT EXISTS `browserTabSessions_new` (" +
+                        "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                        "`appId` INTEGER NOT NULL, " +
+                        "`hostnameId` INTEGER NOT NULL, " +
+                        "`openedAt` INTEGER NOT NULL, " +
+                        "`closedAt` INTEGER, " +
+                        "`privacyMode` INTEGER NOT NULL, " +
+                        "`urlConfidence` INTEGER NOT NULL, " +
+                        "`closeReason` INTEGER)"
+                )
+
+                val sessionCursor = database.query(
+                    "SELECT id, appId, openedAt, closedAt, url, privacyMode, urlConfidence, closeReason " +
+                        "FROM browserTabSessions WHERE url IS NOT NULL AND url != ''"
+                )
+                while (sessionCursor.moveToNext()) {
+                    val url = sessionCursor.getString(4)
+                    val hostname = extractHostnameForMigration(url) ?: continue
+
+                    val hostnameCursor = database.query(
+                        "SELECT id FROM hostnames WHERE hostname = ?",
+                        arrayOf(hostname)
+                    )
+                    if (!hostnameCursor.moveToFirst()) {
+                        hostnameCursor.close()
+                        continue
+                    }
+                    val hostnameId = hostnameCursor.getLong(0)
+                    hostnameCursor.close()
+
+                    val values = ContentValues(8)
+                    values.put("id", sessionCursor.getLong(0))
+                    values.put("appId", sessionCursor.getLong(1))
+                    values.put("hostnameId", hostnameId)
+                    values.put("openedAt", sessionCursor.getLong(2))
+                    if (!sessionCursor.isNull(3)) values.put("closedAt", sessionCursor.getLong(3))
+                    values.put("privacyMode", sessionCursor.getInt(5))
+                    values.put("urlConfidence", sessionCursor.getInt(6))
+                    if (!sessionCursor.isNull(7)) values.put("closeReason", sessionCursor.getInt(7))
+                    database.insert("browserTabSessions_new", SQLiteDatabase.CONFLICT_NONE, values)
+                }
+                sessionCursor.close()
+
+                database.execSQL("DROP TABLE `browserTabSessions`")
+                database.execSQL("ALTER TABLE `browserTabSessions_new` RENAME TO `browserTabSessions`")
+
+                database.execSQL(
+                    "CREATE INDEX IF NOT EXISTS `index_browserTabSessions_appId` ON `browserTabSessions` (`appId`)"
+                )
+                database.execSQL(
+                    "CREATE INDEX IF NOT EXISTS `index_browserTabSessions_openedAt` ON `browserTabSessions` (`openedAt`)"
+                )
+                database.execSQL(
+                    "CREATE INDEX IF NOT EXISTS `index_browserTabSessions_appId_openedAt` ON `browserTabSessions` (`appId`, `openedAt`)"
+                )
+                database.execSQL(
+                    "CREATE INDEX IF NOT EXISTS `index_browserTabSessions_hostnameId` ON `browserTabSessions` (`hostnameId`)"
+                )
+            }
+
+            private fun extractHostnameForMigration(url: String): String? {
+                var cleaned = url.trim().lowercase()
+                cleaned = cleaned.removePrefix("https://").removePrefix("http://")
+                cleaned = cleaned.removePrefix("www.")
+                val slashIndex = cleaned.indexOf('/')
+                val host = if (slashIndex >= 0) cleaned.substring(0, slashIndex) else cleaned
+                if (host.isBlank() || '.' !in host) return null
+                return host
+            }
+        }
+
         internal val ALL_MIGRATIONS = arrayOf(
             MIGRATION_DAY_TO_DATE,
             MIGRATION_ADD_LAST_USED,
@@ -284,7 +383,8 @@ abstract class HistoryDatabase : RoomDatabase() {
             MIGRATION_ADD_COLORS,
             MIGRATION_ADD_INTERVALS_AND_SCREEN_EVENTS,
             MIGRATION_NORMALIZE_APP_IDS,
-            MIGRATION_ADD_BROWSER_TAB_SESSIONS
+            MIGRATION_ADD_BROWSER_TAB_SESSIONS,
+            MIGRATION_SIMPLIFY_BROWSER_SESSIONS
         )
     }
 }

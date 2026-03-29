@@ -9,7 +9,7 @@ class BrowserObservationExtractorTest {
     private val extractor = BrowserObservationExtractor()
 
     @Test
-    fun `extract parses Chromium share description into title and url`() {
+    fun `extract parses hostname from Chromium share description`() {
         val context = BrowserObservationContext(
             applicationId = BrowserSupport.CHROME_PACKAGE,
             windows = listOf(
@@ -31,8 +31,7 @@ class BrowserObservationExtractorTest {
             ExtractionResult.Accepted(
                 BrowserObservation(
                     applicationId = BrowserSupport.CHROME_PACKAGE,
-                    title = "BBC Home - Breaking News",
-                    url = "www.bbc.com",
+                    hostname = "bbc.com",
                     privacyMode = BrowserTabSession.PRIVACY_MODE_UNKNOWN,
                     urlConfidence = BrowserTabSession.URL_CONFIDENCE_HIGH
                 )
@@ -41,7 +40,7 @@ class BrowserObservationExtractorTest {
     }
 
     @Test
-    fun `extract captures Firefox title and address bar url when strongly identified`() {
+    fun `extract captures hostname from Firefox address bar url`() {
         val context = BrowserObservationContext(
             applicationId = "org.mozilla.firefox",
             eventTexts = listOf("Private browsing session"),
@@ -70,8 +69,7 @@ class BrowserObservationExtractorTest {
             ExtractionResult.Accepted(
                 BrowserObservation(
                     applicationId = "org.mozilla.firefox",
-                    title = "Example Domain",
-                    url = "example.org/docs",
+                    hostname = "example.org",
                     privacyMode = BrowserTabSession.PRIVACY_MODE_PRIVATE,
                     urlConfidence = BrowserTabSession.URL_CONFIDENCE_HIGH
                 )
@@ -80,7 +78,7 @@ class BrowserObservationExtractorTest {
     }
 
     @Test
-    fun `extract accepts title from toolbar in secondary browser window`() {
+    fun `extract captures hostname from secondary browser window url bar`() {
         val context = BrowserObservationContext(
             applicationId = BrowserSupport.CHROME_PACKAGE,
             activeWindowId = 10,
@@ -119,8 +117,7 @@ class BrowserObservationExtractorTest {
             ExtractionResult.Accepted(
                 BrowserObservation(
                     applicationId = BrowserSupport.CHROME_PACKAGE,
-                    title = "Example Domain",
-                    url = "example.com/docs",
+                    hostname = "example.com",
                     privacyMode = BrowserTabSession.PRIVACY_MODE_UNKNOWN,
                     urlConfidence = BrowserTabSession.URL_CONFIDENCE_HIGH
                 )
@@ -129,7 +126,7 @@ class BrowserObservationExtractorTest {
     }
 
     @Test
-    fun `extract accepts title only observations`() {
+    fun `extract rejects when only title node found without url`() {
         val context = BrowserObservationContext(
             applicationId = BrowserSupport.CHROME_PACKAGE,
             windows = listOf(
@@ -148,21 +145,11 @@ class BrowserObservationExtractorTest {
 
         val result = extractor.extract(context)
 
-        assertThat(result).isEqualTo(
-            ExtractionResult.Accepted(
-                BrowserObservation(
-                    applicationId = BrowserSupport.CHROME_PACKAGE,
-                    title = "Example Domain",
-                    url = null,
-                    privacyMode = BrowserTabSession.PRIVACY_MODE_UNKNOWN,
-                    urlConfidence = BrowserTabSession.URL_CONFIDENCE_NONE
-                )
-            )
-        )
+        assertThat(result).isInstanceOf(ExtractionResult.Rejected::class.java)
     }
 
     @Test
-    fun `extract rejects low confidence url without title`() {
+    fun `extract rejects low confidence url without strong signal`() {
         val context = BrowserObservationContext(
             applicationId = BrowserSupport.CHROME_PACKAGE,
             windows = listOf(
@@ -227,7 +214,7 @@ class BrowserObservationExtractorTest {
         val result = extractor.extract(context) as ExtractionResult.Accepted
 
         assertThat(result.observation.privacyMode).isEqualTo(BrowserTabSession.PRIVACY_MODE_PRIVATE)
-        assertThat(result.observation.url).isEqualTo("gg.com")
+        assertThat(result.observation.hostname).isEqualTo("gg.com")
     }
 
     @Test

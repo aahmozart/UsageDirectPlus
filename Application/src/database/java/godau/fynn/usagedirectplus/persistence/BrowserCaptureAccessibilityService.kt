@@ -91,7 +91,7 @@ class BrowserCaptureAccessibilityService : AccessibilityService() {
 
         val observation = (extractionResult as? ExtractionResult.Accepted)?.observation
         if (observation != null && shouldThrottle(observation, timestamp)) {
-            BrowserCaptureDiagnostics.recordAccepted(this, activePackage, timestamp, observation.url != null)
+            BrowserCaptureDiagnostics.recordAccepted(this, activePackage, timestamp)
             return
         }
 
@@ -121,13 +121,12 @@ class BrowserCaptureAccessibilityService : AccessibilityService() {
                     is ExtractionResult.Accepted -> {
                         Log.i(
                             TAG,
-                            "Accepted browser observation package=$activePackage title=${result.observation.title} url=${result.observation.url}"
+                            "Accepted browser observation package=$activePackage hostname=${result.observation.hostname}"
                         )
                         BrowserCaptureDiagnostics.recordAccepted(
                             this@BrowserCaptureAccessibilityService,
                             activePackage,
-                            timestamp,
-                            result.observation.url != null
+                            timestamp
                         )
                     }
 
@@ -179,8 +178,7 @@ class BrowserCaptureAccessibilityService : AccessibilityService() {
                 dao.insertOpenSession(
                     applicationId = decision.observation.applicationId,
                     openedAt = decision.openedAt,
-                    title = decision.observation.title,
-                    url = decision.observation.url,
+                    hostname = decision.observation.hostname,
                     privacyMode = decision.observation.privacyMode,
                     urlConfidence = decision.observation.urlConfidence
                 )
@@ -191,8 +189,7 @@ class BrowserCaptureAccessibilityService : AccessibilityService() {
                 Log.d(TAG, "Updating browser session id=${decision.sessionId}")
                 dao.updateOpenSessionMetadata(
                     id = decision.sessionId,
-                    title = decision.observation.title,
-                    url = decision.observation.url,
+                    hostname = decision.observation.hostname,
                     privacyMode = decision.observation.privacyMode,
                     urlConfidence = decision.observation.urlConfidence
                 )
@@ -206,8 +203,7 @@ class BrowserCaptureAccessibilityService : AccessibilityService() {
                     id = decision.sessionId,
                     closedAt = decision.closedAt,
                     closeReason = decision.closeReason,
-                    title = current.title,
-                    url = current.url,
+                    hostname = current.hostname,
                     privacyMode = current.privacyMode,
                     urlConfidence = current.urlConfidence
                 )
@@ -222,16 +218,14 @@ class BrowserCaptureAccessibilityService : AccessibilityService() {
                     id = decision.sessionId,
                     closedAt = decision.closedAt,
                     closeReason = decision.closeReason,
-                    title = current.title,
-                    url = current.url,
+                    hostname = current.hostname,
                     privacyMode = current.privacyMode,
                     urlConfidence = current.urlConfidence
                 )
                 dao.insertOpenSession(
                     applicationId = decision.observation.applicationId,
                     openedAt = decision.openedAt,
-                    title = decision.observation.title,
-                    url = decision.observation.url,
+                    hostname = decision.observation.hostname,
                     privacyMode = decision.observation.privacyMode,
                     urlConfidence = decision.observation.urlConfidence
                 )
@@ -250,8 +244,7 @@ class BrowserCaptureAccessibilityService : AccessibilityService() {
                     id = openSession.id,
                     closedAt = System.currentTimeMillis(),
                     closeReason = closeReason,
-                    title = openSession.title,
-                    url = openSession.url,
+                    hostname = openSession.hostname,
                     privacyMode = openSession.privacyMode,
                     urlConfidence = openSession.urlConfidence
                 )
@@ -275,8 +268,7 @@ class BrowserCaptureAccessibilityService : AccessibilityService() {
                         id = openSession.id,
                         closedAt = System.currentTimeMillis(),
                         closeReason = closeReason,
-                        title = openSession.title,
-                        url = openSession.url,
+                        hostname = openSession.hostname,
                         privacyMode = openSession.privacyMode,
                         urlConfidence = openSession.urlConfidence
                     )
@@ -294,9 +286,7 @@ class BrowserCaptureAccessibilityService : AccessibilityService() {
         val signature = buildString {
             append(observation.applicationId)
             append('|')
-            append(observation.title.orEmpty())
-            append('|')
-            append(observation.url.orEmpty())
+            append(observation.hostname)
             append('|')
             append(observation.privacyMode)
             append('|')

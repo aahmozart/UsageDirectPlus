@@ -146,8 +146,7 @@ class HistoryDatabaseMigrationTest {
             val browserSessionId = db.getBrowserTabSessionDao().insertOpenSession(
                 applicationId = "com.android.chrome",
                 openedAt = 3000L,
-                title = "Example Domain",
-                url = "example.com",
+                hostname = "example.com",
                 privacyMode = BrowserTabSession.PRIVACY_MODE_UNKNOWN,
                 urlConfidence = BrowserTabSession.URL_CONFIDENCE_HIGH
             )
@@ -161,6 +160,52 @@ class HistoryDatabaseMigrationTest {
             assertThat(browserIndexes).contains("index_browserTabSessions_appId")
             assertThat(browserIndexes).contains("index_browserTabSessions_openedAt")
             assertThat(browserIndexes).contains("index_browserTabSessions_appId_openedAt")
+        } finally {
+            db.close()
+        }
+    }
+
+    @Test
+    fun migrate8To9_extractsHostnamesAndDropsTitleOnlySessions() {
+        helper.createDatabase(databaseName, 8).apply {
+            execSQL("INSERT INTO apps(id, applicationId) VALUES (1, 'com.android.chrome')")
+            execSQL(
+                "INSERT INTO browserTabSessions(id, appId, openedAt, closedAt, title, url, privacyMode, urlConfidence, closeReason) " +
+                    "VALUES (1, 1, 1000, 2000, 'Google Maps', 'www.google.com/maps/@16', 0, 2, 2)"
+            )
+            execSQL(
+                "INSERT INTO browserTabSessions(id, appId, openedAt, closedAt, title, url, privacyMode, urlConfidence, closeReason) " +
+                    "VALUES (2, 1, 3000, 4000, 'Some Page', NULL, 0, 0, 1)"
+            )
+            execSQL(
+                "INSERT INTO browserTabSessions(id, appId, openedAt, closedAt, title, url, privacyMode, urlConfidence, closeReason) " +
+                    "VALUES (3, 1, 5000, 6000, 'Proton Mail', 'mail.proton.me/u/0/inbox', 0, 2, 2)"
+            )
+            close()
+        }
+
+        helper.runMigrationsAndValidate(databaseName, 9, true, *HistoryDatabase.ALL_MIGRATIONS)
+
+        val db = Room.databaseBuilder(context, HistoryDatabase::class.java, databaseName)
+            .addMigrations(*HistoryDatabase.ALL_MIGRATIONS)
+            .allowMainThreadQueries()
+            .build()
+
+        try {
+            val sessions = db.getBrowserTabSessionDao()
+                .getByAppAndTimeRange("com.android.chrome", 0, 10_000)
+            assertThat(sessions).hasSize(2)
+            assertThat(sessions.map { it.hostname }).containsExactly("google.com", "mail.proton.me").inOrder()
+            assertThat(sessions.map { it.id }).doesNotContain(2L)
+
+            val writableDb = db.openHelper.writableDatabase
+            assertThat(queryLong(writableDb, "SELECT COUNT(*) FROM hostnames")).isEqualTo(2)
+
+            val browserIndexes = querySecondColumnStrings(
+                writableDb,
+                "PRAGMA index_list(`browserTabSessions`)"
+            )
+            assertThat(browserIndexes).contains("index_browserTabSessions_hostnameId")
         } finally {
             db.close()
         }
