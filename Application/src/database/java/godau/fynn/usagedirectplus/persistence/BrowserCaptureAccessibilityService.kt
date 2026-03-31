@@ -37,6 +37,9 @@ class BrowserCaptureAccessibilityService : AccessibilityService() {
     @Volatile
     private var lastObservationAt: Long = 0
 
+    @Volatile
+    private var lastClosedMetadata: LastClosedSessionMetadata? = null
+
     override fun onServiceConnected() {
         Log.i(TAG, "Accessibility service connected")
         serviceScope.launch {
@@ -108,7 +111,11 @@ class BrowserCaptureAccessibilityService : AccessibilityService() {
                         BrowserTabSession.CLOSE_REASON_SWITCHED
                     )
 
-                    isSupportedBrowser -> BrowserSessionDecision.None
+                    isSupportedBrowser -> {
+                        val reopenDecision = resolveReopenDecision(openSession, activePackage, timestamp, lastClosedMetadata)
+                        if (reopenDecision !is BrowserSessionDecision.None) lastClosedMetadata = null
+                        reopenDecision
+                    }
                     else -> BrowserSessionReducer.reduce(
                         openSession,
                         null,
@@ -183,6 +190,7 @@ class BrowserCaptureAccessibilityService : AccessibilityService() {
                     urlConfidence = decision.observation.urlConfidence
                 )
                 browserSessionOpen = true
+                lastClosedMetadata = null
             }
 
             is BrowserSessionDecision.Update -> {
@@ -208,6 +216,11 @@ class BrowserCaptureAccessibilityService : AccessibilityService() {
                     urlConfidence = current.urlConfidence
                 )
                 browserSessionOpen = false
+                lastClosedMetadata = LastClosedSessionMetadata(
+                    applicationId = current.applicationId,
+                    hostname = current.hostname,
+                    privacyMode = current.privacyMode
+                )
                 clearThrottleState()
             }
 
@@ -230,6 +243,7 @@ class BrowserCaptureAccessibilityService : AccessibilityService() {
                     urlConfidence = decision.observation.urlConfidence
                 )
                 browserSessionOpen = true
+                lastClosedMetadata = null
             }
         }
     }
@@ -249,6 +263,7 @@ class BrowserCaptureAccessibilityService : AccessibilityService() {
                     urlConfidence = openSession.urlConfidence
                 )
                 browserSessionOpen = false
+                lastClosedMetadata = null
                 clearThrottleState()
                 Log.d(TAG, "Closed open session asynchronously reason=$closeReason")
             } finally {
@@ -273,6 +288,7 @@ class BrowserCaptureAccessibilityService : AccessibilityService() {
                         urlConfidence = openSession.urlConfidence
                     )
                     browserSessionOpen = false
+                    lastClosedMetadata = null
                     clearThrottleState()
                     Log.d(TAG, "Closed open session synchronously reason=$closeReason")
                 } finally {
@@ -312,6 +328,12 @@ class BrowserCaptureAccessibilityService : AccessibilityService() {
         }
     }
 
+    internal data class LastClosedSessionMetadata(
+        val applicationId: String,
+        val hostname: String,
+        val privacyMode: Int
+    )
+
     companion object {
         private const val TAG = "BrowserCapture"
         private const val THROTTLE_WINDOW_MS = 750L
@@ -326,6 +348,27 @@ class BrowserCaptureAccessibilityService : AccessibilityService() {
                 .flattenToString()
 
             return enabledServices.split(':').any { it.equals(expected, ignoreCase = true) }
+        }
+
+        internal fun resolveReopenDecision(
+            openSession: BrowserTabSession?,
+            activePackage: String,
+            timestamp: Long,
+            metadata: LastClosedSessionMetadata?
+        ): BrowserSessionDecision {
+            if (openSession != null) return BrowserSessionDecision.None
+            if (metadata == null) return BrowserSessionDecision.None
+            if (metadata.applicationId != activePackage) return BrowserSessionDecision.None
+
+            return BrowserSessionDecision.Open(
+                observation = BrowserObservation(
+                    applicationId = metadata.applicationId,
+                    hostname = metadata.hostname,
+                    privacyMode = metadata.privacyMode,
+                    urlConfidence = BrowserTabSession.URL_CONFIDENCE_LOW
+                ),
+                openedAt = timestamp
+            )
         }
     }
 }
