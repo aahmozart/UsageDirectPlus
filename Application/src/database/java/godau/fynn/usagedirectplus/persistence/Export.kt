@@ -2,6 +2,7 @@ package godau.fynn.usagedirectplus.persistence
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
 import androidx.documentfile.provider.DocumentFile
 import godau.fynn.usagedirectplus.R
@@ -13,6 +14,16 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.zip.GZIPOutputStream
+
+/**
+ * A finished export. Carries the document URI as well as the name so the file can be shared
+ * without exporting it a second time.
+ */
+data class ExportResult(
+    val filename: String,
+    val uri: Uri,
+    val mimeType: String,
+)
 
 object Export {
 
@@ -46,7 +57,7 @@ object Export {
 
     @JvmStatic
     @Throws(IOException::class)
-    fun exportToDirectory(context: Context, directory: DocumentFile, compress: Boolean): String {
+    fun exportToDirectory(context: Context, directory: DocumentFile, compress: Boolean): ExportResult {
         val timestamp = SimpleDateFormat("yyyy-MM-dd_HHmmss", Locale.US).format(Date())
         val ext = if (compress) "sqlite3.gz" else "sqlite3"
         val filename = "usageDirectPlus-$timestamp.$ext"
@@ -77,6 +88,6 @@ object Export {
             }
         }
 
-        return filename
+        return ExportResult(filename, outputFile.uri, mimeType)
     }
 }

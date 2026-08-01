@@ -26,6 +26,11 @@
     <string name="export_dialog_description">Export the database for external analysis. Choose a directory and optionally compress the file.</string>
     <string name="export_io_error">An error occurred while saving the file</string>
     <string name="export_okay">The export was successful</string>
+    <string name="export_share">Share</string>
+    <string name="export_share_done">Done</string>
+    <string name="export_share_message">Saved as %1$s.\n\nSend it to another device or app?</string>
+    <string name="export_share_chooser">Share exported database</string>
+    <string name="export_share_no_app">No app is available to share the export</string>
 
     <string name="color_explanation">Colored apps are highlighted all throughout the application, allowing you to focus on their usage.
         Set an order using drag-and-drop to determine their sorting in graphs and on the main screen.</string>

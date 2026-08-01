@@ -1,5 +1,6 @@
 package godau.fynn.usagedirectplus.view.dialog
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
@@ -12,6 +13,8 @@ import godau.fynn.usagedirectplus.R
 import godau.fynn.usagedirectplus.activity.SourceAppUsageStatisticsActivity
 import godau.fynn.usagedirectplus.databinding.DialogExportBinding
 import godau.fynn.usagedirectplus.persistence.Export
+import godau.fynn.usagedirectplus.persistence.ExportResult
+import godau.fynn.usagedirectplus.persistence.ShareExport
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -57,10 +60,10 @@ class ExportDialog(
 
             activity.lifecycleScope.launch(Dispatchers.IO) {
                 try {
-                    val filename = Export.exportToDirectory(activity, directory, compress)
+                    val result = Export.exportToDirectory(activity, directory, compress)
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(activity, activity.getString(R.string.export_okay), Toast.LENGTH_SHORT).show()
                         dialog.dismiss()
+                        showShareDialog(result)
                     }
                 } catch (e: IOException) {
                     e.printStackTrace()
@@ -72,6 +75,28 @@ class ExportDialog(
         }
 
         return dialog
+    }
+
+    /**
+     * Offers to hand the freshly written file to another app. The export lives in a directory the
+     * user picked, so its document URI can go straight into the share sheet.
+     */
+    private fun showShareDialog(result: ExportResult) {
+        MaterialAlertDialogBuilder(activity)
+            .setTitle(R.string.export_okay)
+            .setMessage(activity.getString(R.string.export_share_message, result.filename))
+            .setPositiveButton(R.string.export_share) { _, _ -> shareExport(result) }
+            .setNegativeButton(R.string.export_share_done, null)
+            .show()
+    }
+
+    private fun shareExport(result: ExportResult) {
+        try {
+            activity.startActivity(ShareExport.buildChooser(activity, result.uri, result.filename))
+        } catch (e: ActivityNotFoundException) {
+            e.printStackTrace()
+            Toast.makeText(activity, R.string.export_share_no_app, Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun onDirectorySelected(uri: Uri) {

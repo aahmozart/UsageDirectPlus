@@ -51,10 +51,12 @@ class ExportToDirectoryTest {
             every { getContentResolver() } returns contentResolver
         }
 
-        val filename = Export.exportToDirectory(context, directory, compress = false)
+        val result = Export.exportToDirectory(context, directory, compress = false)
 
-        assertThat(filename).endsWith(".sqlite3")
-        assertThat(filename).doesNotContain(".gz")
+        assertThat(result.filename).endsWith(".sqlite3")
+        assertThat(result.filename).doesNotContain(".gz")
+        assertThat(result.uri).isEqualTo(outputFileUri)
+        assertThat(result.mimeType).isEqualTo("application/vnd.sqlite3")
         assertThat(outputStream.toByteArray()).isEqualTo(dbContent)
     }
 
@@ -76,9 +78,11 @@ class ExportToDirectoryTest {
             every { getContentResolver() } returns contentResolver
         }
 
-        val filename = Export.exportToDirectory(context, directory, compress = true)
+        val result = Export.exportToDirectory(context, directory, compress = true)
 
-        assertThat(filename).endsWith(".sqlite3.gz")
+        assertThat(result.filename).endsWith(".sqlite3.gz")
+        assertThat(result.uri).isEqualTo(outputFileUri)
+        assertThat(result.mimeType).isEqualTo("application/gzip")
         val compressed = outputStream.toByteArray()
         // GZIP magic bytes
         assertThat(compressed[0]).isEqualTo(0x1f.toByte())
@@ -106,14 +110,14 @@ class ExportToDirectoryTest {
         val directoryUncompressed = mockk<DocumentFile> {
             every { createFile(any(), any()) } returns outputFile
         }
-        val filenameUncompressed = Export.exportToDirectory(context, directoryUncompressed, compress = false)
+        val filenameUncompressed = Export.exportToDirectory(context, directoryUncompressed, compress = false).filename
         assertThat(filenameUncompressed).endsWith(".sqlite3")
         assertThat(filenameUncompressed).doesNotContain(".gz")
 
         val directoryCompressed = mockk<DocumentFile> {
             every { createFile(any(), any()) } returns outputFile
         }
-        val filenameCompressed = Export.exportToDirectory(context, directoryCompressed, compress = true)
+        val filenameCompressed = Export.exportToDirectory(context, directoryCompressed, compress = true).filename
         assertThat(filenameCompressed).endsWith(".sqlite3.gz")
     }
 
@@ -135,7 +139,7 @@ class ExportToDirectoryTest {
             every { getContentResolver() } returns contentResolver
         }
 
-        val filename = Export.exportToDirectory(context, directory, compress = false)
+        val filename = Export.exportToDirectory(context, directory, compress = false).filename
 
         // Format: usageDirectPlus-yyyy-MM-dd_HHmmss.sqlite3
         assertThat(filename).matches("usageDirectPlus-\\d{4}-\\d{2}-\\d{2}_\\d{6}\\.sqlite3")
