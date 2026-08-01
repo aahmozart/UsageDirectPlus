@@ -13,6 +13,7 @@ import godau.fynn.usagedirectplus.R
 import godau.fynn.usagedirectplus.activity.SourceAppUsageStatisticsActivity
 import godau.fynn.usagedirectplus.databinding.DialogExportBinding
 import godau.fynn.usagedirectplus.persistence.Export
+import godau.fynn.usagedirectplus.persistence.ExportDirectoryMemory
 import godau.fynn.usagedirectplus.persistence.ExportResult
 import godau.fynn.usagedirectplus.persistence.ShareExport
 import kotlinx.coroutines.Dispatchers
@@ -26,18 +27,36 @@ class ExportDialog(
 ) : MaterialAlertDialogBuilder(activity) {
 
     private val binding = DialogExportBinding.inflate(LayoutInflater.from(context))
+    private val directoryMemory = ExportDirectoryMemory.of(activity)
     private var selectedDirectoryUri: Uri? = null
 
     init {
         setTitle(R.string.export_title)
         setView(binding.root)
 
+        restoreRememberedDirectory()
+
         binding.exportDirectoryButton.setOnClickListener {
-            directoryPickerLauncher.launch(null)
+            directoryPickerLauncher.launch(selectedDirectoryUri)
         }
 
         setPositiveButton(R.string.go, null)
         setNegativeButton(R.string.cancel, null)
+    }
+
+    /**
+     * Preselects the directory of the previous export. A remembered directory can outlive its
+     * permission grant or its storage volume, so an unusable one is dropped rather than offered.
+     */
+    private fun restoreRememberedDirectory() {
+        val uri = directoryMemory.recall() ?: return
+        val directory = DocumentFile.fromTreeUri(activity, uri)
+
+        if (directory != null && directory.exists() && directory.canWrite()) {
+            showSelectedDirectory(uri, directory)
+        } else {
+            directoryMemory.forget()
+        }
     }
 
     override fun show(): androidx.appcompat.app.AlertDialog {
@@ -100,8 +119,12 @@ class ExportDialog(
     }
 
     fun onDirectorySelected(uri: Uri) {
+        directoryMemory.remember(uri)
+        showSelectedDirectory(uri, DocumentFile.fromTreeUri(activity, uri))
+    }
+
+    private fun showSelectedDirectory(uri: Uri, directory: DocumentFile?) {
         selectedDirectoryUri = uri
-        val directory = DocumentFile.fromTreeUri(activity, uri)
         binding.exportDirectoryLabel.text = directory?.name ?: uri.lastPathSegment
     }
 }
