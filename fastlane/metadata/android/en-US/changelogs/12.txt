@@ -1,0 +1,1 @@
+– Fix a crash in the "Average app usage per weekday" chart when colored apps were used on more than one day
