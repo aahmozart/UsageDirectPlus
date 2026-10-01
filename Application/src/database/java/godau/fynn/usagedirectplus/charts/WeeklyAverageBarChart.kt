@@ -50,7 +50,7 @@ class WeeklyAverageBarChart : UsageStatBarChart() {
         protected abstract fun getUsageStats(): Array<SimpleUsageStat>
 
         @Query(
-            "SELECT apps.applicationId AS applicationId, colors.color AS color, colors.priority AS priority " +
+            "SELECT DISTINCT apps.applicationId AS applicationId, colors.color AS color, colors.priority AS priority " +
                 "FROM colors " +
                 "INNER JOIN apps ON apps.id = colors.appId " +
                 // Only return colors that actually appear in the usageStats to avoid NullPointerExceptions
