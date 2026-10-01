@@ -75,6 +75,12 @@ android {
         viewBinding = true
     }
 
+    dependenciesInfo {
+        // The encrypted dependency metadata block is not accepted by F-Droid
+        includeInApk = false
+        includeInBundle = false
+    }
+
     packaging {
         resources {
             excludes += setOf(
