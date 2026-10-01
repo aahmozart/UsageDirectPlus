@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.9.1] - 2026-10-01
+
+### Fixed
+
+- prevent weekday average chart crash for colored apps
+
+### Changed
+
+- add screenshots taken on an emulator with generated data
+
 ## [0.9.0] - 2026-10-01
 
 ### Added
