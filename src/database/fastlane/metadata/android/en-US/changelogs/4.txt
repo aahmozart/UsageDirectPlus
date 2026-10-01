@@ -1,5 +1,0 @@
-Add daily, weekly, monthly and yearly bar chart
-Add background lines as a scale to the bar chart's background
-Add clock pie chart for the last 10 days
-Remove irrelevant information when viewing past periods
-Feature preview: database

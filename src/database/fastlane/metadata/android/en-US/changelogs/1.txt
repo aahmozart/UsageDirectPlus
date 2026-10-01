@@ -1,9 +1,0 @@
-Changes compared to the sample provided by the AOSP:
-
-* Display time used
-* Sort by time used
-* Display last time used relative to current time
-* Filter unused apps
-* Don't block main thread when loading icons
-* Improved initial startup
-* Prettyfied layout

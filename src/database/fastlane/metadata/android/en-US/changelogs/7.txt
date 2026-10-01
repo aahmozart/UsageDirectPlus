@@ -1,6 +1,0 @@
-* Time today widget
-* Better way of filling up the database
-* Improved database format
-* Better handling when switching timezones
-* Redesigned about screen
-* Various fixes

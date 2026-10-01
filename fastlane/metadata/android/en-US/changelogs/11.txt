@@ -1,0 +1,7 @@
+First release of UsageDirectPlus, a fork of usageDirect.
+
+– Usage intervals with per-session start and end times
+– Usage timeline and unlock timeline charts
+– Screen and lock event history
+– Database export, on demand or scheduled, with optional GZIP compression
+– Fix double-counted, zero-length and midnight-crossing intervals

@@ -1,9 +1,0 @@
-usageDirect zeichnet die Nutzungszeit des Geräts auf und fertigt einen Verlauf an, wie lange jede App an jedem Tag genutzt wurde.
-
-– Zeigt verlässliche Nutzungsstatistiken bis zu zehn Tage vor Installation der App
-– Zeigt historische Daten in einem Graphen
-– Stellt tägliche Nutzungszeiten in einem Uhr-Kuchendiagramm dar
-– Zeigt durchschnittliche Nutzungszeit pro Wochentag
-– Widget mit der Nutzungszeit des Tages
-
-Alle verfügbaren Statistiken werden für historische Daten in einer App-Datenbank gespeichert.

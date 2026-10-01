@@ -1,7 +1,0 @@
-– Color apps to highlight them on every screen
-– Rework bar charts
-– Automatic night theme on Android 10+
-– Workaround more data bugs
-– Charts launcher shortcut
-– Further bug fixes: non-refreshing tab bar on next day, incorrect calendar week
-– Performance improvements

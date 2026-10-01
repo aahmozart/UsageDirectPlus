@@ -1,5 +1,0 @@
-Use data from database
-Periodically copy event log to databse
-Remove unreliable data
-Improve chart screen
-Add weekday average chart

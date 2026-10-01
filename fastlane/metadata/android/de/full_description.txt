@@ -1,0 +1,18 @@
+UsageDirectPlus zeichnet die Nutzungszeit des Geräts auf und fertigt einen dauerhaften Verlauf an, wie lange und wann jede App genutzt wurde.
+
+Es ist ein Fork von usageDirect mit folgenden Ergänzungen:
+
+– Nutzungsintervalle: Start- und Endzeit jeder App-Sitzung, nicht nur die Tagessumme
+– Nutzungs- und Entsperr-Zeitleiste für jeden Tag
+– Verlauf von Bildschirm-an/aus- und Sperr-/Entsperr-Ereignissen
+– Datenbankexport in einen frei wählbaren Ordner, manuell oder regelmäßig, optional GZIP-komprimiert
+
+Wie das Original bietet es außerdem:
+
+– Verlässliche Nutzungsstatistiken bis zu zehn Tage vor Installation der App
+– Historische Daten in einem Graphen
+– Tägliche Nutzungszeiten in einem Uhr-Kuchendiagramm
+– Durchschnittliche Nutzungszeit pro Wochentag
+– Widget mit der Nutzungszeit des Tages
+
+Alle Daten werden in einer Datenbank auf dem Gerät gespeichert. Die App hat keine Internetberechtigung; nichts verlässt das Gerät, außer die Datenbank wird selbst exportiert oder geteilt.

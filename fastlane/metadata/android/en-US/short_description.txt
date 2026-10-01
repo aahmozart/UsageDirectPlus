@@ -1,0 +1,1 @@
+Screen time history with per-session detail and database export
