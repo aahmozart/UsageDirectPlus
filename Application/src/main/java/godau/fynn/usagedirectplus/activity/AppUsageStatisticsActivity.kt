@@ -102,8 +102,7 @@ abstract class AppUsageStatisticsActivity : AppCompatActivity() {
             R.id.menu_about -> {
                 val intent = AboutDirectActivity.IntentBuilder(this, R.string.app_name, BuildConfig.VERSION_NAME)
                     .setIcon(R.mipmap.ic_launcher)
-                    .setAppDeveloperName("Fynn Godau")
-                    .setAppDeveloperMastodon("https://fosstodon.org/@fynnDirect")
+                    .setAppDeveloperName("aahmozart")
                     .setContent(arrayOf<Any>(
                         Artwork(getString(R.string.icon), License("CC BY-SA", null), null, "m4TZ", false, "https://social.anoxinon.de/@m4TZ"),
                         Translator("Стоян", null, Locale("bg")),
@@ -154,20 +153,8 @@ abstract class AppUsageStatisticsActivity : AppCompatActivity() {
                         Library("TypedRecyclerView", License.CC0_LICENSE, null, "Fynn Godau", false, "https://codeberg.org/fynngodau/TypedRecyclerView"),
                         Library("librariesDirect", License.CC0_LICENSE, null, "Fynn Godau", false, "https://codeberg.org/fynngodau/librariesDirect"),
                         Fork("AppUsageStatistics", License.APACHE_20_LICENSE, null, "AOSP", false, "https://github.com/googlesamples/android-AppUsageStatistics"),
-                        OwnLicense(License.GNU_GPL_V3_OR_LATER_LICENSE, null, "https://codeberg.org/fynngodau/usageDirect"),
-                        Imprint("Fynn Godau\n" +
-                                "St\u00f6\u00dfelstra\u00dfe 6\n" +
-                                "97422 Schweinfurt\n" +
-                                "Deutschland\n" +
-                                "\n" +
-                                "fynngodau@mailbox.org\n" +
-                                "+49 9721 730335\n" +
-                                "\n" +
-                                "Umsatzsteuer-Identifikationsnummer (VAT identification number): DE347187327\n" +
-                                "\n" +
-                                "Plattform der EU zur au\u00dfergerichtlichen Streitbeilegung\n" +
-                                "(EU platform for Online Dispute Resolution):\n" +
-                                "https://ec.europa.eu/consumers/odr/"),
+                        Fork("usageDirect", License.GNU_GPL_V3_OR_LATER_LICENSE, null, "Fynn Godau", false, "https://codeberg.org/fynngodau/usageDirect"),
+                        OwnLicense(License.GNU_GPL_V3_OR_LATER_LICENSE, null, "https://github.com/aahmozart/UsageDirectPlus"),
                     ))
                     .build()
 

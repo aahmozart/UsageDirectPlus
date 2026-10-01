@@ -41,7 +41,7 @@
 
     <string name="drag_handle">Drag handle</string>
 
-    <string name="url_email" translatable="false">mailto:fynngodau@mailbox.org?subject=UsageDirectPlus</string>
+    <string name="url_feedback" translatable="false">https://github.com/aahmozart/UsageDirectPlus/issues</string>
     <plurals name="time_used_total_hours">
         <item quantity="one">%1$d hour used total</item>
         <item quantity="other">%1$d hours used total</item>

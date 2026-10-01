@@ -64,8 +64,8 @@ Index: `timestamp`
 ## Building
 
 ```bash
-git clone <this-repo>
-cd usageDirectPlus
+git clone https://github.com/aahmozart/UsageDirectPlus.git
+cd UsageDirectPlus
 
 # Build the database flavor (the one with persistent storage)
 ./gradlew assembleDatabase
@@ -103,6 +103,8 @@ ORDER BY day DESC;
 
 GNU General Public License v3.0 — same as the original usageDirect.
 
----
+## Fork notice
+
+usageDirectPlus is an independent fork and is not maintained or endorsed by the original author. Please report issues with this fork to [this repository's issue tracker](https://github.com/aahmozart/UsageDirectPlus/issues), not to upstream.
 
 Forked from [usageDirect](https://codeberg.org/fynngodau/usageDirect) by Fynn Godau, which was itself forked from [the Android sample called "AppUsageStatistics"](https://github.com/googlesamples/android-AppUsageStatistics) (Copyright 2017 The Android Open Source Project, Inc).

@@ -117,7 +117,7 @@ class SourceAppUsageStatisticsActivity : AppUsageStatisticsActivity() {
                     .setTitle(R.string.menu_feedback)
                     .setMessage(R.string.feedback_message)
                     .setPositiveButton(R.string.menu_feedback) { _, _ ->
-                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_email))))
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_feedback))))
                     }
                     .setNegativeButton(R.string.cancel, null)
                     .show()
