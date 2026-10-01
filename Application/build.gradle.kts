@@ -17,7 +17,7 @@ android {
     namespace = "godau.fynn.usagedirectplus"
 
     defaultConfig {
-        applicationId = "godau.fynn.usagedirectplus"
+        applicationId = "aah.mozart.usagedirectplus"
         minSdk = 26
         targetSdk = 34
         versionCode = (versionProps["VERSION_CODE"] as? String)?.toIntOrNull() ?: 10

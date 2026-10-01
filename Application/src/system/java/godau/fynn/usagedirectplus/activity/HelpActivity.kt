@@ -28,7 +28,7 @@ import godau.fynn.usagedirectplus.databinding.ActivityHelpBinding
 class HelpActivity : AppCompatActivity() {
 
     companion object {
-        private const val DATABASE_FLAVOR_PACKAGE_NAME = "godau.fynn.usagedirectplus"
+        private const val DATABASE_FLAVOR_PACKAGE_NAME = "aah.mozart.usagedirectplus"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
