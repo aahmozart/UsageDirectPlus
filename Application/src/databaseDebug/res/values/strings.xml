@@ -25,10 +25,6 @@
     <string name="menu_debug_custom_query">Custom event log query</string>
 
     <string name="db_status">At the moment, there are %d days stored in the database, amounting to a total of %dh.</string>
-    <string name="db_browser_capture_wait">Browser capture status unavailable.</string>
-    <string name="db_browser_capture">Browser capture: %1$s\nLast package: %2$s\nLast time: %3$s</string>
-    <string name="db_browser_capture_no_package">none</string>
-    <string name="db_browser_capture_no_time">never</string>
     <string name="db_insert">Copy up to 10 days into database</string>
     <string name="db_wait">Gathering data…</string>
     <string name="db_schedule">Automatic inserts scheduled</string>

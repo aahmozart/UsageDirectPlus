@@ -24,15 +24,6 @@
         android:textColor="?android:attr/textColorSecondary"
         tools:text="1h 23 min" />
 
-    <Button
-        android:id="@+id/browser_tab_history_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp"
-        android:text="@string/browser_tab_sessions_button"
-        android:visibility="gone" />
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

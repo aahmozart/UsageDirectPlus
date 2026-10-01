@@ -15,14 +15,6 @@
         android:text="@string/db_wait"
         android:layout_margin="8dp"/>
 
-    <TextView
-        android:id="@+id/text_browser_capture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:textColor="#01579b"
-        android:text="@string/db_browser_capture_wait" />
-
     <Button
         android:id="@+id/button_insert"
         android:layout_width="wrap_content"

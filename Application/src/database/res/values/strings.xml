@@ -69,29 +69,6 @@
 
     <string name="usage_intervals_title">Usage intervals</string>
     <string name="usage_intervals_empty">No usage intervals recorded for this day</string>
-    <string name="browser_tab_sessions_title">Browser tab history</string>
-    <string name="browser_tab_sessions_button">Tab history</string>
-    <string name="browser_tab_sessions_empty">No browser tab sessions were captured for this day</string>
-    <string name="browser_tab_sessions_empty_enabled">Browser capture is enabled, but no tab sessions have been accepted for this browser on this day yet.</string>
-    <string name="browser_tab_sessions_empty_rejected">Browser capture is enabled, but the last capture attempt at %2$s was rejected: %1$s.</string>
-    <string name="browser_tab_sessions_summary">%1$d captured tabs, %2$s total</string>
-    <string name="browser_tab_sessions_private">Private</string>
-    <string name="browser_tab_sessions_enable_capture">Enable browser capture</string>
-    <string name="browser_capture_service_name">Browser tab capture</string>
-    <string name="browser_capture_service_description">Captures the hostname of the active browser tab from supported browsers for persistent history.</string>
-    <string name="browser_capture_dialog_title">Browser capture is off</string>
-    <string name="browser_capture_dialog_message">Enable the accessibility service to capture browser tab history for Chrome, Vanadium, and Firefox. You can still view any history already recorded.</string>
-    <string name="browser_capture_dialog_view_history">View recorded history</string>
-    <string name="browser_capture_status_accepted">Last capture attempt accepted (%1$s).</string>
-    <string name="browser_capture_status_rejected">Last capture attempt rejected: %1$s.</string>
-    <string name="browser_capture_status_no_attempts">No browser capture attempts recorded yet.</string>
-    <string name="browser_capture_status_hostname">hostname</string>
-    <string name="browser_capture_reason_no_supported_windows">no supported browser windows were readable</string>
-    <string name="browser_capture_reason_no_visible_nodes">no visible browser nodes were found</string>
-    <string name="browser_capture_reason_toolbar_not_found">no browser toolbar or title nodes were found</string>
-    <string name="browser_capture_reason_no_hostname">no hostname could be extracted</string>
-    <string name="browser_capture_reason_url_low_confidence_only">only a low-confidence URL was found</string>
-    <string name="browser_capture_reason_unknown">unknown reason</string>
 
     <string name="charts_usage_timeline_general">Usage timelines</string>
     <string name="charts_unlock_timeline_general">Unlock timelines</string>

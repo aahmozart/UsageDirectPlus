@@ -35,7 +35,7 @@ Exports are timestamped (`usageDirectPlus-2026-03-16_143000.sqlite3`) so they ne
 ### Faster sync cycle
 The background data collection interval has been reduced from 24 hours to 6 hours for more timely data.
 
-## Database schema (v6)
+## Database schema (v9)
 
 ### Existing tables (unchanged)
 - **usageStats** — daily aggregate usage per app (day, timeUsed, applicationId, hidden)
@@ -60,6 +60,10 @@ Indices: `applicationId`, `beginTime`
 | eventType | INTEGER NOT NULL | 15=SCREEN_ON, 16=SCREEN_OFF, 17=KEYGUARD_SHOWN, 18=KEYGUARD_HIDDEN |
 
 Index: `timestamp`
+
+## TODO
+
+- **Browser tab history** — an accessibility service that recorded the hostname of the active tab in supported browsers (Chrome, Vanadium, Firefox) was prototyped but removed because it was not yet stable enough. The `browserTabSessions` and `hostnames` tables are still part of the schema, so previously captured data is kept and exported; capture and the in-app viewer may return in a future release.
 
 ## Building
 
