@@ -17,30 +17,31 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/menu_charts"
         android:title="@string/menu_charts"
         android:icon="@drawable/ic_chart"
-        android:showAsAction="always" />
+        app:showAsAction="always" />
     <item android:id="@+id/menu_color"
         android:title="@string/menu_color"
         android:icon="@drawable/ic_colors"
-        android:showAsAction="always"/>
+        app:showAsAction="always"/>
     <item android:id="@+id/menu_reload"
         android:title="@string/menu_reload"
         android:icon="@drawable/ic_reload"
-        android:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom" />
     <item android:id="@+id/menu_restore_hidden"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/menu_restore_hidden" />
     <item android:id="@+id/menu_export_database"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/menu_export" />
     <item android:id="@+id/menu_export_settings"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/menu_export_settings" />
     <item android:id="@+id/menu_feedback"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:visible="false"
         android:title="@string/menu_feedback" />
     <item android:id="@+id/menu_about"
