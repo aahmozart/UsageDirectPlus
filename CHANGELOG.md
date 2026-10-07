@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.9.2] - 2026-10-07
+
+### Fixed
+
+- show chart and color actions in the toolbar again
+
+### Changed
+
+- add 512px store icon and 0.9.2 changelog
+
 ## [0.9.1] - 2026-10-01
 
 ### Fixed
