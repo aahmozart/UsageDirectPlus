@@ -1,0 +1,1 @@
+– Restore the chart and color buttons in the toolbar, which had moved into the overflow menu
