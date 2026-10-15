@@ -35,4 +35,28 @@
 \n
 \nSie kann erst in zukünftigen Versionen der App importiert werden.</string>
     <string name="color_explanation">Gefärbte Apps werden in der Anwendung speziell hervorgehoben, sodass du deren Nutzung besonders beobachten kannst. Wähle mittels Drag-and-Drop eine Reihenfolge, um die Sortierung in Graphen und auf dem Hauptbildschirm zu bestimmen.</string>
+    <string name="export_dialog_description">Exportiere die Datenbank für externe Analysen. Wähle ein Verzeichnis und komprimiere die Datei optional.</string>
+    <string name="export_share">Teilen</string>
+    <string name="export_share_done">Fertig</string>
+    <string name="export_share_message">Gespeichert als %1$s.\n\nAn ein anderes Gerät oder eine andere App senden?</string>
+    <string name="export_share_chooser">Exportierte Datenbank teilen</string>
+    <string name="export_share_no_app">Keine App zum Teilen des Exports verfügbar</string>
+    <string name="menu_export_settings">Automatischer Export</string>
+    <string name="export_settings_title">Regelmäßiger Datenbankexport</string>
+    <string name="export_settings_description">Exportiert die Datenbank automatisch nach Zeitplan in ein Verzeichnis deiner Wahl. Standardmäßig erzeugt jeder Export eine Datei mit Zeitstempel. Optional kann ein fester Dateiname verwendet werden, der den vorherigen Export überschreibt.</string>
+    <string name="export_settings_enable">Regelmäßigen Export aktivieren</string>
+    <string name="export_settings_directory">Exportverzeichnis</string>
+    <string name="export_settings_no_directory">Kein Verzeichnis ausgewählt</string>
+    <string name="export_settings_choose">Auswählen</string>
+    <string name="export_settings_interval">Exportintervall</string>
+    <string name="export_settings_export_now">Jetzt exportieren</string>
+    <string name="export_settings_pick_directory_first">Bitte zuerst ein Exportverzeichnis auswählen</string>
+    <string name="export_settings_export_queued">Export eingeplant</string>
+    <string name="export_settings_fixed_filename">Festen Dateinamen verwenden (überschreiben)</string>
+    <string name="export_settings_remove_old">Alte Exporte entfernen (nur den neuesten behalten)</string>
+    <string name="export_settings_compress">Export komprimieren (GZIP)</string>
+    <string name="usage_intervals_title">Nutzungsintervalle</string>
+    <string name="usage_intervals_empty">Für diesen Tag wurden keine Nutzungsintervalle aufgezeichnet</string>
+    <string name="charts_usage_timeline_general">Nutzungs-Zeitleisten</string>
+    <string name="charts_unlock_timeline_general">Entsperr-Zeitleisten</string>
 </resources>
