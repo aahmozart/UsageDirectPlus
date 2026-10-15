@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.9.3] - 2026-10-15
+
+### Fixed
+
+- add German strings for the export and interval screens
+- follow the system 12/24-hour clock setting
+
+### Changed
+
+- add 0.9.3 changelog
+- enable R8 code and resource shrinking for release builds
+
 ## [0.9.2] - 2026-10-07
 
 ### Fixed
