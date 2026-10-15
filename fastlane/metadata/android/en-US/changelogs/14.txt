@@ -1,0 +1,3 @@
+– Interval times follow the system 12/24-hour setting
+– German translation of the export and interval screens
+– Smaller APK (code shrinking enabled)
